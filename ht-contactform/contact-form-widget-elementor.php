@@ -5,20 +5,20 @@
  * Plugin URI:  https://htplugins.com/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     1.2.1
+ * Version:     1.2.2
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
  * Domain Path: /languages
- * Elementor tested up to: 3.24.3
- * Elementor Pro tested up to: 3.24.2
+ * Elementor tested up to: 3.26.5
+ * Elementor Pro tested up to: 3.26.3
 */
 
 if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '1.2.1' );
+define( 'HTCONTACTFORM_VERSION', '1.2.2' );
 define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', __FILE__ ) );
 define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( __FILE__ ) );
 

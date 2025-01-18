@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Elementor, Contact Form 7, Contact Form 7 Widget, Gutenberg Blocks
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+= Version: 1.2.2 - Date: 18-Jan-2025 =
+* Fixed: Escaping and sanitizing issues across the plugin to prevent potential security vulnerabilities.
+* Fixed: A few minor issues.
+* Tested: Compatibility with the latest version of Elementor.
+
 = Version: 1.2.1 - Date: 22-Sep-2024 =
 * Fixed: Frontend assets loading issue.
 * Compatibility with WordPress latest version.

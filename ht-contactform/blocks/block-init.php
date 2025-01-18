@@ -124,17 +124,17 @@ class Contactform_Block
 	public function render_content($attr){
 
 		if(isset($attr['formId']) && !empty($attr['formId'])){
-			$block_uniqueid = '#ht-block-'.$attr['blockUniqId'];
+			$block_uniqueid = '#ht-block-'.esc_attr($attr['blockUniqId']);
 			ob_start();
-				echo '<div id="ht-block-'.$attr['blockUniqId'].'">';
-					echo do_shortcode( '[contact-form-7 id="'.$attr['formId'].'"]' );
+				echo '<div id="ht-block-'.esc_attr($attr['blockUniqId']).'">';
+					echo do_shortcode( '[contact-form-7 id="'.esc_attr($attr['formId']).'"]' );
 				echo "</div>";
 				?> 
 					<style type="text/css">
-						<?php echo $block_uniqueid; ?>{
+						<?php echo esc_attr($block_uniqueid); ?>{
 							<?php echo $this->dimentation($attr,'areaMargin','','margin'); ?>
 						}
-						<?php echo $block_uniqueid; ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+						<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 							<?php echo $this->generate_css($attr,'inputBackground','','background'); ?>
 							<?php echo $this->generate_css($attr,'inputTextColor','','color'); ?>
 							<?php echo $this->dimentation($attr,'inputPadding','','padding'); ?>
@@ -145,10 +145,10 @@ class Contactform_Block
 							?>
 							<?php echo $this->dimentation($attr,'inputBorderRadius','','border-radius'); ?>
 						}
-						<?php echo $block_uniqueid; ?> .wpcf7 label{
+						<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 label{
 							<?php echo $this->generate_css($attr,'labelColor','','color'); ?>
 						}
-						<?php echo $block_uniqueid; ?> .wpcf7 input[type=submit]{
+						<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=submit]{
 							<?php echo $this->generate_css($attr,'btnBackgroundColor','','background'); ?>
 							<?php echo $this->dimentation($attr,'btnTextColor','','color'); ?>
 							<?php
@@ -161,25 +161,25 @@ class Contactform_Block
 						
 						/* Normal desktop*/
 						@media (min-width: 1300px){
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=text],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=email],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=password],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=search],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=tel],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=url],
-							<?php echo $block_uniqueid; ?> .wpcf7 select{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=text],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=email],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=password],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=search],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=tel],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=url],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 select{
 								height: <?php echo $attr['inputHight']['desktop'] ?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								height: <?php echo $attr['textAreaHight']['desktop'];?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								<?php echo $this->generate_css($attr,'inputTextSize','desktop','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 label{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 label{
 								<?php echo $this->generate_css($attr,'labelFontSize','desktop','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=submit]{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=submit]{
 								<?php echo $this->generate_css($attr,'btnFontSize','desktop','font-size'); ?>
 								<?php echo $this->dimentation($attr,'buttonPadding','desktop','padding'); ?>
 								<?php echo $this->dimentation($attr,'buttonMargin','desktop','margin'); ?>
@@ -188,25 +188,25 @@ class Contactform_Block
 
 						/* Normal laptop*/
 						@media (min-width: 992px) and (max-width: 1299px){
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=text],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=email],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=password],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=search],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=tel],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=url],
-							<?php echo $block_uniqueid; ?> .wpcf7 select{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=text],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=email],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=password],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=search],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=tel],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=url],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 select{
 								height: <?php echo $attr['inputHight']['laptop'] ?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								height: <?php echo $attr['textAreaHight']['laptop'];?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								<?php echo $this->generate_css($attr,'inputTextSize','laptop','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 label{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 label{
 								<?php echo $this->generate_css($attr,'labelFontSize','laptop','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=submit]{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=submit]{
 								<?php echo $this->generate_css($attr,'btnFontSize','laptop','font-size'); ?>
 								<?php echo $this->dimentation($attr,'buttonPadding','laptop','padding'); ?>
 								<?php echo $this->dimentation($attr,'buttonMargin','laptop','margin'); ?>
@@ -215,25 +215,25 @@ class Contactform_Block
 
 						/* Normal tablate*/
 						@media (min-width: 768px) and (max-width: 991px) {
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=text],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=email],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=password],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=search],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=tel],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=url],
-							<?php echo $block_uniqueid; ?> .wpcf7 select{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=text],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=email],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=password],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=search],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=tel],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=url],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 select{
 								height: <?php echo $attr['inputHight']['tablet'] ?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								height: <?php echo $attr['textAreaHight']['tablet'];?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								<?php echo $this->generate_css($attr,'inputTextSize','tablet','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 label{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 label{
 								<?php echo $this->generate_css($attr,'labelFontSize','tablet','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=submit]{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=submit]{
 								<?php echo $this->generate_css($attr,'btnFontSize','tablet','font-size'); ?>
 								<?php echo $this->dimentation($attr,'buttonPadding','tablet','padding'); ?>
 								<?php echo $this->dimentation($attr,'buttonMargin','tablet','margin'); ?>
@@ -242,25 +242,25 @@ class Contactform_Block
 
 						/* Normal mobile*/
 						@media (max-width: 767px) {
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=text],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=email],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=password],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=search],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=tel],
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=url],
-							<?php echo $block_uniqueid; ?> .wpcf7 select{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=text],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=email],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=password],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=search],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=tel],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=url],
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 select{
 								height: <?php echo $attr['inputHight']['mobile'] ?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								height: <?php echo $attr['textAreaHight']['mobile'];?>px;
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo $block_uniqueid; ?> .wpcf7 textarea{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input:not([type="checkbox"]):not([type="submit"]),<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 textarea{
 								<?php echo $this->generate_css($attr,'inputTextSize','mobile','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 label{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 label{
 								<?php echo $this->generate_css($attr,'labelFontSize','mobile','font-size'); ?>
 							}
-							<?php echo $block_uniqueid; ?> .wpcf7 input[type=submit]{
+							<?php echo esc_attr( $block_uniqueid ); ?> .wpcf7 input[type=submit]{
 								<?php echo $this->generate_css($attr,'btnFontSize','mobile','font-size'); ?>
 								<?php echo $this->dimentation($attr,'buttonPadding','mobile','padding'); ?>
 								<?php echo $this->dimentation($attr,'buttonMargin','mobile','margin'); ?>

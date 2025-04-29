@@ -1,0 +1,24 @@
+{
+    "name": "yeasin/ht-contactform",
+    "autoload": {
+        "psr-4": {
+            "HTContactForm\\": "./",
+            "HTContactFormAdmin\\": "admin/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yeasin Hossain",
+            "email": "yeasin.ymr01@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "openspout/openspout": "^3.3"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}

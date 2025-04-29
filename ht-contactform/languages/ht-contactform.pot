@@ -1,0 +1,1830 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Contact Form 7 Widget For Elementor Page Builder & "
+"Gutenberg Blocks\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-24 04:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.7.2; wp-6.7.2\n"
+"X-Domain: ht-contactform"
+
+#: admin/Includes/Config/Field.php:427
+msgid "$999.99"
+msgstr ""
+
+#. %1$s: Site Name, %2$s: Year
+#: templates/email/email-3.php:114
+#, php-format
+msgid "%1$s • %2$s"
+msgstr ""
+
+#. %s: Number of installations.
+#: include/recommended-plugins/class.recommended-plugins.php:316
+#, php-format
+msgid "%s Active Installations"
+msgstr ""
+
+#. %s: field label
+#: admin/Includes/Api/Submission.php:391
+#, php-format
+msgid "%s is required."
+msgstr ""
+
+#. %s: field label
+#: admin/Includes/Api/Submission.php:402
+#, php-format
+msgid "%s must be a valid email address."
+msgstr ""
+
+#. %1$s: Year, %2$s: Site Name, %3$s: Plugin Name
+#: templates/email/email-5.php:140 templates/email/email-4.php:134
+#: templates/email/email-2.php:126 templates/email/email-1.php:114
+#, php-format
+msgid "&copy; %1$s %2$s. All rights reserved. Powered by %3$s"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:403
+msgid "(999) 999-9999"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:411
+msgid "999-99-9999"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:415
+msgid "9999 9999 9999 9999"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:419
+msgid "99999-9999"
+msgstr ""
+
+#: templates/email/email-5.php:38
+msgid "A new form submission has been received with the following details:"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:86
+msgid "Acceptance Field"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:261
+msgid "Activate"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:626
+msgid ""
+"Activate email validation to verify the format and integrity of the provided "
+"address."
+msgstr ""
+
+#: contact-form-widget-elementor.php:115
+msgid "Activate Now"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:145
+#: include/recommended-plugins/class.recommended-plugins.php:272
+msgid "Activated"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:144
+msgid "Activating.."
+msgstr ""
+
+#. %s: Number of millions.
+#: include/recommended-plugins/class.recommended-plugins.php:390
+#, php-format
+msgctxt "Active plugin installations"
+msgid "%s+ Million"
+msgid_plural "%s+ Million"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:394
+msgctxt "Active plugin installations"
+msgid "Less Than 10"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:401
+msgid "Add a class to the contact form."
+msgstr ""
+
+#: admin/Includes/Mailer.php:91
+msgid "Admin Email"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:47
+msgid "Admin Label"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:48
+msgid "Admin label is field title which will be used for admin field title."
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:85
+msgid "Advanced Telephone"
+msgstr ""
+
+#: include/elementor_widgets.php:107
+msgid "Alignment"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:82
+msgid "Already Submitted Notice"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:562
+msgid "An error occurred while processing your submission. Please try again."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:550
+msgid "An error occurred while storing your submission."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:138
+msgid ""
+"Are you getting frustrated with WooCommerce’s current way of presenting the "
+"variants for your products? Well, say goodbye to dropdowns and start showing "
+"the product variations in a whole new light with Swatchly."
+msgstr ""
+
+#: admin/Includes/Mailer.php:210
+msgid "Author Email"
+msgstr ""
+
+#: admin/Includes/Mailer.php:196
+msgid "Author ID"
+msgstr ""
+
+#: admin/Includes/Mailer.php:203
+msgid "Author Name"
+msgstr ""
+
+#: include/elementor_widgets.php:98
+msgid "Background"
+msgstr ""
+
+#: include/elementor_widgets.php:174 include/elementor_widgets.php:340
+#: include/elementor_widgets.php:441 include/elementor_widgets.php:576
+#: include/elementor_widgets.php:664
+msgid "Background Color"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:285 admin/Includes/Config/Form.php:707
+#: admin/Includes/Config/Form.php:724
+msgid "Below Input Element"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:720
+msgid "Below Label"
+msgstr ""
+
+#: include/elementor_widgets.php:246 include/elementor_widgets.php:384
+#: include/elementor_widgets.php:472 include/elementor_widgets.php:614
+#: include/elementor_widgets.php:676
+msgid "Border"
+msgstr ""
+
+#: include/elementor_widgets.php:254 include/elementor_widgets.php:392
+#: include/elementor_widgets.php:480 include/elementor_widgets.php:622
+msgid "Border Radius"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:115
+msgid "Bottom"
+msgstr ""
+
+#: include/elementor_widgets.php:635
+msgid "Box Shadow"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:47
+msgid "Build forms with ease using our intuitive form builder."
+msgstr ""
+
+#: include/elementor_widgets.php:521
+msgid "Button"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:359
+msgid "Button Alignment"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:345
+msgid "Button Style"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:338
+msgid "Button Text"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:540
+msgid "Button Type Layout"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:141
+#: include/recommended-plugins/class.recommended-plugins.php:249
+#: include/recommended-plugins/class.recommended-plugins.php:303
+msgid "Buy Now"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:289
+msgid "By "
+msgstr ""
+
+#: admin/Includes/Config/Form.php:758
+msgid "Captcha"
+msgstr ""
+
+#: include/elementor_widgets.php:115 admin/Includes/Config/Form.php:364
+msgid "Center"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:165 admin/Includes/Config/Form.php:167
+#: admin/Includes/Config/Form.php:168
+msgid "Checkboxes"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:395
+msgid "Choose an input mask to format user input consistently."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:192
+msgid "Choose the display size for the form field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:378
+msgid "Columns"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:239
+msgid "Configuration Required"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:574
+msgid "Confirmation"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:598
+msgid "Confirmation Message"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:614
+msgid "Confirmation Page"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:630
+msgid "Confirmation Redirect"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:578
+msgid "Confirmation Type"
+msgstr ""
+
+#: include/elementor_widgets.php:43 include/ht_form_widgets.php:57
+msgid "Contact Form"
+msgstr ""
+
+#. Name of the plugin
+msgid "Contact Form 7 Widget For Elementor Page Builder & Gutenberg Blocks"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:174
+msgid ""
+"Contact Form7 Extensions plugin is a fantastic WordPress plugin that "
+"enriches the functionalities of Contact Form 7.This all-in-one WordPress "
+"plugin will help you turn any contact page into a well-organized, engaging "
+"tool for communicating with your website visitors by providing tons of "
+"advanced features like drag and drop file upload, repeater field, trigger "
+"error for already submitted forms, popup form response, country flags and "
+"dial codes with a telephone input field and acceptance field, etc. in "
+"addition to its basic features."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:316
+msgid "Coupon Zen"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:25
+msgid "Create Your First Form"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:310
+msgid "DataCaptia"
+msgstr ""
+
+#: admin/Includes/Mailer.php:133 templates/email/email-5.php:116
+msgid "Date"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:103 admin/Includes/Config/Field.php:277
+#: admin/Includes/Config/Form.php:350 admin/Includes/Config/Form.php:552
+msgid "Default"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:221
+msgid "Default Value"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:224
+msgid "Define a default value to pre-populate the field upon form load."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:445
+msgid "Define selectable options with visual cues for default selection."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:349
+msgid "Define the maximum number of characters allowed for the text input."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:576
+msgid "Define the maximum value for numerical input."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:559
+msgid "Define the minimum value for numerical input."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:223
+msgid "Description"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:877
+msgid "Disable IP Logging"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:252
+msgid "Docus Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:304
+msgid "Docus – YouTube Video Playlist"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:87
+msgid "Drag & Drop File Upload"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:36
+msgid "Drag and Drop"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:120 admin/Includes/Config/Form.php:122
+#: admin/Includes/Config/Form.php:123
+msgid "Dropdown"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:37
+msgid "Easily drag and drop form fields to create your perfect form."
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:62
+msgid "Edit your form at any time to make changes or updates."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:249 admin/Includes/Config/Form.php:251
+#: admin/Includes/Config/Form.php:252 admin/Includes/Config/Form.php:732
+#: admin/Includes/Config/Form.php:841
+msgid "Email"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:531
+msgid "Email Body"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:749
+msgid "Email Footer Text"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:51
+msgid "Email Notifications"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:470
+msgid "Email Subject"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:261
+msgid "Email Validation Error Message"
+msgstr ""
+
+#: admin/Includes/Mailer.php:126
+msgid "Embedded Post/Page ID"
+msgstr ""
+
+#: admin/Includes/Mailer.php:112
+msgid "Embedded Post/Page Title"
+msgstr ""
+
+#: admin/Includes/Mailer.php:119
+msgid "Embedded Post/Page URL"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:255
+msgid ""
+"Embedding a YouTube playlist into your website plays a vital role to curate "
+"your content into several categories and make your web content more engaging "
+"and popular by keeping the visitors on your website for a longer period."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:386
+msgid "Enable AJAX"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:387
+msgid "Enable AJAX submission for the contact form."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:411
+msgid "Enable Anti Spam Protection"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:412
+msgid "Enable anti spam protection for the contact form."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:607
+msgid "Enable Email Confirmation"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:609
+msgid ""
+"Enable email confirmation by requiring the email address to be entered twice."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:418
+msgid "Enable minimum time to submit"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:448
+msgid "Enable Notification"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:643
+msgid ""
+"Ensure the email address is unique by comparing against previous submissions"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:455
+msgid ""
+"Enter the email address to receive form entry notifications. For multiple "
+"notifications, separate email addresses with a comma."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:517
+msgid ""
+"Enter the email address you would like to be used as the reply to address "
+"for the notification email."
+msgstr ""
+
+#: admin/Includes/Api/Entry.php:315 admin/Includes/Api/Entry.php:340
+msgid "Entry IDs are required"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:41
+msgid "Entry Management"
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:249
+msgid "Entry not found"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:713
+msgid "Error Message Placement"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:171
+msgid "Extensions For CF7 Pro"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:556 admin/Includes/Helper.php:259
+msgid "Failed to connect to reCAPTCHA server."
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:401
+msgid "Failed to delete entry"
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:310
+msgid "Failed to save form submission"
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:366
+msgid "Failed to update entry"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:280
+msgid "Faster YouTube Embed"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:238
+msgid "Field Class"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:63
+msgid "Field Label"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:190
+msgid "Field Size"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:686
+msgid "First and Last Name"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:719
+msgid "First Name"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:690
+msgid "First, Middle, and Last Name"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:534
+msgid "For every tag use new line."
+msgstr ""
+
+#: admin/Includes/PostType.php:23
+msgid "Form"
+msgstr ""
+
+#: admin/Includes/Api/Form.php:260
+msgid "Form and its entries deleted successfully"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:46
+msgid "Form Builder"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:400
+msgid "Form Class"
+msgstr ""
+
+#: admin/Includes/Api/Form.php:224
+msgid "Form data is required"
+msgstr ""
+
+#: admin/Includes/Api/Submission.php:198
+msgid "Form data or form ID is missing"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:61
+msgid "Form Editor"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:500
+msgid "Form Email"
+msgstr ""
+
+#: admin/Includes/Mailer.php:98
+msgid "Form ID"
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:283
+msgid "Form ID and form data are required"
+msgstr ""
+
+#: admin/Includes/Api/Entry.php:389
+msgid "Form ID is required"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:119
+msgid "Form ID is required."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:485
+msgid "Form Name"
+msgstr ""
+
+#: include/elementor_widgets.php:33 include/ht_form_widgets.php:47
+#: include/class/Api.php:84 include/class/Api.php:107
+msgid "Form not found"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:541
+msgid "Form not found. Please try again."
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:56
+msgid "Form Preview"
+msgstr ""
+
+#: admin/Includes/Mailer.php:105
+msgid "Form Title"
+msgstr ""
+
+#: admin/Includes/Api/Submission.php:217
+msgid "Form validation failed"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:675
+msgid "Format"
+msgstr ""
+
+#: admin/Admin.php:63 admin/Includes/PostType.php:22
+msgid "Forms"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:532
+msgid "Four Columns"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:212 admin/Includes/Config/Form.php:214
+msgid "GDPR Agreement"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:382
+msgid "General"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:93 admin/Includes/Config/Welcome.php:94
+msgid "Get Pro Now"
+msgstr ""
+
+#: admin/Admin.php:73
+msgid "Global Settings"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:225
+msgid "Google Place Review"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:778
+msgid "Google reCAPTCHA v2"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:782
+msgid "Google reCAPTCHA v3"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:354
+msgid "Gray"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:352
+msgid "Green"
+msgstr ""
+
+#: admin/Includes/Models/Entries.php:216 admin/Includes/Models/Entries.php:218
+#: admin/Includes/Models/Entries.php:260 admin/Includes/Models/Entries.php:262
+msgid "Guest"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:50
+msgid "HashBar"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:183
+msgid ""
+"HashBar is a WordPress Notification / Alert / Offer Bar plugin which allows "
+"you to create unlimited notification bars to notify your customers. This "
+"plugin has option to show email subscription form (sometimes it increases up "
+"to 500% email subscriber), Offer text and buttons about your promotions. "
+"This plugin has the options to add unlimited background colors and images to "
+"make your notification bar more professional."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:180
+msgid "HashBar Pro"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:246
+msgid "HasTheme"
+msgstr ""
+
+#: include/elementor_widgets.php:148 include/elementor_widgets.php:320
+#: include/elementor_widgets.php:538
+msgid "Height"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:253
+msgid "Help Message"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:696
+msgid "Help Message Placement"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:423
+msgid "HH:MM"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:79
+msgid "Hide Label"
+msgstr ""
+
+#: include/elementor_widgets.php:646
+msgid "Hover"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:243
+msgid "HT Click To Call"
+msgstr ""
+
+#: admin/Admin.php:48 admin/Admin.php:49
+msgid "HT Contact Form"
+msgstr ""
+
+#: include/elementor_widgets.php:13
+msgid "HT Contact Form 7"
+msgstr ""
+
+#: contact-form-widget-elementor.php:114
+msgid ""
+"HT Contact Form Addons not working because you need to activate the Contact "
+"Form 7 plugin."
+msgstr ""
+
+#: contact-form-widget-elementor.php:121
+msgid ""
+"HT Contact Form Addons not working because you need to install the Contact "
+"Form 7 plugin"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:22
+msgid ""
+"HT Contact Form empowers you to create beautiful, functional forms without "
+"any coding knowledge. Whether you need contact forms, surveys, lead "
+"generation forms, or feedback collectors, our intuitive drag-and-drop "
+"builder makes it simple. Start creating powerful forms in minutes and watch "
+"your conversion rates soar!"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:274
+msgid "HT Feed"
+msgstr ""
+
+#: include/ht_form_widgets.php:13
+msgid "HT Form"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:44
+msgid "HT Mega"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:126
+msgid "HT Mega Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:68
+msgid "HT Menu"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:207
+msgid "HT Menu Pro"
+msgstr ""
+
+#. Author of the plugin
+msgid "HT Plugins"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:74
+msgid "HT Script"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:198
+msgid "HT Script Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:56
+msgid "HT Slider For Elementor"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:216
+msgid "HT Slider Pro For Elementor"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:219
+msgid ""
+"HT Slider Pro is a plugin to create a slider for WordPress websites easily "
+"using the Elementor page builder. 80+ prebuild slides/templates are included "
+"in this plugin. There is the option to create a post slider, WooCommerce "
+"product slider, Video slider, image slider, etc. Fullscreen, full width and "
+"box layout option are included."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:328
+msgid "HT Social Share"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:62
+msgid "HT WPForms"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:246
+msgid ""
+"HT – Click to Call is a lightweight WordPress plugin that allows you to add "
+"a floating click to call button on your website. It will offer your website "
+"visitors an opportunity to call your business immediately at the right "
+"moment, especially when they are interested in your products or services and "
+"seeking more information."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:129
+msgid ""
+"HTMega is an absolute addon for elementor that includes 80+ elements & 360 "
+"Blocks with unlimited variations. HT Mega brings limitless possibilities. "
+"Embellish your site with the elements of HT Mega."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://htplugins.com/"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://profiles.wordpress.org/htplugins/#content-plugins"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:226
+msgid ""
+"I agree to allow this website to store my submitted information in order to "
+"respond to my inquiry."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:878
+msgid ""
+"If this option is turned on, the user's IP address will not be saved with "
+"the form data."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:228
+msgid ""
+"If you are searching for a modern and excellent google places review "
+"WordPress plugin to showcase reviews from Google Maps and strengthen trust "
+"between you and your site visitors, look no further than HT Google Place "
+"Review"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:536
+msgid "Inline Layout"
+msgstr ""
+
+#: include/elementor_widgets.php:141
+msgid "Input"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:853
+msgid "Input Mask Incomplete"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:201
+msgid ""
+"Insert Headers and Footers Code allows you to insert Google Analytics, "
+"Facebook Pixel, custom CSS, custom HTML, JavaScript code to your website "
+"header and footer without modifying your theme code.This plugin has the "
+"option to add any custom code to your theme in one place, no need to edit "
+"the theme code. It will save your time and remove the hassle for the theme "
+"update."
+msgstr ""
+
+#: contact-form-widget-elementor.php:122
+#: include/recommended-plugins/class.recommended-plugins.php:267
+msgid "Install Now"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:143
+msgid "Installing.."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:538
+msgid "Invalid form ID. Please try again."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:532
+msgid "Invalid form request. Please try again."
+msgstr ""
+
+#: templates/email/email-5.php:122 templates/email/email-4.php:116
+#: templates/email/email-3.php:98 templates/email/email-2.php:108
+#: templates/email/email-1.php:96
+msgid "IP Address"
+msgstr ""
+
+#: include/elementor_widgets.php:123
+msgid "Justified"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:98
+msgid "JustTables"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:156
+msgid ""
+"JustTables is an incredible WordPress plugin that lets you showcase all your "
+"WooCommerce products in a sortable and filterable table view. It allows your "
+"customers to easily navigate through different attributes of the products "
+"and compare them on a single page. This plugin will be of great help if you "
+"are looking for an easy solution that increases the chances of landing a "
+"sale on your online store."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:153
+msgid "JustTables Pro"
+msgstr ""
+
+#: include/elementor_widgets.php:433
+msgid "Label"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:96
+msgid "Label Position"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:206
+msgid "Large"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:735
+msgid "Last Name"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:513 admin/Includes/Config/Form.php:689
+msgid "Layout"
+msgstr ""
+
+#: include/elementor_widgets.php:111 admin/Includes/Config/Field.php:119
+#: admin/Includes/Config/Form.php:363
+msgid "Left"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:499
+msgid "Limit the number of selectable options to prevent excessive choices."
+msgstr ""
+
+#: admin/Includes/Mailer.php:224
+msgid "Login URL"
+msgstr ""
+
+#: admin/Includes/Mailer.php:231
+msgid "Logout URL"
+msgstr ""
+
+#: admin/Includes/Mailer.php:245
+msgid "Lost Password URL"
+msgstr ""
+
+#: include/elementor_widgets.php:84 include/elementor_widgets.php:291
+#: include/elementor_widgets.php:417 include/elementor_widgets.php:505
+#: include/elementor_widgets.php:600
+msgid "Margin"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:393 admin/Includes/Config/Form.php:99
+msgid "Mask"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:97 admin/Includes/Config/Form.php:100
+msgid "Mask Input"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:498
+msgid "Max Selection"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:348
+msgid "Max text length"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:573
+msgid "Max Value"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:865
+msgid "Maximum Number"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:202
+msgid "Medium"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:78 admin/Includes/Config/Form.php:79
+#: admin/Includes/Config/Form.php:584
+msgid "Message"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:270
+msgid "Message Position"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:727
+msgid "Middle Name"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:556
+msgid "Min Value"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:859
+msgid "Minimum Number"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:425
+msgid "Minimum Time to Submit (Seconds)"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:873
+msgid "Miscellaneous"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:407
+msgid "MM/DD/YYYY"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:311
+msgid "More Details"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:104
+msgid "Multi Currency"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:162
+msgid "Multi Currency Pro for WooCommerce"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:165
+msgid ""
+"Multi-Currency Pro for WooCommerce is a prominent currency switcher plugin "
+"for WooCommerce. This plugin allows your website or online store visitors to "
+"switch to their preferred currency or their country’s currency."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:481
+msgid "Multiple"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:141 admin/Includes/Config/Form.php:143
+#: admin/Includes/Config/Form.php:144
+msgid "Multiple Choices"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:711 admin/Includes/Config/Form.php:60
+#: admin/Includes/Config/Form.php:62
+msgid "Name"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:331
+msgid "Name Attribute"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:706
+msgid "Names"
+msgstr ""
+
+#: admin/Admin.php:68
+msgid "New Form"
+msgstr ""
+
+#. %s: form title
+#: admin/Includes/Mailer.php:326
+#, php-format
+msgid "New Form Entry - %s"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:471
+msgid "New Form Entry - {form_title}"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:281 admin/Includes/Config/Form.php:703
+msgid "Next to Label as Tooltip"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:399
+msgid "None"
+msgstr ""
+
+#: include/elementor_widgets.php:531
+msgid "Normal"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:444
+msgid "Notification"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:501
+msgid ""
+"Notifications can only use 1 From Email. Please do not enter multiple "
+"addresses."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:187 admin/Includes/Config/Form.php:189
+#: admin/Includes/Config/Form.php:190 admin/Includes/Config/Form.php:847
+msgid "Number"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:520
+msgid "One Column"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:644
+msgid "Open confirmation in new tab"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:443
+msgid "Options"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:353
+msgid "Orange"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:262
+msgid "Others"
+msgstr ""
+
+#: include/elementor_widgets.php:71 include/elementor_widgets.php:272
+#: include/elementor_widgets.php:404 include/elementor_widgets.php:492
+#: include/elementor_widgets.php:587
+msgid "Padding"
+msgstr ""
+
+#: include/elementor_widgets.php:216 include/elementor_widgets.php:370
+msgid "Placeholder Color"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:135
+msgid "Placeholder Text"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:553 admin/Includes/Helper.php:240
+msgid "Please complete the reCAPTCHA challenge."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:613 admin/Includes/Config/Form.php:843
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:617 admin/Includes/Config/Form.php:849
+msgid "Please enter a valid number."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:620
+msgid "Please enter a valid URL."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:855
+msgid "Please enter a valid {format} format"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:614
+msgid "Please enter a valid {format} format."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:357
+msgid "Please leave this field empty"
+msgstr ""
+
+#: blocks/block-init.php:295 blocks/block-init.php:310
+msgid "Please Select a contact form."
+msgstr ""
+
+#: include/elementor_widgets.php:706 include/ht_form_widgets.php:185
+msgid "Please Select contact form."
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:414
+msgid "Plugin Not Found"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:434
+msgid "Plugin Successfully Activated"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:84
+msgid "Popup Form Response"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:301
+msgid "Prefix Label"
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:142
+msgid "Preview"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:292
+msgid "Preview Link Generator"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:57
+msgid "Preview your form to ensure it looks and functions as expected."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:135
+msgid "Product Variation Swatches"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:255
+msgid ""
+"Provide additional guidance that is displayed as a tooltip or below the "
+"field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:136
+msgid "Provide placeholder text that is visible when the field is empty."
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:79
+msgid "Purchase CF7 Pro Extensions"
+msgstr ""
+
+#: admin/Includes/Mailer.php:140
+msgid "Query String Variable"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:298
+msgid "QuickSwish"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:29
+msgid "Read the Full Guide"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:268
+msgid "Really Simple Google Tag Manager"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:236 admin/Includes/Config/Form.php:767
+msgid "reCAPTCHA"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:240
+msgid ""
+"reCAPTCHA is not configured, please configure it in Global Settings > Captcha"
+msgstr ""
+
+#: admin/Includes/Helper.php:292
+msgid "reCAPTCHA is not configured."
+msgstr ""
+
+#: admin/Includes/Fields.php:720
+msgid "reCAPTCHA site key is not configured."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:559 admin/Includes/Helper.php:274
+#: admin/Includes/Helper.php:283
+msgid "reCAPTCHA verification failed. Please try again."
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:52
+msgid "Receive email notifications when form submissions are received."
+msgstr ""
+
+#: include/recommended-plugins/class.recommended-plugins.php:75
+msgid "Recommendations"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:31
+msgid "Recommended"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:351
+msgid "Red"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:588
+msgid "Redirect"
+msgstr ""
+
+#: admin/Includes/Mailer.php:217
+msgid "Referrer URL"
+msgstr ""
+
+#: admin/Includes/Mailer.php:238
+msgid "Register URL"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:83
+msgid "Repeater Field"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:516
+msgid "Reply To"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:149 admin/Includes/Config/Form.php:835
+msgid "Required"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:165 admin/Includes/Config/Form.php:217
+msgid "Required Error Message"
+msgstr ""
+
+#: include/elementor_widgets.php:119 admin/Includes/Config/Field.php:111
+#: admin/Includes/Config/Form.php:365
+msgid "Right"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:363
+msgid "Rows"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:394
+msgid "Save all form submission data to the database for later reference."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:464
+msgid "Searchable"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:814
+msgid "Secret Key"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:535
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:346
+msgid "Select a button style from the dropdown"
+msgstr ""
+
+#: include/elementor_widgets.php:49 include/ht_form_widgets.php:63
+msgid "Select Form"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:677 admin/Includes/Config/Field.php:708
+msgid "Select format to use for the name form field."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:736
+msgid "Select Template"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:454
+msgid "Send To Email"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:419 admin/Includes/Config/Form.php:426
+msgid ""
+"Set a minimum amount of time a user must spend on a form before submitting."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:332
+msgid ""
+"Set a unique name attribute for the field to be used during form submission."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:364
+msgid "Set the number of rows for the textarea element to control its height."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:714
+msgid "Set the placement of error messages for form fields."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:697
+msgid "Set the placement of help messages for form fields."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:593
+msgid "Set the step increment for numerical input control."
+msgstr ""
+
+#: admin/Includes/Api/Settings.php:164
+msgid "Settings must be an object."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:592
+msgid "Show Page"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:660
+msgid "Show the current slider value in real-time beneath the slider control."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:682
+msgid "Simple"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:37
+msgid "Simple Text"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:322
+msgid "Sirve – Simple Directory Listing"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:799
+msgid "Site Key"
+msgstr ""
+
+#: admin/Includes/Mailer.php:252
+msgid "Site Title"
+msgstr ""
+
+#: admin/Includes/Mailer.php:259
+msgid "Site URL"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:305 admin/Includes/Config/Form.php:307
+#: admin/Includes/Config/Form.php:308
+msgid "Slider"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:198
+msgid "Small"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:547 admin/Includes/Api/Submission.php:145
+msgid "Spam detected. Please try again."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:407
+msgid "Spam Protection"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:239
+msgid "Specify a CSS class for custom styling of the field element."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:515
+msgid "Specify the layout style for arranging the field options or appearance."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:379
+msgid ""
+"Specify the number of columns for the textarea element to determine its "
+"width."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:272
+msgid "Specify the position for the field help message."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:98
+msgid "Specify the position for the field label relative to the input area."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:590
+msgid "Step"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:393
+msgid "Store Submissions"
+msgstr ""
+
+#: include/elementor_widgets.php:63
+msgid "Style"
+msgstr ""
+
+#: templates/email/email-5.php:111
+msgid "Submission Details"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:544 admin/Includes/Api/Submission.php:170
+msgid "Submission was too quick. Please wait a moment and try again."
+msgstr ""
+
+#: admin/Includes/Fields.php:701 admin/Includes/Config/Form.php:339
+msgid "Submit"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:335
+msgid "Submit Button"
+msgstr ""
+
+#: templates/email/email-4.php:110 templates/email/email-3.php:95
+#: templates/email/email-2.php:102 templates/email/email-1.php:90
+msgid "Submitted on"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:316
+msgid "Suffix Label"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:548
+msgid "Template"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:553 admin/Includes/Config/Form.php:740
+msgid "Template 1"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:554 admin/Includes/Config/Form.php:741
+msgid "Template 2"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:555 admin/Includes/Config/Form.php:742
+msgid "Template 3"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:556 admin/Includes/Config/Form.php:743
+msgid "Template 4"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:557 admin/Includes/Config/Form.php:744
+msgid "Template 5"
+msgstr ""
+
+#: include/elementor_widgets.php:199 include/elementor_widgets.php:359
+#: include/elementor_widgets.php:452 include/elementor_widgets.php:565
+#: include/elementor_widgets.php:653
+msgid "Text Color"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:317
+msgid "Text to display after the field input, serving as a suffix."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:302
+msgid "Text to display before the field input, serving as a prefix."
+msgstr ""
+
+#: include/elementor_widgets.php:313 admin/Includes/Config/Form.php:76
+msgid "Textarea"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:516 admin/Includes/Config/Form.php:600
+msgid "Thanks for contacting us! We will be in touch with you shortly."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"The Contact Form Widget is a elementor addons and Gutenberg blocks for "
+"WordPress."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:167 admin/Includes/Config/Field.php:716
+#: admin/Includes/Config/Field.php:724 admin/Includes/Config/Field.php:732
+#: admin/Includes/Config/Field.php:740 admin/Includes/Config/Form.php:219
+msgid "This field is required"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:618 admin/Includes/Config/Form.php:837
+msgid "This field is required."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:263
+msgid "This field must contain a valid email"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:64
+msgid "This is the field title the user will see when filling out the form."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:842
+msgid "This message will be shown if validation fails for email field."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:262
+msgid ""
+"This message will be shown if validation fails for Email. Leave empty to use "
+"global message. Configure Global Message from: Global settings > Validation "
+"Messages"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:854
+msgid ""
+"This message will be shown if validation fails for input mask field. {format}"
+" will be replaced with the actual format."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:866
+msgid ""
+"This message will be shown if validation fails for number field maximum "
+"value."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:860
+msgid ""
+"This message will be shown if validation fails for number field minimum "
+"value."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:848
+msgid "This message will be shown if validation fails for number field."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:836
+msgid "This message will be shown if validation fails for required field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:166 admin/Includes/Config/Form.php:218
+msgid ""
+"This message will be shown if validation fails for Required. Leave empty to "
+"use global message. Configure Global Message from: Global settings > "
+"Validation Messages"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:225
+msgid "This message will be shown with GDPR agreement checkbox."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:750
+msgid "This text will be added at the end of the email content."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:528
+msgid "Three Columns"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:81
+msgid "Toggle this switch to hide the field label from display."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:483
+msgid "Toggle to allow multiple selections within the field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:466
+msgid "Toggle to enable search functionality within this field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:151
+msgid "Toggle to mark the field as mandatory for form submission."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:107
+msgid "Top"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:42
+msgid "Track and manage all form submissions in one convenient dashboard."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:524
+msgid "Two Columns"
+msgstr ""
+
+#: admin/Includes/Models/Form.php:138 admin/Includes/Api/Form.php:197
+msgid "Untitled Form"
+msgstr ""
+
+#: admin/Includes/Mailer.php:154
+msgid "User Display Name"
+msgstr ""
+
+#: admin/Includes/Mailer.php:182
+msgid "User Email"
+msgstr ""
+
+#: admin/Includes/Mailer.php:168
+msgid "User First Name"
+msgstr ""
+
+#: admin/Includes/Mailer.php:161
+msgid "User Full Name"
+msgstr ""
+
+#: admin/Includes/Mailer.php:147
+msgid "User ID"
+msgstr ""
+
+#: admin/Includes/Mailer.php:175
+msgid "User Last Name"
+msgstr ""
+
+#: admin/Includes/Mailer.php:189
+msgid "User Meta"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:641
+msgid "Validate as unique"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:624
+msgid "Validate Email"
+msgstr ""
+
+#: admin/Includes/Config/Form.php:831
+msgid "Validation Messages"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:658
+msgid "Value Display"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:234
+msgid "Was This Helpful?"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:237
+msgid ""
+"Was this helpful? is a WordPress plugin that allows you to take visitors' "
+"feedback on your post/pages or any article. A visitor can share his feedback "
+"by like/dislike/yes/no"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:86
+msgid "WC Builder"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:286
+msgid "WC Sales Notification"
+msgstr ""
+
+#: admin/Admin.php:58
+msgid "Welcome"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:21
+msgid "Welcome to HT Contact Form"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:92
+msgid "Whols"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:147
+msgid ""
+"Whols is an outstanding WordPress plugin for WooCommerce that allows store "
+"owners to set wholesale prices for the products of their online stores. This "
+"plugin enables you to show special wholesale prices to the wholesaler. Users "
+"can easily request to become a wholesale customer by filling out a simple "
+"online registration form. Once the registration is complete, the owner of "
+"the store will be able to review the request and approve the request either "
+"manually or automatically."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:144
+msgid "Whols Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:38
+msgid "WooLentor"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:120
+msgid ""
+"WooLentor is one of the most popular WooCommerce Elementor Addons on "
+"WordPress.org. It has been downloaded more than 672,148 times and 60,000 "
+"stores are using WooLentor plugin. Why not you?"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:117
+msgid "WooLentor Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:210
+msgid "WordPress Mega Menu Builder for Elementor"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:80
+msgid "WP Plugin Manager"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:189
+msgid "WP Plugin Manager Pro"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:192
+msgid ""
+"WP Plugin Manager Pro is a specialized WordPress Plugin that helps you to "
+"deactivate unnecessary WordPress Plugins page wise and boosts the speed of "
+"your WordPress site to improve the overall site performance."
+msgstr ""
+
+#: admin/Includes/Api/Settings.php:101
+msgid "You do not have permission to manage settings."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:612
+msgid "You have exceeded the number of allowed characters."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:615
+msgid "You have exceeded the number of allowed maximum."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:616
+msgid "You have exceeded the number of allowed minimum."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:619
+msgid "You have exceeded the number of allowed selections."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:867
+msgid ""
+"You have exceeded the number of allowed {max}. {max} will be replaced with "
+"the field maximum value."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:861
+msgid ""
+"You have exceeded the number of allowed {min}. {min} will be replaced with "
+"the field minimum value."
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:111
+msgid "You May Also Like"
+msgstr ""
+
+#: templates/email/email-4.php:47
+msgid "You've received a new message from your website contact form."
+msgstr ""
+
+#: admin/Includes/Config/Form.php:533
+msgid "{all_fields}"
+msgstr ""

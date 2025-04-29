@@ -22,7 +22,7 @@ if( class_exists('Hasthemes\HTContact_Form\Recommended_Plugins') ){
             'menu_page_slug'    => '',
             'priority'          => 300,
             'assets_url'        => HTCONTACTFORM_PL_URL.'/assets',
-            'hook_suffix'       => '',
+            'hook_suffix'       => 'ht-contact-form_page_ht-contactform_extensions',
         )
     );
 

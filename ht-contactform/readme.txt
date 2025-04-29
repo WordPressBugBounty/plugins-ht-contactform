@@ -1,42 +1,101 @@
-=== Contact Form 7 Widget For Elementor Page Builder & Gutenberg Blocks ===
+=== HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form Builder. ===
 Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Elementor, Contact Form 7, Contact Form 7 Widget, Gutenberg Blocks
 Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 1.2.2
+Tested up to: 6.8
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+HT Contact Form lets you design responsive forms quickly with drag & drop, spam protection, form storage, and instant email alerts.
+
 == Description ==
-Contact Form 7 Widget is a elementor addons for elementor page bulider and gutenberg blocks. It's Help to you easily drag and drop Contact Form 7 forms from a drop down list.
-[Required Plugin:  Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
 
-[youtube https://youtu.be/ZRTPsGZnJq4]
+**HT Contact Form** is a powerful, lightweight, and easy-to-use **WordPress form plugin** that allows you to create stunning, professional contact forms in minutes—no coding required. Capture leads, collect feedback, connect with visitors, and grow your business effortlessly with forms that look and work beautifully on any device.
 
-> ## Absolute Addons for Elementor Page Builder
-> Don't forgete to check our Unlimite mega addon for Elementor page Builder.
-> [HT Mega – Absolute Addons for Elementor Page Builder](https://wordpress.org/plugins/ht-mega-for-elementor/)
-> Includes 360 Blocke & 15 Landing Pages.
+Build beautiful custom forms instantly with the intuitive **drag-and-drop builder**. Select from **12+ ready-to-use input fields** to design **contact forms** that perfectly match your brand identity and website design.
 
-== Features: ==
-* Drag and drop the widget
-* Custom Styling Options
-* Show Contact form in any place on your website.
+HT Contact Form doesn’t just make form creation easy—it also ensures your data is protected. With features like **form entry storage**, **built-in spam protection**, and **Google reCAPTCHA integration**, your information stays safe while maintaining a seamless user experience.a
 
-<h3><a href="https://wordpress.org/plugins/extensions-for-cf7/">Contact Form 7 Extensions</a></h3>
-Are you looking for a plugin to help with your Contact Form 7?
+Furthermore, **email notifications** and **pre-designed email templates** keep both you and your users informed automatically after every form submission.
 
-Extensions For Contact form 7 is the perfect extension for any WordPress site. It will allow you to create a contact form 7 database, conditional fields, and redirection. This extension is free! Check it out today!
+A few helpful links here to get started 👇
 
-You can now save all of your submissions in one place on your website without having to worry about them going missing or getting lost in the shuffle. With this extension, everything will be organized and easy to find when you need it most. 
+📄 [Documentation](https://hasthemes.com/docs/ht-contact-forms/ht-contact-forms/) | 👨🏻‍💻 [Support](https://hasthemes.com/contact-us/)
 
-== Feature List of Extensions For Contact Form 7: ==
+## ✨ Powerful Features You'll Love
 
-✔️ Create a contact form 7 database to save CF7 submissions to your WordPress. 
-✔️ Contact form 7 conditional fields.
-✔️ Contact form 7 redirection.
+🛠️ **Drag & Drop Builder** – Effortlessly design professional forms using a clean and intuitive interface.
 
-Click here to download [Extensions For Contact form 7](https://wordpress.org/plugins/extensions-for-cf7/) today!
+🧩 **12+ Ready-to-Use Input Fields** – Choose from a variety of form elements to build any type of contact form to suit your needs.
+
+💾 **Store Form Entries** – Never lose important submissions again! Automatically save all entries for future reference.
+
+🛡️ **Anti-Spam Protection** – Say goodbye to spam submissions with powerful built-in filtering that keeps your inbox clean.
+
+🔒 **Google reCAPTCHA Support** – Add an extra layer of security to your WordPress forms.
+
+📣 **Email Notifications** – Instantly get notified when someone submits a form.
+
+📧 **5 Pre-Built Email Templates** – Send professional responses automatically with beautifully designed email templates.
+
+📤 **Export Forms** – Easily transfer your forms between sites or create backups with one-click exports.
+
+📊 **Export Entries** – Download form submissions in CSV, Excel, ODS, or JSON formats for analysis or CRM integration.
+
+🔍 **Filter Entries & Form Finder** – Quickly locate specific forms and submissions in your dashboard.
+
+⚡ **Pre-Filled Field Support** – Set default field values or leverage Smart Tags that dynamically populate form fields.
+
+📱 **Fully Responsive & Mobile Friendly** – Deliver a perfect form experience on every device, from desktops to smartphones.
+
+## 🔥 Why Choose HT Contact Form?
+
+### 🛠️ Drag & Drop Builder
+**Design Like a Pro Without Coding**
+Create stunning contact forms in minutes with our visual form builder. Simply drag fields into place, arrange them to match your vision, and customize with a few clicks. Perfect for beginners and pros alike!
+
+### 💾 Store Form Entries
+**Never Lose Important Information Again**
+Every submission is automatically saved in your WordPress dashboard. Access your complete submission history anytime, review data at a glance, and follow up with users effortlessly.
+
+### 🛡️ Anti-Spam Protection
+**Focus on Real Users, Not Spam**
+Our built-in spam filtering keeps your inbox clean automatically. Eliminate time-wasting junk submissions and focus on meaningful interactions with genuine visitors and customers.
+
+### 🔒 Google reCAPTCHA Support
+**Security That Doesn't Frustrate Users**
+Add powerful protection against bots with seamless reCAPTCHA integration. Block automated submissions while keeping the form experience smooth and hassle-free for real users.
+
+### 📧 Email Notifications
+**Stay Connected Automatically**
+Receive instant alerts when someone reaches out through your contact forms. Send professional confirmation emails to users automatically, improving communication and building trust with every form submission.
+
+### 📊 Export Entries
+**Your Data, Your Way**
+Export submissions in CSV, Excel, ODS, or JSON formats with a single click. Perfect for analyzing trends, importing into your CRM, creating reports, or backing up important contact information.
+
+### 📱 Fully Responsive & Mobile Friendly
+**Perfect on Every Device**
+Forms automatically adapt to look beautiful on any screen size—from desktop monitors to smartphones. Give your visitors a flawless experience no matter how they access your site.
+
+## 🧩 Versatile Form Fields to Build Anything
+
+Create the perfect form for any purpose with our comprehensive collection of field types:
+
+1. **Name Fields**  
+2. **Simple Text** 
+3. **Textarea** 
+4. **Mask Input** 
+5. **Dropdown** 
+6. **Multiple Choices** 
+7. **Checkboxes** 
+8. **Number** 
+9. **GDPR**
+10. **reCAPTCHA**
+11. **Email**
+12. **Range Slider**
+13. **Submit Button**
 
 == Other Projects ==
 We have a lot of plugins and extensions that might interest you. Try out other projects by following this link:
@@ -71,6 +130,12 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.0.0 - Date: 29-Apr-2025 =
+* Added: HT Form Builder to Create Form.
+* Added: New Elementor Widget for HT Form.
+* Added: New Gutenberg Block for HT Form.
+
 = Version: 1.2.2 - Date: 18-Jan-2025 =
 * Fixed: Escaping and sanitizing issues across the plugin to prevent potential security vulnerabilities.
 * Fixed: A few minor issues.
@@ -141,13 +206,13 @@ Feel free to [Contact us](https://hasthemes.com/contact-us/)
 * Capability With Latest WordPress.
 
 == Installation ==
-This section describes how to install the Contact Form 7 Widget For Elementor Page Builder and Gutenberg block Plugins for WordPress get it working.
+This section describes how to install the HT Contact Form Widget For Elementor Page Builder, Gutenberg block & Form Builder Plugins for WordPress get it working.
 
 = 1) Install =
 
 = Install: =
 1. Go to the WordPress Dashboard "Add New Plugin" section.
-2. Search For "WPForms Widget For Elementor Page Builder".
+2. Search For "HT Contact Form".
 3. Install, then Activate it.
 
 = OR: =
@@ -155,6 +220,10 @@ This section describes how to install the Contact Form 7 Widget For Elementor Pa
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Screenshots ==
-1. Elementor Addons Content Options
-2. Elementor Addons Styling Options
-3. Front end View
+1. Form List
+2. Form Editor
+3. Form Preview
+4. Entries List
+5. Entry Details
+6. Global Settings
+

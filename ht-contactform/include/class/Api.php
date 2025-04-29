@@ -40,6 +40,17 @@ class Api {
             ]
         );
 
+        register_rest_route(  $this->namespace, 'posts/ht-form', 
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'args' => [
+                    'wpnonce'    => []
+                ],
+                'callback'            => [ $this, 'get_ht_form_post' ],
+                'permission_callback' => [ $this, 'permission_check' ],
+            ]
+        );
+
 	}
 
     /**
@@ -74,6 +85,28 @@ class Api {
         }
         return rest_ensure_response( $formlist );
 
+    }
+
+    /**
+     * Get category data
+     */
+    public function get_ht_form_post( $request ){
+        
+        if ( !wp_verify_nonce( $_REQUEST['wpnonce'], 'htcontactform-nonce') ){
+            return rest_ensure_response([]);
+        }
+
+        $formlist = array();
+        $forms_args = array( 'posts_per_page' => -1, 'post_type'=> 'ht_form' );
+        $forms = get_posts( $forms_args );
+        if( $forms ){
+            foreach ( $forms as $form ){
+                $formlist[$form->ID] = $form->post_title;
+            }
+        }else{
+            $formlist['0'] = __('Form not found','ht-contactform');
+        }
+        return rest_ensure_response( $formlist );
     }
 	
 }

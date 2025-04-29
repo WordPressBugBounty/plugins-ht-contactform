@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Contact Form 7 Widget For Elementor Page Builder & Gutenberg Blocks
+ * Plugin Name: HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form Builder.
  * Description: The Contact Form Widget is a elementor addons and Gutenberg blocks for WordPress.
  * Plugin URI:  https://htplugins.com/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     1.2.2
+ * Version:     2.0.0
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
@@ -14,26 +14,16 @@
  * Elementor Pro tested up to: 3.26.3
 */
 
+use HTContactFormAdmin\Admin;
+
 if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '1.2.2' );
-define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', __FILE__ ) );
-define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( __FILE__ ) );
-
-if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
-    
-    // Elementor Widgets File Call
-    function htcontactform_elementor_widgets(){
-        include( HTCONTACTFORM_PL_PATH.'include/elementor_widgets.php' );
-    }
-    add_action('elementor/widgets/widgets_registered','htcontactform_elementor_widgets');
-
-    include( HTCONTACTFORM_PL_PATH.'blocks/block-init.php' );
-    include( HTCONTACTFORM_PL_PATH.'include/class/Api.php' );
-
-}
+define( 'HTCONTACTFORM_VERSION', '2.0.0' );
+define( 'HTCONTACTFORM_PL_ROOT', __FILE__ );
+define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', HTCONTACTFORM_PL_ROOT ) );
+define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( HTCONTACTFORM_PL_ROOT ) );
 
 // Check Plugins is Installed or not
 if( !function_exists( 'htcontactform_is_plugins_active' ) ){
@@ -43,57 +33,210 @@ if( !function_exists( 'htcontactform_is_plugins_active' ) ){
     }
 }
 
-// Load Plugins
-function htcontactform_load_plugin() {
-    load_plugin_textdomain( 'ht-contactform' );
-    
-    if( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
-        add_action( 'admin_notices', 'htcontactform_check_contactform_status' );
-        return;
-    }
-}
-add_action( 'plugins_loaded', 'htcontactform_load_plugin' );
+class HT_FORM_BUILDER {
+    private static $_instance;
 
-// Check Elementor install or not.
-function htcontactform_check_contactform_status(){
-    $contactform = 'contact-form-7/wp-contact-form-7.php';
-    if( htcontactform_is_plugins_active( $contactform ) ) {
-        if( ! current_user_can( 'activate_plugins' ) ) {
-            return;
+    public static function get_instance() {
+        if ( ! isset( self::$_instance ) ) {
+            self::$_instance = new self();
         }
-        $activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $contactform . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $contactform );
 
-        $message = '<p>' . __( 'HT Contact Form Addons not working because you need to activate the Contact Form 7 plugin.', 'ht-contactform' ) . '</p>';
-        $message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Now', 'ht-contactform' ) ) . '</p>';
-    } else {
-        if ( ! current_user_can( 'install_plugins' ) ) {
-            return;
-        }
-        $install_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=contact-form-7' ), 'install-plugin_contact-form-7' );
-        $message = '<p>' . __( 'HT Contact Form Addons not working because you need to install the Contact Form 7 plugin', 'ht-contactform' ) . '</p>';
-        $message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Now', 'ht-contactform' ) ) . '</p>';
+        return self::$_instance;
     }
-    echo '<div class="error"><p>' . $message . '</p></div>';
-}
+    public function __construct() {
+        require_once HTCONTACTFORM_PL_PATH . 'vendor/autoload.php';
+        add_action('init', [$this, 'load_text_domain']);
+        add_action('activated_plugin', [$this, 'redirection_page']);
+        add_action('plugins_loaded', [$this, 'include_files']);
+        add_action('elementor/widgets/widgets_registered', [$this, 'elementor_widgets']);
+        add_action('init', [$this, 'register_scripts']);
+        add_action('init', [$this, 'preview']);
+    }
 
-if ( ( htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) && is_plugin_inactive( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ) || ! htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ){
-    include( HTCONTACTFORM_PL_PATH.'include/dashboard.php' );
-}
+    /**
+     * Load Text Domain
+     * @return void
+     */
+    public function load_text_domain() {
+        load_plugin_textdomain( 'ht-contactform', false, plugin_basename( dirname( HTCONTACTFORM_PL_ROOT ) ) . '/languages' );
+    }
 
-include( HTCONTACTFORM_PL_PATH.'include/recommended-plugins/class.recommended-plugins.php' );
-include( HTCONTACTFORM_PL_PATH.'include/recommended-plugins/recommended-plugins.php' );
-
-
-function htcontactform_redirection_page( $plugin ){
-    if( plugin_basename( __FILE__ ) == $plugin ){
-        if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
-            if ( ( htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) && is_plugin_inactive( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ) || ! htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ){
-                wp_redirect( admin_url("admin.php?page=htcontact-form") );
-            }else{
-                wp_redirect( admin_url("admin.php?page=ht-contactform_extensions") );
+    /**
+     * Handle redirection after plugin activation
+     * @param mixed $plugin
+     * @return void
+     */
+    public function redirection_page( $plugin ){
+        if( plugin_basename( HTCONTACTFORM_PL_ROOT ) == $plugin ){
+            if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
+                if( ( htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) && is_plugin_inactive( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ) || ! htcontactform_is_plugins_active( 'extension-for-cf7-pro/cf7-extensions-pro.php' ) ){
+                    wp_redirect( admin_url("admin.php?page=htcontact-form") );
+                }else{
+                    wp_redirect( admin_url("admin.php?page=htcontact-form") );
+                }
+                die();
             }
-            die();
+        }
+    }
+
+    /**
+     * Include files
+     * @return void
+     */
+    public function include_files() {
+        if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
+            include HTCONTACTFORM_PL_PATH . 'blocks/block-init.php';
+            include HTCONTACTFORM_PL_PATH . 'include/class/Api.php';
+        }
+        include HTCONTACTFORM_PL_PATH . 'include/recommended-plugins/class.recommended-plugins.php';
+        add_action('init', function() {
+            include HTCONTACTFORM_PL_PATH . 'include/recommended-plugins/recommended-plugins.php';
+            Admin::get_instance();
+        });
+
+    }
+
+    /**
+     * Elementor Widgets File Call
+     * @return void
+     */
+    public function elementor_widgets() {
+        include HTCONTACTFORM_PL_PATH . 'include/elementor_widgets.php';
+        include HTCONTACTFORM_PL_PATH . 'include/ht_form_widgets.php';
+    }
+    
+    /**
+     * Register scripts
+     * @return void
+     */
+    public function register_scripts() {
+        $global_settings = get_option('ht_form_global_settings', []);
+        // Register styles
+        wp_register_style(
+            'htcontact-form-admin-styles',
+            HTCONTACTFORM_PL_URL . 'assets/css/htcontact-form-admin.css',
+            [],
+            '1.0.0'
+        );
+        wp_register_style(
+            'ht-form',
+            HTCONTACTFORM_PL_URL . 'assets/css/form.css',
+            [],
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
+        );
+        // Register scripts
+        wp_register_style(
+            'ht-select', 
+            HTCONTACTFORM_PL_URL . 'assets/css/choices.min.css', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
+        );
+        wp_register_script(
+            'ht-select', 
+            HTCONTACTFORM_PL_URL . 'assets/js/choices.min.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
+            'ht-imask', 
+            HTCONTACTFORM_PL_URL . 'assets/js/inputmask.min.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
+            'ht-axios', 
+            HTCONTACTFORM_PL_URL . 'assets/js/axios.min.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
+            'ht-recaptcha-v2', 
+            'https://www.google.com/recaptcha/api.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        if(!empty($global_settings['captcha']['recaptcha_site_key'])){
+            wp_register_script(
+                'ht-recaptcha-v3', 
+                'https://www.google.com/recaptcha/api.js?render=' . esc_attr($global_settings['captcha']['recaptcha_site_key']), 
+                [], 
+                defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+                true
+            );
+        }
+        wp_register_script(
+            'ht-form',
+            HTCONTACTFORM_PL_URL . 'assets/js/form.js',
+            ['jquery'],
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION,
+            true
+        );
+    }
+
+    /**
+     * Handle form preview requests
+     * @return void
+     */
+    public function preview() {
+        // Check if this is a form preview request
+        if (!empty($_GET['ht_form_preview']) && !empty($_GET['form_id'])) {
+            $form_id = intval($_GET['form_id']);
+            
+            // Enqueue necessary styles
+            wp_enqueue_style('ht-form');
+            
+            // Output a minimal page with just the form
+            add_action('template_redirect', function() use ($form_id) {
+                // Create a minimal HTML page
+                echo '<!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Form Preview</title>
+                    ' . wp_kses_post(wp_head()) . '
+                    <style>
+                        body {
+                            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                            max-width: 800px;
+                            margin: 40px auto;
+                            padding: 20px;
+                            background: #f5f5f5;
+                        }
+                        .preview-container {
+                            background: #fff;
+                            padding: 30px;
+                            border-radius: 6px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        }
+                        .preview-header {
+                            margin-bottom: 20px;
+                            padding-bottom: 15px;
+                            border-bottom: 1px solid #eee;
+                        }
+                        .preview-title {
+                            margin: 0;
+                            color: #333;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="preview-container">
+                        <div class="preview-header">
+                            <h2 class="preview-title">Form Preview</h2>
+                        </div>
+                        ' . do_shortcode("[ht_form id=\"{$form_id}\"]") . '
+                    </div>
+                    ' . wp_kses_post(wp_footer()) . '
+                </body>
+                </html>';
+                exit;
+            }, 5);
         }
     }
 }
-add_action( 'activated_plugin', 'htcontactform_redirection_page' );
+HT_FORM_BUILDER::get_instance();

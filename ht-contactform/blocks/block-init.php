@@ -79,7 +79,18 @@ class Contactform_Block
 				'security' 			=> wp_create_nonce('htcontactform-nonce'),
 			]
 		);
-		wp_enqueue_style( 'ht-contactform-block-editor-style', HTCONTACTFORM_BLOCK_URL . '/src/assets/css/editor-style.css', false, HTCONTACTFORM_VERSION, 'all' );
+		wp_enqueue_style( 
+			'ht-contactform-block-editor-style', 
+			HTCONTACTFORM_BLOCK_URL . '/src/assets/css/editor-style.css', 
+			[], 
+			HTCONTACTFORM_VERSION, 
+			'all' 
+		);
+		wp_enqueue_style( 'ht-form' );
+		wp_enqueue_style('ht-select');
+		wp_enqueue_script('ht-select');
+		wp_enqueue_script('ht-imask');
+		wp_enqueue_script('ht-form');
 	}
 
 	private function register_block(){
@@ -91,6 +102,17 @@ class Contactform_Block
 		register_block_type(
 			'block/ht-contactform', array(
 				'render_callback' => [ $this, 'render_content' ],
+				'attributes'  	  => $attributes,
+			)
+		);
+
+		ob_start();
+		include HTCONTACTFORM_BLOCK_PATH . '/src/ht-form-block/block.json';
+		$attributes = json_decode( ob_get_clean(), true );
+
+		register_block_type(
+			'block/ht-form', array(
+				'render_callback' => [ $this, 'render_ht_form' ],
 				'attributes'  	  => $attributes,
 			)
 		);
@@ -268,6 +290,21 @@ class Contactform_Block
 						}
 					</style>
 				<?php
+			return ob_get_clean();
+		}else{
+			return '<p class="ht-contactform-initial">'.esc_html__( "Please Select a contact form.", "ht-contactform" ).'</p>';
+		}
+	}
+
+
+
+	public function render_ht_form($attr){
+
+		if(isset($attr['formId']) && !empty($attr['formId'])){
+			ob_start();
+				echo '<div id="ht-block-'.esc_attr($attr['blockUniqId']).'">';
+					echo do_shortcode( '[ht_form id="'.esc_attr($attr['formId']).'"]' );
+				echo "</div>";
 			return ob_get_clean();
 		}else{
 			return '<p class="ht-contactform-initial">'.esc_html__( "Please Select a contact form.", "ht-contactform" ).'</p>';

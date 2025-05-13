@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'OpenSpout\\' => array($vendorDir . '/openspout/openspout/src'),
     'HTContactForm\\' => array($baseDir . '/'),
     'HTContactFormAdmin\\' => array($baseDir . '/admin'),
 );

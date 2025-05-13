@@ -1,7 +1,7 @@
 <?php
 namespace HTContactFormAdmin;
-use HTContactFormAdmin\Includes\API;
-use HTContactFormAdmin\Includes\PostType;
+use HTContactFormAdmin\Includes\Api\ApiRegistry;
+use HTContactFormAdmin\Includes\PostTypes\FormPostType; 
 use HTContactFormAdmin\Includes\Config\Form as FormConfig;
 use HTContactFormAdmin\Includes\ShortCode;
 use HTContactFormAdmin\Includes\Assets;
@@ -16,8 +16,8 @@ class Admin {
         return self::$instance;
     }   
     public function __construct() {
-        API::get_instance();
-        PostType::get_instance();
+        ApiRegistry::get_instance();
+        FormPostType::get_instance();
         Assets::get_instance();
         ShortCode::get_instance();
         add_action('in_admin_header', [$this, 'remove_admin_notice']);
@@ -70,9 +70,19 @@ class Admin {
                 "admin.php?page=$slug&path=editor"
             ];
             $submenu[ $slug ][] = [
+                esc_html__('Entries', 'ht-contactform'),
+                $capability,
+                "admin.php?page=$slug&path=all_entries"
+            ];
+            $submenu[ $slug ][] = [
                 esc_html__('Global Settings', 'ht-contactform'),
                 $capability,
                 "admin.php?page=$slug&path=settings"
+            ];
+            $submenu[ $slug ][] = [
+                esc_html__('Integrations', 'ht-contactform'),
+                $capability,
+                "admin.php?page=$slug&path=integrations"
             ];
         }
     }

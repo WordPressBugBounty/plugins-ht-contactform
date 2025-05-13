@@ -634,6 +634,7 @@
     margin-left: 0;
     padding: 0;
     box-shadow: none;
+    width: auto;
 }
 
 .ht-form-elem .choices .choices__list--multiple {

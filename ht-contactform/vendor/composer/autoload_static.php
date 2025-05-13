@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitada11790b2969ee0a5f6159f8a2e49c6
 {
     public static $prefixLengthsPsr4 = array (
+        'O' => 
+        array (
+            'OpenSpout\\' => 10,
+        ),
         'H' => 
         array (
             'HTContactForm\\' => 14,
@@ -15,6 +19,10 @@ class ComposerStaticInitada11790b2969ee0a5f6159f8a2e49c6
     );
 
     public static $prefixDirsPsr4 = array (
+        'OpenSpout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/openspout/openspout/src',
+        ),
         'HTContactForm\\' => 
         array (
             0 => __DIR__ . '/../..' . '/',

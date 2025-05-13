@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Elementor, Contact Form 7, Contact Form 7 Widget, Gutenberg Blocks
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,10 @@ Create stunning contact forms in minutes with our visual form builder. Simply dr
 ### 💾 Store Form Entries
 **Never Lose Important Information Again**
 Every submission is automatically saved in your WordPress dashboard. Access your complete submission history anytime, review data at a glance, and follow up with users effortlessly.
+
+### 🔗 Webhook Integration
+**Automate Your Workflows in Real Time**
+Send form data instantly to external applications, services, or APIs using our flexible webhook integration. Whether you’re connecting to CRMs, marketing tools, or custom scripts, HT Contact Form makes automation seamless and fast—no third-party plugins required.
 
 ### 🛡️ Anti-Spam Protection
 **Focus on Real Users, Not Spam**
@@ -130,6 +134,15 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.1.0 - Date: 13-May-2025 =
+* Added: New Entries page to view all form submissions in one place.
+* Added: Webhook integration to send form data to external URLs.
+* Added: Smart Tags support in the “Send To Email” field for dynamic email routing.
+* Improved: Data fetching performance across the plugin.
+* Fixed: Issue where notifications were not sent to multiple email addresses.
+* Fixed: JavaScript conflict with inputmask library and other plugins.
+* Fixed: Various minor bugs and improvements for better stability.
 
 = Version: 2.0.0 - Date: 29-Apr-2025 =
 * Added: HT Form Builder to Create Form.

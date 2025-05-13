@@ -27,7 +27,7 @@ class Welcome {
                     ],
                     [
                         'label' => __('Read the Full Guide', 'ht-contactform'),
-                        'url' => 'https://www.htcontactform.com/docs/',
+                        'url' => 'https://hasthemes.com/docs/ht-contact-forms/ht-contact-forms/',
                     ],
                 ]
             ],

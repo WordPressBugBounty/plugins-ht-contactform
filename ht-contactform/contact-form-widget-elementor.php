@@ -5,7 +5,7 @@
  * Plugin URI:  https://htplugins.com/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     2.0.0
+ * Version:     2.1.0
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
@@ -20,7 +20,7 @@ if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '2.0.0' );
+define( 'HTCONTACTFORM_VERSION', '2.1.0' );
 define( 'HTCONTACTFORM_PL_ROOT', __FILE__ );
 define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', HTCONTACTFORM_PL_ROOT ) );
 define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( HTCONTACTFORM_PL_ROOT ) );
@@ -84,10 +84,8 @@ class HT_FORM_BUILDER {
      * @return void
      */
     public function include_files() {
-        if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ){
-            include HTCONTACTFORM_PL_PATH . 'blocks/block-init.php';
-            include HTCONTACTFORM_PL_PATH . 'include/class/Api.php';
-        }
+        include HTCONTACTFORM_PL_PATH . 'blocks/block-init.php';
+        include HTCONTACTFORM_PL_PATH . 'include/class/Api.php';
         include HTCONTACTFORM_PL_PATH . 'include/recommended-plugins/class.recommended-plugins.php';
         add_action('init', function() {
             include HTCONTACTFORM_PL_PATH . 'include/recommended-plugins/recommended-plugins.php';

@@ -89,7 +89,6 @@ class Contactform_Block
 		wp_enqueue_style( 'ht-form' );
 		wp_enqueue_style('ht-select');
 		wp_enqueue_script('ht-select');
-		wp_enqueue_script('ht-imask');
 		wp_enqueue_script('ht-form');
 	}
 

@@ -637,8 +637,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Input Mask
-    if(document.querySelectorAll('[data-mask]')) {
-        document.querySelectorAll('[data-mask]').forEach((input) => {
+    if(document.querySelectorAll('.ht-form-elem-input-mask[data-mask]')) {
+        document.querySelectorAll('.ht-form-elem-input-mask[data-mask]').forEach((input) => {
             const maskFormat = input.getAttribute('data-mask');
             
             if (maskFormat) {

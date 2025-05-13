@@ -22,108 +22,12 @@ class edit extends Component {
 	}
 
 	initializeFormComponents() {
-		// load recaptcha js here
-		const recaptchaField = document.querySelector('.ht-form-elem-recaptcha-field');
-		if (recaptchaField) {
-			
-			// Check if we need v2 or v3
-			const isV2 = recaptchaField.classList.contains('ht-form-elem-recaptcha-field-v2');
-			const isV3 = recaptchaField.classList.contains('ht-form-elem-recaptcha-field-v3');
-
-			// Load reCAPTCHA v2 if needed
-			if (isV2) {
-				const script = document.createElement('script');
-				script.src = 'https://www.google.com/recaptcha/api.js';
-				script.async = true;
-				script.defer = true;
-				document.head.appendChild(script);
-			}
-			
-			// Load reCAPTCHA v3 if needed
-			if (isV3) {
-				const siteKey = document.querySelector('.g-recaptcha').getAttribute('data-sitekey');
-				if (siteKey) {
-					const script = document.createElement('script');
-					script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-					script.async = true;
-					script.defer = true;
-					document.head.appendChild(script);
-				}
-			}
-		}
 	    // Handle Range Slider Value Update
 		if(document.querySelectorAll('.ht-form-elem-range')) {
 			document.querySelectorAll('.ht-form-elem-range').forEach((range) => {
 				range.addEventListener('input', () => {
 					range.nextElementSibling.querySelector('.ht-form-elem-range-amount').textContent = range.value;
 				});
-			});
-		}
-	
-		// Input Mask
-		if(document.querySelectorAll('[data-mask]')) {
-			document.querySelectorAll('[data-mask]').forEach((input) => {
-				const maskFormat = input.getAttribute('data-mask');
-				
-				if (maskFormat) {
-					let maskOptions = {};
-					
-					// Configure specific formats
-					if (maskFormat === 'MM/DD/YYYY') {
-						// Date mask with M/D/Y format
-						maskOptions = {
-							alias: 'datetime',
-							inputFormat: 'MM/DD/YYYY',
-						};
-					} else if (maskFormat === 'HH:MM') {
-						// Time mask
-						maskOptions = {
-							alias: 'datetime',
-							inputFormat: 'HH:mm',
-							placeholder: 'HH:MM'
-						};
-					} else if (maskFormat === '9999 9999 9999 9999') {
-						// Credit card mask
-						maskOptions = {
-							mask: '9999 9999 9999 9999'
-						};
-					} else if (maskFormat === '$999.99') {
-						// Currency mask
-						maskOptions = {
-							alias: 'numeric',
-							groupSeparator: '',
-							digits: 2,
-							digitsOptional: false,
-							prefix: '$',
-							rightAlign: false,
-							allowMinus: false,
-						};
-					} else if (maskFormat === '(999) 999-9999') {
-						// Phone mask
-						maskOptions = {
-							mask: '(999) 999-9999'
-						};
-					} else if (maskFormat === '999-99-9999') {
-						// SSN mask
-						maskOptions = {
-							mask: '999-99-9999'
-						};
-					} else if (maskFormat === '99999-9999') {
-						// Zip code mask
-						maskOptions = {
-							mask: '99999-9999'
-						};
-					} else {
-						// Default - use the format as is
-						maskOptions = {
-							mask: maskFormat
-						};
-					}
-					
-					// Apply the mask and store reference for validation
-					const im = new Inputmask(maskOptions);
-					im.mask(input);
-				}
 			});
 		}
 		
@@ -166,7 +70,9 @@ class edit extends Component {
 
 		return (
 			<Fragment>
-				<div id={ htBlockUniqId } className={ areaClasses }>
+				<div id={ htBlockUniqId } className={ areaClasses } style={{
+					pointerEvents: 'none',
+				}}>
 					<ServerSideRender
 						block="block/ht-form"
 						attributes = {{formId:formId}}

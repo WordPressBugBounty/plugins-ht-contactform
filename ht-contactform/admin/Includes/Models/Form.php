@@ -12,9 +12,6 @@ use WP_Error;
  * 
  * Handles all form data operations including CRUD operations,
  * form data manipulation, and data sanitization.
- * 
- * @package HTContactFormAdmin\Includes\Models
- * @since 1.0.0
  */
 class Form {
     //-------------------------------------------------------------------------
@@ -24,6 +21,10 @@ class Form {
     /** @var string Custom post type name for forms */
     private $post_type = 'ht_form';
     private $entries = null;
+
+    private $default_fields = [];
+    private $default_settings = [];
+    private $default_integrations = [];
 
     /** @var self|null Singleton instance */
     private static $instance = null;
@@ -49,7 +50,11 @@ class Form {
      */
     public function __construct() {
         // Initialize the model
+        $form_config = FormConfig::get_instance();
         $this->entries = Entries::get_instance();
+        $this->default_fields = $form_config->fields();
+        $this->default_settings = $form_config->form_settings();
+        $this->default_integrations = $form_config->form_editor_integrations();
     }
 
     //-------------------------------------------------------------------------
@@ -301,6 +306,146 @@ class Form {
             'settings'      => $form_data['settings'],
             'date_exported' => current_time('mysql')
         ];
+    }
+
+    /**
+     * Get form integrations
+     * 
+     * @param int $form_id Form ID
+     * @return array|WP_Error Form integrations or error
+     */
+    public function get_integrations($form_id) {
+        $integrations = get_post_meta($form_id, 'integrations', true);
+        
+        if (empty($integrations)) {
+            return [];
+        }
+        return json_decode($integrations, true);
+    }   
+
+    /**
+     * Update form integrations
+     * 
+     * @param int $form_id Form ID
+     * @param array $integration Form integration
+     * @return bool|WP_Error Form integrations or error
+     */
+    public function update_integrations($form_id, $integration) {
+        $integrations = $this->get_integrations($form_id);
+        
+        if (empty($integrations)) {
+            $integrations = [];
+        }
+
+        $integration = array_merge($integration, $this->sanitize_integration($integration));
+        
+        // Check if this integration already exists (by ID)
+        $updated = false;
+        if (isset($integration['id'])) {
+            foreach ($integrations as $key => $existing) {
+                if (isset($existing['id']) && (int)$existing['id'] === (int)$integration['id']) {
+                    // Update existing integration
+                    $integrations[$key] = $integration;
+                    $updated = true;
+                    break;
+                }
+            }
+        }
+        
+        // If not updated, add as new
+        if (!$updated) {
+            array_push($integrations, $integration);
+        }
+        
+        $result = update_post_meta($form_id, 'integrations', json_encode($integrations));   
+        
+        if (is_wp_error($result)) {
+            return $result;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Delete form integrations
+     * 
+     * @param int $form_id Form ID
+     * @param array $integration_id Form integration
+     * @return bool|WP_Error Form integrations or error
+     */
+    public function delete_integrations($form_id, $integration_id) {
+        $integrations = $this->get_integrations($form_id);
+        
+        if (empty($integrations)) {
+            $integrations = [];
+        }
+
+        $filtered_integrations = [];
+        foreach ($integrations as $integration) {
+            if ((int) $integration['id'] !== (int) $integration_id) {
+                $filtered_integrations[] = $integration;
+            }
+        }
+        
+        $result = update_post_meta($form_id, 'integrations', json_encode($filtered_integrations));
+        
+        if (is_wp_error($result)) {
+            return $result;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Sanitize form integration
+     * 
+     * @param array $integration Form integration
+     * @return array Sanitized form integration
+     */
+    public function sanitize_integration($integration) {
+        $default_fields = $this->default_integrations[$integration['type']]['fields'];
+        foreach ($integration as $key => $value) {
+            // Skip type and id fields
+            if (in_array($key, ['type', 'id'])) {
+                continue;
+            }
+            
+            $field = current(array_filter($default_fields, function($field) use ($key) {
+                return $field['id'] === $key;
+            }));
+
+            if(!isset($field)) {
+                $integration[$key] = sanitize_text_field($value);
+                continue;
+            }
+            
+            if(isset($field['fields']) && is_array($value)) {
+                $sanitized_items = [];
+                foreach ($value as $item) {
+                    $sanitized_item = [];
+                    foreach ($field['fields'] as $sub_field) {
+                        $sub_field_id = $sub_field['id'];
+                        $sub_field_value = isset($item[$sub_field_id]) ? $item[$sub_field_id] : '';
+                        
+                        if (isset($sub_field['callback'])) {
+                            $sanitized_item[$sub_field_id] = call_user_func($sub_field['callback'], $sub_field_value);
+                        } else {
+                            $sanitized_item[$sub_field_id] = sanitize_text_field($sub_field_value);
+                        }
+                    }
+                    $sanitized_items[] = $sanitized_item;
+                }
+                $integration[$key] = $sanitized_items;
+            } else {
+                if (isset($field['callback'])) {
+                    $integration[$key] = call_user_func($field['callback'], $value);
+                } else {
+                    $integration[$key] = sanitize_text_field($value);
+                }
+            }
+        }
+        
+        return $integration;
     }
 
     //-------------------------------------------------------------------------
@@ -572,9 +717,11 @@ class Form {
                 'type' => sanitize_key($field['type'] ?? ''),
             ];
 
+            $default_field = $this->find_default_field($field['type'], $this->default_fields);
+
             // Sanitize field settings
             if (!empty($field['settings']) && is_array($field['settings'])) {
-                $sanitized_field['settings'] = $this->sanitize_field_settings($field['settings']);
+                $sanitized_field['settings'] = $this->sanitize_field_settings($field['settings'], $default_field);
             }
 
             $sanitized_fields[] = $sanitized_field;
@@ -587,22 +734,21 @@ class Form {
      * Sanitize field settings
      * 
      * @param array $settings Settings to sanitize
+     * @param array $default_field Default field settings
      * @return array Sanitized settings
      */
-    private function sanitize_field_settings($settings) {
+    private function sanitize_field_settings($settings, $default_field) {
         $sanitized_settings = [];
-        
-        foreach ($settings as $setting) {
-            if (!is_array($setting)) {
-                continue;
-            }
-            
-            $key = sanitize_key($setting['id'] ?? '');
-            $value = $this->sanitize_setting_value($setting['value'] ?? '', $setting['type'] ?? '');
+        foreach ($settings as $key => $value) {
 
-            // if (!empty($key)) {
-                $sanitized_settings[$key] = $value;
-            // }
+            $field_setting = current(array_filter($default_field['settings'] ?? [], function($sett) use ($key) {
+                return $sett['id'] === $key;
+            }));
+            
+            $key = sanitize_key($key);
+            $value = $this->sanitize_setting_value($value, $field_setting['type'] ?? '');
+
+            $sanitized_settings[$key] = $value;
         }
 
         return $sanitized_settings;
@@ -632,10 +778,17 @@ class Form {
 
             $sanitized_section = [
                 'id' => sanitize_key($section['id'] ?? ''),
+                'settings' => []
             ];
 
+            $default_section_settings = $this->default_settings[$section_key]['settings'] ?? [];
+
             if (!empty($section['settings']) && is_array($section['settings'])) {
-                $sanitized_section['settings'] = $this->sanitize_field_settings($section['settings']);
+                foreach ($section['settings'] as $key => $value) {
+                    $default_section_setting = $this->find_setting_by_id($default_section_settings, $key);
+
+                    $sanitized_section['settings'][$key] = $this->sanitize_setting_value($value, $default_section_setting['type']);
+                }
             }
 
             $sanitized_settings[$section_key] = $sanitized_section;

@@ -1,7 +1,7 @@
 <?php
 namespace HTContactFormAdmin\Includes;
 
-use HTContactFormAdmin\Includes\Mailer;
+use HTContactFormAdmin\Includes\Services\Helper;
 use HTContactFormAdmin\Includes\Config\Form as FormConfig;
 use HTContactFormAdmin\Includes\Config\Welcome;
 
@@ -57,11 +57,14 @@ class Assets {
                     'nonce' => wp_create_nonce('wp_rest'),
                     'site_url' => get_site_url(),
                     'fields' => $form_config->fields(),
-                    'body_tags' => Mailer::get_instance()->get_body_tags(),
+                    'body_tags' => Helper::get_instance()->get_body_tags(),
                     'form_settings' => $form_config->form_settings(),
+                    'form_integrations' => $form_config->form_editor_integrations(),
                     'global_settings' => $form_config->form_global_settings(),
+                    'integrations' => $form_config->form_integrations(),
                     'data' => [
-                        'global_settings' => get_option('ht_form_global_settings', [])
+                        'global_settings' => get_option('ht_form_global_settings', []),
+                        'integrations' => get_option('ht_form_integrations', [])
                     ],
                     'welcome' => $welcome_config->welcome(),
                     'banners' => $welcome_config->banners(),

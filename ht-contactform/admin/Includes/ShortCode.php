@@ -1,18 +1,14 @@
 <?php
 /**
  * ShortCode Handler
- *
- * @package     HT_ContactForm
- * @author      HasThemes
- * @copyright   2025 HasThemes
- * @license     GPL-2.0+
  */
 
 namespace HTContactFormAdmin\Includes;
 use HTContactFormAdmin\Includes\Models\Form as FormModel;
 use HTContactFormAdmin\Includes\Models\Entries;
-use HTContactFormAdmin\Includes\Fields;
-use HTContactFormAdmin\Includes\Helper;
+use HTContactFormAdmin\Includes\UI\Fields;
+use HTContactFormAdmin\Includes\Services\Helper;
+use HTContactFormAdmin\Includes\Services\Mailer;
 
 // If this file is accessed directly, abort.
 if (!defined('ABSPATH')) {

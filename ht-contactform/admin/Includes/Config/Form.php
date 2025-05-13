@@ -453,7 +453,7 @@ class Form {
                         'id' => 'form_send_to_email',
                         'label' => __('Send To Email', 'ht-contactform'),
                         'info' => __('Enter the email address to receive form entry notifications. For multiple notifications, separate email addresses with a comma and space.', 'ht-contactform'),
-                        'value' => '',
+                        'value' => '{admin_email}',
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -658,6 +658,164 @@ class Form {
                                 ]
                             ]
                         ]
+                    ]),
+                ]
+            ],
+        ]);
+    }
+
+    public function form_editor_integrations(): array {
+        return apply_filters('ht_form_editor_integrations', [
+            'webhook' => [
+                'id' => 'webhook',
+                'label' => __('Webhook', 'ht-contactform'),
+                'value' => [
+                    'enabled' => false,
+                    'name' => '',
+                    'url' => '',
+                    'method' => 'POST',
+                    'header_type' => 'no_headers',
+                    'header' => '',
+                    'body_type' => 'json',
+                    'body' => '',
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Webhook', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for the webhook to identify it.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'url',
+                        'label' => __('Webhook URL', 'ht-contactform'),
+                        'info' => __('Enter the webhook request URL.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        ]),
+                    self::$field->create([
+                        'id' => 'method',
+                        'label' => __('Method', 'ht-contactform'),
+                        'info' => __('Select the HTTP method for the webhook request.', 'ht-contactform'),
+                        'type' => 'select',
+                        'value' => 'POST',
+                        'callback' => 'sanitize_text_field',
+                        'options' => [
+                            [
+                                'value' => 'POST',
+                                'label' => __('POST', 'ht-contactform'),
+                            ],
+                            // [
+                            //     'value' => 'GET',
+                            //     'label' => __('GET', 'ht-contactform'),
+                            // ],
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'header_type',
+                        'label' => __('Request Header', 'ht-contactform'),
+                        'info' => __('Select the header for the webhook request.', 'ht-contactform'),
+                        'type' => 'radio',
+                        'value' => 'no_headers',
+                        'callback' => 'sanitize_text_field',
+                        'options' => [
+                            [
+                                'value' => 'no_headers',
+                                'label' => __('No Headers', 'ht-contactform'),
+                            ],
+                            [
+                                'value' => 'with_headers',
+                                'label' => __('With Headers', 'ht-contactform'),
+                            ],
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'headers',
+                        'label' => __('Headers', 'ht-contactform'),
+                        'info' => __('Setup headers to send with webhook request.', 'ht-contactform'),
+                        'type' => 'custom_repeater',
+                        'required' => true,
+                        'value' => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'key',
+                                'placeholder' => __('Key', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                            ]),
+                            self::$field->create([
+                                'id' => 'value',
+                                'placeholder' => __('Value', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                            ]),
+                        ],
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'header_type',
+                                    'value' => 'with_headers',
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'body_fields',
+                        'label' => __('Request Body', 'ht-contactform'),
+                        'info' => __('Select if all fields or selected fields to send with webhook request.', 'ht-contactform'),
+                        'type' => 'radio',
+                        'required' => true,
+                        'value' => 'all_fields',
+                        'callback' => 'sanitize_text_field',
+                        'options' => [
+                            [
+                                'value' => 'all_fields',
+                                'label' => __('All Fields', 'ht-contactform'),
+                            ],
+                            [
+                                'value' => 'selected_fields',
+                                'label' => __('Selected Fields', 'ht-contactform'),
+                            ],
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'fields',
+                        'label' => __('Fields', 'ht-contactform'),
+                        'info' => __('Select the fields to send with webhook request.', 'ht-contactform'),
+                        'type' => 'custom_repeater',
+                        'required' => true,
+                        'value' => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'key',
+                                'placeholder' => __('Field Name', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                            ]),
+                            self::$field->create([
+                                'id' => 'value',
+                                'type' => 'select',
+                                'placeholder' => __('Select Value', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                            ]),
+                        ],
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'body_fields',
+                                    'value' => 'selected_fields',
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
                     ]),
                 ]
             ],
@@ -882,6 +1040,47 @@ class Form {
                     ]),
                 ]
             ],
+        ]);
+    }
+
+
+    /**
+     * Get available form Integrations
+     * 
+     * @return array Array of form settings
+     */
+    public function form_integrations(): array {
+        return apply_filters('ht_form_integrations', [
+            'id' => 'integration',
+            'label' => __('Integrations', 'ht-contactform'),
+            'settings' => [
+                self::$field->create([
+                    'id' => 'webhook',
+                    'icon' => 'webhook',
+                    'label' => __('Webhook', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with external services using webhooks.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                ]),
+                // self::$field->create([
+                //     'id' => 'mailchimp',
+                //     'icon' => 'mailchimp',
+                //     'label' => __('Mailchimp', 'ht-contactform'),
+                //     'info' => __('This option allows you to integrate with Mailchimp.', 'ht-contactform'),
+                //     'type' => 'integration',
+                //     'value' => false,
+                //     'callback' => 'switch',
+                //     'options' => [
+                //         self::$field->create([
+                //             'id' => 'api_key',
+                //             'label' => __('API Key', 'ht-contactform'),
+                //             'info' => __('Enter your Mailchimp API Key, if you do not have, Please login to your Mailchimp account and go to, Profile -> Extras -> Api Keys', 'ht-contactform'),
+                //             'callback' => 'api_key',
+                //         ]),
+                //     ]
+                // ]),
+            ]
         ]);
     }
 

@@ -4,15 +4,13 @@ namespace HTContactFormAdmin\Includes\Models;
 
 use WP_Error;
 use OpenSpout\Writer\Common\Creator\WriterEntityFactory;
+use HTContactFormAdmin\Includes\Models\Form;
 
 /**
  * Entries Model Class
  * 
  * Handles all form submission entries operations including retrieval,
  * creation, updating, deletion, and search functionality.
- * 
- * @package HTContactFormAdmin\Includes\Models
- * @since 1.0.0
  */
 class Entries {
     //-------------------------------------------------------------------------
@@ -21,6 +19,9 @@ class Entries {
     
     /** @var string DB table name for form entries */
     private $table;
+
+    /** @var Form|null Form model instance */
+    private $form;
 
     /** @var self|null Singleton instance */
     private static $instance = null;
@@ -111,6 +112,8 @@ class Entries {
      */
     public function all($args = []) {
         global $wpdb;
+
+        $form = Form::get_instance();
         
         // Check if per_page was explicitly provided
         $per_page_provided = array_key_exists('per_page', $args);
@@ -209,6 +212,10 @@ class Entries {
         // Parse JSON form data for each entry
         foreach ($entries as &$entry) {
             $entry['form_data'] = json_decode($entry['form_data'], true);
+
+            if($form->get($entry['form_id'])) {
+                $entry['form'] = $form->get($entry['form_id'])['title'];
+            }
             
             // Get user information
             if (!empty($entry['user_id'])) {

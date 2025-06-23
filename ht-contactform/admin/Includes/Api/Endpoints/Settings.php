@@ -109,8 +109,8 @@ class Settings {
      * @return WP_REST_Response Response object
      */
     public function get_settings($request) {
-        $default = array_reduce($this->global_settings, function($carry, $section): mixed {
-            $carry[$section['id']] = array_reduce($section['settings'], function($carry, $field): mixed {
+        $default = array_reduce($this->global_settings, function($carry, $section) {
+            $carry[$section['id']] = array_reduce($section['settings'], function($carry, $field) {
                 $carry[$field['id']] = $field['value'];
                 return $carry;
             }, []);

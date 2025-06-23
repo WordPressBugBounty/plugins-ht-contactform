@@ -3,6 +3,9 @@
 namespace HTContactFormAdmin\Includes\Api\Endpoints;
 
 use HTContactFormAdmin\Includes\Config\Form as FormConfig;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -188,7 +191,7 @@ class Integrations {
         }
 
         // Check if integration type is supported
-        $supported_integrations = ['mailchimp'];
+        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite'];
         if (!in_array($integration, $supported_integrations)) {
             return new WP_Error(
                 'unsupported_integration',
@@ -199,7 +202,7 @@ class Integrations {
 
         $result = false;
 
-        // Verify based on integration type
+        // Verify Mailchimp API key
         if ($integration === 'mailchimp') {
             if (empty($settings['api_key'])) {
                 return new WP_Error(
@@ -210,22 +213,35 @@ class Integrations {
             }
             
             $api_key = $settings['api_key'];
-            $result = $this->verify_mailchimp($api_key);
+            $mailchimp = Mailchimp::get_instance();
+            $result = $mailchimp->verify($api_key);
             
-            if ($result === false) {
-                return new WP_Error(
-                    'invalid_api_key',
-                    esc_html__('The Mailchimp API key is invalid or the service is unavailable.', 'ht-contactform'),
-                    ['status' => 400]
-                );
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify ActiveCampaign API key & URL
+        if ($integration === 'activecampaign') {
+            $activecampaign = ActiveCampaign::get_instance();
+            $result = $activecampaign->verify($settings['api_key'], $settings['api_url']);
+            
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify MailerLite API key & URL
+        if ($integration === 'mailerlite') {
+            $mailerlite = MailerLite::get_instance();
+            $result = $mailerlite->verify($settings['api_key']);
+            
+            if (is_wp_error($result)) {
+                return $result;
             }
         }
         
-        return new WP_REST_Response([
-            'success' => true,
-            'message' => esc_html__('Integration verified successfully.', 'ht-contactform'),
-            'data' => $result
-        ], 200);
+        return new WP_REST_Response($result->get_data(), 200);
     }
 
     /**
@@ -242,10 +258,10 @@ class Integrations {
                     return $carry;
                 }, []);
             }
-            $carry[$integration['id']] = [
-                'enabled' => $integration['value'],
-                ...$default_options
-            ];
+            $carry[$integration['id']] = array_merge(
+                ['enabled' => $integration['value']],
+                $default_options
+            );
             
             return $carry;
         }, []);
@@ -276,7 +292,9 @@ class Integrations {
                 $sanitized[$key]['enabled'] = (bool) $integration['enabled'];
             }
 
-            $setting = current(array_filter($this->integrations_settings['settings'], fn($setting) => $setting['id'] === $key));
+            $setting = current(array_filter($this->integrations_settings['settings'], function($setting) use ($key) {
+                return $setting['id'] === $key;
+            }));
 
             if(empty($setting['options'])) {
                 continue;
@@ -288,7 +306,9 @@ class Integrations {
                     continue;
                 }
 
-                $option = current(array_filter($setting['options'], fn($option) => $option['id'] === $option_id));
+                $option = current(array_filter($setting['options'], function($option) use ($option_id) {
+                    return $option['id'] === $option_id;
+                }));
                 $callback = $option['callback'];
 
                 if(is_callable($callback)) {
@@ -313,72 +333,6 @@ class Integrations {
         }
         
         return $sanitized;
-    }
-
-    /**
-     * Verify Mailchimp integration
-     *
-     * @param string $api_key Mailchimp API key
-     * @return array Verification result
-     */
-    private function verify_mailchimp($api_key) {
-        // Extract the data center from the API key
-        $parts = explode('-', $api_key);
-        if (count($parts) != 2) {
-            return [
-                'success' => false,
-                'message' => esc_html__('Invalid API key format. Mailchimp API keys should be in the format "key-datacenter".', 'ht-contactform')
-            ];
-        }
-        
-        $data_center = $parts[1];
-        $url = "https://{$data_center}.api.mailchimp.com/3.0/";
-        
-        $args = [
-            'method' => 'GET',
-            'timeout' => 15,
-            'headers' => [
-                'Authorization' => 'Basic ' . base64_encode("anystring:{$api_key}")
-            ]
-        ];
-        
-        $response = wp_remote_request($url, $args);
-        
-        // Check if request was successful
-        if (is_wp_error($response)) {
-            return [
-                'success' => false,
-                'message' => $response->get_error_message(),
-                'code' => $response->get_error_code()
-            ];
-        }
-        
-        $http_code = wp_remote_retrieve_response_code($response);
-        $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
-
-        switch ($http_code) {
-            case 200:
-                $account_info = [
-                    'account_id' => isset($data['account_id']) ? $data['account_id'] : '',
-                    'account_name' => isset($data['account_name']) ? $data['account_name'] : '',
-                    'email' => isset($data['email']) ? $data['email'] : '',
-                ];
-
-                return [
-                    'success' => true,
-                    'message' => esc_html__('Mailchimp API connection successful.', 'ht-contactform'),
-                    'account' => $account_info
-                ];
-            default:
-                $error_message = isset($data['detail']) ? $data['detail'] : esc_html__('Unknown error occurred.', 'ht-contactform');
-
-                return [
-                    'success' => false,
-                    'message' => $error_message,
-                    'code' => $http_code
-                ];
-        }
     }
     
 }

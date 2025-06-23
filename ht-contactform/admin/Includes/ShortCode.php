@@ -7,6 +7,7 @@ namespace HTContactFormAdmin\Includes;
 use HTContactFormAdmin\Includes\Models\Form as FormModel;
 use HTContactFormAdmin\Includes\Models\Entries;
 use HTContactFormAdmin\Includes\UI\Fields;
+use HTContactFormAdmin\Includes\UI\Styler;
 use HTContactFormAdmin\Includes\Services\Helper;
 use HTContactFormAdmin\Includes\Services\Mailer;
 
@@ -33,6 +34,10 @@ class ShortCode {
      */
     protected $select = false;
     protected $imask = false;
+    protected $flatpickr = false;
+    protected $intl_tel_input = false;
+    protected $country = false;
+    protected $file = false;
     protected $recaptcha_v2 = false;
     protected $recaptcha_v3 = false;
 
@@ -138,6 +143,11 @@ class ShortCode {
         $fields = $form['fields'] ?? [];
         $settings = $form['settings'] ?? [];
 
+        if(!empty($settings->styler['settings']['enable_styler'])) {
+            $styler = Styler::get_instance($unique_id, $settings->styler['settings']);
+            echo '<style>' . $styler->get_style() . '</style>';
+        }
+
         // Form wrapper classes
         $form_classes = ['ht-form'];
         if (!empty($settings->general['settings']['class'])) {
@@ -238,6 +248,18 @@ class ShortCode {
             }
             if($field_type === 'mask_input') {
                 $this->imask = true;
+            }
+            if($field_type === 'phone' && !empty($field_settings['validate'])) {
+                $this->intl_tel_input = true;
+            }
+            if($field_type === 'country' || $field_type === 'address') {
+                $this->country = true;
+            }
+            if($field_type === 'date_time') {
+                $this->flatpickr = true;
+            }
+            if($field_type === 'file_upload') {
+                $this->file = true;
             }
             if($field_type === 'recaptcha') {
                 if($this->global_settings['captcha']['recaptcha_version'] === 'reCAPTCHAv2') {
@@ -428,14 +450,14 @@ class ShortCode {
         }
 
         // Process the form submission
-        $fields = $_POST;
-        unset($fields['action'], $fields['ht_form_nonce'], $fields['ht_form_id']);
+        $form_data = $_POST;
+        unset($form_data['action'], $form_data['ht_form_nonce'], $form_data['ht_form_id']);
         
         // Remove honeypot field from the submission data
-        unset($fields['ht_form_hp_email'], $fields['ht_form_timestamp']);
+        unset($form_data['ht_form_hp_email'], $form_data['ht_form_timestamp']);
         
         // Remove reCAPTCHA response from the submission data
-        unset($fields['g-recaptcha-response']);
+        unset($form_data['g-recaptcha-response']);
 
         // Get meta data
         $meta = [
@@ -448,7 +470,7 @@ class ShortCode {
         ];
         
         // Initialize Mailer class for handling the submission
-        $mailer = Mailer::get_instance($form, $fields, $meta);
+        $mailer = Mailer::get_instance($form, $form_data, $meta);
         $send = $mailer->send();
 
         if (is_wp_error($send)) {
@@ -459,8 +481,8 @@ class ShortCode {
 
         // Store submission in database
         if (!empty($settings->general['settings']['store_submissions'])) {
-            $fields['form_id'] = $form_id;
-            $result = $this->entries->create($fields, $meta);
+            $form_data['form_id'] = $form_id;
+            $result = $this->entries->create($form_data, $meta);
             if (is_wp_error($result)) {
                 wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', 'database_error'));
                 exit;
@@ -491,6 +513,9 @@ class ShortCode {
             // Default to message on same page
             $redirect_url = $this->add_url_param(wp_get_referer(), 'form_success', $form_id);
         }
+        
+        // Run action hook for third-party integrations
+        do_action('ht_form/after_submission', $form, $form_data, $meta);
 
         // Redirect to success URL
         wp_redirect($redirect_url);
@@ -576,11 +601,31 @@ class ShortCode {
         if($this->imask) {
             wp_enqueue_script('ht-imask');
         }
+        if($this->intl_tel_input) {
+            wp_enqueue_style('ht-intl-tel-input');
+            wp_enqueue_script('ht-intl-tel-input');
+        }
+        if($this->flatpickr) {
+            wp_enqueue_style('ht-flatpickr');
+            wp_enqueue_script('ht-flatpickr');
+        }
+        if($this->country) {
+            wp_enqueue_style('ht-country-select');
+            wp_enqueue_script('ht-country-select');
+        }
         if($this->recaptcha_v2) {
             wp_enqueue_script('ht-recaptcha-v2');
         }
         if($this->recaptcha_v3) {
             wp_enqueue_script('ht-recaptcha-v3');
+        }
+        if($this->file) {
+            wp_enqueue_script('ht-form-filepond');
+            wp_enqueue_style('ht-form-filepond');
+            wp_enqueue_style('ht-form-filepond-preview');
+            wp_enqueue_script('ht-form-filepond-preview');
+            wp_enqueue_script('ht-form-filepond-size-validate');
+            wp_enqueue_script('ht-form-filepond-type-validate');
         }
 
         // Enqueue styles
@@ -600,6 +645,7 @@ class ShortCode {
                 'nonce' => wp_create_nonce('ht_form_ajax_nonce'),
                 'rest_url' => rest_url(),
                 'rest_nonce' => wp_create_nonce('wp_rest'),
+                'plugin_url' => HTCONTACTFORM_PL_URL,
                 'captcha' => [
                     'recaptcha_version' => isset($this->global_settings['captcha']['recaptcha_version']) ? $this->global_settings['captcha']['recaptcha_version'] : '',
                     'recaptcha_site_key' => isset($this->global_settings['captcha']['recaptcha_site_key']) ? $this->global_settings['captcha']['recaptcha_site_key'] : '',
@@ -608,6 +654,7 @@ class ShortCode {
                     "character_limit" => __("You have exceeded the number of allowed characters.", 'ht-contactform'),
                     "email" => __("Please enter a valid email address.", 'ht-contactform'),
                     "input_mask" => __("Please enter a valid {format} format.", 'ht-contactform'),
+                    "phone" => __("Please enter a valid phone number.", 'ht-contactform'),
                     "maximum_number" => __("You have exceeded the number of allowed maximum.", 'ht-contactform'),
                     "minimum_number" => __("You have exceeded the number of allowed minimum.", 'ht-contactform'),
                     "number" => __("Please enter a valid number.", 'ht-contactform'),

@@ -135,7 +135,7 @@ class Mailer {
             'form' => $this->form,
             'data' => $data,
             'meta' => $this->meta,
-            'footer_text' => $this->global['email']['footer_text']
+            'footer_text' => !empty($this->global['email']['footer_text']) ? $this->global['email']['footer_text'] : ''
         ]);
         
         // Set up email headers

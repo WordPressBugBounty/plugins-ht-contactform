@@ -18,7 +18,7 @@ class Field {
     /**
      * Create Field Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, options: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, options: array|null}
      */
     public function create(array $args = []) {
         $args = array_merge([
@@ -39,7 +39,7 @@ class Field {
     /**
      * Field Admin Label Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function admin_label(array $args = []) {
         return $this->create([
@@ -55,7 +55,7 @@ class Field {
     /**
      * Field Label Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function label(array $args = []) {
         return $this->create([
@@ -71,7 +71,7 @@ class Field {
     /**
      * Field Label Hide Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function label_hide(array $args = []) {
         return $this->create([
@@ -88,7 +88,7 @@ class Field {
     /**
      * Field Label Position Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function label_position(array $args = []) {
         return $this->create([
@@ -127,13 +127,14 @@ class Field {
     /**
      * Field Placeholder Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function placeholder(array $args = []) {
         return $this->create([
             'id' => 'placeholder',
             'label' => __('Placeholder Text', 'ht-contactform'),
             'info' => __('Provide placeholder text that is visible when the field is empty.', 'ht-contactform'),
+            'value' => $args['value'] ?? '',
             'dependency' => $args['dependency'] ?? null,
         ]);
     }
@@ -141,7 +142,7 @@ class Field {
     /**
      * Field Required Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function required(array $args = []) {
         return $this->create([
@@ -157,7 +158,7 @@ class Field {
     /**
      * Field Required Error Message Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function required_message(array $args = []) {
         return $this->create([
@@ -182,7 +183,7 @@ class Field {
     /**
      * Field Size Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, options: array, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, options: array, type: string, dependency: array|null}
      */
     public function size(array $args = []) {
         return $this->create([
@@ -213,7 +214,7 @@ class Field {
     /**
      * Field Default Value Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function value(array $args = []) {
         return $this->create([
@@ -230,7 +231,7 @@ class Field {
     /**
      * Field Class Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function class(array $args = []) {
         return $this->create([
@@ -245,7 +246,7 @@ class Field {
     /**
      * Field Help Message Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function message(array $args = []) {
         return $this->create([
@@ -262,7 +263,7 @@ class Field {
     /**
      * Field Message Position Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function message_position(array $args = []) {
         return $this->create([
@@ -293,7 +294,7 @@ class Field {
     /**
      * Field Prefix Label Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function prefix_label(array $args = []) {
         return $this->create([
@@ -308,7 +309,7 @@ class Field {
     /**
      * Field Suffix Label Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function suffix_label(array $args = []) {
         return $this->create([
@@ -323,7 +324,7 @@ class Field {
     /**
      * Field Name Attribute Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function name_attribute(array $args = []) {
         return $this->create([
@@ -339,7 +340,7 @@ class Field {
     /**
      * Field Max Length Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function max_length(array $args = []) {
         return $this->create([
@@ -355,7 +356,7 @@ class Field {
     /**
      * Field Rows Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function rows(array $args = []) {
         return $this->create([
@@ -370,7 +371,7 @@ class Field {
     /**
      * Field Columns Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function columns(array $args = []) {
         return $this->create([
@@ -385,7 +386,7 @@ class Field {
     /**
      * Field Mask Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string}
      */
     public function mask(array $args = []) {
         return $this->create([
@@ -435,7 +436,7 @@ class Field {
     /**
      * Field Options for select/choices
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function options(array $args = []) {
         return $this->create([
@@ -456,7 +457,7 @@ class Field {
     /**
      * Field Searchable Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function searchable(array $args = []) {
         return $this->create([
@@ -473,7 +474,7 @@ class Field {
     /**
      * Field Multiple Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function multiple(array $args = []) {
         return $this->create([
@@ -490,7 +491,7 @@ class Field {
     /**
      * Field Max Selection Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function max_selection(array $args = []) {
         return $this->create([
@@ -505,7 +506,7 @@ class Field {
     /**
      * Field Choices Layout
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function layout(array $args = []) {
         return $this->create([
@@ -548,7 +549,7 @@ class Field {
     /**
      * Field Min Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function min(array $args = []) {
         return $this->create([
@@ -565,7 +566,7 @@ class Field {
     /**
      * Field Max Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function max(array $args = []) {
         return $this->create([
@@ -582,7 +583,7 @@ class Field {
     /**
      * Field Step Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function step(array $args = []) {
         return $this->create([
@@ -599,7 +600,7 @@ class Field {
     /**
      * Field Email Confirmation Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function email_confirmation(array $args = []) {
         return $this->create([
@@ -616,7 +617,7 @@ class Field {
     /**
      * Field Email Validation Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function email_validation(array $args = []) {
         return $this->create([
@@ -633,7 +634,7 @@ class Field {
     /**
      * Field Email Unique Option
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function email_unique(array $args = []) {
         return $this->create([
@@ -650,7 +651,7 @@ class Field {
     /**
      * Slider Display Value Field
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string}
      */
     public function slider_display_value(array $args = []) {
         return $this->create([
@@ -667,7 +668,7 @@ class Field {
     /**
      * Field Name Format
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function name_format(array $args = []) {
         return $this->create([
@@ -698,7 +699,7 @@ class Field {
     /**
      * Field Names
      * @param array $args
-     * @return array{value: mixed, desc: string, id: string, info: string, label: string, type: string, dependency: array|null}
+     * @return array{value: mixed, id: string, info: string, label: string, type: string, dependency: array|null}
      */
     public function names(array $args = []) {
         return $this->create([

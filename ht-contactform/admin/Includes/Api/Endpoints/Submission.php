@@ -219,6 +219,8 @@ class Submission {
                     ]
                 );
             }
+
+            $form_data = $this->handle_files_upload($form_data, $form);
             
             // Process form actions (email, storage, etc.)
             $this->process_form_actions($form_data, $form);
@@ -289,6 +291,7 @@ class Submission {
                         break;
                         
                     case 'tel':
+                    case 'phone':
                         // Basic phone sanitization (keeping only digits, plus, dashes, and parentheses)
                         $sanitized_data[$field_name] = preg_replace('/[^0-9\+\-\(\) ]/', '', $form_data[$field_name]);
                         break;
@@ -331,6 +334,29 @@ class Submission {
                             }
                         } else {
                             $sanitized_data[$field_name] = sanitize_text_field($form_data[$field_name]);
+                        }
+                        break;
+
+                    case 'address':
+                        // For name fields with multiple components
+                        if (is_array($form_data[$field_name])) {
+                            $sanitized_data[$field_name] = [];
+                            foreach ($form_data[$field_name] as $name_key => $name_value) {
+                                $sanitized_data[$field_name][$name_key] = sanitize_text_field($name_value);
+                            }
+                        } else {
+                            $sanitized_data[$field_name] = sanitize_text_field($form_data[$field_name]);
+                        }
+                        break;
+
+                    case 'file_upload':
+                        if(is_array($form_data[$field_name])) {
+                            $sanitized_data[$field_name] = [];
+                            foreach ($form_data[$field_name] as $file_value) {
+                                $sanitized_data[$field_name][] = $file_value;
+                            }
+                        } else {
+                            $sanitized_data[$field_name] = $form_data[$field_name];
                         }
                         break;
                     
@@ -408,6 +434,73 @@ class Submission {
     }
 
     /**
+     * Handle file uploads
+     * 
+     * @param array $form_data Form data
+     * @param array $form Form configuration
+     * @return array Array of uploaded files
+     */
+    public function handle_files_upload($form_data, $form) {
+        foreach ($form['fields'] as $field) {
+            if ($field['type'] === 'file_upload') {
+                $destination = $field['settings']['upload_location'] ?? 'ht_form_default';
+                $files = $form_data[$field['settings']['name_attribute']];
+                if (!empty($files)) {
+                    foreach ($files as $key => $file) {
+                        $form_data[$field['settings']['name_attribute']][$key] = $this->upload_file($file, $destination);
+                    }
+                }
+            }
+        }
+        return $form_data;
+    }
+
+    /**
+     * Upload file to media library or default directory
+     * 
+     * @param string $file_name File name with extension
+     * @param string $destination Destination directory
+     * @return int|string Attachment ID or file path
+     */
+    public function upload_file($file_name, $destination) {
+        $upload_dir = wp_upload_dir();
+        $temp_file = $upload_dir['basedir'] . '/ht_form/temp/' . $file_name;
+        if($destination === 'media_library') {
+            // === ATTACH TO MEDIA LIBRARY ===
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            require_once ABSPATH . 'wp-admin/includes/media.php';
+            require_once ABSPATH . 'wp-admin/includes/image.php';
+
+            $file = [
+                'name' => basename($file_name),
+                'tmp_name' => $temp_file,
+                'type' => mime_content_type($temp_file),
+                'error' => 0,
+                'size' => filesize($temp_file),
+            ];
+            $attachment_id = media_handle_sideload($file, 0);
+            if(is_wp_error($attachment_id)) {
+                return $attachment_id->get_error_message();
+            } else {
+                @unlink($temp_file);
+                return wp_get_attachment_url($attachment_id);
+            }
+        } elseif($destination === 'ht_form_default') {
+            $destination = $upload_dir['basedir'] . '/ht_form';
+            if (!file_exists($destination)) {
+                wp_mkdir_p($destination);
+            }
+            $file_name = wp_unique_filename($destination, $file_name);
+            $file_path = "$destination/$file_name";
+            if (rename($temp_file, $file_path)) {
+                // Return URL instead of file path
+                return $upload_dir['baseurl'] . '/ht_form/' . $file_name;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Process form actions (send email, store submission, etc.)
      * 
      * @param array $form_data Submitted form data
@@ -416,7 +509,6 @@ class Submission {
     private function process_form_actions($form_data, $form) {
         $settings = $form['settings'] ?? [];
         $global = get_option('ht_form_global_settings', []);
-        $integrations = get_option('ht_form_integrations', []);
         $meta = [
             'user_id'     => get_current_user_id(),
             'ip_address'  => !empty($global['miscellaneous']['disable_ip_logging']) ? '' : Helper::get_ip(),
@@ -431,19 +523,6 @@ class Submission {
             $mailer = Mailer::get_instance($form, $form_data, $meta);
             $mailer->send();
         }
-
-        // Send webhook if enabled
-        if (isset($integrations['webhook']['enabled']) && $integrations['webhook']['enabled']) {
-            $webhook = Webhook::get_instance($form, $form_data, $meta);
-            $form_integrations = get_post_meta($form['id'], 'integrations', true);
-            $webhooks = array_filter(json_decode($form_integrations, true), function($integration) {
-                return $integration['type'] === 'webhook' && $integration['enabled'];
-            });
-            foreach ($webhooks as $wh) {
-                $webhook->send((object) $wh);
-            }
-        }
-
         
         // Store submission in database if enabled
         if (!empty($settings->general['settings']['store_submissions'])) {
@@ -454,7 +533,7 @@ class Submission {
         }
         
         // Run action hook for third-party integrations
-        do_action('ht_form/after_submission', $form_data, $form);
+        do_action('ht_form/after_submission', $form, $form_data, $meta);
     }
 
     /**

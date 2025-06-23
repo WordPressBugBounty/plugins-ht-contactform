@@ -28,6 +28,7 @@ class Welcome {
                     [
                         'label' => __('Read the Full Guide', 'ht-contactform'),
                         'url' => 'https://hasthemes.com/docs/ht-contact-forms/ht-contact-forms/',
+                        'target' => '_blank',
                     ],
                 ]
             ],

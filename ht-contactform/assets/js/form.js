@@ -1,5 +1,73 @@
 'use strict';
 
+const {__} = wp.i18n;
+
+const fileAllowTypes = {
+    image: [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/jpg',
+    ],
+    audio: [
+        'audio/mpeg',
+        'audio/wav',
+        'audio/ogg',
+        'audio/oga',
+        'audio/wma',
+        'audio/mka',
+        'audio/m4a',
+        'audio/ra',
+        'audio/mid',
+        'audio/midi',
+    ],
+    video: [
+        'video/mp4',
+        'video/mpeg',
+        'video/ogg',
+        'video/avi',
+        'video/divx',
+        'video/flv',
+        'video/mov',
+        'video/ogv',
+        'video/mkv',
+        'video/m4v',
+        'video/divx',
+        'video/mpg',
+        'video/mpeg',
+        'video/mpe',
+    ],
+    pdf: [
+        'application/pdf',
+    ],
+    doc: [
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel',
+        'text/plain',
+    ],
+    zip: [
+        'application/zip',
+        'application/x-zip-compressed',
+        'application/x-rar-compressed',
+        'application/rar',
+        'application/x-7z-compressed',
+        'application/7z',
+        'application/gzip',
+        'application/x-gzip',
+    ],
+    exe: [
+        'application/exe',
+        'application/x-exe',
+    ],
+    csv: [
+        'text/csv',
+    ],
+}
+
 /**
  * HT Form Validation Module
  */
@@ -15,7 +83,14 @@ const HTFormValidation = {
         forms.forEach(form => {
             this.setupFieldEventListeners(form);
             this.setupFormSubmitListener(form);
+            form.querySelectorAll('.ht-form-message').forEach(message => {
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000);
+            });
         });
+
+        
     },
     
     /**
@@ -48,6 +123,13 @@ const HTFormValidation = {
      * @param {HTMLFormElement} form - The form element
      */
     handleCheckboxRadioGroupChange: function(field, form) {
+
+        if(field.type === 'checkbox' && field.checked) {
+            field.closest('.ht-form-elem-checkbox').classList.add('checked');
+        } else {
+            field.closest('.ht-form-elem-checkbox').classList.remove('checked');
+        }
+
         const name = field.getAttribute('name');
         if (!name) return;
         
@@ -123,7 +205,7 @@ const HTFormValidation = {
                 typeof grecaptcha.getResponse !== 'function'
             ) {
                 reject({
-                    message: 'reCAPTCHA is not properly configured'
+                    message: __('reCAPTCHA is not properly configured', 'ht-contactform'),
                 });
                 return;
             }
@@ -139,13 +221,13 @@ const HTFormValidation = {
                         })
                         .catch(function() {
                             reject({
-                                message: 'reCAPTCHA v3 execution failed'
+                                message: __('reCAPTCHA v3 execution failed', 'ht-contactform'),
                             });
                         });
                     });
                 } catch (error) {
                     reject({
-                        message: 'reCAPTCHA v3 is not properly configured'
+                        message: __('reCAPTCHA v3 is not properly configured', 'ht-contactform'),
                     });
                 }
             }
@@ -158,7 +240,7 @@ const HTFormValidation = {
                     resolve(token);
                 } else {
                     reject({
-                        message: 'Please complete the reCAPTCHA verification'
+                        message: __('Please complete the reCAPTCHA verification', 'ht-contactform'),
                     });
                 }
             }
@@ -258,6 +340,9 @@ const HTFormValidation = {
                     
                     // Scroll to message
                     messageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    setTimeout(() => {
+                        messageContainer.style.display = 'none';
+                    }, 5000);
                 }
                 if(confirmation?.type === 'redirect') {
                     if(confirmation?.newTab) {
@@ -276,8 +361,6 @@ const HTFormValidation = {
             }
         })
         .catch(error => {
-            console.log('Error submitting form:', error);
-            
             // Extract error message from axios error response
             let errorMessage = 'Form submission failed. Please try again.';
             
@@ -285,7 +368,7 @@ const HTFormValidation = {
                 if (error.response.data.message) {
                     errorMessage = error.response.data.message;
                 } else if (error.response.data.code === 'submission_too_quick') {
-                    errorMessage = 'Please wait a moment before submitting the form.';
+                    errorMessage = __('Please wait a moment before submitting the form.', 'ht-contactform');
                 }
             }
             
@@ -345,28 +428,31 @@ const HTFormValidation = {
                     if (fieldContainer) {
                         const errorElement = fieldContainer.querySelector('.ht-form-elem-error');
                         if (errorElement) {
-                            errorElement.textContent = error?.message || 'reCAPTCHA verification failed';
+                            errorElement.textContent = error?.message || __('reCAPTCHA verification failed', 'ht-contactform');
                             errorElement.style.display = 'block';
                             // Scroll to error
                             fieldContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         } else {
                             // Fallback if error element not found
-                            console.error('reCAPTCHA error:', error);
-                            alert(error?.message || 'reCAPTCHA verification failed. Please try again.');
+                            alert(error?.message || __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'));
                         }
                     } else {
                         // Fallback if container not found
-                        console.error('reCAPTCHA error:', error);
-                        alert(error?.message || 'reCAPTCHA verification failed. Please try again.');
+                        alert(error?.message || __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'));
                     }
                 });
             } else {
                 // For non-AJAX forms, handle reCAPTCHA and then submit
                 this.handleRecaptcha(form).then(() => {
                     // Standard form submission if AJAX is not enabled
+                    const isValid = this.validateForm(form);
+                    if(!isValid) {
+                        this.scrollToFirstError(form);
+                        return;
+                    }
                     form.submit();
                 }).catch(error => {
-                    alert(error.message || 'reCAPTCHA verification failed. Please try again.');
+                    alert(error.message || __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'));
                 });
             }
         });
@@ -449,6 +535,16 @@ const HTFormValidation = {
             }
         }
         
+        // Phone validation
+        if (field.type === 'tel' && field.getAttribute('data-validation')) {
+            const iti = window.intlTelInput.getInstance(field);
+            if(!iti.isValidNumber()) {
+                this.showErrorForField(field, fieldContainer, errorElement, 'phone');
+                return false;
+            }
+            
+        }
+        
         // Email validation
         if (field.type === 'email' && field.getAttribute('data-email-validation') && field.value.trim()) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -516,9 +612,6 @@ const HTFormValidation = {
             errorElement.textContent = fieldMessage || this.messages.required;
             errorElement.style.display = 'block';
             
-            // Debug
-            console.log('Checkbox/Radio group with error:', name, 'Message:', errorElement.textContent);
-            
             return false;
         }
         
@@ -560,12 +653,12 @@ const HTFormValidation = {
             errorElement.textContent = this.messages.minimum_number.replace('{min}', field.getAttribute('min'));
         } else if (errorType === 'max') {
             errorElement.textContent = this.messages.maximum_number.replace('{max}', field.getAttribute('max'));
+        } else if (errorType === 'phone') {
+            fieldMessage = field.getAttribute('data-validation-message');
+            errorElement.textContent = fieldMessage || this.messages.phone;
         }
         
         errorElement.style.display = 'block';
-        
-        // Debug
-        console.log('Field with error:', field.id, 'Message:', errorElement.textContent);
     },
     
     /**
@@ -713,6 +806,69 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // Tel
+    if(document.querySelectorAll('.ht-form-elem-input-tel')) {
+        document.querySelectorAll('.ht-form-elem-input-tel').forEach((input) => {
+            const initialCountry = input.getAttribute('data-initial-country');
+            const excludeCountries = input.getAttribute('data-exclude-countries') ? input.getAttribute('data-exclude-countries').split(',') : [];
+            const onlyCountries = input.getAttribute('data-only-countries') ? input.getAttribute('data-only-countries').split(',') : [];
+            window.intlTelInput(input, {
+                loadUtils: () => import(`${ht_form.plugin_url}assets/lib/intl-tel-input/utils.min.js`),
+                initialCountry: initialCountry,
+                excludeCountries: excludeCountries,
+                onlyCountries: onlyCountries,
+                customPlaceholder: (selectedCountryPlaceholder, selectedCountryData) => "e.g. " + selectedCountryPlaceholder,
+            });
+            input.closest('.ht-form-elem-content').querySelector('.iti').style.cssText = `
+                --iti-path-flags-1x: url(${ht_form.plugin_url}assets/images/intl-tel-input/flags.webp);
+                --iti-path-flags-2x: url(${ht_form.plugin_url}assets/images/intl-tel-input/flags@2x.webp);
+                --iti-path-globe-1x: url(${ht_form.plugin_url}assets/images/intl-tel-input/globe.webp);
+                --iti-path-globe-2x: url(${ht_form.plugin_url}assets/images/intl-tel-input/globe@2x.webp);
+            `;
+        });
+    }
+    // Country
+    if(document.querySelectorAll('.ht-form-elem-input-country')) {
+        document.querySelectorAll('.ht-form-elem-input-country').forEach((input) => {
+            const initialCountry = input.getAttribute('data-initial-country');
+            const excludeCountries = input.getAttribute('data-exclude-countries') ? input.getAttribute('data-exclude-countries').split(',') : [];
+            const onlyCountries = input.getAttribute('data-only-countries') ? input.getAttribute('data-only-countries').split(',') : [];
+            jQuery(input).countrySelect({
+                defaultCountry: initialCountry,
+                excludeCountries: excludeCountries,
+                onlyCountries: onlyCountries,
+                preferredCountries: [],
+                responsiveDropdown: true,
+            });
+        });
+    }
+    // DateTime (Flatpicker)
+    if(document.querySelectorAll('.ht-form-elem-datetime')) {
+        document.querySelectorAll('.ht-form-elem-datetime').forEach((input) => {
+            const format = input.getAttribute('data-format');
+            const range = input.getAttribute('data-range') === '1';
+            const multiple = input.getAttribute('data-multiple') === '1';
+            const appendTo = input.closest('.ht-form-elem-content');
+
+            const enableTime = format?.includes('H') || format?.includes('h');
+            const noDate = !format?.includes('Y');
+
+            let mode = 'single';
+            if(!enableTime) {
+                if(range) mode = 'range';
+                if(multiple) mode = 'multiple';
+            }
+            
+            flatpickr(input, {
+                enableTime: enableTime,
+                noCalendar: noDate,
+                dateFormat: format,
+                mode: mode,
+                appendTo: appendTo,
+                time_24hr: enableTime && format?.includes('H'),
+            });
+        });
+    }
     
     // Custom Select using Choices JS
     if(document.querySelectorAll('[data-ht-select]')) {
@@ -729,6 +885,130 @@ document.addEventListener('DOMContentLoaded', () => {
                 placeholderValue: '',
                 shouldSort: false,
             });
+        });
+    }
+    
+    // File Upload
+    if(document.querySelectorAll('.ht-form-elem-file-upload')) {
+        document.querySelectorAll('.ht-form-elem-file-upload').forEach((fileUpload) => {
+            const input = fileUpload.querySelector('input[type="file"]');
+            const maxFileCount = parseInt(input.getAttribute('data-max-files'), 10) || null;
+            const maxFileCountMessage = input.getAttribute('data-max-files-message');
+            const maxFileSize = parseInt(input.getAttribute('data-max-file-size'), 10) || 10;
+            const maxFileSizeMessage = input.getAttribute('data-max-file-size-message');
+            const allowTypesMessage = input.getAttribute('data-allow-types-message');
+            const uploadLocation = input.getAttribute('data-upload-location');
+            
+            // Register the necessary plugins
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            FilePond.registerPlugin(FilePondPluginFileValidateSize);
+            FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+            // Idle Label
+            let idleLabel = `<span class="filepond--label-action">Browse</span> or drag and drop your files.`;
+            if(maxFileCount && maxFileCount > 1 && maxFileSize) {
+                idleLabel += `<br/> <span class="filepond-extra-info">Max files: ${maxFileCount} and Max size: ${maxFileSize}MB</span>`;
+            }
+            if(maxFileCount && maxFileCount > 1 && !maxFileSize) {
+                idleLabel += `<br/> <span class="filepond-extra-info">Max files: ${maxFileCount}</span>`;
+            }
+            if((!maxFileCount || maxFileCount === 1) && maxFileSize) {
+                idleLabel += `<br/> <span class="filepond-extra-info">Max size: ${maxFileSize}MB</span>`;
+            }
+            
+            // Create a FilePond instance
+            const pond = FilePond.create(input, {
+                // Configure FilePond options
+                allowMultiple: maxFileCount > 1,
+                maxFiles: parseInt(maxFileCount, 10) || null,
+                maxFileSize: maxFileSize * 1024 * 1024,
+                fileValidateTypeLabelExpectedTypes: 'Expects {allTypes}',
+                acceptedFileTypes: input.accept ? input.accept.split(',') : null,
+                fileSizeBase: 1024,
+                server: {
+                    process: (fieldName, file, metadata, load, error, progress, abort) => {
+                        const formData = new FormData();
+                        formData.append('action', 'ht_form_temp_file_upload');
+                        formData.append('_wpnonce', ht_form.nonce);
+                        formData.append('ht_form_file', file);
+                    
+                        const source = axios.CancelToken.source();
+                    
+                        axios.post(ht_form.ajaxurl, formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                        cancelToken: source.token,
+                        onUploadProgress: (e) => {
+                            // Compute progress in percentage
+                            progress(e.lengthComputable, e.loaded, e.total);
+                        }
+                        })
+                        .then(response => {
+                            const data = response.data;
+                            if (data.success) {
+                                load(data.data.file_id); // pass file ID to FilePond
+                            } else {
+                                error(data.data || 'Upload failed');
+                            }
+                        })
+                        .catch(err => {
+                            if (axios.isCancel(err)) {
+                                error('Upload cancelled');
+                            } else {
+                                error('Upload failed: ' + (err.message || 'Unknown error'));
+                            }
+                        });
+                    
+                        // Setup abort method
+                        return {
+                            abort: () => {
+                                source.cancel('Upload aborted by user');
+                                abort();
+                            }
+                        };
+                    },
+                    
+                    revert: (uniqueFileId, load, error) => {
+                        const formData = new FormData();
+                        formData.append('action', 'ht_form_temp_file_delete');
+                        formData.append('_wpnonce', ht_form.nonce);
+                        formData.append('ht_form_file_id', uniqueFileId);
+                    
+                        axios.post(ht_form.ajaxurl, formData)
+                        .then(response => {
+                            const data = response.data;
+                            if (data.success) {
+                                load();
+                            } else {
+                                error(data.data || 'Delete failed');
+                            }
+                        })
+                        .catch(err => {
+                            error('Delete failed: ' + (err.message || 'Unknown error'));
+                        });
+                    },
+                    
+                    load: null,
+                    restore: null,
+                    fetch: null
+                },                  
+                labelIdle: idleLabel,
+                labelMaxFileSizeExceeded: maxFileSizeMessage ? maxFileSizeMessage.replace('%s', maxFileSize) : __('File is too large. Maximum size is %sMB.', 'ht-contactform').replace('%s', maxFileSize),
+                labelMaxFileSize: __('Maximum file size is %sMB.', 'ht-contactform').replace('%s', maxFileSize),
+                labelMaxTotalFileSizeExceeded: __('Maximum total size exceeded', 'ht-contactform'),
+                labelMaxTotalFileSize: maxFileCount ? __('Maximum total size is %sMB', 'ht-contactform').replace('%s', maxFileSize * maxFileCount) : __('Maximum total size is %sMB', 'ht-contactform').replace('%s', maxFileSize),
+                labelFileTypeNotAllowed: allowTypesMessage ? allowTypesMessage : __('File type not allowed', 'ht-contactform'),
+                labelFileProcessing: __('Uploading', 'ht-contactform'),
+                labelFileProcessingComplete: __('Upload complete', 'ht-contactform'),
+                labelFileProcessingAborted: __('Upload cancelled', 'ht-contactform'),
+                labelFileProcessingError: __('Error during upload', 'ht-contactform'),
+                labelTapToCancel: __('tap to cancel', 'ht-contactform'),
+                labelTapToRetry: __('tap to retry', 'ht-contactform'),
+                labelTapToUndo: __('tap to undo', 'ht-contactform'),
+                credits: false,
+            });
+            
+            // Store FilePond instance in the DOM element for future reference
+            fileUpload.filepond = pond;
         });
     }
 

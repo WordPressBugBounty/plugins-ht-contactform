@@ -5,7 +5,7 @@
  * Plugin URI:  https://htplugins.com/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     2.1.0
+ * Version:     2.2.0
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
@@ -20,7 +20,7 @@ if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '2.1.0' );
+define( 'HTCONTACTFORM_VERSION', '2.2.0' );
 define( 'HTCONTACTFORM_PL_ROOT', __FILE__ );
 define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', HTCONTACTFORM_PL_ROOT ) );
 define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( HTCONTACTFORM_PL_ROOT ) );
@@ -30,6 +30,12 @@ if( !function_exists( 'htcontactform_is_plugins_active' ) ){
     function htcontactform_is_plugins_active( $pl_file_path = NULL ){
         $installed_plugins_list = get_plugins();
         return isset( $installed_plugins_list[$pl_file_path] );
+    }
+}
+
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle) {
+        return strpos($haystack, $needle) !== false;
     }
 }
 
@@ -122,30 +128,69 @@ class HT_FORM_BUILDER {
             [],
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
         );
-        // Register scripts
         wp_register_style(
             'ht-select', 
-            HTCONTACTFORM_PL_URL . 'assets/css/choices.min.css', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/choices/choices.min.css', 
             [], 
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
         );
+        wp_register_style(
+            'ht-intl-tel-input', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/intl-tel-input/intlTelInput.min.css', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
+        );
+        wp_register_style(
+            'ht-flatpickr', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/flatpickr/flatpickr.min.css', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
+        );
+        wp_register_style(
+            'ht-country-select', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/country-select/countrySelect.min.css', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION
+        );
+        // Register scripts
         wp_register_script(
             'ht-select', 
-            HTCONTACTFORM_PL_URL . 'assets/js/choices.min.js', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/choices/choices.min.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
+            'ht-intl-tel-input', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/intl-tel-input/intlTelInput.min.js', 
             [], 
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
             true
         );
         wp_register_script(
             'ht-imask', 
-            HTCONTACTFORM_PL_URL . 'assets/js/inputmask.min.js', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/inputmask/inputmask.min.js', 
             [], 
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
             true
         );
         wp_register_script(
+            'ht-flatpickr', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/flatpickr/flatpickr.min.js', 
+            [], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
+            'ht-country-select', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/country-select/countrySelect.min.js', 
+            ['jquery'], 
+            defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
+            true
+        );
+        wp_register_script(
             'ht-axios', 
-            HTCONTACTFORM_PL_URL . 'assets/js/axios.min.js', 
+            HTCONTACTFORM_PL_URL . 'assets/lib/axios/axios.min.js', 
             [], 
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION, 
             true
@@ -166,10 +211,16 @@ class HT_FORM_BUILDER {
                 true
             );
         }
+        wp_register_style('ht-form-filepond', 'https://unpkg.com/filepond/dist/filepond.css');
+        wp_register_style('ht-form-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.css');
+        wp_register_script('ht-form-filepond', 'https://unpkg.com/filepond/dist/filepond.js', [], null, true);
+        wp_register_script('ht-form-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.js', [], null, true);
+        wp_register_script('ht-form-filepond-size-validate', 'https://unpkg.com/filepond-plugin-file-validate-size@2.2.8/dist/filepond-plugin-file-validate-size.min.js', [], null, true);
+        wp_register_script('ht-form-filepond-type-validate', 'https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js', [], null, true);
         wp_register_script(
             'ht-form',
             HTCONTACTFORM_PL_URL . 'assets/js/form.js',
-            ['jquery'],
+            ['jquery', 'wp-i18n'],
             defined('WP_DEBUG') && WP_DEBUG ? time() : HTCONTACTFORM_VERSION,
             true
         );

@@ -420,20 +420,41 @@ class Form {
             }
             
             if(isset($field['fields']) && is_array($value)) {
-                $sanitized_items = [];
-                foreach ($value as $item) {
-                    $sanitized_item = [];
-                    foreach ($field['fields'] as $sub_field) {
-                        $sub_field_id = $sub_field['id'];
-                        $sub_field_value = isset($item[$sub_field_id]) ? $item[$sub_field_id] : '';
-                        
-                        if (isset($sub_field['callback'])) {
-                            $sanitized_item[$sub_field_id] = call_user_func($sub_field['callback'], $sub_field_value);
+                if($this->is_associative_array($value)) {
+                    $sanitized_items = [];
+                    foreach ($value as $k => $item) {
+                        if (isset($field['callback'])) {
+                            $sanitized_items[$k] = call_user_func($field['callback'], $item);
                         } else {
-                            $sanitized_item[$sub_field_id] = sanitize_text_field($sub_field_value);
+                            $sanitized_items[$k] = sanitize_text_field($item);
                         }
                     }
-                    $sanitized_items[] = $sanitized_item;
+                } else {
+                    $sanitized_items = [];
+                    foreach ($value as $item) {
+                        $sanitized_item = [];
+                        foreach ($field['fields'] as $sub_field) {
+                            $sub_field_id = $sub_field['id'];
+                            $sub_field_value = isset($item[$sub_field_id]) ? $item[$sub_field_id] : '';
+                            
+                            if (isset($sub_field['callback'])) {
+                                $sanitized_item[$sub_field_id] = call_user_func($sub_field['callback'], $sub_field_value);
+                            } else {
+                                $sanitized_item[$sub_field_id] = sanitize_text_field($sub_field_value);
+                            }
+                        }
+                        $sanitized_items[] = $sanitized_item;
+                    }
+                }
+                $integration[$key] = $sanitized_items;
+            } elseif (is_array($value)) {
+                $sanitized_items = [];
+                foreach ($value as $item) {
+                    if (isset($field['callback'])) {
+                        $sanitized_items[] = call_user_func($field['callback'], $item);
+                    } else {
+                        $sanitized_items[] = sanitize_text_field($item);
+                    }
                 }
                 $integration[$key] = $sanitized_items;
             } else {
@@ -451,6 +472,11 @@ class Form {
     //-------------------------------------------------------------------------
     // HELPER METHODS
     //-------------------------------------------------------------------------
+
+    public function is_associative_array(array $arr): bool {
+        if ([] === $arr) return false; // Empty array is not associative
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
     
     /**
      * Get form post by ID
@@ -718,7 +744,6 @@ class Form {
             ];
 
             $default_field = $this->find_default_field($field['type'], $this->default_fields);
-
             // Sanitize field settings
             if (!empty($field['settings']) && is_array($field['settings'])) {
                 $sanitized_field['settings'] = $this->sanitize_field_settings($field['settings'], $default_field);
@@ -828,10 +853,29 @@ class Form {
                     strpos($value, '.') !== false || strpos($value, ' ') !== false) {
                     return $value;
                 }
-                return sanitize_key($value);
+                return sanitize_text_field($value);
                 
             case 'names':
                 return $this->sanitize_names_field($value);
+                
+            case 'group':
+            case 'collapse':
+                $group_data = [];
+                foreach ($value as $key => $val) {
+                    if (is_array($val)) {
+                        $group_data[$key] = $this->sanitize_recursive($val);
+                    } elseif (is_bool($val)) {
+                        $group_data[$key] = (bool) $val;
+                    } elseif (is_numeric($val)) {
+                        $group_data[$key] = (float) $val;
+                    } elseif (is_string($val)) {
+                        $group_data[$key] = sanitize_text_field($val);
+                    }
+                }
+                return $group_data;
+
+            case 'checkbox':
+                return array_map('sanitize_text_field', $value);
                 
             default:
                 return sanitize_text_field($value);

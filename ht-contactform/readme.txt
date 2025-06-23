@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Elementor, Contact Form 7, Contact Form 7 Widget, Gutenberg Blocks
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ HT Contact Form lets you design responsive forms quickly with drag & drop, spam 
 
 Build beautiful custom forms instantly with the intuitive **drag-and-drop builder**. Select from **12+ ready-to-use input fields** to design **contact forms** that perfectly match your brand identity and website design.
 
-HT Contact Form doesn’t just make form creation easy—it also ensures your data is protected. With features like **form entry storage**, **built-in spam protection**, and **Google reCAPTCHA integration**, your information stays safe while maintaining a seamless user experience.a
+HT Contact Form doesn’t just make form creation easy—it also ensures your data is protected. With features like **form entry storage**, **built-in spam protection**, and **Google reCAPTCHA integration**, your information stays safe while maintaining a seamless user experience.
 
 Furthermore, **email notifications** and **pre-designed email templates** keep both you and your users informed automatically after every form submission.
 
@@ -83,6 +83,10 @@ Export submissions in CSV, Excel, ODS, or JSON formats with a single click. Perf
 **Perfect on Every Device**
 Forms automatically adapt to look beautiful on any screen size—from desktop monitors to smartphones. Give your visitors a flawless experience no matter how they access your site.
 
+### 🎨 Form Styler
+**Customize Your Forms**
+Customize the look and feel of your forms with HT Contact Form's custom styling options. You can change colors, font size, weight, line height, border, radius, and other design elements to match your brand identity and website design.
+
 ## 🧩 Versatile Form Fields to Build Anything
 
 Create the perfect form for any purpose with our comprehensive collection of field types:
@@ -99,7 +103,24 @@ Create the perfect form for any purpose with our comprehensive collection of fie
 10. **reCAPTCHA**
 11. **Email**
 12. **Range Slider**
-13. **Submit Button**
+13. **Phone**
+14. **Address**
+15. **Country List**
+16. **File Upload**
+17. **Password**
+18. **Date/Calendar Picker**
+19. **Submit Button**
+
+## 📈 3rd Party Integrations
+
+HT Contact Form seamlessly integrates with popular services to help you streamline your workflow and enhance your form experience. Check out some of the integrations available:
+
+1. **Mailchimp**: Add form submitters to your Mailchimp email list.
+2. **Slack**: Send form submission notifications to your Slack channels.
+3. **Discord**: Send form submission notifications to your Discord channels.
+4. **ActiveCampaign**: Add form submitters to your ActiveCampaign email list.
+5. **MailerLite**: Add form submitters to your MailerLite email list.
+6. **Webhook**: Send form data to external URLs.
 
 == Other Projects ==
 We have a lot of plugins and extensions that might interest you. Try out other projects by following this link:
@@ -134,6 +155,20 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.2.0 - Date: 23-Jun-2025 =
+* Added: New Phone field with auto country code.
+* Added: New Address field with autocomplete.
+* Added: New Country List field with autocomplete.
+* Added: New File Upload field.
+* Added: New Password field.
+* Added: New Date/Calendar Picker field.
+* Added: New per-form design settings to customize styling individually.
+* Added: New MailChimp Integrations.
+* Added: New Slack Integrations.
+* Added: New Discord Integrations.
+* Added: New ActiveCampaign Integrations.
+* Added: New MailerLite Integrations.
 
 = Version: 2.1.0 - Date: 13-May-2025 =
 * Added: New Entries page to view all form submissions in one place.
@@ -220,8 +255,6 @@ Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Installation ==
 This section describes how to install the HT Contact Form Widget For Elementor Page Builder, Gutenberg block & Form Builder Plugins for WordPress get it working.
-
-= 1) Install =
 
 = Install: =
 1. Go to the WordPress Dashboard "Add New Plugin" section.

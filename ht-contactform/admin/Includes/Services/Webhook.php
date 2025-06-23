@@ -3,14 +3,13 @@
 namespace HTContactFormAdmin\Includes\Services;
 
 use HTContactFormAdmin\Includes\Services\Helper;
+use WP_Error;
+use WP_REST_Response;
 
 /**
  * Webhook Class
  * 
  * Handles webhook functionality for sending form data to external services.
- * 
- * @package HTContactFormAdmin\Includes
- * @since 1.0.0
  */
 class Webhook {
     //-------------------------------------------------------------------------
@@ -78,17 +77,17 @@ class Webhook {
     /**
      * Send data to webhook
      * 
-     * @return bool Whether the webhook request was sent successfully
+     * @return WP_Error|WP_REST_Response Whether the webhook request was sent successfully
      */
     public function send($webhook) {
         // Check if webhooks are enabled for this form
         if (empty($webhook->enabled) || empty($webhook->url)) {
-            return false;
+            return new WP_Error('webhook_error', 'Webhooks are not enabled for this form');
         }
 
         $webhook_url = esc_url_raw($webhook->url);
         if (empty($webhook_url)) {
-            return false;
+            return new WP_Error('webhook_error', 'Invalid webhook URL');
         }
         
         // Add custom HTTP headers if provided
@@ -136,10 +135,20 @@ class Webhook {
             'cookies'     => []
         ]);
 
-        // Trigger hooks for external tracking
-        do_action('ht_form/webhook_sent', $response, $this->form, $this->form_data, $data);
+        if (is_wp_error($response)) {
+            error_log('Webhook Error: ' . $response->get_error_message());
+            // Trigger hooks for external tracking
+            do_action('ht_form/webhook_integration_result', $response, 'failed', $response->get_error_message());
+            return new WP_Error('webhook_error', $response->get_error_message());
+        }
 
-        return !is_wp_error($response);
+        // Trigger hooks for external tracking
+        do_action('ht_form/webhook_integration_result', $response, 'success', 'Webhook sent successfully');
+
+        return new WP_REST_Response([
+            'message' => 'Webhook sent successfully',
+            'response' => $response,
+        ], 200);
     }
 
     /**

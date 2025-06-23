@@ -5,6 +5,8 @@ use HTContactFormAdmin\Includes\PostTypes\FormPostType;
 use HTContactFormAdmin\Includes\Config\Form as FormConfig;
 use HTContactFormAdmin\Includes\ShortCode;
 use HTContactFormAdmin\Includes\Assets;
+use HTContactFormAdmin\Includes\Integrations;
+use HTContactFormAdmin\Includes\Ajax;
 class Admin {
     private static $instance = null;
 
@@ -18,8 +20,10 @@ class Admin {
     public function __construct() {
         ApiRegistry::get_instance();
         FormPostType::get_instance();
+        Ajax::get_instance();
         Assets::get_instance();
         ShortCode::get_instance();
+        Integrations::get_instance();
         add_action('in_admin_header', [$this, 'remove_admin_notice']);
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('init', [$this, 'update_global_settings']);
@@ -94,8 +98,8 @@ class Admin {
     public function update_global_settings() {
         if(!get_option('ht_form_global_settings')) {
             $global_settings = FormConfig::get_instance()->form_global_settings();
-            $default = array_reduce($global_settings, function($carry, $section): mixed {
-                $carry[$section['id']] = array_reduce($section['settings'], function($carry, $field): mixed {
+            $default = array_reduce($global_settings, function($carry, $section) {
+                $carry[$section['id']] = array_reduce($section['settings'], function($carry, $field) {
                     $carry[$field['id']] = $field['value'];
                     return $carry;
                 }, []);

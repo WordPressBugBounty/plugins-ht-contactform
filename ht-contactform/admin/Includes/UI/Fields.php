@@ -5,6 +5,8 @@
 
 namespace HTContactFormAdmin\Includes\UI;
 
+use HTContactFormAdmin\Includes\Services\Helper;
+
 // If this file is accessed directly, abort.
 if (!defined('ABSPATH')) {
     exit;
@@ -37,6 +39,71 @@ class Fields {
      * @var array
      */
     protected $global_settings;
+    protected $helper;
+
+    protected $file_types = [
+        'image' => [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/jpg',
+        ],
+        'audio' => [
+            'audio/mpeg',
+            'audio/wav',
+            'audio/ogg',
+            'audio/oga',
+            'audio/wma',
+            'audio/mka',
+            'audio/m4a',
+            'audio/ra',
+            'audio/mid',
+            'audio/midi',
+        ],
+        'video' => [
+            'video/mp4',
+            'video/mpeg',
+            'video/ogg',
+            'video/avi',
+            'video/divx',
+            'video/flv',
+            'video/mov',
+            'video/ogv',
+            'video/mkv',
+            'video/m4v',
+            'video/mpg',
+            'video/mpeg',
+            'video/mpe',
+        ],
+        'pdf' => [
+            'application/pdf',
+        ],
+        'doc' => [
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-excel',
+            'text/plain',
+        ],
+        'zip' => [
+            'application/zip',
+            'application/x-zip-compressed',
+            'application/x-rar-compressed',
+            'application/rar',
+            'application/x-7z-compressed',
+            'application/gzip',
+            'application/x-gzip',
+        ],
+        'exe' => [
+            'application/exe',
+            'application/x-exe',
+        ],
+        'csv' => [
+            'text/csv',
+        ],
+    ];
 
     /**
      * Get instance of this class
@@ -55,6 +122,7 @@ class Fields {
      */
     public function __construct() {
         $this->global_settings = get_option('ht_form_global_settings', []);
+        $this->helper = Helper::get_instance();
     }
 
     /**
@@ -98,7 +166,7 @@ class Fields {
             method_exists($this, "field_$field_type") ? call_user_func([$this, "field_$field_type"], $field_id, $settings) : '',
             $this->field_suffix($settings),
             $help_message_pos === 'below_input_element' ? $this->field_message($settings) : '',
-            $error_message_placement === 'below_input_element'? '<span class="ht-form-elem-error"></span>' :'',
+            $error_message_placement === 'below_input_element' ? '<span class="ht-form-elem-error"></span>' :'',
         );
     }
 
@@ -116,6 +184,7 @@ class Fields {
         }
         if(!empty($settings['hide_label'])) {
             $classes[] = 'ht-form-elem-label-hidden';
+            return '';
         }
         return sprintf(
             '<label for="%1$s" class="' . implode(' ', $classes) . '" aria-label="%2$s">%3$s</label>',
@@ -334,6 +403,319 @@ class Fields {
         return sprintf(
             '<input %s/>',
             $attributes_string
+        );
+    }
+
+    /**
+     * Render password field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_password($field_id, $settings) {
+        $attributes = [
+            'type' => 'password',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-input',
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render date time field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_date_time($field_id, $settings) {
+        $attributes = [
+            'type' => 'text',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-input ht-form-elem-datetime',
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+            'data-format' => !empty($settings['format']) ? $settings['format'] : '',
+            'data-range' => !empty($settings['range']) ? true : false,
+            'data-multiple' => !empty($settings['multiple']) ? true : false,
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render phone/tel field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_phone($field_id, $settings) {
+        $validate = !empty($settings['validate']) ? true : false;
+        $validate_message = !empty($settings['validate_message']) ? $settings['validate_message'] : '';
+        $classes = [
+            'ht-form-elem-input',
+            $validate ? 'ht-form-elem-input-tel' : '',
+        ];
+        $initial_country = $validate && !empty($settings['default_country']) ? $settings['default_country'] : '';
+        $exclude_countries = $validate && !empty($settings['country_list_type']) && $settings['country_list_type'] === 'exclude' ? implode(',', $settings['country_list']) : '';
+        $only_countries = $validate && !empty($settings['country_list_type']) && $settings['country_list_type'] === 'include' ? implode(',', $settings['country_list']) : '';
+
+        if(!empty($settings['auto_country_select'])) {
+            $initial_country = $this->helper->get_geolocation_data($this->helper->get_ip())['country'];
+        }
+        $attributes = [
+            'type' => 'tel',
+            'id' => $field_id,
+            'class' => implode(' ', array_filter($classes)),
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'placeholder' => !empty($settings['placeholder']) && !$validate ? $settings['placeholder'] : '',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'data-validation' => $validate,
+            'data-validation-message' => $validate_message,
+            'data-initial-country' => $initial_country,
+            'data-exclude-countries' => $exclude_countries,
+            'data-only-countries' => $only_countries,
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render country field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_country($field_id, $settings) {
+        $classes = [
+            'ht-form-elem-input',
+            'ht-form-elem-input-country',
+        ];
+        $initial_country = !empty($settings['default_country']) ? $settings['default_country'] : '';
+        $exclude_countries = !empty($settings['country_list_type']) && $settings['country_list_type'] === 'exclude' ? implode(',', $settings['country_list']) : '';
+        $only_countries = !empty($settings['country_list_type']) && $settings['country_list_type'] === 'include' ? implode(',', $settings['country_list']) : '';
+
+        if(!empty($settings['auto_country_select'])) {
+            $initial_country = $this->helper->get_geolocation_data($this->helper->get_ip())['country'];
+        }
+        $attributes = [
+            'type' => 'text',
+            'id' => $field_id,
+            'class' => implode(' ', array_filter($classes)),
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'data-initial-country' => strtolower($initial_country),
+            'data-exclude-countries' => $exclude_countries,
+            'data-only-countries' => $only_countries,
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render address field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_address($field_id, $settings) {
+        $geo_data = $this->helper->get_geolocation_data($this->helper->get_ip());
+        $attributes = [
+            'id' => $field_id,
+            'class' => 'ht-form-elem-group ht-form-elem-address',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        
+        // Create field wrapper
+        $wrapper_classes = [
+            'ht-form-elem',
+            !empty($settings['field_size']) ? 'ht-form-elem-' . sanitize_html_class($settings['field_size']) : 'medium',
+        ];
+
+        $fields = [];
+
+        if(!empty($settings['enable_address_line_1'])) {
+            $wrapper_classes[] = 'ht-form-elem-input-field';
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'input',
+                "{$field_id}_address_line_1",
+                array_merge($settings, [
+                    'label' => !empty($settings['address_line_1']['label']) ? $settings['address_line_1']['label'] : '',
+                    'default_value' => !empty($settings['address_line_1']['value']) ? $settings['address_line_1']['value'] : '',
+                    'placeholder' => !empty($settings['address_line_1']['placeholder']) ? $settings['address_line_1']['placeholder'] : '',
+                    'required' => !empty($settings['address_line_1']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['address_line_1']['required_message']) ? $settings['address_line_1']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_line_1]' : '',
+                ])
+            );
+        }
+        if(!empty($settings['enable_address_line_2'])) {
+            $wrapper_classes[] = 'ht-form-elem-input-field';
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'input',
+                "{$field_id}_address_line_2",
+                array_merge($settings, [
+                    'label' => !empty($settings['address_line_2']['label']) ? $settings['address_line_2']['label'] : '',
+                    'default_value' => !empty($settings['address_line_2']['value']) ? $settings['address_line_2']['value'] : '',
+                    'placeholder' => !empty($settings['address_line_2']['placeholder']) ? $settings['address_line_2']['placeholder'] : '',
+                    'required' => !empty($settings['address_line_2']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['address_line_2']['required_message']) ? $settings['address_line_2']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_line_2]' : '',
+                ])
+            );
+        }
+        if(!empty($settings['enable_city'])) {
+            $wrapper_classes[] = 'ht-form-elem-input-field';
+            $value = !empty($settings['city']['value']) ? $settings['city']['value'] : '';
+            if(!empty($settings['city']['auto_fill'])) {
+                $value = $geo_data['city'];
+            }
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'input',
+                "{$field_id}_city",
+                array_merge($settings, [
+                    'label' => !empty($settings['city']['label']) ? $settings['city']['label'] : '',
+                    'default_value' => $value,
+                    'placeholder' => !empty($settings['city']['placeholder']) ? $settings['city']['placeholder'] : '',
+                    'required' => !empty($settings['city']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['city']['required_message']) ? $settings['city']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_city]' : '',
+                ])
+            );
+        }
+        if(!empty($settings['enable_state'])) {
+            $wrapper_classes[] = 'ht-form-elem-input-field';
+            $value = !empty($settings['state']['value']) ? $settings['state']['value'] : '';
+            if(!empty($settings['state']['auto_fill'])) {
+                $value = $geo_data['region'];
+            }
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'input',
+                "{$field_id}_state",
+                array_merge($settings, [
+                    'label' => !empty($settings['state']['label']) ? $settings['state']['label'] : '',
+                    'default_value' => $value,
+                    'placeholder' => !empty($settings['state']['placeholder']) ? $settings['state']['placeholder'] : '',
+                    'required' => !empty($settings['state']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['state']['required_message']) ? $settings['state']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_state]' : '',
+                ])
+            );
+        }
+        if(!empty($settings['enable_zip'])) {
+            $wrapper_classes[] = 'ht-form-elem-input-field';
+            $value = !empty($settings['zip']['value']) ? $settings['zip']['value'] : '';
+            if(!empty($settings['zip']['auto_fill'])) {
+                $value = $geo_data['postal'];
+            }
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'input',
+                "{$field_id}_zip",
+                array_merge($settings, [
+                    'label' => !empty($settings['zip']['label']) ? $settings['zip']['label'] : '',
+                    'default_value' => $value,
+                    'placeholder' => !empty($settings['zip']['placeholder']) ? $settings['zip']['placeholder'] : '',
+                    'required' => !empty($settings['zip']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['zip']['required_message']) ? $settings['zip']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_zip]' : '',
+                ])
+            );
+        }
+        
+        if(!empty($settings['enable_country'])) {
+            $wrapper_classes[] = 'ht-form-elem-country-field';
+            $value = !empty($settings['country']['value']) ? $settings['country']['value'] : '';
+
+            $fields[] = $this->render_field(
+                $wrapper_classes,
+                'country',
+                "{$field_id}_country",
+                array_merge($settings, [
+                    'label' => !empty($settings['country']['label']) ? $settings['country']['label'] : '',
+                    'default_value' => $value,
+                    'default_country' => !empty($settings['country']['default_country']) ? $settings['country']['default_country'] : '',
+                    'auto_country_select' => !empty($settings['country']['auto_fill']) ? true : false,
+                    'country_list_type' => !empty($settings['country']['country_list_type']) ? $settings['country']['country_list_type'] : '',
+                    'country_list' => !empty($settings['country']['country_list']) ? $settings['country']['country_list'] : [],
+                    'placeholder' => !empty($settings['country']['placeholder']) ? $settings['country']['placeholder'] : '',
+                    'required' => !empty($settings['country']['required']) ? true : false,
+                    'data-required-message' => !empty($settings['country']['required_message']) ? $settings['country']['required_message'] : '',
+                    'name_attribute' => !empty($settings['name_attribute']) ? $settings['name_attribute'] . '[address_country]' : '',
+                ])
+            );
+        }
+
+        return sprintf(
+            '<div %s>
+                %s
+            </div>',
+            $attributes_string,
+            implode('', $fields)
         );
     }
 
@@ -569,7 +951,13 @@ class Fields {
                     }
                 }
                 $options .= sprintf(
-                    '<div class="ht-form-elem-checkbox"><input %s/><label for="%s">%s</label></div>' . PHP_EOL,
+                    '<div class="ht-form-elem-checkbox">
+                        <div class="ht-form-elem-checkbox-inner">
+                            <input %s/>
+                            <svg viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="ht-form-elem-checkbox-icon"><path d="M4 4.586L1.707 2.293A1 1 0 1 0 .293 3.707l3 3a.997.997 0 0 0 1.414 0l5-5A1 1 0 1 0 8.293.293L4 4.586z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <label for="%s">%s</label>
+                    </div>' . PHP_EOL,
                     $item_attributes_string,
                     esc_attr($field_id .'_'. $option['value']),
                     esc_html($option['label'])
@@ -618,6 +1006,66 @@ class Fields {
     }
 
     /**
+     * Render file upload field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_file_upload($field_id, $settings) {
+        $required = !empty($settings['required']) ? true : false;
+        $required_message = !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '';
+        $button_text = !empty($settings['button_text']) ? $settings['button_text'] : '';
+        $interface = !empty($settings['upload_interface']) ? $settings['upload_interface'] : 'button';
+        $max_file_size = !empty($settings['max_file_size']) ? $settings['max_file_size'] : '';
+        $max_file_size_message = !empty($settings['max_file_size_message']) ? $settings['max_file_size_message'] : '';
+        $max_file_count = !empty($settings['max_files']) ? $settings['max_files'] : '';
+        $max_file_count_message = !empty($settings['max_files_message']) ? $settings['max_files_message'] : '';
+        $allow_types = !empty($settings['allow_types']) ? $settings['allow_types'] : [];
+        $allow_types_message = !empty($settings['allow_types_message']) ? $settings['allow_types_message'] : '';
+        $upload_location = !empty($settings['upload_location']) ? $settings['upload_location'] : 'default';
+        $name_attribute = !empty($settings['name_attribute']) ? $settings['name_attribute'] : '';
+
+        $file_allows = array_map(function($type){
+            return $this->file_types[$type];
+        }, $allow_types);
+
+        $file_allows = implode(',', array_merge(...$file_allows));
+
+        return sprintf(
+            '<label for="%1$s" class="ht-form-elem-file-upload ht-form-elem-file-upload-%2$s">
+                <input
+                    type="file"
+                    id="%1$s"
+                    name="%3$s[]"
+                    multiple
+                    accept="%4$s"
+                    %5$s
+                    data-required-message="%6$s"
+                    data-max-file-size="%7$sMB"
+                    data-max-file-size-message="%8$s"
+                    data-max-files="%9$s"
+                    data-max-files-message="%10$s"
+                    data-allow-message="%11$s"
+                    data-upload-location="%12$s"
+                />
+            </label>',
+            esc_attr($field_id),
+            esc_html($interface),
+            esc_attr($name_attribute),
+            esc_attr($file_allows),
+            $required ? 'required' : '',
+            esc_attr($required_message),
+            esc_attr($max_file_size),
+            esc_attr($max_file_size_message),
+            esc_attr($max_file_count),
+            esc_attr($max_file_count_message),
+            esc_attr($allow_types_message),
+            esc_attr($upload_location)
+        );
+    }
+
+    /**
      * Render GDPR field
      *
      * @param string $field_id Field ID
@@ -656,8 +1104,10 @@ class Fields {
         }
         return sprintf(
             '<label %s>
-                <input %s/>
-                <span class="ht-form-elem-gdpr-check"></span>
+                <div class="ht-form-elem-gdpr-inner">
+                    <input %s/>
+                    <svg viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="ht-form-elem-checkbox-icon"><path d="M4 4.586L1.707 2.293A1 1 0 1 0 .293 3.707l3 3a.997.997 0 0 0 1.414 0l5-5A1 1 0 1 0 8.293.293L4 4.586z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </div>
                 <span class="ht-form-elem-gdpr-desc">%s</span>
             </label>',
             $label_attributes_string,

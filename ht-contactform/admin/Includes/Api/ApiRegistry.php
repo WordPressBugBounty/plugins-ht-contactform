@@ -6,6 +6,9 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Entry;
 use HTContactFormAdmin\Includes\Api\Endpoints\Submission;
 use HTContactFormAdmin\Includes\Api\Endpoints\Settings;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
 
 class ApiRegistry {
     private static $instance = null;
@@ -23,5 +26,8 @@ class ApiRegistry {
         Submission::get_instance();
         Settings::get_instance();
         Integrations::get_instance();
+        Mailchimp::get_instance();
+        ActiveCampaign::get_instance();
+        MailerLite::get_instance();
     }
 }

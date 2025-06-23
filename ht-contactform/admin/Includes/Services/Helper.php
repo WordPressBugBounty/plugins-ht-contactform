@@ -168,7 +168,7 @@ class Helper {
     public static function get_ip() {
         // Check for shared internet/ISP IP
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
+            $ip_address = sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
         }
         
         // Check for IPs passing through proxies
@@ -179,14 +179,14 @@ class Helper {
             foreach ($ip_list as $ip) {
                 $ip = trim($ip);
                 if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    return $ip;
+                    $ip_address = $ip;
                 }
             }
         }
         
         // Check for CloudFlare IP
         if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            return sanitize_text_field(wp_unslash($_SERVER['HTTP_CF_CONNECTING_IP']));
+            $ip_address = sanitize_text_field(wp_unslash($_SERVER['HTTP_CF_CONNECTING_IP']));
         }
         
         // Check for other common proxy headers
@@ -201,13 +201,60 @@ class Helper {
             if (!empty($_SERVER[$header])) {
                 $ip = sanitize_text_field(wp_unslash($_SERVER[$header]));
                 if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    return $ip;
+                    $ip_address = $ip;
                 }
             }
         }
         
         // If no proxy detected, return remote address or empty string
-        return isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+        $ip_address = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+        if($ip_address === '127.0.0.1' || $ip_address === '::1') {
+            return self::get_remote_ip();
+        }
+        return $ip_address;
+    }
+
+    /**
+     * Get remote IP address
+     * 
+     * @return string The remote IP address
+     */
+    public static function get_remote_ip() {
+        $api_url = "https://api.ipify.org?format=json";
+        $response = wp_remote_get($api_url);
+        if (is_wp_error($response)) {
+            return false;
+        }
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        if (isset($data['error'])) {
+            return false;
+        }
+        return $data['ip'];
+    }
+
+    /**
+     * Get geolocation data
+     * 
+     * @param string $ip IP address
+     * @param string $key Key to retrieve specific data
+     * @return mixed Geolocation data or false on error
+     */
+    public static function get_geolocation_data($ip, $key = null) {
+        $api_url = "https://ipinfo.io/{$ip}/json";
+        $response = wp_remote_get($api_url);
+        if (is_wp_error($response)) {
+            return false;
+        }
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        if (isset($data['error'])) {
+            return false;
+        }
+        if($key) {
+            return $data[$key];
+        }
+        return $data;
     }
 
     /**
@@ -475,6 +522,26 @@ class Helper {
             ]
         ];
     }
+    
+    /**
+     * Check if an array contains address field components
+     *
+     * @param array $data The data to check
+     * @return bool True if it contains address components
+     */
+    private function is_name_field($data) {
+        $name_fields = [
+            'first_name', 'last_name', 'middle_name'
+        ];
+        
+        foreach ($name_fields as $field) {
+            if (isset($data[$field])) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     /**
      * Filter content for predefined variable like {admin_email}, {site_title}, {site_url}, {current_date}, {current_time}
@@ -483,19 +550,25 @@ class Helper {
      * @param array $form_data Form data
      * @return string Filtered content
      */
-    public function filter_vars($data, $form_data = []) {
+    public function filter_vars($data, $form_data = [], $form = []) {
         $body_tags = $this->get_body_tags();
         // Process {input.field_name} patterns
         if(str_contains($data, '{input.')) {
-            preg_match_all('/{input\.([^}]+)}/', $data, $matches, PREG_SET_ORDER);
+            preg_match_all('/{input\.([^}]+?)(?:\.([^}]+))?}/', $data, $matches, PREG_SET_ORDER);
             foreach($matches as $match) {
                 $placeholder = $match[0]; // Full match like {input.name}
                 $field_name = $match[1]; // Captured group like "name"
-                
+                $field_sub_name = $match[2]; // Captured group like "first_name"
                 if(isset($form_data[$field_name])) {
                     $replacement = $form_data[$field_name];
                     if(is_array($replacement)) {
-                        $replacement = implode(', ', array_map('sanitize_text_field', $replacement));
+                        if(isset($field_sub_name)) {
+                            $replacement = $replacement[$field_sub_name];
+                        } elseif($this->is_name_field($replacement)) {
+                            $replacement = implode(' ', array_filter($replacement));
+                        } else {
+                            $replacement = implode(', ', array_map('sanitize_text_field', $replacement));
+                        }
                     } else {
                         $replacement = sanitize_text_field($replacement);
                     }
@@ -511,7 +584,11 @@ class Helper {
                 $pattern = $tag['value'];
                 
                 // Get the replacement value using the callback
-                $replacement = call_user_func([$this, $tag['callback']], $pattern);
+                if(isset($tag['callback']) &&  str_contains($tag['callback'], 'form')) {
+                    $replacement = call_user_func([$this, $tag['callback']], $pattern, $form);
+                } else {
+                    $replacement = call_user_func([$this, $tag['callback']], $pattern);
+                }
                 
                 // Replace only the specific tag pattern in the data string
                 $data = str_replace($pattern, $replacement, $data);
@@ -569,14 +646,15 @@ class Helper {
      * Parse form variables
      * 
      * @param string $value Value to parse
+     * @param array $form Form data
      * @return string The parsed value
      */
-    private function parse_form($value) {
+    private function parse_form($value, $form = []) {
         if($value === '{form_title}') {
-            return sanitize_text_field($this->form['title']);
+            return !empty($form['title']) ? sanitize_text_field($form['title']) : '';
         }
         if($value === '{form_id}') {
-            return sanitize_text_field($this->form['id']);
+            return !empty($form['id']) ? sanitize_text_field($form['id']) : '';
         }
         return $value;
     }
@@ -679,6 +757,84 @@ class Helper {
             return sanitize_text_field(get_query_var($key));
         }
         return $value;
+    }
+
+
+
+    /**
+     * Get form field by field name
+     * 
+     * @param array $fields Form fields
+     * @param string $field_name Field name
+     * @return string Field
+     */
+    public function get_field($fields, $field_name) {
+        foreach ($fields as $field) {
+            if ($field['type'] !== 'submit' && $field['settings']['name_attribute'] === $field_name) {
+                return $field;
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Get form field admin label by field name
+     * 
+     * @param array $fields Form fields
+     * @param string $field_name Field name
+     * @return string Field admin label
+     */
+    public function get_field_admin_label($fields, $field_name) {
+        foreach ($fields as $field) {
+            if ($field['type'] !== 'submit' && $field['settings']['name_attribute'] === $field_name) {
+                return $field['settings']['admin_label'];
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Get form field type by field name
+     * 
+     * @param array $fields Form fields
+     * @param string $field_name Field name
+     * @return string Field type
+     */
+    public function get_field_type($fields, $field_name) {
+        foreach ($fields as $field) {
+            if ($field['type'] !== 'submit' && $field['settings']['name_attribute'] === $field_name) {
+                return $field['type'];
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Format array value based on field type for integrations
+     * 
+     * @param array $value Field value
+     * @param string $field_type Field type
+     * @return string Formatted value
+     */
+    public function format_array_value($value, $field_type) {
+        if ($field_type === 'name' || $field_type === 'address') {
+            return implode(' ', $value);
+        }
+        return implode(', ', $value);
+    }
+
+    /**
+     * Format field value based on field type for integrations
+     * 
+     * @param mixed $value Field value
+     * @param string $field_type Field type
+     * @return string Formatted value
+     */
+    public function format_field_value($value, $field_type) {
+        if ($field_type === 'textarea') {
+            return nl2br(esc_html($value));
+        }
+        return wp_kses_post($value);
     }
 
 }

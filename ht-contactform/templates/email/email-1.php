@@ -56,7 +56,7 @@ $footer_text = $args['footer_text'] ?? '';
                                         }
                                     }
                                     if(is_array($value) && !empty($value)) {
-                                        if($field_type === 'name') {
+                                        if($field_type === 'name' || $field_type === 'address') {
                                             $value = implode(' ', $value);
                                         } else {
                                             $value = sprintf('<ul style="margin: 0; padding: 0;"><li>%s</li></ul>', implode('</li><li>', $value));

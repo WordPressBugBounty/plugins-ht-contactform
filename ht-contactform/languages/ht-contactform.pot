@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Contact Form 7 Widget For Elementor Page Builder & "
 "Gutenberg Blocks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-24 04:25+0000\n"
+"POT-Creation-Date: 2025-07-09 05:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Loco-Version: 2.7.2; wp-6.7.2\n"
 "X-Domain: ht-contactform"
 
-#: admin/Includes/Config/Field.php:427
+#: admin/Includes/Config/Field.php:428
 msgid "$999.99"
 msgstr ""
 
@@ -34,13 +34,13 @@ msgid "%s Active Installations"
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Submission.php:391
+#: admin/Includes/Api/Endpoints/Submission.php:415
 #, php-format
 msgid "%s is required."
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Submission.php:402
+#: admin/Includes/Api/Endpoints/Submission.php:426
 #, php-format
 msgid "%s must be a valid email address."
 msgstr ""
@@ -52,19 +52,82 @@ msgstr ""
 msgid "&copy; %1$s %2$s. All rights reserved. Powered by %3$s"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:403
+#: admin/Includes/Config/Field.php:404
 msgid "(999) 999-9999"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:411
+#: admin/Includes/Config/Styler.php:94 admin/Includes/Config/Styler.php:170
+#: admin/Includes/Config/Styler.php:262 admin/Includes/Config/Styler.php:388
+#: admin/Includes/Config/Styler.php:554 admin/Includes/Config/Styler.php:789
+#: admin/Includes/Config/Styler.php:932 admin/Includes/Config/Styler.php:1192
+msgid "100"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:98 admin/Includes/Config/Styler.php:174
+#: admin/Includes/Config/Styler.php:266 admin/Includes/Config/Styler.php:392
+#: admin/Includes/Config/Styler.php:558 admin/Includes/Config/Styler.php:793
+#: admin/Includes/Config/Styler.php:936 admin/Includes/Config/Styler.php:1196
+msgid "200"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:102 admin/Includes/Config/Styler.php:178
+#: admin/Includes/Config/Styler.php:270 admin/Includes/Config/Styler.php:396
+#: admin/Includes/Config/Styler.php:562 admin/Includes/Config/Styler.php:797
+#: admin/Includes/Config/Styler.php:940 admin/Includes/Config/Styler.php:1200
+msgid "300"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:106 admin/Includes/Config/Styler.php:182
+#: admin/Includes/Config/Styler.php:274 admin/Includes/Config/Styler.php:400
+#: admin/Includes/Config/Styler.php:566 admin/Includes/Config/Styler.php:801
+#: admin/Includes/Config/Styler.php:944 admin/Includes/Config/Styler.php:1204
+msgid "400"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:110 admin/Includes/Config/Styler.php:186
+#: admin/Includes/Config/Styler.php:278 admin/Includes/Config/Styler.php:404
+#: admin/Includes/Config/Styler.php:570 admin/Includes/Config/Styler.php:805
+#: admin/Includes/Config/Styler.php:948 admin/Includes/Config/Styler.php:1208
+msgid "500"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:114 admin/Includes/Config/Styler.php:190
+#: admin/Includes/Config/Styler.php:282 admin/Includes/Config/Styler.php:408
+#: admin/Includes/Config/Styler.php:574 admin/Includes/Config/Styler.php:809
+#: admin/Includes/Config/Styler.php:952 admin/Includes/Config/Styler.php:1212
+msgid "600"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:118 admin/Includes/Config/Styler.php:194
+#: admin/Includes/Config/Styler.php:286 admin/Includes/Config/Styler.php:412
+#: admin/Includes/Config/Styler.php:578 admin/Includes/Config/Styler.php:813
+#: admin/Includes/Config/Styler.php:956 admin/Includes/Config/Styler.php:1216
+msgid "700"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:122 admin/Includes/Config/Styler.php:198
+#: admin/Includes/Config/Styler.php:290 admin/Includes/Config/Styler.php:416
+#: admin/Includes/Config/Styler.php:582 admin/Includes/Config/Styler.php:817
+#: admin/Includes/Config/Styler.php:960 admin/Includes/Config/Styler.php:1220
+msgid "800"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:126 admin/Includes/Config/Styler.php:202
+#: admin/Includes/Config/Styler.php:294 admin/Includes/Config/Styler.php:420
+#: admin/Includes/Config/Styler.php:586 admin/Includes/Config/Styler.php:821
+#: admin/Includes/Config/Styler.php:964 admin/Includes/Config/Styler.php:1224
+msgid "900"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:412
 msgid "999-99-9999"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:415
+#: admin/Includes/Config/Field.php:416
 msgid "9999 9999 9999 9999"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:419
+#: admin/Includes/Config/Field.php:420
 msgid "99999-9999"
 msgstr ""
 
@@ -72,7 +135,7 @@ msgstr ""
 msgid "A new form submission has been received with the following details:"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:86
+#: admin/Includes/Config/Welcome.php:87
 msgid "Acceptance Field"
 msgstr ""
 
@@ -80,14 +143,10 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:626
+#: admin/Includes/Config/Field.php:627
 msgid ""
 "Activate email validation to verify the format and integrity of the provided "
 "address."
-msgstr ""
-
-#: contact-form-widget-elementor.php:115
-msgid "Activate Now"
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:145
@@ -113,11 +172,11 @@ msgctxt "Active plugin installations"
 msgid "Less Than 10"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:401
-msgid "Add a class to the contact form."
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:284
+msgid "ActiveCampaign connection successful."
 msgstr ""
 
-#: admin/Includes/Mailer.php:91
+#: admin/Includes/Services/Helper.php:350
 msgid "Admin Email"
 msgstr ""
 
@@ -129,7 +188,7 @@ msgstr ""
 msgid "Admin label is field title which will be used for admin field title."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:85
+#: admin/Includes/Config/Welcome.php:86
 msgid "Advanced Telephone"
 msgstr ""
 
@@ -137,16 +196,30 @@ msgstr ""
 msgid "Alignment"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:82
+#: admin/Includes/Config/Welcome.php:83
 msgid "Already Submitted Notice"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:562
+#: admin/Includes/ShortCode.php:583
 msgid "An error occurred while processing your submission. Please try again."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:550
+#: admin/Includes/ShortCode.php:571
 msgid "An error occurred while storing your submission."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:158
+msgid "API key & API URL are required for ActiveCampaign integration."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations.php:210
+msgid "API key is required for Mailchimp integration."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:121
+#: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:158
+#: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:189
+msgid "API key is required for MailerLite integration."
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:138
@@ -156,20 +229,34 @@ msgid ""
 "the product variations in a whole new light with Swatchly."
 msgstr ""
 
-#: admin/Includes/Mailer.php:210
+#: admin/Includes/Services/Helper.php:469
 msgid "Author Email"
 msgstr ""
 
-#: admin/Includes/Mailer.php:196
+#: admin/Includes/Services/Helper.php:455
 msgid "Author ID"
 msgstr ""
 
-#: admin/Includes/Mailer.php:203
+#: admin/Includes/Services/Helper.php:462
 msgid "Author Name"
 msgstr ""
 
-#: include/elementor_widgets.php:98
+#: include/elementor_widgets.php:98 admin/Includes/Config/Styler.php:232
+#: admin/Includes/Config/Styler.php:340 admin/Includes/Config/Styler.php:694
+#: admin/Includes/Config/Styler.php:719 admin/Includes/Config/Styler.php:1137
 msgid "Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:701
+msgid "Background (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1144
+msgid "Background (Hover)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:726
+msgid "Background (Selected)"
 msgstr ""
 
 #: include/elementor_widgets.php:174 include/elementor_widgets.php:340
@@ -178,13 +265,8 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:285 admin/Includes/Config/Form.php:707
-#: admin/Includes/Config/Form.php:724
+#: admin/Includes/Config/Field.php:286
 msgid "Below Input Element"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:720
-msgid "Below Label"
 msgstr ""
 
 #: include/elementor_widgets.php:246 include/elementor_widgets.php:384
@@ -193,9 +275,36 @@ msgstr ""
 msgid "Border"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:468 admin/Includes/Config/Styler.php:680
+#: admin/Includes/Config/Styler.php:1272
+msgid "Border Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:687
+msgid "Border Color (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:475
+msgid "Border Color (Focus)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1279
+msgid "Border Color (Hover)"
+msgstr ""
+
 #: include/elementor_widgets.php:254 include/elementor_widgets.php:392
 #: include/elementor_widgets.php:480 include/elementor_widgets.php:622
 msgid "Border Radius"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:447 admin/Includes/Config/Styler.php:659
+#: admin/Includes/Config/Styler.php:1251
+msgid "Border Style"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:438 admin/Includes/Config/Styler.php:650
+#: admin/Includes/Config/Styler.php:1242
+msgid "Border Width"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:115
@@ -206,7 +315,7 @@ msgstr ""
 msgid "Box Shadow"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:47
+#: admin/Includes/Config/Welcome.php:48
 msgid "Build forms with ease using our intuitive form builder."
 msgstr ""
 
@@ -214,19 +323,7 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:359
-msgid "Button Alignment"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:345
-msgid "Button Style"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:338
-msgid "Button Text"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:540
+#: admin/Includes/Config/Field.php:541
 msgid "Button Type Layout"
 msgstr ""
 
@@ -240,61 +337,86 @@ msgstr ""
 msgid "By "
 msgstr ""
 
-#: admin/Includes/Config/Form.php:758
-msgid "Captcha"
-msgstr ""
-
-#: include/elementor_widgets.php:115 admin/Includes/Config/Form.php:364
+#: include/elementor_widgets.php:115
 msgid "Center"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:165 admin/Includes/Config/Form.php:167
-#: admin/Includes/Config/Form.php:168
-msgid "Checkboxes"
+#: admin/Includes/Config/Styler.php:707
+msgid "Check Icon Color"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:395
+#: admin/Includes/Config/Styler.php:640
+msgid "Checkbox & Label Gap"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1062
+msgid "Checkbox Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1069
+msgid "Checkbox Background (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1048
+msgid "Checkbox Border Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1055
+msgid "Checkbox Border Color (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1027
+msgid "Checkbox Border Style"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1018
+msgid "Checkbox Border Width"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1076
+msgid "Checkbox Check Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1083
+msgid "Checkbox Radius"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:604 admin/Includes/Config/Styler.php:982
+msgid "Checkbox Size"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:622 admin/Includes/Config/Styler.php:1000
+msgid "Checkbox Size (Large)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:613 admin/Includes/Config/Styler.php:991
+msgid "Checkbox Size (Small)"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:396
 msgid "Choose an input mask to format user input consistently."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:192
+#: admin/Includes/Config/Field.php:193
 msgid "Choose the display size for the form field."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:378
+#: admin/Includes/Config/Styler.php:55 admin/Includes/Config/Styler.php:149
+#: admin/Includes/Config/Styler.php:225 admin/Includes/Config/Styler.php:333
+#: admin/Includes/Config/Styler.php:515 admin/Includes/Config/Styler.php:1123
+msgid "Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1130
+msgid "Color (Hover)"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:379
 msgid "Columns"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:239
-msgid "Configuration Required"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:574
-msgid "Confirmation"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:598
-msgid "Confirmation Message"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:614
-msgid "Confirmation Page"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:630
-msgid "Confirmation Redirect"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:578
-msgid "Confirmation Type"
 msgstr ""
 
 #: include/elementor_widgets.php:43 include/ht_form_widgets.php:57
 msgid "Contact Form"
-msgstr ""
-
-#. Name of the plugin
-msgid "Contact Form 7 Widget For Elementor Page Builder & Gutenberg Blocks"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:174
@@ -309,6 +431,10 @@ msgid ""
 "addition to its basic features."
 msgstr ""
 
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:419
+msgid "Contact ID and tag IDs are required."
+msgstr ""
+
 #: include/recommended-plugins/recommended-plugins.php:316
 msgid "Coupon Zen"
 msgstr ""
@@ -317,49 +443,67 @@ msgstr ""
 msgid "Create Your First Form"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:457 admin/Includes/Config/Styler.php:669
+#: admin/Includes/Config/Styler.php:1037 admin/Includes/Config/Styler.php:1261
+msgid "Dashed"
+msgstr ""
+
 #: include/recommended-plugins/recommended-plugins.php:310
 msgid "DataCaptia"
 msgstr ""
 
-#: admin/Includes/Mailer.php:133 templates/email/email-5.php:116
+#: templates/email/email-5.php:116 admin/Includes/Services/Helper.php:392
 msgid "Date"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:103 admin/Includes/Config/Field.php:277
-#: admin/Includes/Config/Form.php:350 admin/Includes/Config/Form.php:552
+#: admin/Includes/Config/Styler.php:1104
+msgid "Date/Time Selected Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1111
+msgid "Date/Time Selected Border Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1097
+msgid "Date/Time Selected Color"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:103 admin/Includes/Config/Field.php:278
 msgid "Default"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:221
+#: admin/Includes/Config/Field.php:222
 msgid "Default Value"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:224
+#: admin/Includes/Config/Field.php:225
 msgid "Define a default value to pre-populate the field upon form load."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:445
+#: admin/Includes/Config/Field.php:446
 msgid "Define selectable options with visual cues for default selection."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:349
+#: admin/Includes/Config/Field.php:350
 msgid "Define the maximum number of characters allowed for the text input."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:576
+#: admin/Includes/Config/Field.php:577
 msgid "Define the maximum value for numerical input."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:559
+#: admin/Includes/Config/Field.php:560
 msgid "Define the minimum value for numerical input."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:223
-msgid "Description"
+#: admin/Includes/Integrations/Discord.php:116
+#, php-format
+msgid "Discord webhook error: %s"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:877
-msgid "Disable IP Logging"
+#: admin/Includes/Integrations/Discord.php:126
+#, php-format
+msgid "Discord webhook returned error code: %s"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:252
@@ -370,62 +514,44 @@ msgstr ""
 msgid "Docus – YouTube Video Playlist"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:87
+#: admin/Includes/Config/Styler.php:461 admin/Includes/Config/Styler.php:673
+#: admin/Includes/Config/Styler.php:1041 admin/Includes/Config/Styler.php:1265
+msgid "Dotted"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:88
 msgid "Drag & Drop File Upload"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:36
+#: admin/Includes/Config/Welcome.php:37
 msgid "Drag and Drop"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:120 admin/Includes/Config/Form.php:122
-#: admin/Includes/Config/Form.php:123
-msgid "Dropdown"
-msgstr ""
-
-#: admin/Includes/Config/Welcome.php:37
+#: admin/Includes/Config/Welcome.php:38
 msgid "Easily drag and drop form fields to create your perfect form."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:62
+#: admin/Includes/Config/Welcome.php:63
 msgid "Edit your form at any time to make changes or updates."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:249 admin/Includes/Config/Form.php:251
-#: admin/Includes/Config/Form.php:252 admin/Includes/Config/Form.php:732
-#: admin/Includes/Config/Form.php:841
-msgid "Email"
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:384
+msgid "Email is required for contact sync."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:531
-msgid "Email Body"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:749
-msgid "Email Footer Text"
-msgstr ""
-
-#: admin/Includes/Config/Welcome.php:51
+#: admin/Includes/Config/Welcome.php:52
 msgid "Email Notifications"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:470
-msgid "Email Subject"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:261
-msgid "Email Validation Error Message"
-msgstr ""
-
-#: admin/Includes/Mailer.php:126
+#: admin/Includes/Services/Helper.php:385
 msgid "Embedded Post/Page ID"
 msgstr ""
 
-#: admin/Includes/Mailer.php:112
+#: admin/Includes/Services/Helper.php:371
 msgid "Embedded Post/Page Title"
 msgstr ""
 
-#: admin/Includes/Mailer.php:119
+#: admin/Includes/Services/Helper.php:378
 msgid "Embedded Post/Page URL"
 msgstr ""
 
@@ -436,89 +562,85 @@ msgid ""
 "and popular by keeping the visitors on your website for a longer period."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:386
-msgid "Enable AJAX"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:387
-msgid "Enable AJAX submission for the contact form."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:411
-msgid "Enable Anti Spam Protection"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:412
-msgid "Enable anti spam protection for the contact form."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:607
+#: admin/Includes/Config/Field.php:608
 msgid "Enable Email Confirmation"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:609
+#: admin/Includes/Config/Field.php:610
 msgid ""
 "Enable email confirmation by requiring the email address to be entered twice."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:418
-msgid "Enable minimum time to submit"
+#: admin/Includes/Config/Styler.php:33
+msgid "Enable Styler"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:448
-msgid "Enable Notification"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:643
+#: admin/Includes/Config/Field.php:644
 msgid ""
 "Ensure the email address is unique by comparing against previous submissions"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:455
-msgid ""
-"Enter the email address to receive form entry notifications. For multiple "
-"notifications, separate email addresses with a comma."
+#: admin/Admin.php:77
+msgid "Entries"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:517
-msgid ""
-"Enter the email address you would like to be used as the reply to address "
-"for the notification email."
-msgstr ""
-
-#: admin/Includes/Api/Entry.php:315 admin/Includes/Api/Entry.php:340
+#: admin/Includes/Api/Endpoints/Entry.php:312
+#: admin/Includes/Api/Endpoints/Entry.php:337
 msgid "Entry IDs are required"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:41
+#: admin/Includes/Config/Welcome.php:42
 msgid "Entry Management"
 msgstr ""
 
-#: admin/Includes/Models/Entries.php:249
+#: admin/Includes/Models/Entries.php:256
 msgid "Entry not found"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:713
-msgid "Error Message Placement"
+#: admin/Includes/Config/Styler.php:489
+msgid "Error Border Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:482
+msgid "Error Text Color"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:171
 msgid "Extensions For CF7 Pro"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:556 admin/Includes/Helper.php:259
+#. %s: error message
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:215
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:231
+#, php-format
+msgid "Failed to connect to ActiveCampaign: %s"
+msgstr ""
+
+#. %s: error message
+#: admin/Includes/Api/Endpoints/Integrations/Mailchimp.php:167
+#, php-format
+msgid "Failed to connect to Mailchimp: %s"
+msgstr ""
+
+#. %s: error message
+#: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:135
+#, php-format
+msgid "Failed to connect to MailerLite: %s"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:577 admin/Includes/Services/Helper.php:303
 msgid "Failed to connect to reCAPTCHA server."
 msgstr ""
 
-#: admin/Includes/Models/Entries.php:401
+#: admin/Includes/Models/Entries.php:408
 msgid "Failed to delete entry"
 msgstr ""
 
-#: admin/Includes/Models/Entries.php:310
+#: admin/Includes/Models/Entries.php:317
 msgid "Failed to save form submission"
 msgstr ""
 
-#: admin/Includes/Models/Entries.php:366
+#: admin/Includes/Models/Entries.php:373
 msgid "Failed to update entry"
 msgstr ""
 
@@ -526,7 +648,7 @@ msgstr ""
 msgid "Faster YouTube Embed"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:238
+#: admin/Includes/Config/Field.php:239
 msgid "Field Class"
 msgstr ""
 
@@ -534,76 +656,86 @@ msgstr ""
 msgid "Field Label"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:190
+#: admin/Includes/Config/Field.php:191
 msgid "Field Size"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:686
+#: admin/Includes/Config/Field.php:687
 msgid "First and Last Name"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:719
+#: admin/Includes/Config/Field.php:720
 msgid "First Name"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:690
+#: admin/Includes/Config/Field.php:691
 msgid "First, Middle, and Last Name"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:534
-msgid "For every tag use new line."
+#: admin/Includes/Config/Styler.php:62 admin/Includes/Config/Styler.php:156
+#: admin/Includes/Config/Styler.php:248 admin/Includes/Config/Styler.php:356
+#: admin/Includes/Config/Styler.php:522 admin/Includes/Config/Styler.php:1160
+msgid "Font Size"
 msgstr ""
 
-#: admin/Includes/PostType.php:23
+#: admin/Includes/Config/Styler.php:80 admin/Includes/Config/Styler.php:374
+#: admin/Includes/Config/Styler.php:540 admin/Includes/Config/Styler.php:1178
+msgid "Font Size (Large)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:71 admin/Includes/Config/Styler.php:365
+#: admin/Includes/Config/Styler.php:531 admin/Includes/Config/Styler.php:1169
+msgid "Font Size (Small)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:89 admin/Includes/Config/Styler.php:165
+#: admin/Includes/Config/Styler.php:257 admin/Includes/Config/Styler.php:383
+#: admin/Includes/Config/Styler.php:549 admin/Includes/Config/Styler.php:1187
+msgid "Font Weight"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:873 admin/Includes/Config/Styler.php:881
+msgid "For Multiselect Only"
+msgstr ""
+
+#: admin/Includes/PostTypes/FormPostType.php:23
 msgid "Form"
 msgstr ""
 
-#: admin/Includes/Api/Form.php:260
+#: admin/Includes/Api/Endpoints/Form.php:278
 msgid "Form and its entries deleted successfully"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:46
+#: admin/Includes/Config/Welcome.php:47
 msgid "Form Builder"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:400
-msgid "Form Class"
-msgstr ""
-
-#: admin/Includes/Api/Form.php:224
+#: admin/Includes/Api/Endpoints/Form.php:242
 msgid "Form data is required"
 msgstr ""
 
-#: admin/Includes/Api/Submission.php:198
+#: admin/Includes/Api/Endpoints/Submission.php:196
 msgid "Form data or form ID is missing"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:61
+#: admin/Includes/Config/Welcome.php:62
 msgid "Form Editor"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:500
-msgid "Form Email"
-msgstr ""
-
-#: admin/Includes/Mailer.php:98
+#: admin/Includes/Services/Helper.php:357
 msgid "Form ID"
 msgstr ""
 
-#: admin/Includes/Models/Entries.php:283
+#: admin/Includes/Models/Entries.php:290
 msgid "Form ID and form data are required"
 msgstr ""
 
-#: admin/Includes/Api/Entry.php:389
+#: admin/Includes/Api/Endpoints/Entry.php:386
 msgid "Form ID is required"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:119
+#: admin/Includes/ShortCode.php:120
 msgid "Form ID is required."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:485
-msgid "Form Name"
 msgstr ""
 
 #: include/elementor_widgets.php:33 include/ht_form_widgets.php:47
@@ -611,47 +743,49 @@ msgstr ""
 msgid "Form not found"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:541
+#: admin/Includes/ShortCode.php:562
 msgid "Form not found. Please try again."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:56
+#: admin/Includes/Config/Welcome.php:57
 msgid "Form Preview"
 msgstr ""
 
-#: admin/Includes/Mailer.php:105
+#: admin/Includes/Services/Helper.php:364
 msgid "Form Title"
 msgstr ""
 
-#: admin/Includes/Api/Submission.php:217
+#: admin/Includes/Api/Endpoints/Submission.php:215
 msgid "Form validation failed"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:675
+#: admin/Includes/Integrations/Slack.php:170
+#: admin/Includes/Integrations/Discord.php:170
+#, php-format
+msgid "Form: %s"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:676
 msgid "Format"
 msgstr ""
 
-#: admin/Admin.php:63 admin/Includes/PostType.php:22
+#: admin/Admin.php:67 admin/Includes/PostTypes/FormPostType.php:22
 msgid "Forms"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:532
+#: admin/Includes/Config/Field.php:533
 msgid "Four Columns"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:212 admin/Includes/Config/Form.php:214
-msgid "GDPR Agreement"
+#: admin/Includes/Config/Styler.php:1009
+msgid "Gap Between Checkbox & Text"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:382
-msgid "General"
-msgstr ""
-
-#: admin/Includes/Config/Welcome.php:93 admin/Includes/Config/Welcome.php:94
+#: admin/Includes/Config/Welcome.php:94 admin/Includes/Config/Welcome.php:95
 msgid "Get Pro Now"
 msgstr ""
 
-#: admin/Admin.php:73
+#: admin/Admin.php:82
 msgid "Global Settings"
 msgstr ""
 
@@ -659,24 +793,8 @@ msgstr ""
 msgid "Google Place Review"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:778
-msgid "Google reCAPTCHA v2"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:782
-msgid "Google reCAPTCHA v3"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:354
-msgid "Gray"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:352
-msgid "Green"
-msgstr ""
-
-#: admin/Includes/Models/Entries.php:216 admin/Includes/Models/Entries.php:218
-#: admin/Includes/Models/Entries.php:260 admin/Includes/Models/Entries.php:262
+#: admin/Includes/Models/Entries.php:223 admin/Includes/Models/Entries.php:225
+#: admin/Includes/Models/Entries.php:267 admin/Includes/Models/Entries.php:269
 msgid "Guest"
 msgstr ""
 
@@ -707,15 +825,11 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:253
+#: admin/Includes/Config/Field.php:254
 msgid "Help Message"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:696
-msgid "Help Message Placement"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:423
+#: admin/Includes/Config/Field.php:424
 msgid "HH:MM"
 msgstr ""
 
@@ -731,24 +845,12 @@ msgstr ""
 msgid "HT Click To Call"
 msgstr ""
 
-#: admin/Admin.php:48 admin/Admin.php:49
+#: admin/Admin.php:52 admin/Admin.php:53
 msgid "HT Contact Form"
 msgstr ""
 
 #: include/elementor_widgets.php:13
 msgid "HT Contact Form 7"
-msgstr ""
-
-#: contact-form-widget-elementor.php:114
-msgid ""
-"HT Contact Form Addons not working because you need to activate the Contact "
-"Form 7 plugin."
-msgstr ""
-
-#: contact-form-widget-elementor.php:121
-msgid ""
-"HT Contact Form Addons not working because you need to install the Contact "
-"Form 7 plugin"
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:22
@@ -758,6 +860,12 @@ msgid ""
 "generation forms, or feedback collectors, our intuitive drag-and-drop "
 "builder makes it simple. Start creating powerful forms in minutes and watch "
 "your conversion rates soar!"
+msgstr ""
+
+#. Name of the plugin
+msgid ""
+"HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form "
+"Builder."
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:274
@@ -837,24 +945,20 @@ msgid ""
 "Embellish your site with the elements of HT Mega."
 msgstr ""
 
-#. URI of the plugin
-msgid "https://htplugins.com/"
-msgstr ""
-
 #. Author URI of the plugin
 msgid "https://profiles.wordpress.org/htplugins/#content-plugins"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:226
-msgid ""
-"I agree to allow this website to store my submitted information in order to "
-"respond to my inquiry."
+#. URI of the plugin
+msgid "https://theplugindemo.com/ht-contactform/"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:878
-msgid ""
-"If this option is turned on, the user's IP address will not be saved with "
-"the form data."
+#: admin/Includes/Config/Styler.php:312
+msgid "Icon Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:319
+msgid "Icon Size"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:228
@@ -865,16 +969,12 @@ msgid ""
 "Review"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:536
+#: admin/Includes/Config/Field.php:537
 msgid "Inline Layout"
 msgstr ""
 
 #: include/elementor_widgets.php:141
 msgid "Input"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:853
-msgid "Input Mask Incomplete"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:201
@@ -887,7 +987,6 @@ msgid ""
 "update."
 msgstr ""
 
-#: contact-form-widget-elementor.php:122
 #: include/recommended-plugins/class.recommended-plugins.php:267
 msgid "Install Now"
 msgstr ""
@@ -896,12 +995,39 @@ msgstr ""
 msgid "Installing.."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:538
+#: admin/Includes/Api/Endpoints/Integrations.php:198
+#, php-format
+msgid "Integration type \"%s\" is not supported."
+msgstr ""
+
+#: admin/Admin.php:87
+msgid "Integrations"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/Mailchimp.php:143
+msgid ""
+"Invalid API key format. Mailchimp API keys should be in the format \"key-"
+"datacenter\"."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:167
+msgid "Invalid API URL format."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:559
 msgid "Invalid form ID. Please try again."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:532
+#: admin/Includes/ShortCode.php:553
 msgid "Invalid form request. Please try again."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:275
+msgid "Invalid response from ActiveCampaign API. User data not found."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:245
+msgid "Invalid response received from ActiveCampaign API."
 msgstr ""
 
 #: templates/email/email-5.php:122 templates/email/email-4.php:116
@@ -940,37 +1066,51 @@ msgstr ""
 msgid "Label Position"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:206
+#: admin/Includes/Config/Field.php:207
 msgid "Large"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:735
+#: admin/Includes/Config/Field.php:736
 msgid "Last Name"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:513 admin/Includes/Config/Form.php:689
+#: admin/Includes/Config/Field.php:514
 msgid "Layout"
 msgstr ""
 
 #: include/elementor_widgets.php:111 admin/Includes/Config/Field.php:119
-#: admin/Includes/Config/Form.php:363
 msgid "Left"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:499
+#: admin/Includes/Config/Field.php:500
 msgid "Limit the number of selectable options to prevent excessive choices."
 msgstr ""
 
-#: admin/Includes/Mailer.php:224
+#: admin/Includes/Config/Styler.php:134 admin/Includes/Config/Styler.php:210
+#: admin/Includes/Config/Styler.php:302 admin/Includes/Config/Styler.php:428
+#: admin/Includes/Config/Styler.php:594 admin/Includes/Config/Styler.php:829
+#: admin/Includes/Config/Styler.php:1232
+msgid "Line Height"
+msgstr ""
+
+#: admin/Includes/Services/Helper.php:483
 msgid "Login URL"
 msgstr ""
 
-#: admin/Includes/Mailer.php:231
+#: admin/Includes/Services/Helper.php:490
 msgid "Logout URL"
 msgstr ""
 
-#: admin/Includes/Mailer.php:245
+#: admin/Includes/Services/Helper.php:504
 msgid "Lost Password URL"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/Mailchimp.php:182
+msgid "Mailchimp API connection successful."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:144
+msgid "MailerLite API connection successful."
 msgstr ""
 
 #: include/elementor_widgets.php:84 include/elementor_widgets.php:291
@@ -979,64 +1119,39 @@ msgstr ""
 msgid "Margin"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:393 admin/Includes/Config/Form.php:99
+#: admin/Includes/Config/Field.php:394
 msgid "Mask"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:97 admin/Includes/Config/Form.php:100
-msgid "Mask Input"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:498
+#: admin/Includes/Config/Field.php:499
 msgid "Max Selection"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:348
+#: admin/Includes/Config/Field.php:349
 msgid "Max text length"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:573
+#: admin/Includes/Config/Field.php:574
 msgid "Max Value"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:865
-msgid "Maximum Number"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:202
+#: admin/Includes/Config/Field.php:203
 msgid "Medium"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:78 admin/Includes/Config/Form.php:79
-#: admin/Includes/Config/Form.php:584
-msgid "Message"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:270
+#: admin/Includes/Config/Field.php:271
 msgid "Message Position"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:727
+#: admin/Includes/Config/Field.php:728
 msgid "Middle Name"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:556
+#: admin/Includes/Config/Field.php:557
 msgid "Min Value"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:859
-msgid "Minimum Number"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:425
-msgid "Minimum Time to Submit (Seconds)"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:873
-msgid "Miscellaneous"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:407
+#: admin/Includes/Config/Field.php:408
 msgid "MM/DD/YYYY"
 msgstr ""
 
@@ -1059,47 +1174,43 @@ msgid ""
 "switch to their preferred currency or their country’s currency."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:481
+#: admin/Includes/Config/Field.php:482
 msgid "Multiple"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:141 admin/Includes/Config/Form.php:143
-#: admin/Includes/Config/Form.php:144
-msgid "Multiple Choices"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:711 admin/Includes/Config/Form.php:60
-#: admin/Includes/Config/Form.php:62
+#: admin/Includes/Config/Field.php:712
 msgid "Name"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:331
+#: admin/Includes/Config/Field.php:332
 msgid "Name Attribute"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:706
+#: admin/Includes/Config/Field.php:707
 msgid "Names"
 msgstr ""
 
-#: admin/Admin.php:68
+#: admin/Includes/Integrations/Slack.php:152
+#: admin/Includes/Integrations/Discord.php:152
+#, php-format
+msgid "New entry submitted on %s"
+msgstr ""
+
+#: admin/Admin.php:72
 msgid "New Form"
 msgstr ""
 
 #. %s: form title
-#: admin/Includes/Mailer.php:326
+#: admin/Includes/Services/Mailer.php:95
 #, php-format
 msgid "New Form Entry - %s"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:471
-msgid "New Form Entry - {form_title}"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:281 admin/Includes/Config/Form.php:703
+#: admin/Includes/Config/Field.php:282
 msgid "Next to Label as Tooltip"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:399
+#: admin/Includes/Config/Field.php:400
 msgid "None"
 msgstr ""
 
@@ -1107,35 +1218,28 @@ msgstr ""
 msgid "Normal"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:444
-msgid "Notification"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:501
-msgid ""
-"Notifications can only use 1 From Email. Please do not enter multiple "
-"addresses."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:187 admin/Includes/Config/Form.php:189
-#: admin/Includes/Config/Form.php:190 admin/Includes/Config/Form.php:847
-msgid "Number"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:520
+#: admin/Includes/Config/Field.php:521
 msgid "One Column"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:644
-msgid "Open confirmation in new tab"
+#: admin/Includes/Config/Styler.php:865
+msgid "Option Highlighted Background"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:443
+#: admin/Includes/Config/Styler.php:858
+msgid "Option Highlighted Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:851
+msgid "Option Selected Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:844
+msgid "Option Selected Color"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:444
 msgid "Options"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:353
-msgid "Orange"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:262
@@ -1148,6 +1252,14 @@ msgstr ""
 msgid "Padding"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:880
+msgid "Pill Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:872
+msgid "Pill Color"
+msgstr ""
+
 #: include/elementor_widgets.php:216 include/elementor_widgets.php:370
 msgid "Placeholder Color"
 msgstr ""
@@ -1156,35 +1268,35 @@ msgstr ""
 msgid "Placeholder Text"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:553 admin/Includes/Helper.php:240
+#: admin/Includes/ShortCode.php:574 admin/Includes/Services/Helper.php:284
 msgid "Please complete the reCAPTCHA challenge."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:613 admin/Includes/Config/Form.php:843
+#: admin/Includes/ShortCode.php:655
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:617 admin/Includes/Config/Form.php:849
+#: admin/Includes/ShortCode.php:660
 msgid "Please enter a valid number."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:620
+#: admin/Includes/ShortCode.php:657
+msgid "Please enter a valid phone number."
+msgstr ""
+
+#: admin/Includes/ShortCode.php:663
 msgid "Please enter a valid URL."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:855
-msgid "Please enter a valid {format} format"
-msgstr ""
-
-#: admin/Includes/ShortCode.php:614
+#: admin/Includes/ShortCode.php:656
 msgid "Please enter a valid {format} format."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:357
+#: admin/Includes/ShortCode.php:375
 msgid "Please leave this field empty"
 msgstr ""
 
-#: blocks/block-init.php:295 blocks/block-init.php:310
+#: blocks/block-init.php:294 blocks/block-init.php:309
 msgid "Please Select a contact form."
 msgstr ""
 
@@ -1200,12 +1312,20 @@ msgstr ""
 msgid "Plugin Successfully Activated"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:84
+#: admin/Includes/Config/Welcome.php:85
 msgid "Popup Form Response"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:301
+#: admin/Includes/Config/Field.php:302
 msgid "Prefix Label"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:503
+msgid "Prefix/Suffix Background Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:496
+msgid "Prefix/Suffix Color"
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:142
@@ -1216,7 +1336,7 @@ msgstr ""
 msgid "Preview Link Generator"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:57
+#: admin/Includes/Config/Welcome.php:58
 msgid "Preview your form to ensure it looks and functions as expected."
 msgstr ""
 
@@ -1224,7 +1344,7 @@ msgstr ""
 msgid "Product Variation Swatches"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:255
+#: admin/Includes/Config/Field.php:256
 msgid ""
 "Provide additional guidance that is displayed as a tooltip or below the "
 "field."
@@ -1234,16 +1354,21 @@ msgstr ""
 msgid "Provide placeholder text that is visible when the field is empty."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:79
+#: admin/Includes/Config/Welcome.php:80
 msgid "Purchase CF7 Pro Extensions"
 msgstr ""
 
-#: admin/Includes/Mailer.php:140
+#: admin/Includes/Services/Helper.php:399
 msgid "Query String Variable"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:298
 msgid "QuickSwish"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:239 admin/Includes/Config/Styler.php:347
+#: admin/Includes/Config/Styler.php:631 admin/Includes/Config/Styler.php:1151
+msgid "Radius"
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:29
@@ -1254,29 +1379,20 @@ msgstr ""
 msgid "Really Simple Google Tag Manager"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:236 admin/Includes/Config/Form.php:767
-msgid "reCAPTCHA"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:240
-msgid ""
-"reCAPTCHA is not configured, please configure it in Global Settings > Captcha"
-msgstr ""
-
-#: admin/Includes/Helper.php:292
+#: admin/Includes/Services/Helper.php:336
 msgid "reCAPTCHA is not configured."
 msgstr ""
 
-#: admin/Includes/Fields.php:720
+#: admin/Includes/UI/Fields.php:1165
 msgid "reCAPTCHA site key is not configured."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:559 admin/Includes/Helper.php:274
-#: admin/Includes/Helper.php:283
+#: admin/Includes/ShortCode.php:580 admin/Includes/Services/Helper.php:318
+#: admin/Includes/Services/Helper.php:327
 msgid "reCAPTCHA verification failed. Please try again."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:52
+#: admin/Includes/Config/Welcome.php:53
 msgid "Receive email notifications when form submissions are received."
 msgstr ""
 
@@ -1288,177 +1404,128 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:351
-msgid "Red"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:588
-msgid "Redirect"
-msgstr ""
-
-#: admin/Includes/Mailer.php:217
+#: admin/Includes/Services/Helper.php:476
 msgid "Referrer URL"
 msgstr ""
 
-#: admin/Includes/Mailer.php:238
+#: admin/Includes/Services/Helper.php:497
 msgid "Register URL"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:83
+#: admin/Includes/Config/Welcome.php:84
 msgid "Repeater Field"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:516
-msgid "Reply To"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:149 admin/Includes/Config/Form.php:835
+#: admin/Includes/Config/Field.php:150
 msgid "Required"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:165 admin/Includes/Config/Form.php:217
+#: admin/Includes/Config/Field.php:166
 msgid "Required Error Message"
 msgstr ""
 
 #: include/elementor_widgets.php:119 admin/Includes/Config/Field.php:111
-#: admin/Includes/Config/Form.php:365
 msgid "Right"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:363
+#: admin/Includes/Config/Field.php:364
 msgid "Rows"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:394
-msgid "Save all form submission data to the database for later reference."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:464
+#: admin/Includes/Config/Field.php:465
 msgid "Searchable"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:814
-msgid "Secret Key"
-msgstr ""
-
-#: admin/Includes/ShortCode.php:535
+#: admin/Includes/ShortCode.php:556
 msgid "Security check failed. Please try again."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:346
-msgid "Select a button style from the dropdown"
 msgstr ""
 
 #: include/elementor_widgets.php:49 include/ht_form_widgets.php:63
 msgid "Select Form"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:677 admin/Includes/Config/Field.php:708
+#: admin/Includes/Config/Field.php:678 admin/Includes/Config/Field.php:709
 msgid "Select format to use for the name form field."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:736
-msgid "Select Template"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:454
-msgid "Send To Email"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:419 admin/Includes/Config/Form.php:426
-msgid ""
-"Set a minimum amount of time a user must spend on a form before submitting."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:332
+#: admin/Includes/Config/Field.php:333
 msgid ""
 "Set a unique name attribute for the field to be used during form submission."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:364
+#: admin/Includes/Config/Field.php:365
 msgid "Set the number of rows for the textarea element to control its height."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:714
-msgid "Set the placement of error messages for form fields."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:697
-msgid "Set the placement of help messages for form fields."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:593
+#: admin/Includes/Config/Field.php:594
 msgid "Set the step increment for numerical input control."
 msgstr ""
 
-#: admin/Includes/Api/Settings.php:164
+#: admin/Includes/Api/Endpoints/Settings.php:161
+#: admin/Includes/Api/Endpoints/Integrations.php:160
+#: admin/Includes/Api/Endpoints/Integrations.php:188
 msgid "Settings must be an object."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:592
-msgid "Show Page"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:660
+#: admin/Includes/Config/Field.php:661
 msgid "Show the current slider value in real-time beneath the slider control."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:682
+#: admin/Includes/Config/Field.php:683
 msgid "Simple"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:37
-msgid "Simple Text"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:322
 msgid "Sirve – Simple Directory Listing"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:799
-msgid "Site Key"
-msgstr ""
-
-#: admin/Includes/Mailer.php:252
+#: admin/Includes/Services/Helper.php:511
 msgid "Site Title"
 msgstr ""
 
-#: admin/Includes/Mailer.php:259
+#: admin/Includes/Services/Helper.php:518
 msgid "Site URL"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:305 admin/Includes/Config/Form.php:307
-#: admin/Includes/Config/Form.php:308
-msgid "Slider"
+#: admin/Includes/Integrations/Slack.php:116
+#, php-format
+msgid "Slack webhook error: %s"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:198
+#: admin/Includes/Integrations/Slack.php:126
+#, php-format
+msgid "Slack webhook returned error code: %s"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:199
 msgid "Small"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:547 admin/Includes/Api/Submission.php:145
+#: admin/Includes/Config/Styler.php:453 admin/Includes/Config/Styler.php:665
+#: admin/Includes/Config/Styler.php:1033 admin/Includes/Config/Styler.php:1257
+msgid "Solid"
+msgstr ""
+
+#: admin/Includes/ShortCode.php:568
+#: admin/Includes/Api/Endpoints/Submission.php:143
 msgid "Spam detected. Please try again."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:407
-msgid "Spam Protection"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:239
+#: admin/Includes/Config/Field.php:240
 msgid "Specify a CSS class for custom styling of the field element."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:515
+#: admin/Includes/Config/Field.php:516
 msgid "Specify the layout style for arranging the field options or appearance."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:379
+#: admin/Includes/Config/Field.php:380
 msgid ""
 "Specify the number of columns for the textarea element to determine its "
 "width."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:272
+#: admin/Includes/Config/Field.php:273
 msgid "Specify the position for the field help message."
 msgstr ""
 
@@ -1466,12 +1533,8 @@ msgstr ""
 msgid "Specify the position for the field label relative to the input area."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:590
+#: admin/Includes/Config/Field.php:591
 msgid "Step"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:393
-msgid "Store Submissions"
 msgstr ""
 
 #: include/elementor_widgets.php:63
@@ -1482,16 +1545,13 @@ msgstr ""
 msgid "Submission Details"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:544 admin/Includes/Api/Submission.php:170
+#: admin/Includes/ShortCode.php:565
+#: admin/Includes/Api/Endpoints/Submission.php:168
 msgid "Submission was too quick. Please wait a moment and try again."
 msgstr ""
 
-#: admin/Includes/Fields.php:701 admin/Includes/Config/Form.php:339
+#: admin/Includes/UI/Fields.php:1146
 msgid "Submit"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:335
-msgid "Submit Button"
 msgstr ""
 
 #: templates/email/email-4.php:110 templates/email/email-3.php:95
@@ -1499,53 +1559,54 @@ msgstr ""
 msgid "Submitted on"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:316
+#: admin/Includes/Config/Field.php:317
 msgid "Suffix Label"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:548
-msgid "Template"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:553 admin/Includes/Config/Form.php:740
-msgid "Template 1"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:554 admin/Includes/Config/Form.php:741
-msgid "Template 2"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:555 admin/Includes/Config/Form.php:742
-msgid "Template 3"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:556 admin/Includes/Config/Form.php:743
-msgid "Template 4"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:557 admin/Includes/Config/Form.php:744
-msgid "Template 5"
+#: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:465
+msgid "Tags added successfully."
 msgstr ""
 
 #: include/elementor_widgets.php:199 include/elementor_widgets.php:359
 #: include/elementor_widgets.php:452 include/elementor_widgets.php:565
-#: include/elementor_widgets.php:653
+#: include/elementor_widgets.php:653 admin/Includes/Config/Styler.php:750
+#: admin/Includes/Config/Styler.php:893
 msgid "Text Color"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:317
+#: admin/Includes/Config/Styler.php:757 admin/Includes/Config/Styler.php:900
+msgid "Text Font Size"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:775 admin/Includes/Config/Styler.php:918
+msgid "Text Font Size (Large)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:766 admin/Includes/Config/Styler.php:909
+msgid "Text Font Size (Small)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:784 admin/Includes/Config/Styler.php:927
+msgid "Text Font Weight"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:972
+msgid "Text Line Height"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:318
 msgid "Text to display after the field input, serving as a suffix."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:302
+#: admin/Includes/Config/Field.php:303
 msgid "Text to display before the field input, serving as a prefix."
 msgstr ""
 
-#: include/elementor_widgets.php:313 admin/Includes/Config/Form.php:76
+#: include/elementor_widgets.php:313
 msgid "Textarea"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:516 admin/Includes/Config/Form.php:600
+#: admin/Includes/ShortCode.php:537
 msgid "Thanks for contacting us! We will be in touch with you shortly."
 msgstr ""
 
@@ -1555,93 +1616,52 @@ msgid ""
 "WordPress."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:167 admin/Includes/Config/Field.php:716
-#: admin/Includes/Config/Field.php:724 admin/Includes/Config/Field.php:732
-#: admin/Includes/Config/Field.php:740 admin/Includes/Config/Form.php:219
+#: admin/Includes/Config/Field.php:168 admin/Includes/Config/Field.php:717
+#: admin/Includes/Config/Field.php:725 admin/Includes/Config/Field.php:733
+#: admin/Includes/Config/Field.php:741
 msgid "This field is required"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:618 admin/Includes/Config/Form.php:837
+#: admin/Includes/ShortCode.php:661
 msgid "This field is required."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:263
-msgid "This field must contain a valid email"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:64
 msgid "This is the field title the user will see when filling out the form."
 msgstr ""
 
-#: admin/Includes/Config/Form.php:842
-msgid "This message will be shown if validation fails for email field."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:262
-msgid ""
-"This message will be shown if validation fails for Email. Leave empty to use "
-"global message. Configure Global Message from: Global settings > Validation "
-"Messages"
-msgstr ""
-
-#: admin/Includes/Config/Form.php:854
-msgid ""
-"This message will be shown if validation fails for input mask field. {format}"
-" will be replaced with the actual format."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:866
-msgid ""
-"This message will be shown if validation fails for number field maximum "
-"value."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:860
-msgid ""
-"This message will be shown if validation fails for number field minimum "
-"value."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:848
-msgid "This message will be shown if validation fails for number field."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:836
-msgid "This message will be shown if validation fails for required field."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:166 admin/Includes/Config/Form.php:218
+#: admin/Includes/Config/Field.php:167
 msgid ""
 "This message will be shown if validation fails for Required. Leave empty to "
 "use global message. Configure Global Message from: Global settings > "
 "Validation Messages"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:225
-msgid "This message will be shown with GDPR agreement checkbox."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:750
-msgid "This text will be added at the end of the email content."
-msgstr ""
-
-#: admin/Includes/Config/Field.php:528
+#: admin/Includes/Config/Field.php:529
 msgid "Three Columns"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:733
+msgid "Thumb Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:740
+msgid "Thumb Radius"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:81
 msgid "Toggle this switch to hide the field label from display."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:483
+#: admin/Includes/Config/Field.php:484
 msgid "Toggle to allow multiple selections within the field."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:466
+#: admin/Includes/Config/Field.php:467
 msgid "Toggle to enable search functionality within this field."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:151
+#: admin/Includes/Config/Field.php:152
 msgid "Toggle to mark the field as mandatory for form submission."
 msgstr ""
 
@@ -1649,59 +1669,64 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:42
+#: admin/Includes/Config/Welcome.php:43
 msgid "Track and manage all form submissions in one convenient dashboard."
 msgstr ""
 
-#: admin/Includes/Config/Field.php:524
+#: admin/Includes/Config/Field.php:525
 msgid "Two Columns"
 msgstr ""
 
-#: admin/Includes/Models/Form.php:138 admin/Includes/Api/Form.php:197
+#: admin/Includes/Api/Endpoints/Integrations/Mailchimp.php:185
+msgid "Unknown error occurred."
+msgstr ""
+
+#: admin/Includes/Integrations/Slack.php:151
+#: admin/Includes/Integrations/Discord.php:151
+msgid "Unknown Form"
+msgstr ""
+
+#: admin/Includes/Models/Form.php:143 admin/Includes/Api/Endpoints/Form.php:215
 msgid "Untitled Form"
 msgstr ""
 
-#: admin/Includes/Mailer.php:154
+#: admin/Includes/Services/Helper.php:413
 msgid "User Display Name"
 msgstr ""
 
-#: admin/Includes/Mailer.php:182
+#: admin/Includes/Services/Helper.php:441
 msgid "User Email"
 msgstr ""
 
-#: admin/Includes/Mailer.php:168
+#: admin/Includes/Services/Helper.php:427
 msgid "User First Name"
 msgstr ""
 
-#: admin/Includes/Mailer.php:161
+#: admin/Includes/Services/Helper.php:420
 msgid "User Full Name"
 msgstr ""
 
-#: admin/Includes/Mailer.php:147
+#: admin/Includes/Services/Helper.php:406
 msgid "User ID"
 msgstr ""
 
-#: admin/Includes/Mailer.php:175
+#: admin/Includes/Services/Helper.php:434
 msgid "User Last Name"
 msgstr ""
 
-#: admin/Includes/Mailer.php:189
+#: admin/Includes/Services/Helper.php:448
 msgid "User Meta"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:641
+#: admin/Includes/Config/Field.php:642
 msgid "Validate as unique"
 msgstr ""
 
-#: admin/Includes/Config/Field.php:624
+#: admin/Includes/Config/Field.php:625
 msgid "Validate Email"
 msgstr ""
 
-#: admin/Includes/Config/Form.php:831
-msgid "Validation Messages"
-msgstr ""
-
-#: admin/Includes/Config/Field.php:658
+#: admin/Includes/Config/Field.php:659
 msgid "Value Display"
 msgstr ""
 
@@ -1724,7 +1749,7 @@ msgstr ""
 msgid "WC Sales Notification"
 msgstr ""
 
-#: admin/Admin.php:58
+#: admin/Admin.php:62
 msgid "Welcome"
 msgstr ""
 
@@ -1785,36 +1810,28 @@ msgid ""
 "your WordPress site to improve the overall site performance."
 msgstr ""
 
-#: admin/Includes/Api/Settings.php:101
+#: admin/Includes/Api/Endpoints/Integrations.php:122
+msgid "You do not have permission to manage integrations."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Settings.php:98
 msgid "You do not have permission to manage settings."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:612
+#: admin/Includes/ShortCode.php:654
 msgid "You have exceeded the number of allowed characters."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:615
+#: admin/Includes/ShortCode.php:658
 msgid "You have exceeded the number of allowed maximum."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:616
+#: admin/Includes/ShortCode.php:659
 msgid "You have exceeded the number of allowed minimum."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:619
+#: admin/Includes/ShortCode.php:662
 msgid "You have exceeded the number of allowed selections."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:867
-msgid ""
-"You have exceeded the number of allowed {max}. {max} will be replaced with "
-"the field maximum value."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:861
-msgid ""
-"You have exceeded the number of allowed {min}. {min} will be replaced with "
-"the field minimum value."
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:111
@@ -1823,8 +1840,4 @@ msgstr ""
 
 #: templates/email/email-4.php:47
 msgid "You've received a new message from your website contact form."
-msgstr ""
-
-#: admin/Includes/Config/Form.php:533
-msgid "{all_fields}"
 msgstr ""

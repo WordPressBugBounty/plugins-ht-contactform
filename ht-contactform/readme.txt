@@ -1,9 +1,9 @@
 === HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form Builder. ===
 Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
-Tags: Contact Form, Elementor, Contact Form 7, Contact Form 7 Widget, Gutenberg Blocks
+Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -156,19 +156,22 @@ Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
 
+= Version: 2.2.1 - Date: 09-Jul-2025 =
+* Updated language translation file: ht-contactform.pot
+
 = Version: 2.2.0 - Date: 23-Jun-2025 =
-* Added: New Phone field with auto country code.
-* Added: New Address field with autocomplete.
-* Added: New Country List field with autocomplete.
-* Added: New File Upload field.
-* Added: New Password field.
-* Added: New Date/Calendar Picker field.
-* Added: New per-form design settings to customize styling individually.
-* Added: New MailChimp Integrations.
-* Added: New Slack Integrations.
-* Added: New Discord Integrations.
-* Added: New ActiveCampaign Integrations.
-* Added: New MailerLite Integrations.
+* Added: Phone field with auto country code.
+* Added: Address field with autocomplete.
+* Added: Country List field with autocomplete.
+* Added: File Upload field.
+* Added: Password field.
+* Added: Date/Calendar Picker field.
+* Added: per-form design settings to customize styling individually.
+* Added: MailChimp Integrations.
+* Added: Slack Integrations.
+* Added: Discord Integrations.
+* Added: ActiveCampaign Integrations.
+* Added: MailerLite Integrations.
 
 = Version: 2.1.0 - Date: 13-May-2025 =
 * Added: New Entries page to view all form submissions in one place.

@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,6 +155,10 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.2.2 - Date: 10-Jul-2025 =
+* Improved: File upload handling by adding file type validation.
+* Fixed: File name sanitization issue in file upload field.
 
 = Version: 2.2.1 - Date: 09-Jul-2025 =
 * Updated language translation file: ht-contactform.pot

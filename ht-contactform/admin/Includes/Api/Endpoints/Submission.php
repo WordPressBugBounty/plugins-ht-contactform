@@ -447,6 +447,7 @@ class Submission {
                 $files = $form_data[$field['settings']['name_attribute']];
                 if (!empty($files)) {
                     foreach ($files as $key => $file) {
+                        $file = sanitize_file_name($file);
                         $form_data[$field['settings']['name_attribute']][$key] = $this->upload_file($file, $destination);
                     }
                 }

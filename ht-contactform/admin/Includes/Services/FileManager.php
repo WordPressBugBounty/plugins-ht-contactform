@@ -76,6 +76,13 @@ class FileManager {
         $filename = $this->process_filename($file['name']);
         $file_path = "{$destination}/$filename";
         
+        // File type validation check
+        $validate = wp_check_filetype( $filename );
+        if ($validate['type'] === false) {
+            wp_send_json_error('Invalid file type.');
+            return;
+        }
+        
         // Check if directory is writable
         if (!is_writable($destination)) {
             wp_send_json_error("Directory is not writable: {$destination}");
@@ -142,6 +149,7 @@ class FileManager {
                 'message' => $error_message
             ];
         }
+
         return ['valid' => true];
     }
 

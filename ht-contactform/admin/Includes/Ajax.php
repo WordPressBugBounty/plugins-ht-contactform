@@ -74,7 +74,7 @@ class Ajax {
     public function temp_file_delete() {
         check_ajax_referer('ht_form_ajax_nonce', '_wpnonce');
     
-        $file_id = isset($_POST['ht_form_file_id']) ? sanitize_text_field(wp_unslash($_POST['ht_form_file_id'])) : '';
+        $file_id = isset($_POST['ht_form_file_id']) ? sanitize_file_name(wp_unslash($_POST['ht_form_file_id'])) : '';
         if (!$file_id) {
             wp_send_json_error('No file ID provided');
         }

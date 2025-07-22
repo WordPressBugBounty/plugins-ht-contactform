@@ -111,6 +111,13 @@
     --ht-date-time-selected-border-color: var(--ht-primary);
     --ht-date-time-selected-color: var(--white);
 
+    /* Ratings */
+    --ht-ratings-size: 20px;
+    --ht-ratings-size-sm: 16px;
+    --ht-ratings-size-lg: 24px;
+    --ht-ratings-color: #ced4da;
+    --ht-ratings-color-active: #fab005;
+
     /* Field Error */
     --ht-field-error-color: #ef4444;
     --ht-field-error-border-color: #ef4444;
@@ -249,6 +256,7 @@
     flex-direction: row;
     flex: 1;
     flex-wrap: wrap;
+    position: relative;
 }
 
 /* Help Message */
@@ -1120,34 +1128,34 @@
 }
 
 /* Address */
-.ht-form-elem-address {
+.ht-form-elem .ht-form-elem-address {
     flex-direction: row;
     flex-wrap: wrap;
 }
-.ht-form-elem-address .ht-form-elem{
+.ht-form-elem .ht-form-elem-address .ht-form-elem{
     max-width: calc(50% - 10px);
     width: 100%;
 }
 @media only screen and (max-width: 555px) {
-    .ht-form-elem-address {
+    .ht-form-elem .ht-form-elem-address {
         flex-direction: column;
     }
-    .ht-form-elem-address .ht-form-elem{
+    .ht-form-elem .ht-form-elem-address .ht-form-elem{
         max-width: 100%;
     }
 }
 
 /* File Upload */
-.ht-form-elem-file-upload {
+.ht-form-elem .ht-form-elem-file-upload {
     width: 100%;
 }
-.ht-form-elem-file-upload .filepond--drop-label label {
+.ht-form-elem .ht-form-elem-file-upload .filepond--drop-label label {
     color: var(--ht-field-color);
 }
-.ht-form-elem-file-upload .filepond--root {
+.ht-form-elem .ht-form-elem-file-upload .filepond--root {
     margin-bottom: 0;
 }
-.ht-form-elem-file-upload .filepond--panel-root {
+.ht-form-elem .ht-form-elem-file-upload .filepond--panel-root {
     background-color: var(--ht-field-bg-color);
     border: var(--ht-field-border-width) var(--ht-field-border-style) var(--ht-field-border-color);
     border-radius: var(--ht-field-radius);
@@ -1155,4 +1163,83 @@
 
 span.filepond-extra-info {
     font-size: 12px;
+}
+
+/* Image Upload */
+.ht-form-elem .ht-form-elem-image-upload {
+    width: 100%;
+}
+.ht-form-elem .ht-form-elem-image-upload .filepond--drop-label label {
+    color: var(--ht-field-color);
+}
+.ht-form-elem .ht-form-elem-image-upload .filepond--root {
+    margin-bottom: 0;
+}
+.ht-form-elem .ht-form-elem-image-upload .filepond--panel-root {
+    background-color: var(--ht-field-bg-color);
+    border: var(--ht-field-border-width) var(--ht-field-border-style) var(--ht-field-border-color);
+    border-radius: var(--ht-field-radius);
+}
+
+/* Ratings */
+.ht-form-elem .ht-form-elem-ratings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+.ht-form-elem .ht-form-elem-ratings label {
+    display: flex;
+    margin: 0;
+    position: relative;
+}
+.ht-form-elem .ht-form-elem-ratings label[data-tooltip]::before {
+    content: attr(data-tooltip);
+    display: block;
+    margin: 0;
+    position: absolute;
+    bottom: calc(100% + 3px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--white);
+    background-color: var(--black);
+    padding: 1px 7px;
+    border-radius: 3px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.ht-form-elem .ht-form-elem-ratings label:hover[data-tooltip]::before {
+    opacity: 1;
+    visibility: visible;
+}
+.ht-form-elem .ht-form-elem-ratings input[type="radio"] {
+    position: absolute;
+    left: -99999px;
+    top: -99999px;
+    opacity: 0;
+    visibility: hidden;
+}
+.ht-form-elem .ht-form-elem-ratings label svg {
+    width: var(--ht-ratings-size);
+    height: var(--ht-ratings-size);
+    color: var(--ht-ratings-color);
+}
+.ht-form-elem .ht-form-elem-ratings label.active svg {
+    color: var(--ht-ratings-color-active);
+}
+
+/* Size Ratings */
+.ht-form-elem.ht-form-elem-small .ht-form-elem-ratings label svg {
+    width: var(--ht-ratings-size-sm);
+    height: var(--ht-ratings-size-sm);
+}
+.ht-form-elem.ht-form-elem-large .ht-form-elem-ratings label svg {
+    width: var(--ht-ratings-size-lg);
+    height: var(--ht-ratings-size-lg);
 }

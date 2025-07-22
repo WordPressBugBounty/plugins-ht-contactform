@@ -241,7 +241,8 @@ class Helper {
      * @return mixed Geolocation data or false on error
      */
     public static function get_geolocation_data($ip, $key = null) {
-        $api_url = "https://ipinfo.io/{$ip}/json";
+        // $api_url = "https://ipinfo.io/{$ip}/json";
+        $api_url = "https://ipinfo.io/?token=c97c286aac0e17";
         $response = wp_remote_get($api_url);
         if (is_wp_error($response)) {
             return false;
@@ -558,7 +559,9 @@ class Helper {
             foreach($matches as $match) {
                 $placeholder = $match[0]; // Full match like {input.name}
                 $field_name = $match[1]; // Captured group like "name"
-                $field_sub_name = $match[2]; // Captured group like "first_name"
+                if(isset($match[2])) {
+                    $field_sub_name = $match[2]; // Captured group like "first_name"
+                }
                 if(isset($form_data[$field_name])) {
                     $replacement = $form_data[$field_name];
                     if(is_array($replacement)) {

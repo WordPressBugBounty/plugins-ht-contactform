@@ -445,7 +445,7 @@ class Field {
             'type' => 'repeater',
             'info' => __('Define selectable options with visual cues for default selection.', 'ht-contactform'),
             'option_type' =>  $args['option_type'] ?? 'radio',
-            'value' => [
+            'value' => $args['value'] ?? [
                 [ 'label' => "First Option", 'value' => "first_option", 'selected' => false ],
                 [ 'label' => "Second Option", 'value' => "second_option", 'selected' => false ]
             ],
@@ -743,6 +743,90 @@ class Field {
             ],
             'disabled' => $args['disabled'] ?? false,
             'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Field Enable Condition Option
+     * @param array $args
+     * @return array{value: mixed, id: string, info: string, label: string, type: string}
+     */
+    public function enable_condition(array $args = []) {
+        return $this->create([
+            'id' => 'enable_condition',    
+            'label' => __('Enable Condition', 'ht-contactform'),
+            'type' => 'switch',
+            'info' => __('Enable condition to control field visibility based on other field values.', 'ht-contactform'),
+            'value' => false,
+            'disabled' => $args['disabled'] ?? false,
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Field Conditional Match Option
+     * @param array $args
+     * @return array{value: mixed, id: string, info: string, label: string, type: string}
+     */
+    public function conditional_match(array $args = []) {
+        return $this->create([
+            'id' => 'conditional_match',    
+            'label' => __('Conditional Match', 'ht-contactform'),
+            'type' => 'radio',
+            'info' => __('Select the type of match to apply for conditional logic.', 'ht-contactform'),
+            'value' => 'all',
+            'options' => [
+                [
+                    'value' => 'all',
+                    'label' => __('All', 'ht-contactform'),
+                ],
+                [
+                    'value' => 'any',
+                    'label' => __('Any', 'ht-contactform'),
+                ],
+            ],
+            'disabled' => $args['disabled'] ?? false,
+            'dependency' => $args['dependency'] ?? [
+                'relation' => 'AND',
+                'rules' => [
+                    [
+                        'id' => 'enable_condition',
+                        'compare' => '==',
+                        'value' => true,
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * Field Conditional Logic Option
+     * @param array $args
+     * @return array{value: mixed, id: string, info: string, label: string, type: string}
+     */
+    public function conditional_logic(array $args = []) {
+        return $this->create([
+            'id' => 'conditional_logic',
+            // 'type' => 'select',
+            'type' => 'cl_repeater',
+            'value' => [
+                [
+                    'field' => '',
+                    'operator' => '==',
+                    'value' => '',
+                ]
+            ],
+            'disabled' => $args['disabled'] ?? false,
+            'dependency' => $args['dependency'] ?? [
+                'relation' => 'AND',
+                'rules' => [
+                    [
+                        'id' => 'enable_condition',
+                        'value' => true,
+                        'compare' => '==',
+                    ],
+                ],
+            ],
         ]);
     }
 }

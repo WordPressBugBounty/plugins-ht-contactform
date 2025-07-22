@@ -5,7 +5,7 @@
  * Plugin URI:  https://theplugindemo.com/ht-contactform/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     2.2.2
+ * Version:     2.3.0
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
@@ -15,12 +15,13 @@
 */
 
 use HTContactFormAdmin\Admin;
+use HTContactForm\Base;
 
 if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '2.2.2' );
+define( 'HTCONTACTFORM_VERSION', '2.3.0' );
 define( 'HTCONTACTFORM_PL_ROOT', __FILE__ );
 define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', HTCONTACTFORM_PL_ROOT ) );
 define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( HTCONTACTFORM_PL_ROOT ) );
@@ -96,6 +97,7 @@ class HT_FORM_BUILDER {
         add_action('init', function() {
             include HTCONTACTFORM_PL_PATH . 'include/recommended-plugins/recommended-plugins.php';
             Admin::get_instance();
+            Base::get_instance();
         });
 
     }
@@ -105,8 +107,8 @@ class HT_FORM_BUILDER {
      * @return void
      */
     public function elementor_widgets() {
-        include HTCONTACTFORM_PL_PATH . 'include/elementor_widgets.php';
-        include HTCONTACTFORM_PL_PATH . 'include/ht_form_widgets.php';
+        include HTCONTACTFORM_PL_PATH . 'include/Widgets/elementor_widgets.php';
+        include HTCONTACTFORM_PL_PATH . 'include/Widgets/ht_form_widgets.php';
     }
     
     /**
@@ -211,12 +213,12 @@ class HT_FORM_BUILDER {
                 true
             );
         }
-        wp_register_style('ht-form-filepond', 'https://unpkg.com/filepond/dist/filepond.css');
-        wp_register_style('ht-form-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.css');
-        wp_register_script('ht-form-filepond', 'https://unpkg.com/filepond/dist/filepond.js', [], null, true);
-        wp_register_script('ht-form-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.js', [], null, true);
-        wp_register_script('ht-form-filepond-size-validate', 'https://unpkg.com/filepond-plugin-file-validate-size@2.2.8/dist/filepond-plugin-file-validate-size.min.js', [], null, true);
-        wp_register_script('ht-form-filepond-type-validate', 'https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js', [], null, true);
+        wp_register_style('ht-filepond', 'https://unpkg.com/filepond/dist/filepond.css');
+        wp_register_style('ht-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.css');
+        wp_register_script('ht-filepond', 'https://unpkg.com/filepond/dist/filepond.js', [], null, true);
+        wp_register_script('ht-filepond-preview', 'https://unpkg.com/filepond-plugin-image-preview@4.6.12/dist/filepond-plugin-image-preview.min.js', [], null, true);
+        wp_register_script('ht-filepond-size-validate', 'https://unpkg.com/filepond-plugin-file-validate-size@2.2.8/dist/filepond-plugin-file-validate-size.min.js', [], null, true);
+        wp_register_script('ht-filepond-type-validate', 'https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js', [], null, true);
         wp_register_script(
             'ht-form',
             HTCONTACTFORM_PL_URL . 'assets/js/form.js',

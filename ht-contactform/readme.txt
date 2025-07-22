@@ -1,9 +1,10 @@
 === HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form Builder. ===
 Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: Contact Form, Form Builder, Forms, Custom Form, form
+Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.2.2
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +49,10 @@ A few helpful links here to get started 👇
 ⚡ **Pre-Filled Field Support** – Set default field values or leverage Smart Tags that dynamically populate form fields.
 
 📱 **Fully Responsive & Mobile Friendly** – Deliver a perfect form experience on every device, from desktops to smartphones.
+
+🎯 **Field Conditions Display** – Show/hide fields based on user input.
+
+🌍 **Form Submission Restrictions** – Restrict form submissions based on IP address and country.
 
 ## 🔥 Why Choose HT Contact Form?
 
@@ -107,20 +112,26 @@ Create the perfect form for any purpose with our comprehensive collection of fie
 14. **Address**
 15. **Country List**
 16. **File Upload**
-17. **Password**
-18. **Date/Calendar Picker**
-19. **Submit Button**
+17. **Image Upload**
+18. **Password**
+19. **Date/Calendar Picker**
+20. **ShortCode**
+21. **Rating**
+22. **Submit Button**
 
 ## 📈 3rd Party Integrations
 
 HT Contact Form seamlessly integrates with popular services to help you streamline your workflow and enhance your form experience. Check out some of the integrations available:
 
-1. **Mailchimp**: Add form submitters to your Mailchimp email list.
-2. **Slack**: Send form submission notifications to your Slack channels.
-3. **Discord**: Send form submission notifications to your Discord channels.
-4. **ActiveCampaign**: Add form submitters to your ActiveCampaign email list.
-5. **MailerLite**: Add form submitters to your MailerLite email list.
-6. **Webhook**: Send form data to external URLs.
+1. **Mailchimp** – Automatically add form submitters to your Mailchimp email list.
+2. **Slack** – Instantly send form submission notifications to your Slack channels.
+3. **Discord** – Receive form submission alerts directly in your Discord channels.
+4. **ActiveCampaign** – Add submitters to your ActiveCampaign email list seamlessly.
+5. **MailerLite** – Grow your MailerLite list with every new form submission.
+6. **Zapier** – Connect with thousands of apps by sending form data to Zapier.
+7. **Constant Contact** – Automatically forward form entries to Constant Contact.
+8. **Support Genix** – Create a support ticket from each form submission.
+9. **Webhook** – Send form data to any external URL using a custom webhook.
 
 == Other Projects ==
 We have a lot of plugins and extensions that might interest you. Try out other projects by following this link:
@@ -155,6 +166,17 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.3.0 - Date: 22-Jul-2025 =
+* Added: Image Upload Field.
+* Added: ShortCode Field.
+* Added: Rating Field.
+* Added: Constant Contact Integration.
+* Added: Zapier Integration.
+* Added: Support Genix Integration.
+* Added: Option to dynamically show/hide fields based on user input.
+* Added: IP & Country Based form submission restrictions.
+* Added: Option to automatically delete old form entries after a defined period.
 
 = Version: 2.2.2 - Date: 10-Jul-2025 =
 * Improved: File upload handling by adding file type validation.

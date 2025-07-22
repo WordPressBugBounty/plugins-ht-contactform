@@ -6,6 +6,7 @@ use HTContactFormAdmin\Includes\Config\Form as FormConfig;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ConstantContact;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -58,6 +59,25 @@ class Integrations {
     public function __construct() {
         $this->integrations_settings = FormConfig::get_instance()->form_integrations();
         add_action('rest_api_init', [$this, 'register_routes']);
+        
+        // Initialize integration classes that need to register their own routes
+        $this->init_integration_classes();
+    }
+
+    /**
+     * Initialize integration classes that need to register their own routes
+     */
+    private function init_integration_classes() {
+        // Get saved integrations
+        $saved_integrations = get_option(self::OPTION_NAME, []);
+        
+        // Initialize Constant Contact if settings exist
+        if (!empty($saved_integrations['constantcontact'])) {
+            $cc_settings = $saved_integrations['constantcontact'];
+            if (!empty($cc_settings['client_id']) && !empty($cc_settings['client_secret'])) {
+                new ConstantContact($cc_settings['client_id'], $cc_settings['client_secret']);
+            }
+        }
     }
 
     /**
@@ -191,7 +211,7 @@ class Integrations {
         }
 
         // Check if integration type is supported
-        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite'];
+        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact'];
         if (!in_array($integration, $supported_integrations)) {
             return new WP_Error(
                 'unsupported_integration',
@@ -235,6 +255,16 @@ class Integrations {
         if ($integration === 'mailerlite') {
             $mailerlite = MailerLite::get_instance();
             $result = $mailerlite->verify($settings['api_key']);
+            
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Constant Contact API key & URL
+        if ($integration === 'constantcontact') {
+            $constantcontact = new ConstantContact($settings['client_id'], $settings['client_secret']);
+            $result = $constantcontact->verify();
             
             if (is_wp_error($result)) {
                 return $result;

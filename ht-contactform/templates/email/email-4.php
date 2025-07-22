@@ -61,31 +61,42 @@ $footer_text = $args['footer_text'] ?? '';
                                     </tr>
                                     <?php
                                 } else {
-                                    // For non-numeric keys, find the field information
-                                    $field_type = '';
-                                    $field_admin_label = '';
+                                    // Get current field using key
+                                    $current_field = null;
                                     foreach ($form['fields'] as $field) {
                                         if($field['type'] !== 'submit' && $field['settings']['name_attribute'] === $key) {
-                                            $field_type = $field['type'];
-                                            $field_admin_label = $field['settings']['admin_label'];
+                                            $current_field = $field;
                                             break;
                                         }
                                     }
                                     
-                                    // Process array values
+                                    // Use current field variable for operations
+                                    $field_type = $current_field ? $current_field['type'] : '';
+                                    $field_admin_label = $current_field ? $current_field['settings']['admin_label'] : '';
+                                    $display_value = $value;
+                                    
                                     if(is_array($value) && !empty($value)) {
                                         if($field_type === 'name' || $field_type === 'address') {
-                                            $value = implode(' ', $value);
+                                            $display_value = implode(' ', $value);
                                         } else {
-                                            $value = sprintf('<ul style="margin: 0; padding: 0 0 0 20px;"><li>%s</li></ul>', implode('</li><li>', $value));
+                                            $display_value = sprintf('<ul style="margin: 0; padding: 0;"><li>%s</li></ul>', implode('</li><li>', $value));
                                         }
                                     }
                                     
-                                    // Format based on field type
                                     if($field_type === 'textarea') {
-                                        $value = nl2br(esc_html($value));
-                                    } else {
-                                        $value = wp_kses_post($value);
+                                        $display_value = nl2br(esc_html($value));
+                                    }
+
+                                    if($field_type === 'ratings') {
+                                        $options = $current_field['settings']['options'] ?? [];
+                                        $rating_label = '';
+                                        foreach ($options as $option) {
+                                            if($option['value'] === $value) {
+                                                $rating_label = $option['label'];
+                                                break;
+                                            }
+                                        }
+                                        $display_value = implode(' ', [$rating_label, "({$value})"]) ;
                                     }
                                     ?>
                                     <tr>
@@ -93,7 +104,7 @@ $footer_text = $args['footer_text'] ?? '';
                                             <?php echo esc_html($field_admin_label); ?>:
                                         </th>
                                         <td style="padding: 12px 15px; border-bottom: 1px solid #e1e1e1; vertical-align: top; color: #333333; font-size: 14px;">
-                                            <?php echo wp_kses_post($value); ?>
+                                            <?php echo wp_kses_post($display_value); ?>
                                         </td>
                                     </tr>
                                     <?php

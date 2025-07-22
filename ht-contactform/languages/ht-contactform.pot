@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Contact Form 7 Widget For Elementor Page Builder & "
 "Gutenberg Blocks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 05:00+0000\n"
+"POT-Creation-Date: 2025-07-22 09:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgid "$999.99"
 msgstr ""
 
 #. %1$s: Site Name, %2$s: Year
-#: templates/email/email-3.php:114
+#: templates/email/email-3.php:125
 #, php-format
 msgid "%1$s • %2$s"
 msgstr ""
@@ -34,20 +34,20 @@ msgid "%s Active Installations"
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Endpoints/Submission.php:415
+#: admin/Includes/Api/Endpoints/Submission.php:435
 #, php-format
 msgid "%s is required."
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Endpoints/Submission.php:426
+#: admin/Includes/Api/Endpoints/Submission.php:446
 #, php-format
 msgid "%s must be a valid email address."
 msgstr ""
 
 #. %1$s: Year, %2$s: Site Name, %3$s: Plugin Name
-#: templates/email/email-5.php:140 templates/email/email-4.php:134
-#: templates/email/email-2.php:126 templates/email/email-1.php:114
+#: templates/email/email-5.php:151 templates/email/email-4.php:145
+#: templates/email/email-2.php:137 templates/email/email-1.php:131
 #, php-format
 msgid "&copy; %1$s %2$s. All rights reserved. Powered by %3$s"
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 msgid "ActiveCampaign connection successful."
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:350
+#: admin/Includes/Services/Helper.php:351
 msgid "Admin Email"
 msgstr ""
 
@@ -192,27 +192,35 @@ msgstr ""
 msgid "Advanced Telephone"
 msgstr ""
 
-#: include/elementor_widgets.php:107
+#: include/Widgets/elementor_widgets.php:107
 msgid "Alignment"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:781
+msgid "All"
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:83
 msgid "Already Submitted Notice"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:583
+#: include/UI/ShortCode.php:635
 msgid "An error occurred while processing your submission. Please try again."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:571
+#: include/UI/ShortCode.php:617
 msgid "An error occurred while storing your submission."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:785
+msgid "Any"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:158
 msgid "API key & API URL are required for ActiveCampaign integration."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:210
+#: admin/Includes/Api/Endpoints/Integrations.php:230
 msgid "API key is required for Mailchimp integration."
 msgstr ""
 
@@ -229,21 +237,41 @@ msgid ""
 "the product variations in a whole new light with Swatchly."
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:469
+#. %1$s: project name
+#. %2$s: strong start tag
+#. %3$s: strong end tag
+#. %4$s: a start tag with url
+#. %5$s: a end tag
+#: admin/Includes/DiagnosticData.php:625
+#, php-format
+msgid ""
+"At %2$s%1$s%3$s, we prioritize continuous improvement and compatibility. To "
+"achieve this, we gather non-sensitive diagnostic information and details "
+"about plugin usage. This includes your site's URL, the versions of WordPress "
+"and PHP you're using, and a list of your installed plugins and themes. We "
+"also require your email address to provide you with exclusive discount "
+"coupons and updates. This data collection is crucial for ensuring that "
+"%2$s%1$s%3$s remains up-to-date and compatible with the most widely-used "
+"plugins and themes. Rest assured, your privacy is our priority – no spam, "
+"guaranteed. %4$sPrivacy Policy%5$s"
+msgstr ""
+
+#: admin/Includes/Services/Helper.php:470
 msgid "Author Email"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:455
+#: admin/Includes/Services/Helper.php:456
 msgid "Author ID"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:462
+#: admin/Includes/Services/Helper.php:463
 msgid "Author Name"
 msgstr ""
 
-#: include/elementor_widgets.php:98 admin/Includes/Config/Styler.php:232
-#: admin/Includes/Config/Styler.php:340 admin/Includes/Config/Styler.php:694
-#: admin/Includes/Config/Styler.php:719 admin/Includes/Config/Styler.php:1137
+#: include/Widgets/elementor_widgets.php:98
+#: admin/Includes/Config/Styler.php:232 admin/Includes/Config/Styler.php:340
+#: admin/Includes/Config/Styler.php:694 admin/Includes/Config/Styler.php:719
+#: admin/Includes/Config/Styler.php:1137
 msgid "Background"
 msgstr ""
 
@@ -259,9 +287,11 @@ msgstr ""
 msgid "Background (Selected)"
 msgstr ""
 
-#: include/elementor_widgets.php:174 include/elementor_widgets.php:340
-#: include/elementor_widgets.php:441 include/elementor_widgets.php:576
-#: include/elementor_widgets.php:664
+#: include/Widgets/elementor_widgets.php:174
+#: include/Widgets/elementor_widgets.php:340
+#: include/Widgets/elementor_widgets.php:441
+#: include/Widgets/elementor_widgets.php:576
+#: include/Widgets/elementor_widgets.php:664
 msgid "Background Color"
 msgstr ""
 
@@ -269,9 +299,11 @@ msgstr ""
 msgid "Below Input Element"
 msgstr ""
 
-#: include/elementor_widgets.php:246 include/elementor_widgets.php:384
-#: include/elementor_widgets.php:472 include/elementor_widgets.php:614
-#: include/elementor_widgets.php:676
+#: include/Widgets/elementor_widgets.php:246
+#: include/Widgets/elementor_widgets.php:384
+#: include/Widgets/elementor_widgets.php:472
+#: include/Widgets/elementor_widgets.php:614
+#: include/Widgets/elementor_widgets.php:676
 msgid "Border"
 msgstr ""
 
@@ -292,8 +324,10 @@ msgstr ""
 msgid "Border Color (Hover)"
 msgstr ""
 
-#: include/elementor_widgets.php:254 include/elementor_widgets.php:392
-#: include/elementor_widgets.php:480 include/elementor_widgets.php:622
+#: include/Widgets/elementor_widgets.php:254
+#: include/Widgets/elementor_widgets.php:392
+#: include/Widgets/elementor_widgets.php:480
+#: include/Widgets/elementor_widgets.php:622
 msgid "Border Radius"
 msgstr ""
 
@@ -311,7 +345,7 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: include/elementor_widgets.php:635
+#: include/Widgets/elementor_widgets.php:635
 msgid "Box Shadow"
 msgstr ""
 
@@ -319,7 +353,7 @@ msgstr ""
 msgid "Build forms with ease using our intuitive form builder."
 msgstr ""
 
-#: include/elementor_widgets.php:521
+#: include/Widgets/elementor_widgets.php:521
 msgid "Button"
 msgstr ""
 
@@ -337,7 +371,7 @@ msgstr ""
 msgid "By "
 msgstr ""
 
-#: include/elementor_widgets.php:115
+#: include/Widgets/elementor_widgets.php:115
 msgid "Center"
 msgstr ""
 
@@ -415,7 +449,12 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-#: include/elementor_widgets.php:43 include/ht_form_widgets.php:57
+#: admin/Includes/Config/Field.php:774
+msgid "Conditional Match"
+msgstr ""
+
+#: include/Widgets/elementor_widgets.php:43
+#: include/Widgets/ht_form_widgets.php:57
 msgid "Contact Form"
 msgstr ""
 
@@ -435,6 +474,10 @@ msgstr ""
 msgid "Contact ID and tag IDs are required."
 msgstr ""
 
+#: admin/Includes/DiagnosticData.php:633
+msgid "Count Me In"
+msgstr ""
+
 #: include/recommended-plugins/recommended-plugins.php:316
 msgid "Coupon Zen"
 msgstr ""
@@ -452,7 +495,7 @@ msgstr ""
 msgid "DataCaptia"
 msgstr ""
 
-#: templates/email/email-5.php:116 admin/Includes/Services/Helper.php:392
+#: templates/email/email-5.php:127 admin/Includes/Services/Helper.php:393
 msgid "Date"
 msgstr ""
 
@@ -496,12 +539,12 @@ msgstr ""
 msgid "Define the minimum value for numerical input."
 msgstr ""
 
-#: admin/Includes/Integrations/Discord.php:116
+#: include/Integrations/Discord.php:116
 #, php-format
 msgid "Discord webhook error: %s"
 msgstr ""
 
-#: admin/Includes/Integrations/Discord.php:126
+#: include/Integrations/Discord.php:126
 #, php-format
 msgid "Discord webhook returned error code: %s"
 msgstr ""
@@ -543,15 +586,15 @@ msgstr ""
 msgid "Email Notifications"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:385
+#: admin/Includes/Services/Helper.php:386
 msgid "Embedded Post/Page ID"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:371
+#: admin/Includes/Services/Helper.php:372
 msgid "Embedded Post/Page Title"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:378
+#: admin/Includes/Services/Helper.php:379
 msgid "Embedded Post/Page URL"
 msgstr ""
 
@@ -560,6 +603,15 @@ msgid ""
 "Embedding a YouTube playlist into your website plays a vital role to curate "
 "your content into several categories and make your web content more engaging "
 "and popular by keeping the visitors on your website for a longer period."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:757
+msgid "Enable Condition"
+msgstr ""
+
+#: admin/Includes/Config/Field.php:759
+msgid ""
+"Enable condition to control field visibility based on other field values."
 msgstr ""
 
 #: admin/Includes/Config/Field.php:608
@@ -580,7 +632,7 @@ msgid ""
 "Ensure the email address is unique by comparing against previous submissions"
 msgstr ""
 
-#: admin/Admin.php:77
+#: admin/Admin.php:74
 msgid "Entries"
 msgstr ""
 
@@ -599,6 +651,11 @@ msgstr ""
 
 #: admin/Includes/Config/Styler.php:489
 msgid "Error Border Color"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:424
+#, php-format
+msgid "Error from Constant Contact API: %s"
 msgstr ""
 
 #: admin/Includes/Config/Styler.php:482
@@ -628,12 +685,17 @@ msgstr ""
 msgid "Failed to connect to MailerLite: %s"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:577 admin/Includes/Services/Helper.php:303
+#: include/UI/ShortCode.php:623 admin/Includes/Services/Helper.php:304
 msgid "Failed to connect to reCAPTCHA server."
 msgstr ""
 
 #: admin/Includes/Models/Entries.php:408
 msgid "Failed to delete entry"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:307
+#, php-format
+msgid "Failed to get access token. Response: %s"
 msgstr ""
 
 #: admin/Includes/Models/Entries.php:317
@@ -714,7 +776,7 @@ msgstr ""
 msgid "Form data is required"
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Submission.php:196
+#: admin/Includes/Api/Endpoints/Submission.php:214
 msgid "Form data or form ID is missing"
 msgstr ""
 
@@ -722,7 +784,7 @@ msgstr ""
 msgid "Form Editor"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:357
+#: admin/Includes/Services/Helper.php:358
 msgid "Form ID"
 msgstr ""
 
@@ -734,16 +796,21 @@ msgstr ""
 msgid "Form ID is required"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:120
+#: include/UI/ShortCode.php:119
 msgid "Form ID is required."
 msgstr ""
 
-#: include/elementor_widgets.php:33 include/ht_form_widgets.php:47
+#: include/UI/ShortCode.php:602
+msgid "Form is missing. Please try again."
+msgstr ""
+
 #: include/class/Api.php:84 include/class/Api.php:107
+#: include/Widgets/elementor_widgets.php:33
+#: include/Widgets/ht_form_widgets.php:47
 msgid "Form not found"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:562
+#: include/UI/ShortCode.php:608
 msgid "Form not found. Please try again."
 msgstr ""
 
@@ -751,16 +818,19 @@ msgstr ""
 msgid "Form Preview"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:364
+#: admin/Includes/Services/Helper.php:365
 msgid "Form Title"
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Submission.php:215
+#: admin/Includes/Api/Endpoints/Submission.php:233
 msgid "Form validation failed"
 msgstr ""
 
-#: admin/Includes/Integrations/Slack.php:170
-#: admin/Includes/Integrations/Discord.php:170
+#: include/UI/ShortCode.php:605
+msgid "Form validation failed. Please try again."
+msgstr ""
+
+#: include/Integrations/Slack.php:170 include/Integrations/Discord.php:170
 #, php-format
 msgid "Form: %s"
 msgstr ""
@@ -769,7 +839,7 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: admin/Admin.php:67 admin/Includes/PostTypes/FormPostType.php:22
+#: admin/Admin.php:64 admin/Includes/PostTypes/FormPostType.php:22
 msgid "Forms"
 msgstr ""
 
@@ -785,7 +855,7 @@ msgstr ""
 msgid "Get Pro Now"
 msgstr ""
 
-#: admin/Admin.php:82
+#: admin/Admin.php:79
 msgid "Global Settings"
 msgstr ""
 
@@ -820,8 +890,9 @@ msgstr ""
 msgid "HasTheme"
 msgstr ""
 
-#: include/elementor_widgets.php:148 include/elementor_widgets.php:320
-#: include/elementor_widgets.php:538
+#: include/Widgets/elementor_widgets.php:148
+#: include/Widgets/elementor_widgets.php:320
+#: include/Widgets/elementor_widgets.php:538
 msgid "Height"
 msgstr ""
 
@@ -837,7 +908,7 @@ msgstr ""
 msgid "Hide Label"
 msgstr ""
 
-#: include/elementor_widgets.php:646
+#: include/Widgets/elementor_widgets.php:646
 msgid "Hover"
 msgstr ""
 
@@ -845,11 +916,11 @@ msgstr ""
 msgid "HT Click To Call"
 msgstr ""
 
-#: admin/Admin.php:52 admin/Admin.php:53
+#: admin/Admin.php:49 admin/Admin.php:50
 msgid "HT Contact Form"
 msgstr ""
 
-#: include/elementor_widgets.php:13
+#: include/Widgets/elementor_widgets.php:13
 msgid "HT Contact Form 7"
 msgstr ""
 
@@ -872,7 +943,7 @@ msgstr ""
 msgid "HT Feed"
 msgstr ""
 
-#: include/ht_form_widgets.php:13
+#: include/Widgets/ht_form_widgets.php:13
 msgid "HT Form"
 msgstr ""
 
@@ -973,7 +1044,7 @@ msgstr ""
 msgid "Inline Layout"
 msgstr ""
 
-#: include/elementor_widgets.php:141
+#: include/Widgets/elementor_widgets.php:141
 msgid "Input"
 msgstr ""
 
@@ -995,12 +1066,12 @@ msgstr ""
 msgid "Installing.."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:198
+#: admin/Includes/Api/Endpoints/Integrations.php:218
 #, php-format
 msgid "Integration type \"%s\" is not supported."
 msgstr ""
 
-#: admin/Admin.php:87
+#: admin/Admin.php:84
 msgid "Integrations"
 msgstr ""
 
@@ -1014,12 +1085,17 @@ msgstr ""
 msgid "Invalid API URL format."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:559
+#: include/UI/ShortCode.php:599
 msgid "Invalid form ID. Please try again."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:553
+#: include/UI/ShortCode.php:593
 msgid "Invalid form request. Please try again."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:317
+#: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:435
+msgid "Invalid JSON response from Constant Contact"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:275
@@ -1030,13 +1106,13 @@ msgstr ""
 msgid "Invalid response received from ActiveCampaign API."
 msgstr ""
 
-#: templates/email/email-5.php:122 templates/email/email-4.php:116
-#: templates/email/email-3.php:98 templates/email/email-2.php:108
-#: templates/email/email-1.php:96
+#: templates/email/email-5.php:133 templates/email/email-4.php:127
+#: templates/email/email-3.php:109 templates/email/email-2.php:119
+#: templates/email/email-1.php:113
 msgid "IP Address"
 msgstr ""
 
-#: include/elementor_widgets.php:123
+#: include/Widgets/elementor_widgets.php:123
 msgid "Justified"
 msgstr ""
 
@@ -1058,7 +1134,7 @@ msgstr ""
 msgid "JustTables Pro"
 msgstr ""
 
-#: include/elementor_widgets.php:433
+#: include/Widgets/elementor_widgets.php:433
 msgid "Label"
 msgstr ""
 
@@ -1078,7 +1154,8 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: include/elementor_widgets.php:111 admin/Includes/Config/Field.php:119
+#: include/Widgets/elementor_widgets.php:111
+#: admin/Includes/Config/Field.php:119
 msgid "Left"
 msgstr ""
 
@@ -1093,15 +1170,15 @@ msgstr ""
 msgid "Line Height"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:483
+#: admin/Includes/Services/Helper.php:484
 msgid "Login URL"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:490
+#: admin/Includes/Services/Helper.php:491
 msgid "Logout URL"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:504
+#: admin/Includes/Services/Helper.php:505
 msgid "Lost Password URL"
 msgstr ""
 
@@ -1113,9 +1190,11 @@ msgstr ""
 msgid "MailerLite API connection successful."
 msgstr ""
 
-#: include/elementor_widgets.php:84 include/elementor_widgets.php:291
-#: include/elementor_widgets.php:417 include/elementor_widgets.php:505
-#: include/elementor_widgets.php:600
+#: include/Widgets/elementor_widgets.php:84
+#: include/Widgets/elementor_widgets.php:291
+#: include/Widgets/elementor_widgets.php:417
+#: include/Widgets/elementor_widgets.php:505
+#: include/Widgets/elementor_widgets.php:600
 msgid "Margin"
 msgstr ""
 
@@ -1190,13 +1269,12 @@ msgstr ""
 msgid "Names"
 msgstr ""
 
-#: admin/Includes/Integrations/Slack.php:152
-#: admin/Includes/Integrations/Discord.php:152
+#: include/Integrations/Slack.php:152 include/Integrations/Discord.php:152
 #, php-format
 msgid "New entry submitted on %s"
 msgstr ""
 
-#: admin/Admin.php:72
+#: admin/Admin.php:69
 msgid "New Form"
 msgstr ""
 
@@ -1210,12 +1288,20 @@ msgstr ""
 msgid "Next to Label as Tooltip"
 msgstr ""
 
+#: admin/Includes/DiagnosticData.php:636
+msgid "No, Thanks"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:400
 msgid "None"
 msgstr ""
 
-#: include/elementor_widgets.php:531
+#: include/Widgets/elementor_widgets.php:531
 msgid "Normal"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:399
+msgid "Not connected to Constant Contact. Please connect first."
 msgstr ""
 
 #: admin/Includes/Config/Field.php:521
@@ -1246,9 +1332,11 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: include/elementor_widgets.php:71 include/elementor_widgets.php:272
-#: include/elementor_widgets.php:404 include/elementor_widgets.php:492
-#: include/elementor_widgets.php:587
+#: include/Widgets/elementor_widgets.php:71
+#: include/Widgets/elementor_widgets.php:272
+#: include/Widgets/elementor_widgets.php:404
+#: include/Widgets/elementor_widgets.php:492
+#: include/Widgets/elementor_widgets.php:587
 msgid "Padding"
 msgstr ""
 
@@ -1260,7 +1348,8 @@ msgstr ""
 msgid "Pill Color"
 msgstr ""
 
-#: include/elementor_widgets.php:216 include/elementor_widgets.php:370
+#: include/Widgets/elementor_widgets.php:216
+#: include/Widgets/elementor_widgets.php:370
 msgid "Placeholder Color"
 msgstr ""
 
@@ -1268,31 +1357,31 @@ msgstr ""
 msgid "Placeholder Text"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:574 admin/Includes/Services/Helper.php:284
+#: include/UI/ShortCode.php:620 admin/Includes/Services/Helper.php:285
 msgid "Please complete the reCAPTCHA challenge."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:655
+#: include/UI/ShortCode.php:678
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:660
+#: include/UI/ShortCode.php:683
 msgid "Please enter a valid number."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:657
+#: include/UI/ShortCode.php:680
 msgid "Please enter a valid phone number."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:663
+#: include/UI/ShortCode.php:686
 msgid "Please enter a valid URL."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:656
+#: include/UI/ShortCode.php:679
 msgid "Please enter a valid {format} format."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:375
+#: include/UI/ShortCode.php:377
 msgid "Please leave this field empty"
 msgstr ""
 
@@ -1300,7 +1389,8 @@ msgstr ""
 msgid "Please Select a contact form."
 msgstr ""
 
-#: include/elementor_widgets.php:706 include/ht_form_widgets.php:185
+#: include/Widgets/elementor_widgets.php:706
+#: include/Widgets/ht_form_widgets.php:185
 msgid "Please Select contact form."
 msgstr ""
 
@@ -1358,7 +1448,7 @@ msgstr ""
 msgid "Purchase CF7 Pro Extensions"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:399
+#: admin/Includes/Services/Helper.php:400
 msgid "Query String Variable"
 msgstr ""
 
@@ -1379,16 +1469,16 @@ msgstr ""
 msgid "Really Simple Google Tag Manager"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:336
+#: admin/Includes/Services/Helper.php:337
 msgid "reCAPTCHA is not configured."
 msgstr ""
 
-#: admin/Includes/UI/Fields.php:1165
+#: include/UI/Fields.php:1345
 msgid "reCAPTCHA site key is not configured."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:580 admin/Includes/Services/Helper.php:318
-#: admin/Includes/Services/Helper.php:327
+#: include/UI/ShortCode.php:626 admin/Includes/Services/Helper.php:319
+#: admin/Includes/Services/Helper.php:328
 msgid "reCAPTCHA verification failed. Please try again."
 msgstr ""
 
@@ -1404,11 +1494,11 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:476
+#: admin/Includes/Services/Helper.php:477
 msgid "Referrer URL"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:497
+#: admin/Includes/Services/Helper.php:498
 msgid "Register URL"
 msgstr ""
 
@@ -1424,7 +1514,8 @@ msgstr ""
 msgid "Required Error Message"
 msgstr ""
 
-#: include/elementor_widgets.php:119 admin/Includes/Config/Field.php:111
+#: include/Widgets/elementor_widgets.php:119
+#: admin/Includes/Config/Field.php:111
 msgid "Right"
 msgstr ""
 
@@ -1436,16 +1527,32 @@ msgstr ""
 msgid "Searchable"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:556
+#: include/UI/ShortCode.php:596
 msgid "Security check failed. Please try again."
 msgstr ""
 
-#: include/elementor_widgets.php:49 include/ht_form_widgets.php:63
+#: include/Widgets/elementor_widgets.php:49
+#: include/Widgets/ht_form_widgets.php:63
 msgid "Select Form"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:678 admin/Includes/Config/Field.php:709
 msgid "Select format to use for the name form field."
+msgstr ""
+
+#: admin/Includes/Config/Field.php:776
+msgid "Select the type of match to apply for conditional logic."
+msgstr ""
+
+#. %1$s: a start tag with url
+#. %2$s: a end tag
+#: admin/Includes/DiagnosticData.php:631
+#, php-format
+msgid ""
+"Server information (Web server, PHP version, MySQL version), WordPress "
+"information, site name, site URL, number of plugins, number of users, your "
+"name, and email address. You can rest assured that no sensitive data will be "
+"collected or tracked. %1$sLearn more%2$s."
 msgstr ""
 
 #: admin/Includes/Config/Field.php:333
@@ -1462,8 +1569,8 @@ msgid "Set the step increment for numerical input control."
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Settings.php:161
-#: admin/Includes/Api/Endpoints/Integrations.php:160
-#: admin/Includes/Api/Endpoints/Integrations.php:188
+#: admin/Includes/Api/Endpoints/Integrations.php:180
+#: admin/Includes/Api/Endpoints/Integrations.php:208
 msgid "Settings must be an object."
 msgstr ""
 
@@ -1479,20 +1586,20 @@ msgstr ""
 msgid "Sirve – Simple Directory Listing"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:511
+#: admin/Includes/Services/Helper.php:512
 msgid "Site Title"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:518
+#: admin/Includes/Services/Helper.php:519
 msgid "Site URL"
 msgstr ""
 
-#: admin/Includes/Integrations/Slack.php:116
+#: include/Integrations/Slack.php:116
 #, php-format
 msgid "Slack webhook error: %s"
 msgstr ""
 
-#: admin/Includes/Integrations/Slack.php:126
+#: include/Integrations/Slack.php:126
 #, php-format
 msgid "Slack webhook returned error code: %s"
 msgstr ""
@@ -1506,8 +1613,7 @@ msgstr ""
 msgid "Solid"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:568
-#: admin/Includes/Api/Endpoints/Submission.php:143
+#: include/UI/ShortCode.php:614 admin/Includes/Api/Endpoints/Submission.php:161
 msgid "Spam detected. Please try again."
 msgstr ""
 
@@ -1537,25 +1643,24 @@ msgstr ""
 msgid "Step"
 msgstr ""
 
-#: include/elementor_widgets.php:63
+#: include/Widgets/elementor_widgets.php:63
 msgid "Style"
 msgstr ""
 
-#: templates/email/email-5.php:111
+#: templates/email/email-5.php:122
 msgid "Submission Details"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:565
-#: admin/Includes/Api/Endpoints/Submission.php:168
+#: include/UI/ShortCode.php:611 admin/Includes/Api/Endpoints/Submission.php:186
 msgid "Submission was too quick. Please wait a moment and try again."
 msgstr ""
 
-#: admin/Includes/UI/Fields.php:1146
+#: include/UI/Fields.php:1326
 msgid "Submit"
 msgstr ""
 
-#: templates/email/email-4.php:110 templates/email/email-3.php:95
-#: templates/email/email-2.php:102 templates/email/email-1.php:90
+#: templates/email/email-4.php:121 templates/email/email-3.php:106
+#: templates/email/email-2.php:113 templates/email/email-1.php:107
 msgid "Submitted on"
 msgstr ""
 
@@ -1567,10 +1672,12 @@ msgstr ""
 msgid "Tags added successfully."
 msgstr ""
 
-#: include/elementor_widgets.php:199 include/elementor_widgets.php:359
-#: include/elementor_widgets.php:452 include/elementor_widgets.php:565
-#: include/elementor_widgets.php:653 admin/Includes/Config/Styler.php:750
-#: admin/Includes/Config/Styler.php:893
+#: include/Widgets/elementor_widgets.php:199
+#: include/Widgets/elementor_widgets.php:359
+#: include/Widgets/elementor_widgets.php:452
+#: include/Widgets/elementor_widgets.php:565
+#: include/Widgets/elementor_widgets.php:653
+#: admin/Includes/Config/Styler.php:750 admin/Includes/Config/Styler.php:893
 msgid "Text Color"
 msgstr ""
 
@@ -1602,11 +1709,19 @@ msgstr ""
 msgid "Text to display before the field input, serving as a prefix."
 msgstr ""
 
-#: include/elementor_widgets.php:313
+#: include/Widgets/elementor_widgets.php:313
 msgid "Textarea"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:537
+#. %1$s: project name
+#. %2$s: strong start tag
+#. %3$s: strong end tag
+#: admin/Includes/DiagnosticData.php:665
+#, php-format
+msgid "Thank you very much for supporting %2$s%1$s%3$s."
+msgstr ""
+
+#: include/UI/ShortCode.php:576
 msgid "Thanks for contacting us! We will be in touch with you shortly."
 msgstr ""
 
@@ -1622,7 +1737,7 @@ msgstr ""
 msgid "This field is required"
 msgstr ""
 
-#: admin/Includes/ShortCode.php:661
+#: include/UI/ShortCode.php:684
 msgid "This field is required."
 msgstr ""
 
@@ -1681,8 +1796,7 @@ msgstr ""
 msgid "Unknown error occurred."
 msgstr ""
 
-#: admin/Includes/Integrations/Slack.php:151
-#: admin/Includes/Integrations/Discord.php:151
+#: include/Integrations/Slack.php:151 include/Integrations/Discord.php:151
 msgid "Unknown Form"
 msgstr ""
 
@@ -1690,31 +1804,31 @@ msgstr ""
 msgid "Untitled Form"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:413
+#: admin/Includes/Services/Helper.php:414
 msgid "User Display Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:441
+#: admin/Includes/Services/Helper.php:442
 msgid "User Email"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:427
+#: admin/Includes/Services/Helper.php:428
 msgid "User First Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:420
+#: admin/Includes/Services/Helper.php:421
 msgid "User Full Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:406
+#: admin/Includes/Services/Helper.php:407
 msgid "User ID"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:434
+#: admin/Includes/Services/Helper.php:435
 msgid "User Last Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:448
+#: admin/Includes/Services/Helper.php:449
 msgid "User Meta"
 msgstr ""
 
@@ -1749,7 +1863,7 @@ msgstr ""
 msgid "WC Sales Notification"
 msgstr ""
 
-#: admin/Admin.php:62
+#: admin/Admin.php:59
 msgid "Welcome"
 msgstr ""
 
@@ -1810,7 +1924,7 @@ msgid ""
 "your WordPress site to improve the overall site performance."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:122
+#: admin/Includes/Api/Endpoints/Integrations.php:142
 msgid "You do not have permission to manage integrations."
 msgstr ""
 
@@ -1818,19 +1932,19 @@ msgstr ""
 msgid "You do not have permission to manage settings."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:654
+#: include/UI/ShortCode.php:677
 msgid "You have exceeded the number of allowed characters."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:658
+#: include/UI/ShortCode.php:681
 msgid "You have exceeded the number of allowed maximum."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:659
+#: include/UI/ShortCode.php:682
 msgid "You have exceeded the number of allowed minimum."
 msgstr ""
 
-#: admin/Includes/ShortCode.php:662
+#: include/UI/ShortCode.php:685
 msgid "You have exceeded the number of allowed selections."
 msgstr ""
 
@@ -1840,4 +1954,28 @@ msgstr ""
 
 #: templates/email/email-4.php:47
 msgid "You've received a new message from your website contact form."
+msgstr ""
+
+#: include/UI/ShortCode.php:632
+msgid "Your country is restricted. Please try again."
+msgstr ""
+
+#: include/UI/ShortCode.php:629
+msgid "Your IP address is restricted. Please try again."
+msgstr ""
+
+#: include/Integrations/Zapier.php:116
+#, php-format
+msgid "Zapier webhook error: %s"
+msgstr ""
+
+#: include/Integrations/Zapier.php:126
+#, php-format
+msgid "Zapier webhook returned error code: %s"
+msgstr ""
+
+#. %1$s: project name
+#: admin/Includes/DiagnosticData.php:643
+#, php-format
+msgid "🌟 Enhance Your %1$s Experience as a Valued Contributor!"
 msgstr ""

@@ -2,7 +2,7 @@
     "name": "yeasin/ht-contactform",
     "autoload": {
         "psr-4": {
-            "HTContactForm\\": "./",
+            "HTContactForm\\": "include/",
             "HTContactFormAdmin\\": "admin/"
         }
     },

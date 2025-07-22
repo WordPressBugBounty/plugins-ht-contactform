@@ -3,10 +3,9 @@ namespace HTContactFormAdmin;
 use HTContactFormAdmin\Includes\Api\ApiRegistry;
 use HTContactFormAdmin\Includes\PostTypes\FormPostType; 
 use HTContactFormAdmin\Includes\Config\Form as FormConfig;
-use HTContactFormAdmin\Includes\ShortCode;
 use HTContactFormAdmin\Includes\Assets;
-use HTContactFormAdmin\Includes\Integrations;
-use HTContactFormAdmin\Includes\Ajax;
+use HTContactFormAdmin\Includes\Notice;
+use HTContactFormAdmin\Includes\DiagnosticData;
 class Admin {
     private static $instance = null;
 
@@ -20,13 +19,11 @@ class Admin {
     public function __construct() {
         ApiRegistry::get_instance();
         FormPostType::get_instance();
-        Ajax::get_instance();
         Assets::get_instance();
-        ShortCode::get_instance();
-        Integrations::get_instance();
         add_action('in_admin_header', [$this, 'remove_admin_notice']);
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_action('init', [$this, 'update_global_settings']);
+        add_action('admin_init', [$this, 'diagnostic_data']);
     }
     
     /**
@@ -92,6 +89,7 @@ class Admin {
     }
 
     public function render_admin_page() {
+        do_action('ht_contactform_admin_notices');
         echo '<div id="ht-contactform-admin"></div>';
     }
 
@@ -106,6 +104,27 @@ class Admin {
                 return $carry;
             }, []);
             update_option('ht_form_global_settings', $default);
+        }
+    }
+    public function diagnostic_data() {
+        $diagnostic_data = DiagnosticData::get_instance();
+        ob_start();
+        $diagnostic_data->show_notices();
+        $message = ob_get_clean();
+        if (! empty( $message ) ) {
+            $notice = Notice::instance();
+            $notice::set_notice(
+                [
+                    'id'          => 'diagnostic-data',
+                    'type'        => 'success',
+                    'dismissible' => false,
+                    'message_type' => 'html',
+                    'message'     => $message,
+                    'display_after'  => ( 7 * DAY_IN_SECONDS ),
+                    'expire_time' => 0,
+                    'close_by'    => 'transient'
+                ]
+            );
         }
     }
 }

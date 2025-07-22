@@ -136,6 +136,24 @@ class Submission {
                 return $form;
             }
 
+            // Check form restrictions
+            $settings = $form['settings'] ?? [];
+            $restriction_settings = $settings->form_restriction['settings'] ?? [];
+            // IP restrictions
+            if(!empty($restriction_settings['enable_ip_restriction'])) {
+                $ip_restrictions_check = apply_filters('ht_form_submission_ip_restrictions_check', null, $restriction_settings);
+                if (is_wp_error($ip_restrictions_check)) {
+                    return $ip_restrictions_check;
+                }
+            }
+            // Country restrictions
+            if(!empty($restriction_settings['enable_country_restriction'])) {
+                $country_restrictions_check = apply_filters('ht_form_submission_country_restrictions_check', null, $restriction_settings);
+                if (is_wp_error($country_restrictions_check)) {
+                    return $country_restrictions_check;
+                }
+            }
+
             // Check honeypot field - if it's filled, it's probably a bot
             if (isset($form_data['ht_form_hp_email']) && !empty($form_data['ht_form_hp_email'])) {
                 return new WP_Error(
@@ -256,7 +274,7 @@ class Submission {
      * @param array $form_data Raw form data submitted by the user
      * @return array Sanitized form data
      */
-    private function sanitize_data($form_id, $form_data, $fields) {
+    public function sanitize_data($form_id, $form_data, $fields) {
         // Sanitize Form Data
         $sanitized_data = [];
 
@@ -303,6 +321,7 @@ class Submission {
                     case 'multiple_choices':
                     case 'checkboxes':
                     case 'radio':
+                    case 'ratings':
                         // For multi-value fields like checkboxes
                         if (is_array($form_data[$field_name])) {
                             $sanitized_data[$field_name] = array_map('sanitize_text_field', $form_data[$field_name]);
@@ -350,6 +369,7 @@ class Submission {
                         break;
 
                     case 'file_upload':
+                    case 'image_upload':
                         if(is_array($form_data[$field_name])) {
                             $sanitized_data[$field_name] = [];
                             foreach ($form_data[$field_name] as $file_value) {
@@ -394,7 +414,7 @@ class Submission {
      * @param array $form Form configuration
      * @return array Array of validation errors (field_name => error_message)
      */
-    private function validate_data($form_data, $form) {
+    public function validate_data($form_data, $form) {
         $errors = [];
         $fields = $form['fields'] ?? [];
         
@@ -442,9 +462,11 @@ class Submission {
      */
     public function handle_files_upload($form_data, $form) {
         foreach ($form['fields'] as $field) {
-            if ($field['type'] === 'file_upload') {
+            if ($field['type'] === 'file_upload' || $field['type'] === 'image_upload') {
                 $destination = $field['settings']['upload_location'] ?? 'ht_form_default';
-                $files = $form_data[$field['settings']['name_attribute']];
+                if(isset($form_data[$field['settings']['name_attribute']])) {
+                    $files = $form_data[$field['settings']['name_attribute']];
+                }
                 if (!empty($files)) {
                     foreach ($files as $key => $file) {
                         $file = sanitize_file_name($file);
@@ -507,7 +529,7 @@ class Submission {
      * @param array $form_data Submitted form data
      * @param array $form Form configuration
      */
-    private function process_form_actions($form_data, $form) {
+    public function process_form_actions($form_data, $form) {
         $settings = $form['settings'] ?? [];
         $global = get_option('ht_form_global_settings', []);
         $meta = [

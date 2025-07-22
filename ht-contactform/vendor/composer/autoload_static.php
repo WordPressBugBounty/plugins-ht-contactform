@@ -115,7 +115,7 @@ class ComposerStaticInitada11790b2969ee0a5f6159f8a2e49c6
         ),
         'HTContactForm\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/',
+            0 => __DIR__ . '/../..' . '/include',
         ),
         'HTContactFormAdmin\\' => 
         array (

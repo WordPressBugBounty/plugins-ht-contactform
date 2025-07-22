@@ -6,6 +6,7 @@ use HTContactFormAdmin\Includes\Config\Styler;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
+use HTContactFormAdmin\Includes\Config\Countries;
 
 class Form {
 
@@ -29,10 +30,13 @@ class Form {
     public static $countries = null;
     public static $styler = null;
 
+    public static $is_pro_active = false;
+
     public function __construct() {
         self::$field = Field::get_instance();
         self::$countries = Countries::get_instance();
         self::$styler = Styler::get_instance();
+        self::$is_pro_active = is_plugin_active('ht-contactform-pro/ht-contactform-pro.php');
         $this->global_settings = get_option('ht_form_global_settings', []);
         $this->integrations = get_option('ht_form_integrations', []);
         $this->mailchimp = Mailchimp::get_instance();
@@ -68,6 +72,9 @@ class Form {
                     self::$field->suffix_label(),
                     self::$field->name_attribute(),
                     self::$field->max_length(),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -84,6 +91,9 @@ class Form {
                     self::$field->class(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'name']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -105,6 +115,9 @@ class Form {
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'message']),
                     self::$field->max_length(),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -128,6 +141,9 @@ class Form {
                     self::$field->prefix_label(),
                     self::$field->suffix_label(),
                     self::$field->name_attribute(['value' => 'input_mask']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -149,6 +165,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'dropdown']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -173,6 +192,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'multi_select']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -195,6 +217,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'checkboxes']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -333,6 +358,9 @@ class Form {
                     self::$field->prefix_label(),
                     self::$field->suffix_label(),
                     self::$field->name_attribute(['value' => 'phone']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -358,6 +386,9 @@ class Form {
                     self::$field->prefix_label(),
                     self::$field->suffix_label(),
                     self::$field->name_attribute(['value' => 'number']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -382,6 +413,9 @@ class Form {
                     self::$field->size(),
                     self::$field->class(),
                     self::$field->name_attribute(['value' => 'gdpr_agreement']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -451,6 +485,9 @@ class Form {
                     self::$field->prefix_label(),
                     self::$field->suffix_label(),
                     self::$field->name_attribute(['value' => 'email']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -471,6 +508,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'password']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -666,6 +706,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'date_time']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -749,6 +792,9 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'country']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -1244,6 +1290,9 @@ class Form {
                     self::$field->class(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'address']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -1341,11 +1390,14 @@ class Form {
                             ]
                         ],
                     ]),
-                    self::$field->size(),
+                    // self::$field->size(),
                     self::$field->class(),
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'file-upload']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -1376,6 +1428,150 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'slider']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'image_upload',
+                'type' => 'image_upload',
+                'label' => __('Image Upload', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('Image Upload', 'ht-contactform')]),
+                    self::$field->label(['value' => __('Image Upload', 'ht-contactform')]),
+                    self::$field->label_position(),
+                    self::$field->label_hide(),
+                    self::$field->required(),
+                    self::$field->required_message(),
+                    self::$field->create([
+                        'id' => 'max_file_size',
+                        'label' => __('Max File Size', 'ht-contactform'),
+                        'info' => __('Max file size upload limit by user.', 'ht-contactform'),
+                        'type' => 'number',
+                        'value' => 2,
+                        'min' => 1,
+                        'suffix' => 'MB',
+                    ]),
+                    self::$field->create([
+                        'id' => 'max_file_size_message',
+                        'label' => __('Max File Size Error Message', 'ht-contactform'),
+                        'value' => __('Max file size is 2MB', 'ht-contactform'),
+                    ]),
+                    self::$field->create([
+                        'id' => 'max_files',
+                        'label' => __('Max Files Count', 'ht-contactform'),
+                        'info' => __('Max files count upload limit by user.', 'ht-contactform'),
+                        'type' => 'number',
+                        'value' => 1,
+                        'min' => 1,
+                    ]),
+                    self::$field->create([
+                        'id' => 'allow_types',
+                        'label' => __('Allow File Types', 'ht-contactform'),
+                        'type' => 'checkbox',
+                        'value' => ['image/jpeg'],
+                        'options' => [
+                            [
+                                'value' => 'image/jpeg',
+                                'label' => __('JPG', 'ht-contactform'),
+                            ],
+                            [
+                                'value' => 'image/png',
+                                'label' => __('PNG', 'ht-contactform'),
+                            ],
+                            [
+                                'value' => 'image/gif',
+                                'label' => __('GIF', 'ht-contactform'),
+                            ],
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'allow_types_message',
+                        'label' => __('Allow Types Error Message', 'ht-contactform'),
+                        'value' => __('Validation fails for allow file types', 'ht-contactform'),
+                    ]),
+                    self::$field->create([
+                        'id' => 'upload_location',
+                        'label' => __('Upload Location', 'ht-contactform'),
+                        'info' => __('Upload location.', 'ht-contactform'),
+                        'type' => 'select',
+                        'value' => 'ht_form_default',
+                        'options' => [
+                            [
+                                'value' => 'ht_form_default',
+                                'label' => __('HT Form Default', 'ht-contactform'),
+                            ],
+                            [
+                                'value' => 'media_library',
+                                'label' => __('Media Library', 'ht-contactform'),
+                            ]
+                        ],
+                    ]),
+                    // self::$field->size(),
+                    self::$field->class(),
+                    self::$field->message(),
+                    self::$field->message_position(),
+                    self::$field->name_attribute(['value' => 'image-upload']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'shortcode',
+                'type' => 'shortcode',
+                'label' => __('Shortcode', 'ht-contactform'),
+                'settings' => [
+                    self::$field->create([
+                        'id' => 'shortcode',
+                        'label' => __('Shortcode', 'ht-contactform'),
+                        'info' => __('Paste your shortcode to render desired content in the current place.', 'ht-contactform'),
+                        'type' => 'input',
+                        'value' => '[sample_shortcode]',
+                    ]),
+                    self::$field->class(),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'ratings',
+                'type' => 'ratings',
+                'label' => __('Ratings', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('Ratings', 'ht-contactform')]),
+                    self::$field->label(['value' => __('Ratings', 'ht-contactform')]),
+                    self::$field->label_position(),
+                    self::$field->label_hide(),
+                    self::$field->options([
+                        'option_type' => 'radio',
+                        'value' => [
+                            [ 'label' => "Nice", 'value' => 1, 'selected' => false ],
+                            [ 'label' => "Good", 'value' => 2, 'selected' => false ],
+                            [ 'label' => "Very Good", 'value' => 3, 'selected' => false ],
+                            [ 'label' => "Excellent", 'value' => 4, 'selected' => true ],
+                            [ 'label' => "Outstanding", 'value' => 5, 'selected' => false ],
+                        ]
+                    ]),
+                    self::$field->create([
+                        'id' => 'show_text_on_hover',
+                        'label' => __('Show Text', 'ht-contactform'),
+                        'info' => __('Show text value on hover', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => false,
+                    ]),
+                    self::$field->required(),
+                    self::$field->required_message(),
+                    self::$field->size(),
+                    self::$field->class(),
+                    self::$field->message(),
+                    self::$field->message_position(),
+                    self::$field->name_attribute(['value' => 'ratings']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
                 ],
             ],
             [
@@ -1445,6 +1641,33 @@ class Form {
                         'value' => true,
                     ]),
                     self::$field->create([
+                        'id' => 'delete_old_entries',
+                        'label' => __('Delete Old Entries', 'ht-contactform'),
+                        'info' => __('Delete old form submission data after a certain period of time.', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => false,
+                    ]),
+                    self::$field->create([
+                        'id' => 'delete_old_entries_after',
+                        'label' => __('Delete Old Entries After', 'ht-contactform'),
+                        // 'info' => __('Delete old form submission data after a certain period of time.', 'ht-contactform'),
+                        'type' => 'number',
+                        'value' => 30,
+                        'min' => 1,
+                        'max' => 365,
+                        'suffix' => ' days',
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'delete_old_entries',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ]
+                    ]),
+                    self::$field->create([
                         'id' => 'class',
                         'label' => __('Form Class', 'ht-contactform'),
                         'info' => __('Add a class to the contact form.', 'ht-contactform'),
@@ -1480,6 +1703,90 @@ class Form {
                             'rules' => [
                                 [
                                     'id' => 'enable_minimum_time_to_submit',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ]
+                    ]),
+                ]
+            ],
+            'form_restriction' => [
+                'id' => 'form_restriction',
+                'label' => __('Form Restriction', 'ht-contactform'),
+                'settings' => [
+                    self::$field->create([
+                        'id' => 'enable_ip_restriction',
+                        'label' => __('Enable IP Based Restriction', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => false,
+                    ]),
+                    self::$field->create([
+                        'id' => 'restrict_ip_address',
+                        'label' => __('Restrict IP Address', 'ht-contactform'),
+                        'info' => __('Add multiple IP addresses separated by commas to restrict submission.', 'ht-contactform'),
+                        'placeholder' => '192.168.1.1, 192.168.1.2',
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enable_ip_restriction',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ]
+                    ]),
+                    self::$field->create([
+                        'id' => 'restrict_ip_message',
+                        'label' => __('Restrict IP Address Error Message', 'ht-contactform'),
+                        'value' => __('Sorry! You can\'t submit a form from your IP address.', 'ht-contactform'),
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enable_ip_restriction',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ]
+                    ]),
+                    self::$field->create([
+                        'id' => 'enable_country_restriction',
+                        'label' => __('Enable Country Based Restriction', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => false,
+                    ]),
+                    self::$field->create([
+                        'id' => 'restrict_country',
+                        'label' => __('Restrict Country', 'ht-contactform'),
+                        'info' => __('Select countries to restrict submission.', 'ht-contactform'),
+                        'type' => 'select',
+                        'multiple' => true,
+                        'searchable' => true,
+                        'value' => [],
+                        'options' => self::$countries->get_all(),
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enable_country_restriction',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ]
+                    ]),
+                    self::$field->create([
+                        'id' => 'restrict_country_message',
+                        'label' => __('Restrict Country Error Message', 'ht-contactform'),
+                        'value' => __('Sorry! You can\'t submit a form the country you are residing.', 'ht-contactform'),
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enable_country_restriction',
                                     'value' => true,
                                     'compare' => '==',
                                 ]
@@ -1743,7 +2050,7 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the webhook to identify it.', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
@@ -1899,8 +2206,9 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the mailchimp to identify it.', 'ht-contactform'),
+                        'value' => __('Mailchimp Integration Feed', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
                     ]),
@@ -2031,8 +2339,9 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the slack to identify it.', 'ht-contactform'),
+                        'value' => __('Slack Integration Feed', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
                     ]),
@@ -2077,8 +2386,9 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the discord to identify it.', 'ht-contactform'),
+                        'value' => __('Discord Integration Feed', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
                     ]),
@@ -2127,8 +2437,9 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the activecampaign to identify it.', 'ht-contactform'),
+                        'value' => __('ActiveCampaign Integration Feed', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
                     ]),
@@ -2216,8 +2527,9 @@ class Form {
                     ]),
                     self::$field->create([
                         'id' => 'name',
-                        'label' => __('Name', 'ht-contactform'),
+                        'label' => __('Integration Name', 'ht-contactform'),
                         'info' => __('Enter a unique name for the mailerlite to identify it.', 'ht-contactform'),
+                        'value' => __('MailerLite Integration Feed', 'ht-contactform'),
                         'callback' => 'sanitize_text_field',
                         'required' => true,
                     ]),
@@ -2238,26 +2550,439 @@ class Form {
                         'required' => true,
                         "type" => "custom",
                         "value" => [],
-                        "options" => [
-                            [
-                                'name' => 'Email',
-                                'key' => 'email',
-                            ],
-                        ],
                         "fields" => [
                             self::$field->create([
-                                'id' => 'value',
+                                'id' => 'email_address',
+                                'label' => 'Email Address',
                                 'type' => 'select',
                                 'placeholder' => __('Select Value', 'ht-contactform'),
                                 'callback' => 'sanitize_text_field',
                                 'options' => 'tags',
+                                'required' => true,
                                 'searchable' => true,
                             ]),
                         ],
                     ]),
                 ]
             ],
+            'zapier' => [
+                'id' => 'zapier',
+                'label' => __('Zapier', 'ht-contactform'),
+                'value' => [
+                    'enabled' => false,
+                    'name' => '',
+                    'url' => '',
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Zapier', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Integration Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for the zapier to identify it.', 'ht-contactform'),
+                        'value' => __('Zapier Integration Feed', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'url',
+                        'label' => __('Webhook URL', 'ht-contactform'),
+                        'info' => __('Enter the zapier webhook URL.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'fields',
+                        'label' => __('Fields', 'ht-contactform'),
+                        'info' => __('Select the fields to send with zapier request.', 'ht-contactform'),
+                        'type' => 'field_checkbox',
+                        'required' => true,
+                        'value' => [],
+                        'options' => [],
+                    ]),
+                ]
+            ],
+            'supportgenix' => [
+                'id' => 'supportgenix',
+                'label' => __('Support Genix', 'ht-contactform'),
+                'value' => [
+                    'enabled' => false,
+                    'name' => '',
+                    'ticket_subject' => '',
+                    'ticket_description' => '',
+                    'ticket_attachments' => '',
+                    'ticket_priority' => '',
+                    'ticket_email' => '',
+                    'ticket_f_name' => '',
+                    'ticket_l_name' => '',
+                    'ticket_customer_fields' => [],
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Support Genix', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Integration Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for you to identify it later.', 'ht-contactform'),
+                        'placeholder' => __('Ex: Support Genix Ticket', 'ht-contactform'),
+                        'value' => __('Support Genix Ticket', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'ticket_subject',
+                        'label' => __('Ticket Title / Subject', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'placeholder' => __('Select a field or type custom value', 'ht-contactform'),
+                        'required' => true,
+                        'support' => ['tags']
+                    ]),
+                    self::$field->create([
+                        'id' => 'ticket_description',
+                        'label' => __('Ticket Content', 'ht-contactform'),
+                        'placeholder' => __('Select a field or type custom value. Ex: {input.message}', 'ht-contactform'),
+                        'type' => 'textarea',
+                        'required' => true,
+                        'callback' => 'sanitize_textarea_field',
+                        'support' => ['tags']
+                    ]),
+                    self::$field->create([
+                        'id' => 'ticket_attachments',
+                        'label' => __('Ticket Attachments', 'ht-contactform'),
+                        'placeholder' => __('Select a field or type custom value', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'support' => ['tags']
+                    ]),
+                    // self::$field->create([
+                    //     'id' => 'ticket_custom_fields__priority',
+                    //     'label' => __('Ticket Priority', 'ht-contactform'),
+                    //     'placeholder' => __('Ex: High', 'ht-contactform'),
+                    //     'callback' => 'sanitize_text_field',
+                    // ]),
+                    self::$field->create([
+                        'id' => 'custom_fields',
+                        'label' => __('Custom Fields', 'ht-contactform'),
+                        'desc' => __('Please map you ticket custom fields data with this form.', 'ht-contactform'),
+                        'type' => 'custom_fields',
+                        'value' => [],
+                        'options' => $this->get_support_genix_custom_fields(),
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'value',
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'customer_headings',
+                        'label' => __('Customer Information', 'ht-contactform'),
+                        'desc' => __('Configure how customer details are captured for support tickets. When users are logged in, their profile information will be automatically populated. For guest users submitting tickets, you can specify which customer fields to collect.', 'ht-contactform'),
+                        'type' => 'heading',
+                    ]),
+                    self::$field->create([
+                        'id' => 'user_email',
+                        'label' => __('Email Address', 'ht-contactform'),
+                        'placeholder' => __('Select a field', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        'support' => ['tags']
+                    ]),
+                    self::$field->create([
+                        'id' => 'user_first_name',
+                        'label' => __('First Name', 'ht-contactform'),
+                        'placeholder' => __('Select a field or type custom value', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        'support' => ['tags']
+                    ]),
+                    self::$field->create([
+                        'id' => 'user_last_name',
+                        'label' => __('Last Name', 'ht-contactform'),
+                        'placeholder' => __('Select a field or type custom value', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'support' => ['tags']
+                    ]),
+                    self::$field->create([
+                        'id' => 'ticket_customer_fields',
+                        'label' => __('Additional Customer Information', 'ht-contactform'),
+                        'desc' => __('Map your HT Contact Forms fields to their corresponding Support Genix fields to collect additional customer information beyond name and email.', 'ht-contactform'),
+                        'type' => 'custom_repeater',
+                        'value' => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'key',
+                                'placeholder' => __('Field Name', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                            ]),
+                            self::$field->create([
+                                'id' => 'value',
+                                'placeholder' => __('Field Value', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                        ],
+                    ]),
+                ]
+            ],
+            'constantcontact' => [
+                'id' => 'constantcontact',
+                'label' => __('Constant Contact', 'ht-contactform'),
+                'value' => [
+                    'enabled' => true,
+                    'name' => '',
+                    'list_id' => '',
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Constant Contact', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Integration Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for the you to identify it.', 'ht-contactform'),
+                        'value' => __('Constant Contact Integration Feed', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'list_id',
+                        'label' => __('Constant Contact List', 'ht-contactform'),
+                        'info' => __('Select the constant contact list you like to add your contact to.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        "type" => "select",
+                        "options" => [],
+                    ]),
+                    self::$field->create([
+                        'id' => 'tags',
+                        'label' => __('Constant Contact Tags', 'ht-contactform'),
+                        'info' => __('Select the constant contact tags you like to add your contact to.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        "type" => "multiselect",
+                        'value' => [],
+                        "options" => [],
+                    ]),
+                    self::$field->create([
+                        'id' => 'fields',
+                        'label' => __('Constant Contact Fields', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        "type" => "map_fields",
+                        "options" => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'email_address',
+                                'label' => __('Email Address', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'type' => 'select',
+                                'required' => true,
+                                'support' => ['tags'],
+                            ]),
+                            self::$field->create([
+                                'id' => 'permission_to_send',
+                                'label' => __('Permission To Send', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'type' => 'select',
+                                'required' => true,
+                                'options' => [
+                                    [
+                                        'value' => 'explicit',
+                                        'label' => __('Explicit', 'ht-contactform'),
+                                    ],
+                                    [
+                                        'value' => 'implicit',
+                                        'label' => __('Implicit', 'ht-contactform'),
+                                    ],
+                                    [
+                                        'value' => 'not_set',
+                                        'label' => __('Not Set', 'ht-contactform'),
+                                    ],
+                                    [
+                                        'value' => 'pending_confirmation',
+                                        'label' => __('Pending Confirmation', 'ht-contactform'),
+                                    ],
+                                    [
+                                        'value' => 'temp_hold',
+                                        'label' => __('Temporary Hold', 'ht-contactform'),
+                                    ],
+                                    [
+                                        'value' => 'unsubscribed',
+                                        'label' => __('Unsubscribed', 'ht-contactform'),
+                                    ],
+                                ]
+                            ]),
+                            self::$field->create([
+                                'id'   => 'first_name',
+                                'label' => __('First Name', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'last_name',
+                                'label' => __('Last Name', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'job_title',
+                                'label' => __('Job Title', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'company_name',
+                                'label' => __('Company Name', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'birthday_month',
+                                'label' => __('Birthday Month', 'ht-contactform'),
+                                'tips' => __('The month value for the contact\'s birthday. Valid values are from 1 through 12.', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'birthday_day',
+                                'label' => __('Birth Day', 'ht-contactform'),
+                                'tips' => __('The day value for the contact\'s birthday. Valid values are from 1 through 31.', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'anniversary',
+                                'label' => __('Anniversary', 'ht-contactform'),
+                                'tips' => __('this value could be the date when the contact first became a customer of an organization in Constant Contact. Valid date formats are MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD.', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_phone',
+                                'label' => __('Home Phone Number', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_phone',
+                                'label' => __('Work Phone Number', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'mobile_phone',
+                                'label' => __('Mobile Phone Number', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_address_street',
+                                'label' => __('Home Street Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_address_city',
+                                'label' => __('Home City Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_address_state',
+                                'label' => __('Home State', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_address_postal_code',
+                                'label' => __('Home Postal Code', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'home_address_country',
+                                'label' => __('Home Country', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_address_street',
+                                'label' => __('Work Street Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_address_city',
+                                'label' => __('Work City Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_address_state',
+                                'label' => __('Work State', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_address_postal_code',
+                                'label' => __('Work Postal Code', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'work_address_country',
+                                'label' => __('Work Country', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'other_address_street',
+                                'label' => __('Other Street Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'other_address_city',
+                                'label' => __('Other City Address', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'other_address_state',
+                                'label' => __('Other State', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'other_address_postal_code',
+                                'label' => __('Other Postal Code', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'other_address_country',
+                                'label' => __('Other Country', 'ht-contactform'),
+                                'support' => ['tags']
+                            ])
+                        ]
+                    ]),
+                    self::$field->create([
+                        'id' => 'custom_fields',
+                        'require_list' => false,
+                        'label' => __('Custom Fields', 'ht-contactform'),
+                        'info' => __('Select which Fluent Forms fields pair with their respective Constant Contact fields. Custom Date Fields supports only MM/DD/YYYY format', 'ht-contactform'),
+                        'type' => 'select',
+                        'options' => [],
+                        'support' => ['tags'],
+                        'fields' => [
+                            self::$field->create([
+                                'id'   => 'custom_field_id',
+                                'label' => __('Custom Field ID', 'ht-contactform'),
+                                'support' => ['tags']
+                            ]),
+                        ]
+                    ]),
+                ]
+            ]
         ]);
+    }
+
+    public function get_support_genix_custom_fields() {
+        // Now we can safely use the class
+        if (class_exists('Mapbd_wps_custom_field')) {
+            $custom_fields = \Mapbd_wps_custom_field::getCustomFieldForAPI();
+            return $custom_fields->ticket_form;
+        }
     }
 
     /**
@@ -2577,6 +3302,58 @@ class Form {
                             'info' => __('Enter your MailerLite API Token.', 'ht-contactform'),
                             'callback' => 'api_key',
                             'required' => true,
+                        ]),
+                    ]
+                ]),
+                self::$field->create([
+                    'id' => 'zapier',
+                    'icon' => 'zapier',
+                    'label' => __('Zapier', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with Zapier.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                ]),
+                self::$field->create([
+                    'id' => 'supportgenix',
+                    'icon' => 'supportgenix',
+                    'label' => __('Support Genix', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with Support Genix.', 'ht-contactform'),
+                    'disabled_info' => __('The Support Genix plugin is not active or needs to be updated. Please activate or update the plugin.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'disabled' => !class_exists('Apbd_wps_ht_contact_form'),
+                    'callback' => 'switch',
+                ]),
+                self::$field->create([
+                    'id' => 'constantcontact',
+                    'icon' => 'constantcontact',
+                    'label' => __('ConstantContact', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with ConstantContact.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                    'options' => [
+                        self::$field->create([
+                            'id' => 'client_id',
+                            'label' => __('Client ID', 'ht-contactform'),
+                            'info' => __('Enter your ConstantContact Client ID.', 'ht-contactform'),
+                            'callback' => 'client_id',
+                            'required' => true,
+                        ]),
+                        self::$field->create([
+                            'id' => 'client_secret',
+                            'label' => __('Client Secret', 'ht-contactform'),
+                            'info' => __('Enter your ConstantContact Client Secret.', 'ht-contactform'),
+                            'callback' => 'client_secret',
+                            'required' => true,
+                        ]),
+                        self::$field->create([
+                            'id' => 'redirect_uri',
+                            'type' => 'text',
+                            'content' => [
+                                __('Set your Redirect Url as: ', 'ht-contactform') .'<strong>'. rest_url('ht-form/v1/constantcontact/callback'). '</strong>'
+                            ],
                         ]),
                     ]
                 ]),

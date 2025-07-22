@@ -841,6 +841,7 @@ class Form {
                 return sanitize_textarea_field($value);
                 
             case 'repeater':
+            case 'cl_repeater':
                 return $this->sanitize_recursive($value);
                 
             case 'select':

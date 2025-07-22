@@ -2,7 +2,7 @@
 
 namespace HTContactFormAdmin\Includes\Api\Endpoints\Integrations;
 
-use HTContactFormAdmin\Includes\Integrations\Mailchimp as MailchimpIntegration;
+use HTContactForm\Integrations\Mailchimp as MailchimpIntegration;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;

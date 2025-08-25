@@ -9,6 +9,7 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ConstantContact;
 
 class ApiRegistry {
     private static $instance = null;

@@ -395,6 +395,106 @@ class Fields {
     }
 
     /**
+     * Render website url field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_url($field_id, $settings) {
+        $attributes = [
+            'type' => 'url',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-input',
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+            'data-validate' => !empty($settings['validate_url']) ? true : false,
+            'data-validation-message' =>  !empty($settings['validate_url']) && !empty($settings['validate_url_message']) ? $settings['validate_url_message'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render hidden field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_hidden($field_id, $settings) {
+        $attributes = [
+            'type' => 'hidden',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-input',
+            'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<input %s/>',
+            $attributes_string
+        );
+    }
+
+    /**
+     * Render Custom HTML field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_custom_html($field_id, $settings) {
+        $content = !empty($settings['html']) ? $settings['html'] : '';
+        $content = $this->helper->filter_vars($content);
+        if(str_contains($content, '{input.')) {
+            // Match all {input.something} patterns
+            preg_match_all('/{input\.[^}]+}/', $content, $matches);
+            
+            if (!empty($matches[0])) {
+                foreach ($matches[0] as $match) {
+                    // Extract the field name from the tag (e.g., {input.email} -> email)
+                    $field_name = str_replace(['{input.', '}'], '', $match);
+                    // Convert dot notation to array notation (e.g., name.first_name.nested -> name[first_name][nested])
+                    if (strpos($field_name, '.') !== false) {
+                        $parts = explode('.', $field_name);
+                        $base = array_shift($parts);
+                        $field_name = $base;
+                        foreach ($parts as $part) {
+                            $field_name .= "[$part]";
+                        }
+                    }
+                    
+                    // Create a span with data attribute to reference this field
+                    $span = '<span class="ht-form-elem-dynamic" data-ref="' . esc_attr($field_name) . '"></span>';
+                    
+                    // Replace the tag with the span
+                    $content = str_replace($match, $span, $content);
+                }
+            }
+        }
+        return wp_kses_post("<div class=\"ht-form-elem-custom-html\">$content</div>");
+    }
+
+    /**
      * Render input field
      *
      * @param string $field_id Field ID
@@ -998,6 +1098,67 @@ class Fields {
     }
 
     /**
+     * Render radio field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_radio($field_id, $settings) {
+        $attributes = [
+            'class' => implode(' ', array_filter([
+                'ht-form-elem-radios',
+                $settings['layout'] ? "ht-form-elem-radios-" . esc_attr($settings['layout']) : false
+            ])),
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        $options = '';
+        if(!empty($settings['options'])) {
+            foreach ($settings['options'] as $option) {
+                $item_attributes = [
+                    'type' => 'radio',
+                    'id' => $field_id .'_'. $option['value'],
+                    'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+                    'value' => $option['value'],
+                    'checked' => $option['selected'] ? 'checked' : '',
+                    'required' => $settings['required'] ? true : false,
+                    'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+                ];
+                // Build attribute string
+                $item_attributes_string = '';
+                foreach ($item_attributes as $key => $value) {
+                    if($value) {
+                        $item_attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+                    }
+                }
+                $options .= sprintf(
+                    '<div class="ht-form-elem-radio-item">
+                        <div class="ht-form-elem-radio-inner">
+                            <input %s/>
+                            <span class="ht-form-elem-radio-icon"></span>
+                        </div>
+                        <label for="%s">%s</label>
+                    </div>' . PHP_EOL,
+                    $item_attributes_string,
+                    esc_attr($field_id .'_'. $option['value']),
+                    esc_html($option['label'])
+                );
+            }
+        }
+        return sprintf(
+            '<div %s>%s</div>',
+            $attributes_string,
+            $options
+        );
+    }
+
+    /**
      * Render slider field
      *
      * @param string $field_id Field ID
@@ -1293,6 +1454,57 @@ class Fields {
             $label_attributes_string,
             $attributes_string,
             $desc
+        );
+    }
+
+    /**
+     * Render Terms and Conditions field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_terms_conditions($field_id, $settings) {
+        $content = !empty($settings['content']) ? $settings['content'] : '';
+        $label_attributes = [
+            'for' => $field_id,
+            'class' => 'ht-form-elem-terms-conditions',
+            'aria-label' => $content,
+        ];
+        // Build attribute string
+        $label_attributes_string = '';
+        foreach ($label_attributes as $key => $value) {
+            if($value) {
+                $label_attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        $attributes = [
+            'type' => 'checkbox',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-input',
+            'value' => 'yes',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+            'required' => true,
+            'data-required-message' => !empty($settings['required_message']) ? $settings['required_message'] : '',
+        ];
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+        return sprintf(
+            '<label %s>
+                <div class="ht-form-elem-terms-conditions-inner">
+                    <input %s/>
+                    <svg viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="ht-form-elem-checkbox-icon"><path d="M4 4.586L1.707 2.293A1 1 0 1 0 .293 3.707l3 3a.997.997 0 0 0 1.414 0l5-5A1 1 0 1 0 8.293.293L4 4.586z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </div>
+                <span class="ht-form-elem-terms-conditions-desc">%s</span>
+            </label>',
+            $label_attributes_string,
+            $attributes_string,
+            wp_kses_post($content)
         );
     }
 

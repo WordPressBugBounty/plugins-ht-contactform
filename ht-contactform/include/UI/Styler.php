@@ -53,9 +53,11 @@ class Styler {
         $style .= $this->get_help_tooltip_style();
         $style .= $this->get_field_style();
         $style .= $this->get_checkbox_style();
+        $style .= $this->get_radio_style();
         $style .= $this->get_range_style();
         $style .= $this->get_select_style();
         $style .= $this->get_gdpr_style();
+        $style .= $this->get_terms_conditions_style();
         $style .= $this->get_date_time_style();
         $style .= $this->get_submit_button_style();
         $style .= "}";
@@ -279,6 +281,70 @@ class Styler {
     }
 
     /**
+     * Get radio style
+     *
+     * @return string
+     */
+    public function get_radio_style() {
+        $style = '';
+        if(isset($this->styler['radio_color']) && $this->styler['radio_color'] !== '') {
+            $style .= "--ht-radio-label-color: {$this->styler['radio_color']};";
+        }
+        if(isset($this->styler['radio_font_size']) && $this->styler['radio_font_size'] !== '') {
+            $style .= "--ht-radio-label-fz: {$this->styler['radio_font_size']}px;";
+        }
+        if(isset($this->styler['radio_font_size_sm']) && $this->styler['radio_font_size_sm'] !== '') {
+            $style .= "--ht-radio-label-fz-sm: {$this->styler['radio_font_size_sm']}px;";
+        }
+        if(isset($this->styler['radio_font_size_lg']) && $this->styler['radio_font_size_lg'] !== '') {
+            $style .= "--ht-radio-label-fz-lg: {$this->styler['radio_font_size_lg']}px;";
+        }
+        if(isset($this->styler['radio_font_weight']) && $this->styler['radio_font_weight'] !== '') {
+            $style .= "--ht-radio-label-fw: {$this->styler['radio_font_weight']};";
+        }
+        if(isset($this->styler['radio_line_height']) && $this->styler['radio_line_height'] !== '') {
+            $style .= "--ht-radio-label-lh: {$this->styler['radio_line_height']};";
+        }
+        if(isset($this->styler['radio_size']) && $this->styler['radio_size'] !== '') {
+            $style .= "--ht-radio-size: {$this->styler['radio_size']}px;";
+        }
+        if(isset($this->styler['radio_size_sm']) && $this->styler['radio_size_sm'] !== '') {
+            $style .= "--ht-radio-size-sm: {$this->styler['radio_size_sm']}px;";
+        }
+        if(isset($this->styler['radio_size_lg']) && $this->styler['radio_size_lg'] !== '') {
+            $style .= "--ht-radio-size-lg: {$this->styler['radio_size_lg']}px;";
+        }
+        if(isset($this->styler['radio_radius']) && $this->styler['radio_radius'] !== '') {
+            $style .= "--ht-radio-radius: {$this->styler['radio_radius']}px;";
+        }
+        if(isset($this->styler['radio_gap']) && $this->styler['radio_gap'] !== '') {
+            $style .= "--ht-radio-gap: {$this->styler['radio_gap']}px;";
+        }
+        if(isset($this->styler['radio_border_style']) && $this->styler['radio_border_style'] !== '') {
+            $style .= "--ht-radio-border-style: {$this->styler['radio_border_style']};";
+        }
+        if(isset($this->styler['radio_border_width']) && $this->styler['radio_border_width'] !== '') {
+            $style .= "--ht-radio-border-width: {$this->styler['radio_border_width']}px;";
+        }
+        if(isset($this->styler['radio_border_color']) && $this->styler['radio_border_color'] !== '') {
+            $style .= "--ht-radio-border-color: {$this->styler['radio_border_color']};";
+        }
+        if(isset($this->styler['radio_border_color_active']) && $this->styler['radio_border_color_active'] !== '') {
+            $style .= "--ht-radio-border-color-active: {$this->styler['radio_border_color_active']};";
+        }
+        if(isset($this->styler['radio_bg_color']) && $this->styler['radio_bg_color'] !== '') {
+            $style .= "--ht-radio-bg-color: {$this->styler['radio_bg_color']};";
+        }
+        if(isset($this->styler['radio_bg_color_active']) && $this->styler['radio_bg_color_active'] !== '') {
+            $style .= "--ht-radio-bg-color-active: {$this->styler['radio_bg_color_active']};";
+        }
+        if(isset($this->styler['radio_check_color']) && $this->styler['radio_check_color'] !== '') {
+            $style .= "--ht-radio-check-color: {$this->styler['radio_check_color']};";
+        }
+        return $style;
+    }
+
+    /**
      * Get range style
      *
      * @return string
@@ -406,6 +472,76 @@ class Styler {
         }
         if(isset($this->styler['gdpr_radius']) && $this->styler['gdpr_radius'] !== '') {
             $style .= "--ht-gdpr-radius: {$this->styler['gdpr_radius']}px;";
+        }
+        return $style;
+    }
+
+    /**
+     * Get Terms & Conditions style
+     *
+     * @return string
+     */
+    public function get_terms_conditions_style() {
+        $style = '';
+        if(isset($this->styler['terms_conditions_label_color']) && $this->styler['terms_conditions_label_color'] !== '') {
+            $style .= "--ht-terms-conditions-label-color: {$this->styler['terms_conditions_label_color']};";
+        }
+        if(isset($this->styler['terms_conditions_label_size']) && $this->styler['terms_conditions_label_size'] !== '') {
+            $style .= "--ht-terms-conditions-label-fz: {$this->styler['terms_conditions_label_size']}px;";
+        }
+        if(isset($this->styler['terms_conditions_label_size_sm']) && $this->styler['terms_conditions_label_size_sm'] !== '') {
+            $style .= "--ht-terms-conditions-label-fz-sm: {$this->styler['terms_conditions_label_size_sm']}px;";
+        }
+        if(isset($this->styler['terms_conditions_label_size_lg']) && $this->styler['terms_conditions_label_size_lg'] !== '') {
+            $style .= "--ht-terms-conditions-label-fz-lg: {$this->styler['terms_conditions_label_size_lg']}px;";
+        }
+        if(isset($this->styler['terms_conditions_label_weight']) && $this->styler['terms_conditions_label_weight'] !== '') {
+            $style .= "--ht-terms-conditions-label-fw: {$this->styler['terms_conditions_label_weight']};";
+        }
+        if(isset($this->styler['terms_conditions_label_line_height']) && $this->styler['terms_conditions_label_line_height'] !== '') {
+            $style .= "--ht-terms-conditions-label-lh: {$this->styler['terms_conditions_label_line_height']};";
+        }
+        if(isset($this->styler['terms_conditions_size']) && $this->styler['terms_conditions_size'] !== '') {
+            $style .= "--ht-terms-conditions-size: {$this->styler['terms_conditions_size']}px;";
+        }
+        if(isset($this->styler['terms_conditions_size_sm']) && $this->styler['terms_conditions_size_sm'] !== '') {
+            $style .= "--ht-terms-conditions-size-sm: {$this->styler['terms_conditions_size_sm']}px;";
+        }
+        if(isset($this->styler['terms_conditions_size_lg']) && $this->styler['terms_conditions_size_lg'] !== '') {
+            $style .= "--ht-terms-conditions-size-lg: {$this->styler['terms_conditions_size_lg']}px;";
+        }
+        if(isset($this->styler['terms_conditions_link_color']) && $this->styler['terms_conditions_link_color'] !== '') {
+            $style .= "--ht-terms-conditions-link-color: {$this->styler['terms_conditions_link_color']};";
+        }
+        if(isset($this->styler['terms_conditions_link_hover_color']) && $this->styler['terms_conditions_link_hover_color'] !== '') {
+            $style .= "--ht-terms-conditions-link-hover-color: {$this->styler['terms_conditions_link_hover_color']};";
+        }
+        if(isset($this->styler['terms_conditions_gap']) && $this->styler['terms_conditions_gap'] !== '') {
+            $style .= "--ht-terms-conditions-gap: {$this->styler['terms_conditions_gap']}px;";
+        }
+        if(isset($this->styler['terms_conditions_border_width']) && $this->styler['terms_conditions_border_width'] !== '') {
+            $style .= "--ht-terms-conditions-border-width: {$this->styler['terms_conditions_border_width']}px;";
+        }
+        if(isset($this->styler['terms_conditions_border_style']) && $this->styler['terms_conditions_border_style'] !== '') {
+            $style .= "--ht-terms-conditions-border-style: {$this->styler['terms_conditions_border_style']};";
+        }
+        if(isset($this->styler['terms_conditions_border_color']) && $this->styler['terms_conditions_border_color'] !== '') {
+            $style .= "--ht-terms-conditions-border-color: {$this->styler['terms_conditions_border_color']};";
+        }
+        if(isset($this->styler['terms_conditions_border_color_active']) && $this->styler['terms_conditions_border_color_active'] !== '') {
+            $style .= "--ht-terms-conditions-border-color-active: {$this->styler['terms_conditions_border_color_active']};";
+        }
+        if(isset($this->styler['terms_conditions_bg_color']) && $this->styler['terms_conditions_bg_color'] !== '') {
+            $style .= "--ht-terms-conditions-bg-color: {$this->styler['terms_conditions_bg_color']};";
+        }
+        if(isset($this->styler['terms_conditions_bg_color_active']) && $this->styler['terms_conditions_bg_color_active'] !== '') {
+            $style .= "--ht-terms-conditions-bg-color-active: {$this->styler['terms_conditions_bg_color_active']};";
+        }
+        if(isset($this->styler['terms_conditions_check_color']) && $this->styler['terms_conditions_check_color'] !== '') {
+            $style .= "--ht-terms-conditions-check-color: {$this->styler['terms_conditions_check_color']};";
+        }
+        if(isset($this->styler['terms_conditions_radius']) && $this->styler['terms_conditions_radius'] !== '') {
+            $style .= "--ht-terms-conditions-radius: {$this->styler['terms_conditions_radius']}px;";
         }
         return $style;
     }

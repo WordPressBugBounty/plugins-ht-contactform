@@ -227,6 +227,14 @@ const HTFormValidator = {
                 return false;
             }
         }
+        
+        // URL validation
+        if (field.type === 'url' && field.getAttribute('data-validate') && field.value.trim()) {
+            if (!this._validateUrl(field.value.trim())) {
+                this._showFieldError(field, fieldContainer, errorElement, 'url');
+                return false;
+            }
+        }
 
         // Number min/max validation
         if (field.type === 'number') {
@@ -312,8 +320,7 @@ const HTFormValidator = {
         if (!isAnyChecked) {
             groupInputs.forEach(input => input.classList.add(HTFORM_CONFIG.ERROR_CLASS));
             
-            const fieldMessage = field.getAttribute('data-required-message') || 
-                               fieldContainer.getAttribute('data-required-message');
+            const fieldMessage = field.getAttribute('data-required-message') || fieldContainer.getAttribute('data-required-message');
             errorElement.textContent = fieldMessage || this.messages.required;
             errorElement.style.display = 'block';
             
@@ -339,7 +346,8 @@ const HTFormValidator = {
             format: field.getAttribute('data-format-message') || this.messages.input_mask?.replace('{format}', field.getAttribute('data-mask')),
             min: this.messages.minimum_number?.replace('{min}', field.getAttribute('min')),
             max: this.messages.maximum_number?.replace('{max}', field.getAttribute('max')),
-            phone: field.getAttribute('data-validation-message') || this.messages.phone
+            phone: field.getAttribute('data-validation-message') || this.messages.phone,
+            url: field.getAttribute('data-validation-message') || this.messages.url
         };
         
         errorElement.textContent = errorMessages[errorType] || 'Validation error';
@@ -348,6 +356,10 @@ const HTFormValidator = {
 
     _validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    },
+
+    _validateUrl(url) {
+        return /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(url);
     },
 
     _validateMaskedInput(field, maskFormat) {
@@ -387,6 +399,7 @@ const HTFormEventHandlers = {
      * @param {HTMLFormElement} form - Form element
      */
     setupFieldListeners(form) {
+        // Handle Input Fields
         form.querySelectorAll(HTFORM_CONFIG.FIELD_SELECTOR).forEach(field => {
             field.addEventListener('input', () => {
                 HTFormValidator.clearFieldError(field, form);
@@ -403,6 +416,7 @@ const HTFormEventHandlers = {
             });
         });
 
+        // Handle Ratings
         document.querySelectorAll('.ht-form-elem-ratings').forEach(ratingsContainer => {
             ratingsContainer.querySelectorAll('label').forEach(label => {
                 label.addEventListener('mouseover', () => {
@@ -410,10 +424,70 @@ const HTFormEventHandlers = {
                 });
             });
             
-            // Use mouseleave instead of mouseout to only trigger when leaving the entire container
             ratingsContainer.addEventListener('mouseleave', () => {
                 this._resetRatingsToCheckedState(ratingsContainer);
             });
+        });
+
+        // Handle Dynamic Fields
+        document.querySelectorAll('.ht-form-elem-dynamic').forEach(elem => {
+            const ref = elem.dataset.ref;
+            
+            // Check if this is a parent field reference (without brackets)
+            if (!ref.includes('[') && !ref.includes(']')) {
+                // Look for child fields that start with this parent name
+                const childFields = form.querySelectorAll(`[name^="${ref}["]`);
+                if (childFields.length > 0) {
+                    // For parent fields, we'll combine values of children
+                    const updateParentContent = () => {
+                        const values = [];
+                        childFields.forEach(field => {
+                            if ((field.type === 'checkbox' || field.type === 'radio') && !field.checked) {
+                                return;
+                            }
+                            if (field.value.trim()) {
+                                values.push(field.value);
+                            }
+                        });
+                        elem.textContent = values.join(' ');
+                    };
+                    // Initial update
+                    updateParentContent();
+                    // Add listeners to all child fields
+                    ['input', 'change'].forEach(event => {
+                        childFields.forEach(field => {
+                            field.addEventListener(event, updateParentContent);
+                        });
+                    });
+                    return; // Skip the regular field handling below
+                }
+            }
+            
+            // Regular handling for direct field references
+            const field = form.querySelectorAll(`[name="${ref}"]`);
+            
+            if (field.length) {
+                const updateContent = (e) => {
+                    elem.textContent = e.target.value;
+                };
+                field.forEach(f => {
+                    let value = f.value;
+                    if(f.type === 'checkbox' || f.type === 'radio') {
+                        if(f.checked) {
+                            value = f.value;
+                            updateContent({target: {value}});
+                            return;
+                        }
+                        return;
+                    }
+                    updateContent({target: {value}});
+                });
+                ['input', 'change'].forEach(event => {
+                    field.forEach(f => {
+                        f.addEventListener(event, updateContent);
+                    });
+                });
+            }
         });
     },
 
@@ -459,6 +533,15 @@ const HTFormEventHandlers = {
             const container = field.closest('.ht-form-elem-checkbox');
             if (container) {
                 container.classList.toggle('checked', field.checked);
+            }
+        }
+        if (field.type === 'radio') {
+            const container = field.closest('.ht-form-elem-radio-item');
+            if (container) {
+                container?.closest('.ht-form-elem-radios')?.querySelectorAll('.ht-form-elem-radio-item')?.forEach(function(item) {
+                    item.classList.remove('checked');
+                })
+                container.classList.add('checked');
             }
         }
 
@@ -947,6 +1030,9 @@ const HTFormFieldComponents = {
             initialCountry: input.getAttribute('data-initial-country'),
             excludeCountries: input.getAttribute('data-exclude-countries')?.split(',') || [],
             onlyCountries: input.getAttribute('data-only-countries')?.split(',') || [],
+            hiddenInput: (input) => ({
+                phone: 'phone',
+            }),
             customPlaceholder: (selectedCountryPlaceholder) => "e.g. " + selectedCountryPlaceholder
         };
     },

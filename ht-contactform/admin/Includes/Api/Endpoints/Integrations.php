@@ -8,6 +8,9 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ConstantContact;
 
+use HTContactForm\Integrations\Insightly;
+use HTContactForm\Integrations\Brevo;
+
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
@@ -23,7 +26,7 @@ class Integrations {
     //-------------------------------------------------------------------------
     
     /** @var string REST API namespace */
-    private $namespace = 'ht-form/v1';
+    private const NAMESPACE = 'ht-form/v1';
 
     /** @var self|null Singleton instance */
     private static $instance = null;
@@ -34,6 +37,24 @@ class Integrations {
      * Option name for storing integrations settings
      */
     public const OPTION_NAME = 'ht_form_integrations';
+
+    //-------------------------------------------------------------------------
+    // INTEGRATIONS INSTANCES
+    //-------------------------------------------------------------------------
+
+    /** 
+     * Insightly integration instance
+     * 
+     * @var Insightly
+     */
+    private $insightly = null;
+
+    /** 
+     * Brevo integration instance
+     * 
+     * @var Brevo
+     */
+    private $brevo = null;
 
     //-------------------------------------------------------------------------
     // INITIALIZATION
@@ -59,6 +80,9 @@ class Integrations {
     public function __construct() {
         $this->integrations_settings = FormConfig::get_instance()->form_integrations();
         add_action('rest_api_init', [$this, 'register_routes']);
+
+        $this->brevo = new Brevo();
+        $this->insightly = new Insightly();
         
         // Initialize integration classes that need to register their own routes
         $this->init_integration_classes();
@@ -84,49 +108,93 @@ class Integrations {
      * Register routes
      */
     public function register_routes() {
-        register_rest_route(
-            $this->namespace, 
-            '/integrations', 
+        $routes = [
             [
-                [
-                    'methods'             => 'GET',
-                    'callback'            => [$this, 'get_integrations'],
-                    'permission_callback' => [$this, 'permissions_check'],
+                'endpoint' => 'integrations',
+                'methods'  => 'GET',
+                'callback' => [$this, 'get_integrations'],
+            ],
+            [
+                'endpoint' => 'integrations',
+                'methods'  => 'PUT',
+                'callback' => [$this, 'update_integrations'],
+                'args'                => [
+                    'settings' => [
+                        'required' => true,
+                        'type'     => 'object',
+                    ],
                 ],
-                [
-                    'methods'             => 'PUT',
-                    'callback'            => [$this, 'update_integrations'],
-                    'permission_callback' => [$this, 'permissions_check'],
-                    'args'                => [
-                        'settings' => [
-                            'required' => true,
-                            'type'     => 'object',
-                        ],
-                    ],
-                ]
-            ]
-        );
-        register_rest_route(
-            $this->namespace, 
-            '/integrations/verify', 
+            ],
             [
-                [
-                    'methods'             => 'POST',
-                    'callback'            => [$this, 'verify_integration'],
-                    'permission_callback' => [$this, 'permissions_check'],
-                    'args'                => [
-                        'integration' => [
-                            'required' => true,
-                            'type'     => 'string',
-                        ],
-                        'settings' => [
-                            'required' => true,
-                            'type'     => 'object',
-                        ],
+                'endpoint' => 'integrations/verify',
+                'methods'  => 'POST',
+                'callback' => [$this, 'verify_integration'],
+                'args'                => [
+                    'integration' => [
+                        'required' => true,
+                        'type'     => 'string',
                     ],
-                ]
-            ]
-        );
+                    'settings' => [
+                        'required' => true,
+                        'type'     => 'object',
+                    ],
+                ],
+            ],
+            
+            // Brevo Integration API Endpoints
+            [
+                'endpoint' => 'brevo/verify',
+                'methods'  => 'POST',
+                'callback' => [$this->brevo, 'verify'],
+                'args'     => [
+                    'api_key' => [
+                        'required' => true,
+                        'type'     => 'string',
+                    ],
+                ],
+            ],
+            [
+                'endpoint' => 'brevo/get_lists',
+                'methods'  => 'GET',
+                'callback' => [$this->brevo, 'get_lists'],
+            ],
+
+            // Insightly Integration API Endpoints
+            [
+                'endpoint' => 'insightly/verify',
+                'methods'  => 'POST',
+                'callback' => [$this->insightly, 'verify'],
+                'args'     => [
+                    'api_key' => [
+                        'required' => true,
+                        'type'     => 'string',
+                    ],
+                    'api_url' => [
+                        'required' => true,
+                        'type'     => 'string',
+                    ],
+                ],
+            ],
+            [
+                'endpoint' => 'insightly/get_fields',
+                'methods'  => 'GET',
+                'callback' => [$this->insightly, 'get_fields'],
+                'args'     => [
+                    'service' => [
+                        'required' => true,
+                        'type'     => 'string',
+                    ],
+                ],
+            ],
+        ];
+        foreach ($routes as $route) {
+            register_rest_route(self::NAMESPACE, $route['endpoint'], [
+                'methods'             => $route['methods'],
+                'callback'            => $route['callback'],
+                'permission_callback' => [$this, 'permissions_check'],
+                'args'                => $route['args'] ?? []
+            ]);
+        }
     }
 
     /**
@@ -135,7 +203,7 @@ class Integrations {
      * @param WP_REST_Request $request Request object
      * @return bool|WP_Error True if user has permission, WP_Error otherwise
      */
-    public function permissions_check($request) {
+    public function permissions_check() {
         if (!current_user_can('manage_options')) {
             return new WP_Error(
                 'rest_forbidden',
@@ -211,7 +279,7 @@ class Integrations {
         }
 
         // Check if integration type is supported
-        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact'];
+        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact', 'brevo', 'insightly'];
         if (!in_array($integration, $supported_integrations)) {
             return new WP_Error(
                 'unsupported_integration',

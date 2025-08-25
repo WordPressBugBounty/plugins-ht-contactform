@@ -40,9 +40,11 @@ class Styler {
             $this->get_help_tooltip_settings(),
             $this->get_field_settings(),
             $this->get_checkbox_settings(),
+            $this->get_radio_settings(),
             $this->get_range_settings(),
             $this->get_select_settings(),
             $this->get_gdpr_settings(),
+            $this->get_terms_conditions_settings(),
             $this->get_date_time_settings(),
             $this->get_submit_button_settings(),
         ));
@@ -712,6 +714,210 @@ class Styler {
         ]);
     }
 
+    public function get_radio_settings(): array {
+        return apply_filters('ht_form_styler_radio_settings', [
+            self::$field->create([
+                'id' => 'radio_color',
+                'label' => __('Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#000000',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_font_size',
+                'label' => __('Font Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '14',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_font_size_sm',
+                'label' => __('Font Size (Small)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '16',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_font_size_lg',
+                'label' => __('Font Size (Large)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '18',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_font_weight',
+                'label' => __('Font Weight', 'ht-contactform'),
+                'type' => 'select',
+                'value' => '400',
+                'options' => [
+                    [
+                        'label' => __('100', 'ht-contactform'),
+                        'value' => '100',
+                    ],
+                    [
+                        'label' => __('200', 'ht-contactform'),
+                        'value' => '200',
+                    ],
+                    [
+                        'label' => __('300', 'ht-contactform'),
+                        'value' => '300',
+                    ],
+                    [
+                        'label' => __('400', 'ht-contactform'),
+                        'value' => '400',
+                    ],
+                    [
+                        'label' => __('500', 'ht-contactform'),
+                        'value' => '500',
+                    ],
+                    [
+                        'label' => __('600', 'ht-contactform'),
+                        'value' => '600',
+                    ],
+                    [
+                        'label' => __('700', 'ht-contactform'),
+                        'value' => '700',
+                    ],
+                    [
+                        'label' => __('800', 'ht-contactform'),
+                        'value' => '800',
+                    ],
+                    [
+                        'label' => __('900', 'ht-contactform'),
+                        'value' => '900',
+                    ],
+                ],
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_line_height',
+                'label' => __('Line Height', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '1.5',
+                'suffix' => '',
+                'min' => '1',
+                'step' => '0.1',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_size',
+                'label' => __('Radio Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '18',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_size_sm',
+                'label' => __('Radio Size (Small)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '16',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_size_lg',
+                'label' => __('Radio Size (Large)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '22',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_radius',
+                'label' => __('Radius', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_gap',
+                'label' => __('Radio & Label Gap', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '10',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'radio',
+            ]),
+
+            self::$field->create([
+                'id' => 'radio_border_width',
+                'label' => __('Border Width', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '1',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_border_style',
+                'label' => __('Border Style', 'ht-contactform'),
+                'type' => 'select',
+                'value' => 'solid',
+                'options' => [
+                    [
+                        'value' => 'solid',
+                        'label' => __('Solid', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dashed',
+                        'label' => __('Dashed', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dotted',
+                        'label' => __('Dotted', 'ht-contactform'),
+                    ],
+                ],
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_border_color',
+                'label' => __('Border Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#dddddd',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_border_color_active',
+                'label' => __('Border Color (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_bg_color',
+                'label' => __('Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'radio',
+            ]),
+            self::$field->create([
+                'id' => 'radio_bg_color_active',
+                'label' => __('Background (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'radio',
+            ]), self::$field->create([
+                'id' => 'radio_check_color',
+                'label' => __('Check Icon Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'radio',
+            ]),
+        ]);
+    }
+
     public function get_range_settings(): array {
         return apply_filters('ht_form_styler_range_settings', [
             self::$field->create([
@@ -1086,6 +1292,224 @@ class Styler {
                 'suffix' => 'px',
                 'min' => '0',
                 'group' => 'gdpr',
+            ]),
+        ]);
+    }
+
+    public function get_terms_conditions_settings(): array {
+        return apply_filters('ht_form_styler_terms_conditions_settings', [
+            self::$field->create([
+                'id' => 'terms_conditions_label_color',
+                'label' => __('Text Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#111827',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_label_size',
+                'label' => __('Text Font Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '15',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_label_size_sm',
+                'label' => __('Text Font Size (Small)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '13',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_label_size_lg',
+                'label' => __('Text Font Size (Large)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '17',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_label_weight',
+                'label' => __('Text Font Weight', 'ht-contactform'),
+                'type' => 'select',
+                'value' => '400',
+                'options' => [
+                    [
+                        'label' => __('100', 'ht-contactform'),
+                        'value' => '100',
+                    ],
+                    [
+                        'label' => __('200', 'ht-contactform'),
+                        'value' => '200',
+                    ],
+                    [
+                        'label' => __('300', 'ht-contactform'),
+                        'value' => '300',
+                    ],
+                    [
+                        'label' => __('400', 'ht-contactform'),
+                        'value' => '400',
+                    ],
+                    [
+                        'label' => __('500', 'ht-contactform'),
+                        'value' => '500',
+                    ],
+                    [
+                        'label' => __('600', 'ht-contactform'),
+                        'value' => '600',
+                    ],
+                    [
+                        'label' => __('700', 'ht-contactform'),
+                        'value' => '700',
+                    ],
+                    [
+                        'label' => __('800', 'ht-contactform'),
+                        'value' => '800',
+                    ],
+                    [
+                        'label' => __('900', 'ht-contactform'),
+                        'value' => '900',
+                    ],
+                ],
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_label_line_height',
+                'label' => __('Text Line Height', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '1.5',
+                'suffix' => '',
+                'min' => '1',
+                'step' => '0.1',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_size',
+                'label' => __('Checkbox Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '18',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_size_sm',
+                'label' => __('Checkbox Size (Small)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '16',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_size_lg',
+                'label' => __('Checkbox Size (Large)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '22',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_link_color',
+                'label' => __('Link Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_link_hover_color',
+                'label' => __('Link Hover Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_gap',
+                'label' => __('Gap Between Checkbox & Text', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '10',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_border_width',
+                'label' => __('Checkbox Border Width', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '1',
+                'suffix' => 'px',
+                'min' => '1',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_border_style',
+                'label' => __('Checkbox Border Style', 'ht-contactform'),
+                'type' => 'select',
+                'value' => 'solid',
+                'options' => [
+                    [
+                        'value' => 'solid',
+                        'label' => __('Solid', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dashed',
+                        'label' => __('Dashed', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dotted',
+                        'label' => __('Dotted', 'ht-contactform'),
+                    ],
+                ],
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_border_color',
+                'label' => __('Checkbox Border Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#dddddd',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_border_color_active',
+                'label' => __('Checkbox Border Color (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_bg_color',
+                'label' => __('Checkbox Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_bg_color_active',
+                'label' => __('Checkbox Background (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_check_color',
+                'label' => __('Checkbox Check Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'terms_conditions',
+            ]),
+            self::$field->create([
+                'id' => 'terms_conditions_radius',
+                'label' => __('Checkbox Radius', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'terms_conditions',
             ]),
         ]);
     }

@@ -877,6 +877,9 @@ class Form {
 
             case 'checkbox':
                 return array_map('sanitize_text_field', $value);
+
+            case 'richtext':
+                return wp_kses_post($value);
                 
             default:
                 return sanitize_text_field($value);

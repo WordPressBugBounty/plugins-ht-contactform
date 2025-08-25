@@ -111,7 +111,6 @@ class DiagnosticData {
                 return;
             }
             $agreed  = isset( $_GET['ht_contactform_diagnostic_data_agreed'] ) ? sanitize_key( wp_unslash($_GET['ht_contactform_diagnostic_data_agreed']) ) : '' ;
-            var_dump($agreed);
 
             if( $agreed === 'yes' ){
                 $this->process_data( $agreed );

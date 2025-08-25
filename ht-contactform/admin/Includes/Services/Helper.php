@@ -722,14 +722,15 @@ class Helper {
      * @return string The parsed value
      */
     private function parse_author($value) {
+        $user_id = get_current_user_id();
         if($value === '{author_id}') {
-            return sanitize_text_field(get_the_author_meta('ID'));
+            return sanitize_text_field(get_the_author_meta('ID', $user_id));
         }
         if($value === '{author_email}') {
-            return sanitize_email(get_the_author_meta('user_email'));
+            return sanitize_email(get_the_author_meta('user_email', $user_id));
         }
         if($value === '{author_display}') {
-            return sanitize_text_field(get_the_author_meta('display_name'));
+            return sanitize_text_field(get_the_author_meta('display_name', $user_id));
         }
         return $value;
     }

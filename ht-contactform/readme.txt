@@ -4,7 +4,7 @@ Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ A few helpful links here to get started 👇
 
 🛠️ **Drag & Drop Builder** – Effortlessly design professional forms using a clean and intuitive interface.
 
-🧩 **12+ Ready-to-Use Input Fields** – Choose from a variety of form elements to build any type of contact form to suit your needs.
+🧩 **27+ Ready-to-Use Input Fields** – Choose from a variety of form elements to build any type of contact form to suit your needs.
 
 💾 **Store Form Entries** – Never lose important submissions again! Automatically save all entries for future reference.
 
@@ -117,7 +117,12 @@ Create the perfect form for any purpose with our comprehensive collection of fie
 19. **Date/Calendar Picker**
 20. **ShortCode**
 21. **Rating**
-22. **Submit Button**
+22. **Radio**
+23. **Website**
+24. **Custom HTML**
+25. **Hidden**
+26. **Terms & Conditions**
+27. **Submit Button**
 
 ## 📈 3rd Party Integrations
 
@@ -131,7 +136,9 @@ HT Contact Form seamlessly integrates with popular services to help you streamli
 6. **Zapier** – Connect with thousands of apps by sending form data to Zapier.
 7. **Constant Contact** – Automatically forward form entries to Constant Contact.
 8. **Support Genix** – Create a support ticket from each form submission.
-9. **Webhook** – Send form data to any external URL using a custom webhook.
+9. **Brevo** – Send form data directly to your Brevo marketing platform.
+10. **Insightly** – Automatically push form entries to your Insightly CRM for lead management.
+11. **Webhook** – Send form data to any external URL using a custom webhook.
 
 == Other Projects ==
 We have a lot of plugins and extensions that might interest you. Try out other projects by following this link:
@@ -166,6 +173,15 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.4.0 - Date: 25-Aug-2025 =
+* Added: Radio Field.
+* Added: Website Field.
+* Added: Custom HTML Field.
+* Added: Hidden Field.
+* Added: Terms & Conditions Field.
+* Added: Brevo Integration.
+* Added: Insightly Integration.
 
 = Version: 2.3.0 - Date: 22-Jul-2025 =
 * Added: Image Upload Field.

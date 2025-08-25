@@ -136,7 +136,7 @@ class ShortCode {
         $form_error = isset($_GET['form_error']) ? sanitize_text_field(wp_unslash($_GET['form_error'])) : '';
 
         // Generate a unique form ID for the page
-        $unique_id = 'ht-form-' . $form_id . '-' . uniqid();
+        $unique_id = 'ht-form-' . $form_id;
 
         // Get form data
         $fields = $form['fields'] ?? [];

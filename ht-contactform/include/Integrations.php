@@ -11,6 +11,8 @@ use HTContactForm\Integrations\MailerLite;
 use HTContactForm\Integrations\Zapier;
 use HTContactForm\Integrations\SupportGenix;
 use HTContactForm\Integrations\ConstantContact;
+use HTContactForm\Integrations\Brevo;
+use HTContactForm\Integrations\Insightly;
 
 /**
  * Integrations Class
@@ -68,6 +70,8 @@ class Integrations {
             $this->supportgenix($form, $form_data, $meta);
         }
         $this->constantcontact($form, $form_data, $meta);
+        $this->brevo($form, $form_data, $meta);
+        $this->insightly($form, $form_data, $meta);
         // Allow other integrations to be processed
         do_action('ht_form/process_custom_integrations', $form, $form_data, $meta);
     }
@@ -444,6 +448,14 @@ class Integrations {
         }
     }
 
+    /**
+     * Send data to ConstantContact
+     * 
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
     public function constantcontact($form, $form_data, $meta) {
         try {
             if (empty($this->integrations_settings) || empty($form['id'])) {
@@ -475,7 +487,97 @@ class Integrations {
             }
         } catch (\Exception $e) {
             error_log(sprintf(
-                'HT Contact Form Zapier Exception (Form ID: %s): %s',
+                'HT Contact Form ConstantContact Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Send data to Brevo
+     * 
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
+    public function brevo($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+            
+            // Check if Brevo integration is enabled globally
+            if (empty($this->integrations_settings['brevo']['enabled'])) {
+                return;
+            }
+            
+            // Get form-specific integrations
+            $integration_list = $this->get_form_integrations($form['id'], 'brevo');
+            if (empty($integration_list)) {
+                return;
+            }
+            // Process each Brevo integration
+            $brevo = new Brevo();
+            foreach ($integration_list as $integration) {
+                $result = $brevo->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Brevo Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Brevo Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Send data to Insightly
+     * 
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
+    public function insightly($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+            
+            // Check if Insightly integration is enabled globally
+            if (empty($this->integrations_settings['insightly']['enabled'])) {
+                return;
+            }
+            
+            // Get form-specific integrations
+            $integration_list = $this->get_form_integrations($form['id'], 'insightly');
+            if (empty($integration_list)) {
+                return;
+            }
+            // Process each Insightly integration
+            $insightly = new Insightly();
+            foreach ($integration_list as $integration) {
+                $result = $insightly->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Insightly Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Insightly Exception (Form ID: %s): %s',
                 $form['id'] ?? 'unknown',
                 $e->getMessage()
             ));

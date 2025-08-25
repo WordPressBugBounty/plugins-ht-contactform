@@ -315,7 +315,7 @@ class Submission {
                         break;
                         
                     case 'url':
-                        $sanitized_data[$field_name] = esc_url_raw($form_data[$field_name]);
+                        $sanitized_data[$field_name] = sanitize_url($form_data[$field_name]);
                         break;
                         
                     case 'multiple_choices':

@@ -8,6 +8,8 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
 use HTContactFormAdmin\Includes\Config\Countries;
 
+use HTContactFormAdmin\Includes\Config\Editor\Integrations\Insightly;
+
 class Form {
 
     private $global_settings = [];
@@ -217,6 +219,31 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'checkboxes']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'radio',
+                'type' => 'radio',
+                'label' => __('Radio', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('Radio', 'ht-contactform')]),
+                    self::$field->label(['value' => __('Radio', 'ht-contactform')]),
+                    self::$field->label_position(),
+                    self::$field->label_hide(),
+                    self::$field->options([
+                        'option_type' => 'radio',
+                    ]),
+                    self::$field->layout(),
+                    self::$field->required(),
+                    self::$field->required_message(),
+                    self::$field->size(),
+                    self::$field->class(),
+                    self::$field->message(),
+                    self::$field->message_position(),
+                    self::$field->name_attribute(['value' => 'radio']),
                     self::$field->enable_condition(),
                     self::$field->conditional_match(),
                     self::$field->conditional_logic(),
@@ -508,6 +535,105 @@ class Form {
                     self::$field->message(),
                     self::$field->message_position(),
                     self::$field->name_attribute(['value' => 'password']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'url',
+                'type' => 'url',
+                'label' => __('Website URL', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('URL', 'ht-contactform')]),
+                    self::$field->label(['value' => __('URL', 'ht-contactform')]),
+                    self::$field->label_position(),
+                    self::$field->label_hide(),
+                    self::$field->placeholder(),
+                    self::$field->required(),
+                    self::$field->required_message(),
+                    self::$field->create([
+                        'id' => 'validate_url',
+                        'label' => __('Validate URL', 'ht-contactform'),
+                        'info' => __('Select whether to validate this field as URL or not', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'validate_url_message',
+                        'label' => __('URL Validation Error Message', 'ht-contactform'),
+                        'info' => __('This message will be shown if validation fails for URL. Leave empty to use global message. Configure Global Message from: Global settings > Validation Messages', 'ht-contactform'),
+                        'value' => __('This field must contain a valid URL', 'ht-contactform'),
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'validate_url',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                    self::$field->value(),
+                    self::$field->size(),
+                    self::$field->class(),
+                    self::$field->message(),
+                    self::$field->message_position(),
+                    self::$field->prefix_label(),
+                    self::$field->suffix_label(),
+                    self::$field->name_attribute(['value' => 'url']),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'hidden',
+                'type' => 'hidden',
+                'label' => __('Hidden Field', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('Hidden', 'ht-contactform')]),
+                    self::$field->value(),
+                    self::$field->name_attribute(['value' => 'hidden']),
+                ],
+            ],
+            [
+                'id' => 'custom_html',
+                'type' => 'custom_html',
+                'label' => __('Custom HTML', 'ht-contactform'),
+                'settings' => [
+                    self::$field->create([
+                        'id' => 'html',
+                        'label' => __('HTML', 'ht-contactform'),
+                        'type' => 'richtext',
+                        'value' => '<p>Some description about this section</p>',
+                        'support' => ['tags'],
+                    ]),
+                    self::$field->class(),
+                    self::$field->enable_condition(),
+                    self::$field->conditional_match(),
+                    self::$field->conditional_logic(),
+                ],
+            ],
+            [
+                'id' => 'terms_conditions',
+                'type' => 'terms_conditions',
+                'label' => __('Terms & Conditions', 'ht-contactform'),
+                'settings' => [
+                    self::$field->admin_label(['value' => __('Terms & Conditions', 'ht-contactform')]),
+                    self::$field->required(),
+                    self::$field->required_message(),
+                    self::$field->create([
+                        'id' => 'content',
+                        'label' => __('Content', 'ht-contactform'),
+                        'type' => 'richtext',
+                        'value' => '<p>By checking this box, you agree to our terms and conditions.</p>',
+                        'support' => ['tags'],
+                    ]),
+                    self::$field->size(),
+                    self::$field->class(),
+                    self::$field->name_attribute(['value' => 'terms_and_conditions']),
                     self::$field->enable_condition(),
                     self::$field->conditional_match(),
                     self::$field->conditional_logic(),
@@ -2973,7 +3099,108 @@ class Form {
                         ]
                     ]),
                 ]
-            ]
+            ],
+            'brevo' => [
+                'id' => 'brevo',
+                'label' => __('Brevo', 'ht-contactform'),
+                'value' => [
+                    'enabled' => true,
+                    'name' => 'Brevo Integration Feed',
+                    'list_id' => '',
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Brevo', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Integration Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for the you to identify it.', 'ht-contactform'),
+                        'value' => __('Brevo Integration Feed', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'list_id',
+                        'label' => __('Brevo List', 'ht-contactform'),
+                        'info' => __('Select the brevo list you like to add your contact to.', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                        "type" => "select",
+                        "options" => [],
+                    ]),
+                    self::$field->create([
+                        'id' => 'fields',
+                        'label' => __('Brevo Fields', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        "type" => "map_fields",
+                        "options" => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'email',
+                                'label' => __('Email Address', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'type' => 'select',
+                                'required' => true,
+                                'support' => ['tags'],
+                            ]),
+                            self::$field->create([
+                                'id'   => 'FIRSTNAME',
+                                'label' => __('First Name', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'LASTNAME',
+                                'label' => __('Last Name', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'SMS',
+                                'label' => __('SMS', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'EXT_ID',
+                                'label' => __('External ID', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'LANDLINE_NUMBER',
+                                'label' => __('Landline Number', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'CONTACT_TIMEZONE',
+                                'label' => __('Contact Timezone', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'JOB_TITLE',
+                                'label' => __('Job Title', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                            self::$field->create([
+                                'id'   => 'LINKEDIN',
+                                'label' => __('LinkedIn', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags']
+                            ]),
+                        ]
+                    ]),
+                ]
+            ],
+            'insightly' => Insightly::get_instance()->get_configs(),
         ]);
     }
 
@@ -3165,6 +3392,12 @@ class Form {
                         'value' => __('Please enter a valid email address.', 'ht-contactform'),
                     ]),
                     self::$field->create([
+                        'id' => 'url',
+                        'label' => __('URL', 'ht-contactform'),
+                        'info' => __('This message will be shown if validation fails for URL field.', 'ht-contactform'),
+                        'value' => __('Please enter a valid URL.', 'ht-contactform'),
+                    ]),
+                    self::$field->create([
                         'id' => 'number',
                         'label' => __('Number', 'ht-contactform'),
                         'info' => __('This message will be shown if validation fails for number field.', 'ht-contactform'),
@@ -3205,7 +3438,6 @@ class Form {
             ],
         ]);
     }
-
 
     /**
      * Get available form Integrations
@@ -3354,6 +3586,49 @@ class Form {
                             'content' => [
                                 __('Set your Redirect Url as: ', 'ht-contactform') .'<strong>'. rest_url('ht-form/v1/constantcontact/callback'). '</strong>'
                             ],
+                        ]),
+                    ]
+                ]),
+                self::$field->create([
+                    'id' => 'brevo',
+                    'icon' => 'brevo',
+                    'label' => __('Brevo', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with Brevo.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                    'options' => [
+                        self::$field->create([
+                            'id' => 'api_key',
+                            'label' => __('API Token', 'ht-contactform'),
+                            'info' => __('Enter your Brevo API Token.', 'ht-contactform'),
+                            'callback' => 'api_key',
+                            'required' => true,
+                        ]),
+                    ]
+                ]),
+                self::$field->create([
+                    'id' => 'insightly',
+                    'icon' => 'insightly',
+                    'label' => __('Insightly', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with Insightly.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                    'options' => [
+                        self::$field->create([
+                            'id' => 'api_key',
+                            'label' => __('API Key', 'ht-contactform'),
+                            'info' => __('Enter your Insightly API Key.', 'ht-contactform'),
+                            'callback' => 'api_key',
+                            'required' => true,
+                        ]),
+                        self::$field->create([
+                            'id' => 'api_url',
+                            'label' => __('API URL', 'ht-contactform'),
+                            'info' => __('Enter your Insightly API URL.', 'ht-contactform'),
+                            'callback' => 'api_url',
+                            'required' => true,
                         ]),
                     ]
                 ]),

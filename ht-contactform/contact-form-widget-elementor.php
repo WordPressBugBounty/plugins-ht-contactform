@@ -5,7 +5,7 @@
  * Plugin URI:  https://theplugindemo.com/ht-contactform/
  * Author:      HT Plugins
  * Author URI:  https://profiles.wordpress.org/htplugins/#content-plugins
- * Version:     2.3.0
+ * Version:     2.4.0
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ht-contactform
@@ -21,7 +21,7 @@ if( ! defined( 'ABSPATH' ) ) exit(); // Exit if accessed directly
 
 if ( ! function_exists('is_plugin_active')) { include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); }
 
-define( 'HTCONTACTFORM_VERSION', '2.3.0' );
+define( 'HTCONTACTFORM_VERSION', '2.4.0' );
 define( 'HTCONTACTFORM_PL_ROOT', __FILE__ );
 define( 'HTCONTACTFORM_PL_URL', plugins_url( '/', HTCONTACTFORM_PL_ROOT ) );
 define( 'HTCONTACTFORM_PL_PATH', plugin_dir_path( HTCONTACTFORM_PL_ROOT ) );
@@ -249,7 +249,7 @@ class HT_FORM_BUILDER {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Form Preview</title>
-                    ' . wp_kses_post(wp_head()) . '
+                    ' . wp_head() . '
                     <style>
                         body {
                             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -282,7 +282,7 @@ class HT_FORM_BUILDER {
                         </div>
                         ' . do_shortcode("[ht_form id=\"{$form_id}\"]") . '
                     </div>
-                    ' . wp_kses_post(wp_footer()) . '
+                    ' . wp_footer() . '
                 </body>
                 </html>';
                 exit;

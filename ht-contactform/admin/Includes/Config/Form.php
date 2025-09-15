@@ -2011,9 +2011,10 @@ class Form {
                     self::$field->create([
                         'id' => 'form_email_body',
                         'label' => __('Email Body', 'ht-contactform'),
-                        'type' => 'textarea',
+                        'type' => 'richtext',
                         'value' => __('{all_fields}', 'ht-contactform'),
-                        'info'=> __('For every tag use new line.', 'ht-contactform'),
+                        'info' => __('For every tag use new line.', 'ht-contactform'),
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -2288,11 +2289,9 @@ class Form {
                             ]),
                             self::$field->create([
                                 'id' => 'value',
-                                'type' => 'select',
-                                'placeholder' => __('Select Value', 'ht-contactform'),
+                                'placeholder' => __('Type or select smart tags.', 'ht-contactform'),
                                 'callback' => 'sanitize_text_field',
-                                'options' => 'tags',
-                                'searchable' => true,
+                                'support' => ['tags'],
                             ]),
                         ],
                         'dependency' => [
@@ -2358,11 +2357,9 @@ class Form {
                         "fields" => [
                             self::$field->create([
                                 'id' => 'value',
-                                'type' => 'select',
-                                'placeholder' => __('Select Value', 'ht-contactform'),
+                                'placeholder' => __('Type or select smart tags.', 'ht-contactform'),
                                 'callback' => 'sanitize_text_field',
-                                'options' => 'tags',
-                                'searchable' => true,
+                                'support' => ['tags'],
                             ]),
                         ],
                         'dependency' => [
@@ -2608,11 +2605,9 @@ class Form {
                         "fields" => [
                             self::$field->create([
                                 'id' => 'value',
-                                'type' => 'select',
-                                'placeholder' => __('Select Value', 'ht-contactform'),
+                                'placeholder' => __('Type or select smart tags.', 'ht-contactform'),
                                 'callback' => 'sanitize_text_field',
-                                'options' => 'tags',
-                                'searchable' => true,
+                                'support' => ['tags'],
                             ]),
                         ],
                     ]),
@@ -2676,16 +2671,19 @@ class Form {
                         'required' => true,
                         "type" => "custom",
                         "value" => [],
+                        "options" => [
+                            [
+                                'name' => __('Email Address', 'ht-contactform'),
+                                'key' => 'email_address',
+                                'required' => true,
+                            ],
+                        ],
                         "fields" => [
                             self::$field->create([
-                                'id' => 'email_address',
-                                'label' => 'Email Address',
-                                'type' => 'select',
-                                'placeholder' => __('Select Value', 'ht-contactform'),
+                                'id' => 'value',
+                                'placeholder' => __('Type or select smart tags', 'ht-contactform'),
                                 'callback' => 'sanitize_text_field',
-                                'options' => 'tags',
-                                'required' => true,
-                                'searchable' => true,
+                                'support' => ['tags'],
                             ]),
                         ],
                     ]),

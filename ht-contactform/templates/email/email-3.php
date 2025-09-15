@@ -42,7 +42,7 @@ $footer_text = $args['footer_text'] ?? '';
                                     ?>
                                     <tr>
                                         <td style="padding: 12px 0; border-top: 1px solid #EEEEEE; vertical-align: top; font-size: 14px; color: #111111;" colspan="2">
-                                            <?php echo esc_html($value); ?>
+                                            <?php echo wp_kses_post($value); ?>
                                         </td>
                                     </tr>
                                     <?php

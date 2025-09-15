@@ -441,6 +441,7 @@ class Fields {
             'class' => 'ht-form-elem-input',
             'value' => !empty($settings['default_value']) ? $settings['default_value'] : '',
             'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+            'readonly' => true,
         ];
         // Build attribute string
         $attributes_string = '';

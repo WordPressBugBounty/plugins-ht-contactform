@@ -4,7 +4,7 @@ Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Tags: Contact Form, Form Builder, Forms, Custom Form, form
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -173,6 +173,12 @@ Needs assistance to use this plugin?
 Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 == Changelog ==
+
+= Version: 2.4.1 - Date: 15-Sep-2025 =
+* Added: Rich text editor for the notification email body builder.
+* Improved: Integration settings drawer UI.
+* Fixed: Hidden field not appearing in smart tags.
+* Updated: Translation file (ht-contactform.pot).
 
 = Version: 2.4.0 - Date: 25-Aug-2025 =
 * Added: Radio Field.

@@ -109,12 +109,12 @@ class MailerLite {
             'subscribed_at' => date('Y-m-d H:i:s'),
         ];
 
-        $data['email'] = $this->helper->filter_vars($integration->merge_fields['email'], $form_data, $form);
+        $data['email'] = $this->helper->filter_vars($integration->merge_fields['email_address'], $form_data, $form);
         
         // Process merge fields
         if (!empty($integration->merge_fields) && is_array($integration->merge_fields)) {
             foreach ($integration->merge_fields as $key => $value) {
-                if (empty($value)) {
+                if (empty($value) || $key === 'email_address') {
                     continue;
                 }
 

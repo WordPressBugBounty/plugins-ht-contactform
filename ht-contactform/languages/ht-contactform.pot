@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Contact Form 7 Widget For Elementor Page Builder & "
 "Gutenberg Blocks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 09:38+0000\n"
+"POT-Creation-Date: 2025-09-07 04:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -56,66 +56,75 @@ msgstr ""
 msgid "(999) 999-9999"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:94 admin/Includes/Config/Styler.php:170
-#: admin/Includes/Config/Styler.php:262 admin/Includes/Config/Styler.php:388
-#: admin/Includes/Config/Styler.php:554 admin/Includes/Config/Styler.php:789
-#: admin/Includes/Config/Styler.php:932 admin/Includes/Config/Styler.php:1192
+#: admin/Includes/Config/Styler.php:96 admin/Includes/Config/Styler.php:172
+#: admin/Includes/Config/Styler.php:264 admin/Includes/Config/Styler.php:390
+#: admin/Includes/Config/Styler.php:556 admin/Includes/Config/Styler.php:760
+#: admin/Includes/Config/Styler.php:995 admin/Includes/Config/Styler.php:1138
+#: admin/Includes/Config/Styler.php:1342 admin/Includes/Config/Styler.php:1616
 msgid "100"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:98 admin/Includes/Config/Styler.php:174
-#: admin/Includes/Config/Styler.php:266 admin/Includes/Config/Styler.php:392
-#: admin/Includes/Config/Styler.php:558 admin/Includes/Config/Styler.php:793
-#: admin/Includes/Config/Styler.php:936 admin/Includes/Config/Styler.php:1196
+#: admin/Includes/Config/Styler.php:100 admin/Includes/Config/Styler.php:176
+#: admin/Includes/Config/Styler.php:268 admin/Includes/Config/Styler.php:394
+#: admin/Includes/Config/Styler.php:560 admin/Includes/Config/Styler.php:764
+#: admin/Includes/Config/Styler.php:999 admin/Includes/Config/Styler.php:1142
+#: admin/Includes/Config/Styler.php:1346 admin/Includes/Config/Styler.php:1620
 msgid "200"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:102 admin/Includes/Config/Styler.php:178
-#: admin/Includes/Config/Styler.php:270 admin/Includes/Config/Styler.php:396
-#: admin/Includes/Config/Styler.php:562 admin/Includes/Config/Styler.php:797
-#: admin/Includes/Config/Styler.php:940 admin/Includes/Config/Styler.php:1200
+#: admin/Includes/Config/Styler.php:104 admin/Includes/Config/Styler.php:180
+#: admin/Includes/Config/Styler.php:272 admin/Includes/Config/Styler.php:398
+#: admin/Includes/Config/Styler.php:564 admin/Includes/Config/Styler.php:768
+#: admin/Includes/Config/Styler.php:1003 admin/Includes/Config/Styler.php:1146
+#: admin/Includes/Config/Styler.php:1350 admin/Includes/Config/Styler.php:1624
 msgid "300"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:106 admin/Includes/Config/Styler.php:182
-#: admin/Includes/Config/Styler.php:274 admin/Includes/Config/Styler.php:400
-#: admin/Includes/Config/Styler.php:566 admin/Includes/Config/Styler.php:801
-#: admin/Includes/Config/Styler.php:944 admin/Includes/Config/Styler.php:1204
+#: admin/Includes/Config/Styler.php:108 admin/Includes/Config/Styler.php:184
+#: admin/Includes/Config/Styler.php:276 admin/Includes/Config/Styler.php:402
+#: admin/Includes/Config/Styler.php:568 admin/Includes/Config/Styler.php:772
+#: admin/Includes/Config/Styler.php:1007 admin/Includes/Config/Styler.php:1150
+#: admin/Includes/Config/Styler.php:1354 admin/Includes/Config/Styler.php:1628
 msgid "400"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:110 admin/Includes/Config/Styler.php:186
-#: admin/Includes/Config/Styler.php:278 admin/Includes/Config/Styler.php:404
-#: admin/Includes/Config/Styler.php:570 admin/Includes/Config/Styler.php:805
-#: admin/Includes/Config/Styler.php:948 admin/Includes/Config/Styler.php:1208
+#: admin/Includes/Config/Styler.php:112 admin/Includes/Config/Styler.php:188
+#: admin/Includes/Config/Styler.php:280 admin/Includes/Config/Styler.php:406
+#: admin/Includes/Config/Styler.php:572 admin/Includes/Config/Styler.php:776
+#: admin/Includes/Config/Styler.php:1011 admin/Includes/Config/Styler.php:1154
+#: admin/Includes/Config/Styler.php:1358 admin/Includes/Config/Styler.php:1632
 msgid "500"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:114 admin/Includes/Config/Styler.php:190
-#: admin/Includes/Config/Styler.php:282 admin/Includes/Config/Styler.php:408
-#: admin/Includes/Config/Styler.php:574 admin/Includes/Config/Styler.php:809
-#: admin/Includes/Config/Styler.php:952 admin/Includes/Config/Styler.php:1212
+#: admin/Includes/Config/Styler.php:116 admin/Includes/Config/Styler.php:192
+#: admin/Includes/Config/Styler.php:284 admin/Includes/Config/Styler.php:410
+#: admin/Includes/Config/Styler.php:576 admin/Includes/Config/Styler.php:780
+#: admin/Includes/Config/Styler.php:1015 admin/Includes/Config/Styler.php:1158
+#: admin/Includes/Config/Styler.php:1362 admin/Includes/Config/Styler.php:1636
 msgid "600"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:118 admin/Includes/Config/Styler.php:194
-#: admin/Includes/Config/Styler.php:286 admin/Includes/Config/Styler.php:412
-#: admin/Includes/Config/Styler.php:578 admin/Includes/Config/Styler.php:813
-#: admin/Includes/Config/Styler.php:956 admin/Includes/Config/Styler.php:1216
+#: admin/Includes/Config/Styler.php:120 admin/Includes/Config/Styler.php:196
+#: admin/Includes/Config/Styler.php:288 admin/Includes/Config/Styler.php:414
+#: admin/Includes/Config/Styler.php:580 admin/Includes/Config/Styler.php:784
+#: admin/Includes/Config/Styler.php:1019 admin/Includes/Config/Styler.php:1162
+#: admin/Includes/Config/Styler.php:1366 admin/Includes/Config/Styler.php:1640
 msgid "700"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:122 admin/Includes/Config/Styler.php:198
-#: admin/Includes/Config/Styler.php:290 admin/Includes/Config/Styler.php:416
-#: admin/Includes/Config/Styler.php:582 admin/Includes/Config/Styler.php:817
-#: admin/Includes/Config/Styler.php:960 admin/Includes/Config/Styler.php:1220
+#: admin/Includes/Config/Styler.php:124 admin/Includes/Config/Styler.php:200
+#: admin/Includes/Config/Styler.php:292 admin/Includes/Config/Styler.php:418
+#: admin/Includes/Config/Styler.php:584 admin/Includes/Config/Styler.php:788
+#: admin/Includes/Config/Styler.php:1023 admin/Includes/Config/Styler.php:1166
+#: admin/Includes/Config/Styler.php:1370 admin/Includes/Config/Styler.php:1644
 msgid "800"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:126 admin/Includes/Config/Styler.php:202
-#: admin/Includes/Config/Styler.php:294 admin/Includes/Config/Styler.php:420
-#: admin/Includes/Config/Styler.php:586 admin/Includes/Config/Styler.php:821
-#: admin/Includes/Config/Styler.php:964 admin/Includes/Config/Styler.php:1224
+#: admin/Includes/Config/Styler.php:128 admin/Includes/Config/Styler.php:204
+#: admin/Includes/Config/Styler.php:296 admin/Includes/Config/Styler.php:422
+#: admin/Includes/Config/Styler.php:588 admin/Includes/Config/Styler.php:792
+#: admin/Includes/Config/Styler.php:1027 admin/Includes/Config/Styler.php:1170
+#: admin/Includes/Config/Styler.php:1374 admin/Includes/Config/Styler.php:1648
 msgid "900"
 msgstr ""
 
@@ -176,6 +185,10 @@ msgstr ""
 msgid "ActiveCampaign connection successful."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:484
+msgid "Actual Close Date"
+msgstr ""
+
 #: admin/Includes/Services/Helper.php:351
 msgid "Admin Email"
 msgstr ""
@@ -220,7 +233,7 @@ msgstr ""
 msgid "API key & API URL are required for ActiveCampaign integration."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:230
+#: admin/Includes/Api/Endpoints/Integrations.php:298
 msgid "API key is required for Mailchimp integration."
 msgstr ""
 
@@ -237,12 +250,20 @@ msgid ""
 "the product variations in a whole new light with Swatchly."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:217
+msgid "Assistant Name"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:223
+msgid "Assistant Phone"
+msgstr ""
+
 #. %1$s: project name
 #. %2$s: strong start tag
 #. %3$s: strong end tag
 #. %4$s: a start tag with url
 #. %5$s: a end tag
-#: admin/Includes/DiagnosticData.php:625
+#: admin/Includes/DiagnosticData.php:624
 #, php-format
 msgid ""
 "At %2$s%1$s%3$s, we prioritize continuous improvement and compatibility. To "
@@ -269,21 +290,22 @@ msgid "Author Name"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:98
-#: admin/Includes/Config/Styler.php:232 admin/Includes/Config/Styler.php:340
-#: admin/Includes/Config/Styler.php:694 admin/Includes/Config/Styler.php:719
-#: admin/Includes/Config/Styler.php:1137
+#: admin/Includes/Config/Styler.php:234 admin/Includes/Config/Styler.php:342
+#: admin/Includes/Config/Styler.php:696 admin/Includes/Config/Styler.php:900
+#: admin/Includes/Config/Styler.php:925 admin/Includes/Config/Styler.php:1561
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:571
 msgid "Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:701
+#: admin/Includes/Config/Styler.php:703 admin/Includes/Config/Styler.php:907
 msgid "Background (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1144
+#: admin/Includes/Config/Styler.php:1568
 msgid "Background (Hover)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:726
+#: admin/Includes/Config/Styler.php:932
 msgid "Background (Selected)"
 msgstr ""
 
@@ -299,6 +321,38 @@ msgstr ""
 msgid "Below Input Element"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:503
+msgid "Bid Amount"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:497
+msgid "Bid Currency"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:509
+msgid "Bid Type"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:602
+msgid "Billing City"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:620
+msgid "Billing Country"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:614
+msgid "Billing Postal Code"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:608
+msgid "Billing State"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:596
+msgid "Billing Street"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:246
 #: include/Widgets/elementor_widgets.php:384
 #: include/Widgets/elementor_widgets.php:472
@@ -307,20 +361,20 @@ msgstr ""
 msgid "Border"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:468 admin/Includes/Config/Styler.php:680
-#: admin/Includes/Config/Styler.php:1272
+#: admin/Includes/Config/Styler.php:470 admin/Includes/Config/Styler.php:682
+#: admin/Includes/Config/Styler.php:886 admin/Includes/Config/Styler.php:1696
 msgid "Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:687
+#: admin/Includes/Config/Styler.php:689 admin/Includes/Config/Styler.php:893
 msgid "Border Color (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:475
+#: admin/Includes/Config/Styler.php:477
 msgid "Border Color (Focus)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1279
+#: admin/Includes/Config/Styler.php:1703
 msgid "Border Color (Hover)"
 msgstr ""
 
@@ -331,13 +385,13 @@ msgstr ""
 msgid "Border Radius"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:447 admin/Includes/Config/Styler.php:659
-#: admin/Includes/Config/Styler.php:1251
+#: admin/Includes/Config/Styler.php:449 admin/Includes/Config/Styler.php:661
+#: admin/Includes/Config/Styler.php:865 admin/Includes/Config/Styler.php:1675
 msgid "Border Style"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:438 admin/Includes/Config/Styler.php:650
-#: admin/Includes/Config/Styler.php:1242
+#: admin/Includes/Config/Styler.php:440 admin/Includes/Config/Styler.php:652
+#: admin/Includes/Config/Styler.php:856 admin/Includes/Config/Styler.php:1666
 msgid "Border Width"
 msgstr ""
 
@@ -371,59 +425,67 @@ msgstr ""
 msgid "By "
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:727
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:778
+msgid "Category"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:115
 msgid "Center"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:707
+#: admin/Includes/Config/Styler.php:709 admin/Includes/Config/Styler.php:913
 msgid "Check Icon Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:640
+#: admin/Includes/Config/Styler.php:642
 msgid "Checkbox & Label Gap"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1062
+#: admin/Includes/Config/Styler.php:1268 admin/Includes/Config/Styler.php:1486
 msgid "Checkbox Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1069
+#: admin/Includes/Config/Styler.php:1275 admin/Includes/Config/Styler.php:1493
 msgid "Checkbox Background (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1048
+#: admin/Includes/Config/Styler.php:1254 admin/Includes/Config/Styler.php:1472
 msgid "Checkbox Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1055
+#: admin/Includes/Config/Styler.php:1261 admin/Includes/Config/Styler.php:1479
 msgid "Checkbox Border Color (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1027
+#: admin/Includes/Config/Styler.php:1233 admin/Includes/Config/Styler.php:1451
 msgid "Checkbox Border Style"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1018
+#: admin/Includes/Config/Styler.php:1224 admin/Includes/Config/Styler.php:1442
 msgid "Checkbox Border Width"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1076
+#: admin/Includes/Config/Styler.php:1282 admin/Includes/Config/Styler.php:1500
 msgid "Checkbox Check Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1083
+#: admin/Includes/Config/Styler.php:1289 admin/Includes/Config/Styler.php:1507
 msgid "Checkbox Radius"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:604 admin/Includes/Config/Styler.php:982
+#: admin/Includes/Config/Styler.php:606 admin/Includes/Config/Styler.php:1188
+#: admin/Includes/Config/Styler.php:1392
 msgid "Checkbox Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:622 admin/Includes/Config/Styler.php:1000
+#: admin/Includes/Config/Styler.php:624 admin/Includes/Config/Styler.php:1206
+#: admin/Includes/Config/Styler.php:1410
 msgid "Checkbox Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:613 admin/Includes/Config/Styler.php:991
+#: admin/Includes/Config/Styler.php:615 admin/Includes/Config/Styler.php:1197
+#: admin/Includes/Config/Styler.php:1401
 msgid "Checkbox Size (Small)"
 msgstr ""
 
@@ -435,13 +497,19 @@ msgstr ""
 msgid "Choose the display size for the form field."
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:55 admin/Includes/Config/Styler.php:149
-#: admin/Includes/Config/Styler.php:225 admin/Includes/Config/Styler.php:333
-#: admin/Includes/Config/Styler.php:515 admin/Includes/Config/Styler.php:1123
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:235
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:412
+msgid "City"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:57 admin/Includes/Config/Styler.php:151
+#: admin/Includes/Config/Styler.php:227 admin/Includes/Config/Styler.php:335
+#: admin/Includes/Config/Styler.php:517 admin/Includes/Config/Styler.php:721
+#: admin/Includes/Config/Styler.php:1547
 msgid "Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1130
+#: admin/Includes/Config/Styler.php:1554
 msgid "Color (Hover)"
 msgstr ""
 
@@ -474,8 +542,17 @@ msgstr ""
 msgid "Contact ID and tag IDs are required."
 msgstr ""
 
-#: admin/Includes/DiagnosticData.php:633
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:64
+msgid "Contacts"
+msgstr ""
+
+#: admin/Includes/DiagnosticData.php:632
 msgid "Count Me In"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:253
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:430
+msgid "Country"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:316
@@ -486,8 +563,9 @@ msgstr ""
 msgid "Create Your First Form"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:457 admin/Includes/Config/Styler.php:669
-#: admin/Includes/Config/Styler.php:1037 admin/Includes/Config/Styler.php:1261
+#: admin/Includes/Config/Styler.php:459 admin/Includes/Config/Styler.php:671
+#: admin/Includes/Config/Styler.php:875 admin/Includes/Config/Styler.php:1243
+#: admin/Includes/Config/Styler.php:1461 admin/Includes/Config/Styler.php:1685
 msgid "Dashed"
 msgstr ""
 
@@ -499,15 +577,19 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1104
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:181
+msgid "Date of Birth"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1528
 msgid "Date/Time Selected Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1111
+#: admin/Includes/Config/Styler.php:1535
 msgid "Date/Time Selected Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1097
+#: admin/Includes/Config/Styler.php:1521
 msgid "Date/Time Selected Color"
 msgstr ""
 
@@ -539,6 +621,10 @@ msgstr ""
 msgid "Define the minimum value for numerical input."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:860
+msgid "Details"
+msgstr ""
+
 #: include/Integrations/Discord.php:116
 #, php-format
 msgid "Discord webhook error: %s"
@@ -557,8 +643,9 @@ msgstr ""
 msgid "Docus – YouTube Video Playlist"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:461 admin/Includes/Config/Styler.php:673
-#: admin/Includes/Config/Styler.php:1041 admin/Includes/Config/Styler.php:1265
+#: admin/Includes/Config/Styler.php:463 admin/Includes/Config/Styler.php:675
+#: admin/Includes/Config/Styler.php:879 admin/Includes/Config/Styler.php:1247
+#: admin/Includes/Config/Styler.php:1465 admin/Includes/Config/Styler.php:1689
 msgid "Dotted"
 msgstr ""
 
@@ -570,12 +657,24 @@ msgstr ""
 msgid "Drag and Drop"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:792
+msgid "Due Date"
+msgstr ""
+
 #: admin/Includes/Config/Welcome.php:38
 msgid "Easily drag and drop form fields to create your perfect form."
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:63
 msgid "Edit your form at any time to make changes or updates."
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:352
+msgid "Email"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:123
+msgid "Email Address"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:384
@@ -605,6 +704,10 @@ msgid ""
 "and popular by keeping the visitors on your website for a longer period."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:400
+msgid "Employee Count"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:757
 msgid "Enable Condition"
 msgstr ""
@@ -623,6 +726,10 @@ msgid ""
 "Enable email confirmation by requiring the email address to be entered twice."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:41
+msgid "Enable Insightly"
+msgstr ""
+
 #: admin/Includes/Config/Styler.php:33
 msgid "Enable Styler"
 msgstr ""
@@ -630,6 +737,10 @@ msgstr ""
 #: admin/Includes/Config/Field.php:644
 msgid ""
 "Ensure the email address is unique by comparing against previous submissions"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:49
+msgid "Enter a unique name for the you to identify it."
 msgstr ""
 
 #: admin/Admin.php:74
@@ -649,8 +760,13 @@ msgstr ""
 msgid "Entry not found"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:489
+#: admin/Includes/Config/Styler.php:491
 msgid "Error Border Color"
+msgstr ""
+
+#: include/Integrations/Brevo.php:96
+#, php-format
+msgid "Error from Brevo API: %s"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:424
@@ -658,12 +774,22 @@ msgstr ""
 msgid "Error from Constant Contact API: %s"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:482
+#: include/Integrations/Insightly.php:95
+#, php-format
+msgid "Error from Insightly API: %s"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:484
 msgid "Error Text Color"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:171
 msgid "Extensions For CF7 Pro"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:169
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:664
+msgid "Facebook URL"
 msgstr ""
 
 #. %s: error message
@@ -710,6 +836,15 @@ msgstr ""
 msgid "Faster YouTube Embed"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:358
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:583
+msgid "Fax"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:211
+msgid "Fax Phone"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:239
 msgid "Field Class"
 msgstr ""
@@ -727,6 +862,8 @@ msgid "First and Last Name"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:720
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:137
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:304
 msgid "First Name"
 msgstr ""
 
@@ -734,30 +871,42 @@ msgstr ""
 msgid "First, Middle, and Last Name"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:62 admin/Includes/Config/Styler.php:156
-#: admin/Includes/Config/Styler.php:248 admin/Includes/Config/Styler.php:356
-#: admin/Includes/Config/Styler.php:522 admin/Includes/Config/Styler.php:1160
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:515
+msgid "Fixed Bid"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:64 admin/Includes/Config/Styler.php:158
+#: admin/Includes/Config/Styler.php:250 admin/Includes/Config/Styler.php:358
+#: admin/Includes/Config/Styler.php:524 admin/Includes/Config/Styler.php:728
+#: admin/Includes/Config/Styler.php:1584
 msgid "Font Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:80 admin/Includes/Config/Styler.php:374
-#: admin/Includes/Config/Styler.php:540 admin/Includes/Config/Styler.php:1178
+#: admin/Includes/Config/Styler.php:82 admin/Includes/Config/Styler.php:376
+#: admin/Includes/Config/Styler.php:542 admin/Includes/Config/Styler.php:746
+#: admin/Includes/Config/Styler.php:1602
 msgid "Font Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:71 admin/Includes/Config/Styler.php:365
-#: admin/Includes/Config/Styler.php:531 admin/Includes/Config/Styler.php:1169
+#: admin/Includes/Config/Styler.php:73 admin/Includes/Config/Styler.php:367
+#: admin/Includes/Config/Styler.php:533 admin/Includes/Config/Styler.php:737
+#: admin/Includes/Config/Styler.php:1593
 msgid "Font Size (Small)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:89 admin/Includes/Config/Styler.php:165
-#: admin/Includes/Config/Styler.php:257 admin/Includes/Config/Styler.php:383
-#: admin/Includes/Config/Styler.php:549 admin/Includes/Config/Styler.php:1187
+#: admin/Includes/Config/Styler.php:91 admin/Includes/Config/Styler.php:167
+#: admin/Includes/Config/Styler.php:259 admin/Includes/Config/Styler.php:385
+#: admin/Includes/Config/Styler.php:551 admin/Includes/Config/Styler.php:755
+#: admin/Includes/Config/Styler.php:1611
 msgid "Font Weight"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:873 admin/Includes/Config/Styler.php:881
+#: admin/Includes/Config/Styler.php:1079 admin/Includes/Config/Styler.php:1087
 msgid "For Multiselect Only"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:478
+msgid "Forecast Close Date"
 msgstr ""
 
 #: admin/Includes/PostTypes/FormPostType.php:23
@@ -847,7 +996,7 @@ msgstr ""
 msgid "Four Columns"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1009
+#: admin/Includes/Config/Styler.php:1215 admin/Includes/Config/Styler.php:1433
 msgid "Gap Between Checkbox & Text"
 msgstr ""
 
@@ -1016,6 +1165,12 @@ msgid ""
 "Embellish your site with the elements of HT Mega."
 msgstr ""
 
+#. %s: Error message
+#: include/Integrations/Mailchimp.php:158
+#, php-format
+msgid "HTTP request failed: %s"
+msgstr ""
+
 #. Author URI of the plugin
 msgid "https://profiles.wordpress.org/htplugins/#content-plugins"
 msgstr ""
@@ -1024,11 +1179,11 @@ msgstr ""
 msgid "https://theplugindemo.com/ht-contactform/"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:312
+#: admin/Includes/Config/Styler.php:314
 msgid "Icon Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:319
+#: admin/Includes/Config/Styler.php:321
 msgid "Icon Size"
 msgstr ""
 
@@ -1038,6 +1193,10 @@ msgid ""
 "WordPress plugin to showcase reviews from Google Maps and strengthen trust "
 "between you and your site visitors, look no further than HT Google Place "
 "Review"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:364
+msgid "Industry"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:537
@@ -1058,6 +1217,18 @@ msgid ""
 "update."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:32
+msgid "Insightly"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:50
+msgid "Insightly Integration Feed"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:56
+msgid "Insightly Service"
+msgstr ""
+
 #: include/recommended-plugins/class.recommended-plugins.php:267
 msgid "Install Now"
 msgstr ""
@@ -1066,7 +1237,11 @@ msgstr ""
 msgid "Installing.."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:218
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:48
+msgid "Integration Name"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Integrations.php:286
 #, php-format
 msgid "Integration type \"%s\" is not supported."
 msgstr ""
@@ -1093,9 +1268,21 @@ msgstr ""
 msgid "Invalid form request. Please try again."
 msgstr ""
 
+#: include/Integrations/Brevo.php:107
+msgid "Invalid JSON response from Brevo"
+msgstr ""
+
 #: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:317
 #: admin/Includes/Api/Endpoints/Integrations/ConstantContact.php:435
 msgid "Invalid JSON response from Constant Contact"
+msgstr ""
+
+#: include/Integrations/Insightly.php:106
+msgid "Invalid JSON response from Insightly"
+msgstr ""
+
+#: include/Integrations/Mailchimp.php:194
+msgid "Invalid JSON response from Mailchimp API"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:275
@@ -1147,11 +1334,33 @@ msgid "Large"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:736
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:144
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:311
 msgid "Last Name"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:514
 msgid "Layout"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:370
+msgid "Lead Description"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:376
+msgid "Lead Rating"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:325
+msgid "Lead Source"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:317
+msgid "Lead Status"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:72
+msgid "Leads"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:111
@@ -1163,11 +1372,24 @@ msgstr ""
 msgid "Limit the number of selectable options to prevent excessive choices."
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:134 admin/Includes/Config/Styler.php:210
-#: admin/Includes/Config/Styler.php:302 admin/Includes/Config/Styler.php:428
-#: admin/Includes/Config/Styler.php:594 admin/Includes/Config/Styler.php:829
-#: admin/Includes/Config/Styler.php:1232
+#: admin/Includes/Config/Styler.php:136 admin/Includes/Config/Styler.php:212
+#: admin/Includes/Config/Styler.php:304 admin/Includes/Config/Styler.php:430
+#: admin/Includes/Config/Styler.php:596 admin/Includes/Config/Styler.php:800
+#: admin/Includes/Config/Styler.php:1035 admin/Includes/Config/Styler.php:1656
 msgid "Line Height"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1419
+msgid "Link Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1426
+msgid "Link Hover Color"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:163
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:658
+msgid "LinkedIn URL"
 msgstr ""
 
 #: admin/Includes/Services/Helper.php:484
@@ -1184,6 +1406,12 @@ msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/Mailchimp.php:182
 msgid "Mailchimp API connection successful."
+msgstr ""
+
+#. %1$d: HTTP status code, %2$s: Error message
+#: include/Integrations/Mailchimp.php:180
+#, php-format
+msgid "Mailchimp API error [%1$d]: %2$s"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/MailerLite.php:144
@@ -1232,6 +1460,10 @@ msgstr ""
 
 #: admin/Includes/Config/Field.php:408
 msgid "MM/DD/YYYY"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:382
+msgid "Mobile"
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:311
@@ -1288,7 +1520,7 @@ msgstr ""
 msgid "Next to Label as Tooltip"
 msgstr ""
 
-#: admin/Includes/DiagnosticData.php:636
+#: admin/Includes/DiagnosticData.php:635
 msgid "No, Thanks"
 msgstr ""
 
@@ -1308,24 +1540,81 @@ msgstr ""
 msgid "One Column"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:865
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:76
+msgid "Opportunities"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:734
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:866
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:873
+msgid "Opportunity"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:452
+msgid "Opportunity Details"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:445
+msgid "Opportunity Name"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1071
 msgid "Option Highlighted Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:858
+#: admin/Includes/Config/Styler.php:1064
 msgid "Option Highlighted Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:851
+#: admin/Includes/Config/Styler.php:1057
 msgid "Option Selected Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:844
+#: admin/Includes/Config/Styler.php:1050
 msgid "Option Selected Color"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:444
 msgid "Options"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:150
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:458
+msgid "Organization"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:346
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:564
+msgid "Organization Name"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:157
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:340
+msgid "Organization Title"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:68
+msgid "Organizations"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:265
+msgid "Other City"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:283
+msgid "Other Country"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:277
+msgid "Other Postcode"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:271
+msgid "Other State"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:259
+msgid "Other Street"
 msgstr ""
 
 #: include/recommended-plugins/recommended-plugins.php:262
@@ -1340,12 +1629,59 @@ msgstr ""
 msgid "Padding"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:880
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:523
+msgid "Per Day"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:519
+msgid "Per Hour"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:531
+msgid "Per Month"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:527
+msgid "Per Week"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:535
+msgid "Per Year"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:187
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:388
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:577
+msgid "Phone"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:193
+msgid "Phone Home"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:199
+msgid "Phone Mobile"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:205
+msgid "Phone Other"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1086
 msgid "Pill Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:872
+#: admin/Includes/Config/Styler.php:1078
 msgid "Pill Color"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:541
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:741
+msgid "Pipeline"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:548
+msgid "Pipeline Stage"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:216
@@ -1406,15 +1742,20 @@ msgstr ""
 msgid "Popup Form Response"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:247
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:424
+msgid "Postcode"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:302
 msgid "Prefix Label"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:503
+#: admin/Includes/Config/Styler.php:505
 msgid "Prefix/Suffix Background Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:496
+#: admin/Includes/Config/Styler.php:498
 msgid "Prefix/Suffix Color"
 msgstr ""
 
@@ -1430,8 +1771,40 @@ msgstr ""
 msgid "Preview your form to ensure it looks and functions as expected."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:816
+msgid "Priority"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:472
+msgid "Probability of Winning"
+msgstr ""
+
 #: include/recommended-plugins/recommended-plugins.php:135
 msgid "Product Variation Swatches"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:810
+msgid "Progress"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:880
+msgid "Project"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:465
+msgid "Project Category"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:721
+msgid "Project Details"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:685
+msgid "Project Name"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:80
+msgid "Projects"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:256
@@ -1456,8 +1829,25 @@ msgstr ""
 msgid "QuickSwish"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:239 admin/Includes/Config/Styler.php:347
-#: admin/Includes/Config/Styler.php:631 admin/Includes/Config/Styler.php:1151
+#: admin/Includes/Config/Styler.php:846
+msgid "Radio & Label Gap"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:810
+msgid "Radio Size"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:828
+msgid "Radio Size (Large)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:819
+msgid "Radio Size (Small)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:241 admin/Includes/Config/Styler.php:349
+#: admin/Includes/Config/Styler.php:633 admin/Includes/Config/Styler.php:837
+#: admin/Includes/Config/Styler.php:1575
 msgid "Radius"
 msgstr ""
 
@@ -1473,7 +1863,7 @@ msgstr ""
 msgid "reCAPTCHA is not configured."
 msgstr ""
 
-#: include/UI/Fields.php:1345
+#: include/UI/Fields.php:1558
 msgid "reCAPTCHA site key is not configured."
 msgstr ""
 
@@ -1502,6 +1892,10 @@ msgstr ""
 msgid "Register URL"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:804
+msgid "Reminder Date"
+msgstr ""
+
 #: admin/Includes/Config/Welcome.php:84
 msgid "Repeater Field"
 msgstr ""
@@ -1514,6 +1908,13 @@ msgstr ""
 msgid "Required Error Message"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:333
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:490
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:755
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:785
+msgid "Responsible User"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:119
 #: admin/Includes/Config/Field.php:111
 msgid "Right"
@@ -1521,6 +1922,11 @@ msgstr ""
 
 #: admin/Includes/Config/Field.php:364
 msgid "Rows"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:131
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:298
+msgid "Salutation"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:465
@@ -1540,13 +1946,17 @@ msgstr ""
 msgid "Select format to use for the name form field."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:57
+msgid "Select the insightly service you like to add your contact to."
+msgstr ""
+
 #: admin/Includes/Config/Field.php:776
 msgid "Select the type of match to apply for conditional logic."
 msgstr ""
 
 #. %1$s: a start tag with url
 #. %2$s: a end tag
-#: admin/Includes/DiagnosticData.php:631
+#: admin/Includes/DiagnosticData.php:630
 #, php-format
 msgid ""
 "Server information (Web server, PHP version, MySQL version), WordPress "
@@ -1569,9 +1979,29 @@ msgid "Set the step increment for numerical input control."
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Settings.php:161
-#: admin/Includes/Api/Endpoints/Integrations.php:180
-#: admin/Includes/Api/Endpoints/Integrations.php:208
+#: admin/Includes/Api/Endpoints/Integrations.php:248
+#: admin/Includes/Api/Endpoints/Integrations.php:276
 msgid "Settings must be an object."
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:633
+msgid "Shipping City"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:651
+msgid "Shipping Country"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:645
+msgid "Shipping Postal Code"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:639
+msgid "Shipping State"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:627
+msgid "Shipping Street"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:661
@@ -1608,8 +2038,9 @@ msgstr ""
 msgid "Small"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:453 admin/Includes/Config/Styler.php:665
-#: admin/Includes/Config/Styler.php:1033 admin/Includes/Config/Styler.php:1257
+#: admin/Includes/Config/Styler.php:455 admin/Includes/Config/Styler.php:667
+#: admin/Includes/Config/Styler.php:871 admin/Includes/Config/Styler.php:1239
+#: admin/Includes/Config/Styler.php:1457 admin/Includes/Config/Styler.php:1681
 msgid "Solid"
 msgstr ""
 
@@ -1639,8 +2070,32 @@ msgstr ""
 msgid "Specify the position for the field label relative to the input area."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:748
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:887
+msgid "Stage"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:798
+msgid "Start Date"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:241
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:418
+msgid "State"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:692
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:836
+msgid "Status"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:591
 msgid "Step"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:229
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:406
+msgid "Street Address"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:63
@@ -1655,7 +2110,7 @@ msgstr ""
 msgid "Submission was too quick. Please wait a moment and try again."
 msgstr ""
 
-#: include/UI/Fields.php:1326
+#: include/UI/Fields.php:1539
 msgid "Submit"
 msgstr ""
 
@@ -1672,32 +2127,41 @@ msgstr ""
 msgid "Tags added successfully."
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:84
+msgid "Tasks"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:199
 #: include/Widgets/elementor_widgets.php:359
 #: include/Widgets/elementor_widgets.php:452
 #: include/Widgets/elementor_widgets.php:565
 #: include/Widgets/elementor_widgets.php:653
-#: admin/Includes/Config/Styler.php:750 admin/Includes/Config/Styler.php:893
+#: admin/Includes/Config/Styler.php:956 admin/Includes/Config/Styler.php:1099
+#: admin/Includes/Config/Styler.php:1303
 msgid "Text Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:757 admin/Includes/Config/Styler.php:900
+#: admin/Includes/Config/Styler.php:963 admin/Includes/Config/Styler.php:1106
+#: admin/Includes/Config/Styler.php:1310
 msgid "Text Font Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:775 admin/Includes/Config/Styler.php:918
+#: admin/Includes/Config/Styler.php:981 admin/Includes/Config/Styler.php:1124
+#: admin/Includes/Config/Styler.php:1328
 msgid "Text Font Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:766 admin/Includes/Config/Styler.php:909
+#: admin/Includes/Config/Styler.php:972 admin/Includes/Config/Styler.php:1115
+#: admin/Includes/Config/Styler.php:1319
 msgid "Text Font Size (Small)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:784 admin/Includes/Config/Styler.php:927
+#: admin/Includes/Config/Styler.php:990 admin/Includes/Config/Styler.php:1133
+#: admin/Includes/Config/Styler.php:1337
 msgid "Text Font Weight"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:972
+#: admin/Includes/Config/Styler.php:1178 admin/Includes/Config/Styler.php:1382
 msgid "Text Line Height"
 msgstr ""
 
@@ -1716,7 +2180,7 @@ msgstr ""
 #. %1$s: project name
 #. %2$s: strong start tag
 #. %3$s: strong end tag
-#: admin/Includes/DiagnosticData.php:665
+#: admin/Includes/DiagnosticData.php:664
 #, php-format
 msgid "Thank you very much for supporting %2$s%1$s%3$s."
 msgstr ""
@@ -1756,12 +2220,16 @@ msgstr ""
 msgid "Three Columns"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:733
+#: admin/Includes/Config/Styler.php:939
 msgid "Thumb Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:740
+#: admin/Includes/Config/Styler.php:946
 msgid "Thumb Radius"
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:771
+msgid "Title"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:81
@@ -1786,6 +2254,11 @@ msgstr ""
 
 #: admin/Includes/Config/Welcome.php:43
 msgid "Track and manage all form submissions in one convenient dashboard."
+msgstr ""
+
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:175
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:670
+msgid "Twitter URL"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:525
@@ -1863,6 +2336,11 @@ msgstr ""
 msgid "WC Sales Notification"
 msgstr ""
 
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:394
+#: admin/Includes/Config/Editor/Integrations/Insightly.php:589
+msgid "Website"
+msgstr ""
+
 #: admin/Admin.php:59
 msgid "Welcome"
 msgstr ""
@@ -1924,7 +2402,7 @@ msgid ""
 "your WordPress site to improve the overall site performance."
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Integrations.php:142
+#: admin/Includes/Api/Endpoints/Integrations.php:210
 msgid "You do not have permission to manage integrations."
 msgstr ""
 
@@ -1975,7 +2453,7 @@ msgid "Zapier webhook returned error code: %s"
 msgstr ""
 
 #. %1$s: project name
-#: admin/Includes/DiagnosticData.php:643
+#: admin/Includes/DiagnosticData.php:642
 #, php-format
 msgid "🌟 Enhance Your %1$s Experience as a Valued Contributor!"
 msgstr ""

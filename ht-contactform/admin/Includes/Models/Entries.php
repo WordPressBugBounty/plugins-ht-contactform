@@ -592,9 +592,23 @@ class Entries {
             // Add field values as key-value pairs
             foreach (array_keys($fields) as $field_name) {
                 if (isset($form_data[$field_name]) && is_array($form_data[$field_name])) {
-                    if(array_keys($form_data[$field_name]) !== range(0, count($form_data[$field_name]) - 1)) {
+                    // Check if it's a repeater field (array of objects)
+                    if (!empty($form_data[$field_name][0]) && is_array($form_data[$field_name][0])) {
+                        // Format repeater data for export
+                        $repeater_rows = [];
+                        foreach ($form_data[$field_name] as $row_index => $row_data) {
+                            $row_num = $row_index + 1;
+                            $row_values = array_map(function($val) {
+                                return is_array($val) ? implode(', ', $val) : $val;
+                            }, $row_data);
+                            $repeater_rows[] = "Row {$row_num}: " . implode(' | ', $row_values);
+                        }
+                        $row[$fields[$field_name]] = implode('; ', $repeater_rows);
+                    } else if(array_keys($form_data[$field_name]) !== range(0, count($form_data[$field_name]) - 1)) {
+                        // Associative array (like name or address fields)
                         $row[$fields[$field_name]] = implode(' ', $form_data[$field_name]) ?? '';
                     } else {
+                        // Simple indexed array (like checkboxes)
                         $row[$fields[$field_name]] = implode(', ', $form_data[$field_name]) ?? '';
                     }
                 } else {

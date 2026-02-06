@@ -218,4 +218,120 @@ class FileManager {
         }
     }
 
+    //-------------------------------------------------------------------------
+    // DRAFT FILE MANAGEMENT (Save & Resume)
+    //-------------------------------------------------------------------------
+
+    /**
+     * Move temp files to draft storage
+     *
+     * @param array  $file_ids  Array of file IDs to move
+     * @param string $draft_key Unique draft key (UUID)
+     * @return array Array of successfully moved file IDs
+     */
+    public function move_to_draft($file_ids, $draft_key) {
+        $draft_dir = "{$this->dir}/drafts/{$draft_key}";
+        $this->maybe_create_directories($draft_dir);
+
+        $moved_files = [];
+        foreach ($file_ids as $file_id) {
+            $file_id = sanitize_file_name($file_id);
+            $temp_path = "{$this->dir}/temp/{$file_id}";
+            $draft_path = "{$draft_dir}/{$file_id}";
+
+            if (file_exists($temp_path) && is_file($temp_path)) {
+                if (@rename($temp_path, $draft_path)) {
+                    $moved_files[] = $file_id;
+                }
+            } elseif (file_exists($draft_path)) {
+                // File already in draft storage (re-save scenario)
+                $moved_files[] = $file_id;
+            }
+        }
+
+        return $moved_files;
+    }
+
+    /**
+     * Get draft file URL for FilePond restore
+     *
+     * @param string $draft_key Unique draft key
+     * @param string $file_id   File ID
+     * @return string Full URL to the draft file
+     */
+    public function get_draft_file_url($draft_key, $file_id) {
+        $upload_dir = wp_upload_dir();
+        $file_id = sanitize_file_name($file_id);
+        return "{$upload_dir['baseurl']}/ht_form/drafts/{$draft_key}/{$file_id}";
+    }
+
+    /**
+     * Get draft file path
+     *
+     * @param string $draft_key Unique draft key
+     * @param string $file_id   File ID
+     * @return string Full path to the draft file
+     */
+    public function get_draft_file_path($draft_key, $file_id) {
+        $file_id = sanitize_file_name($file_id);
+        return "{$this->dir}/drafts/{$draft_key}/{$file_id}";
+    }
+
+    /**
+     * Check if draft file exists
+     *
+     * @param string $draft_key Unique draft key
+     * @param string $file_id   File ID
+     * @return bool True if file exists
+     */
+    public function draft_file_exists($draft_key, $file_id) {
+        $file_path = $this->get_draft_file_path($draft_key, $file_id);
+        return file_exists($file_path) && is_file($file_path);
+    }
+
+    /**
+     * Delete all files for a draft
+     *
+     * @param string $draft_key Unique draft key
+     * @return bool True on success, false if any file failed to delete
+     */
+    public function delete_draft_files($draft_key) {
+        $draft_dir = "{$this->dir}/drafts/{$draft_key}";
+
+        if (!is_dir($draft_dir)) {
+            return true; // Nothing to delete
+        }
+
+        $files = glob("{$draft_dir}/*");
+        $all_deleted = true;
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                if (!@unlink($file)) {
+                    error_log("HT ContactForm: Failed to delete file: {$file}");
+                    $all_deleted = false;
+                }
+            }
+        }
+
+        // Only try to remove directory if all files were deleted
+        if ($all_deleted) {
+            if (!@rmdir($draft_dir)) {
+                error_log("HT ContactForm: Failed to remove directory: {$draft_dir}");
+                return false;
+            }
+        }
+
+        return $all_deleted;
+    }
+
+    /**
+     * Get directory path
+     *
+     * @return string Base directory path
+     */
+    public function get_dir() {
+        return $this->dir;
+    }
+
 }

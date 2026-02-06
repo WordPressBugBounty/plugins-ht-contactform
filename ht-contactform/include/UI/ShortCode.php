@@ -37,9 +37,6 @@ class ShortCode {
      */
     protected $assets = [];
 
-    protected $recaptcha_v2 = false;
-    protected $recaptcha_v3 = false;
-
     /**
      * Form model instance
      *
@@ -88,6 +85,23 @@ class ShortCode {
         // Register handler for non-JavaScript form submissions
         add_action('admin_post_ht_form_submit_nojs', [$this, 'handle_form_submission_nojs']);
         add_action('admin_post_nopriv_ht_form_submit_nojs', [$this, 'handle_form_submission_nojs']);
+    }
+
+    /**
+     * Get the active reCAPTCHA site key based on active version
+     *
+     * @return string Site key or empty string
+     */
+    private function get_active_recaptcha_site_key() {
+        $active_version = $this->global_settings['captcha']['recaptcha_active_version'] ?? '';
+
+        if ($active_version === 'v2') {
+            return $this->global_settings['captcha']['recaptcha_v2_site_key'] ?? '';
+        } elseif ($active_version === 'v3') {
+            return $this->global_settings['captcha']['recaptcha_v3_site_key'] ?? '';
+        }
+
+        return '';
     }
 
     /**
@@ -242,32 +256,10 @@ class ShortCode {
                 continue;
             }
 
-            if($field_type === 'dropdown' || $field_type === 'multiple_choices') {
-                $this->assets[] = 'select';
-            }
-            if($field_type === 'mask_input') {
-                $this->assets[] = 'imask';
-            }
-            if($field_type === 'phone' && !empty($field_settings['validate'])) {
-                $this->assets[] = 'intl-tel-input';
-            }
-            if($field_type === 'country' || $field_type === 'address') {
-                $this->assets[] = 'country-select';
-            }
-            if($field_type === 'date_time') {
-                $this->assets[] = 'flatpickr';
-            }
-            if($field_type === 'file_upload' || $field_type === 'image_upload') {
-                $this->assets[] = 'filepond';
-                $this->assets[] = 'filepond-preview';
-                $this->assets[] = 'filepond-size-validate';
-                $this->assets[] = 'filepond-type-validate';
-            }
-            if($field_type === 'recaptcha') {
-                if($this->global_settings['captcha']['recaptcha_version'] === 'reCAPTCHAv2') {
-                    $this->assets[] = 'recaptcha-v2';
-                } else {
-                    $this->assets[] = 'recaptcha-v3';
+            $this->manage_field_assets($field_type, $field_settings);
+            if($field_type === 'repeater') {
+                foreach ($field_settings['sub_fields'] as $sub_field) {
+                    $this->manage_field_assets($sub_field['type'], $sub_field['settings'] ?? []);
                 }
             }
 
@@ -279,8 +271,6 @@ class ShortCode {
                 'ht-form-elem',
                 $field_type ? 'ht-form-elem-' . sanitize_html_class($field_type) . '-field' : '',
                 !empty($settings['field_size']) ? 'ht-form-elem-' . sanitize_html_class($settings['field_size']) : 'medium',
-                $this->recaptcha_v2 && $field_type === 'recaptcha' ? 'ht-form-elem-recaptcha-field-v2' : '',
-                $this->recaptcha_v3 && $field_type === 'recaptcha' ? 'ht-form-elem-recaptcha-field-v3' : '',
             ];
 
             if (!empty($settings['field_class'])) {
@@ -301,6 +291,9 @@ class ShortCode {
             if($field_type === 'name') {
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $this->fields->field_name($field_id, $settings);
+            // } else if($field_type === 'action_hook') {
+            //     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            //     echo $this->fields->field_action_hook($field_id, $settings);
             } else {
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $this->fields->render_field($wrapper_classes, $field_type, $field_id, $settings);
@@ -308,6 +301,53 @@ class ShortCode {
         }
 
         echo '</div>'; // Close fields wrapper
+    }
+
+    /**
+     * Manage field assets
+     * 
+     * @param string $field_type Field type
+     * @return void
+     */
+    private function manage_field_assets($field_type, $field_settings) {
+        if($field_type === 'dropdown' || $field_type === 'multiple_choices' || $field_type === 'post_select') {
+            $this->assets[] = 'select';
+        }
+        if($field_type === 'mask_input') {
+            $this->assets[] = 'imask';
+        }
+        if($field_type === 'phone' && !empty($field_settings['validate'])) {
+            $this->assets[] = 'intl-tel-input';
+        }
+        if($field_type === 'country' || $field_type === 'address') {
+            $this->assets[] = 'country-select';
+        }
+        if($field_type === 'date_time') {
+            $this->assets[] = 'flatpickr';
+        }
+        if($field_type === 'file_upload' || $field_type === 'image_upload') {
+            $this->assets[] = 'filepond';
+            $this->assets[] = 'filepond-preview';
+            $this->assets[] = 'filepond-size-validate';
+            $this->assets[] = 'filepond-type-validate';
+        }
+        if($field_type === 'recaptcha') {
+            $active_version = $this->global_settings['captcha']['recaptcha_active_version'] ?? '';
+            if ($active_version === 'v2') {
+                $this->assets[] = 'recaptcha-v2';
+            } elseif ($active_version === 'v3') {
+                $this->assets[] = 'recaptcha-v3';
+            }
+        }
+        if($field_type === 'hcaptcha') {
+            $this->assets[] = 'hcaptcha';
+        }
+        if($field_type === 'richtext') {
+            $this->assets[] = 'quill';
+        }
+        if($field_type === 'signature') {
+            $this->assets[] = 'signature-pad';
+        }
     }
 
     /**
@@ -421,7 +461,7 @@ class ShortCode {
         }
 
         // Check form restrictions
-        $settings = $form['settings'] ?? [];
+        $settings = $form['settings'] ?? (object)[];
         $restriction_settings = $settings->form_restriction['settings'] ?? [];
         // IP restrictions
         if(!empty($restriction_settings['enable_ip_restriction'])) {
@@ -439,9 +479,6 @@ class ShortCode {
                 exit;
             }
         }
-
-        // Get form settings
-        $settings = $form['settings'] ?? (object)[];
         
         // Check for minimum submission time if enabled
         $spam_settings = $settings->spam_protection['settings'] ?? [];
@@ -462,9 +499,27 @@ class ShortCode {
             }
         }
 
-        // Verify reCAPTCHA if enabled in global settings
-        if(isset($_POST['g-recaptcha-response'])) {
-            $recaptcha_result = Helper::validate_recaptcha($_POST['g-recaptcha-response']);
+        // Check which captcha is configured
+        $recaptcha_active_version = $this->global_settings['captcha']['recaptcha_active_version'] ?? '';
+        $recaptcha_configured = false;
+        if ($recaptcha_active_version === 'v2') {
+            $recaptcha_configured = !empty($this->global_settings['captcha']['recaptcha_v2_secret_key']);
+        } elseif ($recaptcha_active_version === 'v3') {
+            $recaptcha_configured = !empty($this->global_settings['captcha']['recaptcha_v3_secret_key']);
+        }
+        $hcaptcha_configured = !empty($this->global_settings['captcha']['hcaptcha_secret_key']);
+
+        // Verify hCaptcha first if configured (hCaptcha may also send g-recaptcha-response for compatibility)
+        if($hcaptcha_configured && isset($_POST['h-captcha-response'])) {
+            $hcaptcha_result = Helper::validate_hcaptcha(sanitize_text_field(wp_unslash($_POST['h-captcha-response'])));
+            if ($hcaptcha_result !== true) {
+                wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', $hcaptcha_result['code']));
+                exit;
+            }
+        }
+        // Verify reCAPTCHA only if configured and hCaptcha response is not present
+        elseif($recaptcha_configured && isset($_POST['g-recaptcha-response'])) {
+            $recaptcha_result = Helper::validate_recaptcha(sanitize_text_field(wp_unslash($_POST['g-recaptcha-response'])));
             if ($recaptcha_result !== true) {
                 wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', $recaptcha_result['code']));
                 exit;
@@ -472,14 +527,16 @@ class ShortCode {
         }
 
         // Process the form submission
-        $form_data = $_POST;
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already verified above
+        $form_data = wp_unslash($_POST);
         unset($form_data['action'], $form_data['ht_form_nonce'], $form_data['ht_form_id']);
-        
+
         // Remove honeypot field from the submission data
         unset($form_data['ht_form_hp_email'], $form_data['ht_form_timestamp']);
-        
-        // Remove reCAPTCHA response from the submission data
+
+        // Remove captcha responses from the submission data
         unset($form_data['g-recaptcha-response']);
+        unset($form_data['h-captcha-response']);
 
         $submission = SubmissionEndpoint::get_instance();
         $form_data = $submission->sanitize_data($form_id, $form_data, $form['fields']);
@@ -625,6 +682,15 @@ class ShortCode {
             case 'recaptcha_failed':
                 $error_message = __('reCAPTCHA verification failed. Please try again.', 'ht-contactform');
                 break;
+            case 'hcaptcha_required':
+                $error_message = __('Please complete the hCaptcha challenge.', 'ht-contactform');
+                break;
+            case 'hcaptcha_connection_failed':
+                $error_message = __('Failed to connect to hCaptcha server.', 'ht-contactform');
+                break;
+            case 'hcaptcha_failed':
+                $error_message = __('hCaptcha verification failed. Please try again.', 'ht-contactform');
+                break;
             case 'ip_restricted':
                 $error_message = $settings->form_restriction['settings']['restrict_ip_message'] ?? __('Your IP address is restricted. Please try again.', 'ht-contactform');
                 break;
@@ -669,9 +735,11 @@ class ShortCode {
                 'rest_url' => rest_url(),
                 'rest_nonce' => wp_create_nonce('wp_rest'),
                 'plugin_url' => HTCONTACTFORM_PL_URL,
+                'upload_url' => wp_upload_dir()['baseurl'],
                 'captcha' => [
-                    'recaptcha_version' => isset($this->global_settings['captcha']['recaptcha_version']) ? $this->global_settings['captcha']['recaptcha_version'] : '',
-                    'recaptcha_site_key' => isset($this->global_settings['captcha']['recaptcha_site_key']) ? $this->global_settings['captcha']['recaptcha_site_key'] : '',
+                    'recaptcha_active_version' => $this->global_settings['captcha']['recaptcha_active_version'] ?? '',
+                    'recaptcha_site_key' => $this->get_active_recaptcha_site_key(),
+                    'hcaptcha_site_key' => $this->global_settings['captcha']['hcaptcha_site_key'] ?? '',
                 ],
                 'i18n' => $this->global_settings['validation_messages'] ?? [
                     "character_limit" => __("You have exceeded the number of allowed characters.", 'ht-contactform'),

@@ -189,8 +189,30 @@ class Submission {
                 }
             }
 
-            // Verify reCAPTCHA if enabled in global settings
-            if(isset($form_data['g-recaptcha-response'])) {
+            // Get global settings for captcha configuration
+            $global_settings = get_option('ht_form_global_settings', []);
+            $recaptcha_active_version = $global_settings['captcha']['recaptcha_active_version'] ?? '';
+            $recaptcha_configured = false;
+            if ($recaptcha_active_version === 'v2') {
+                $recaptcha_configured = !empty($global_settings['captcha']['recaptcha_v2_secret_key']);
+            } elseif ($recaptcha_active_version === 'v3') {
+                $recaptcha_configured = !empty($global_settings['captcha']['recaptcha_v3_secret_key']);
+            }
+            $hcaptcha_configured = !empty($global_settings['captcha']['hcaptcha_secret_key']);
+
+            // Verify hCaptcha first if configured (hCaptcha may also send g-recaptcha-response for compatibility)
+            if($hcaptcha_configured && isset($form_data['h-captcha-response'])) {
+                $hcaptcha_result = Helper::validate_hcaptcha($form_data['h-captcha-response']);
+                if ($hcaptcha_result !== true) {
+                    return new WP_Error(
+                        $hcaptcha_result['code'],
+                        $hcaptcha_result['message'],
+                        ['status' => $hcaptcha_result['status']]
+                    );
+                }
+            }
+            // Verify reCAPTCHA only if configured and hCaptcha response is not present
+            elseif($recaptcha_configured && isset($form_data['g-recaptcha-response'])) {
                 $recaptcha_result = Helper::validate_recaptcha($form_data['g-recaptcha-response']);
                 if ($recaptcha_result !== true) {
                     return new WP_Error(
@@ -201,8 +223,9 @@ class Submission {
                 }
             }
 
-            // Remove reCAPTCHA response from the submission data
+            // Remove captcha responses from the submission data
             unset($form_data['g-recaptcha-response']);
+            unset($form_data['h-captcha-response']);
 
             // Sanitize Form Data
             $form_data = $this->sanitize_data($form_id, $form_data, $form['fields']);
@@ -288,8 +311,12 @@ class Submission {
             foreach ($fields as $field) {
                 $field_name = $field['settings']['name_attribute'] ?? '';
                 $field_type = $field['type'];
-                // Skip if field doesn't exist in submission
-                if (empty($form_data[$field_name])) {
+                // Skip if field doesn't exist in submission (but allow empty arrays for chained_select)
+                if (empty($form_data[$field_name]) && $field_type !== 'chained_select') {
+                    continue;
+                }
+                // For chained_select, ensure we have an array even if empty
+                if ($field_type === 'chained_select' && !isset($form_data[$field_name])) {
                     continue;
                 }
                 
@@ -379,8 +406,201 @@ class Submission {
                             $sanitized_data[$field_name] = $form_data[$field_name];
                         }
                         break;
-                    
-                    // Default sanitization for text and other field types    
+
+                    case 'repeater':
+                        // For repeater fields with multiple rows of sub-fields
+                        if (is_array($form_data[$field_name])) {
+                            $sanitized_data[$field_name] = [];
+                            $sub_fields = $field['settings']['sub_fields'] ?? [];
+
+                            foreach ($form_data[$field_name] as $row_index => $row_data) {
+                                if (!is_array($row_data)) {
+                                    continue;
+                                }
+
+                                $sanitized_row = [];
+                                foreach ($sub_fields as $sub_field) {
+                                    $sub_field_name = $sub_field['settings']['name_attribute'] ?? $sub_field['id'];
+
+                                    if (!isset($row_data[$sub_field_name])) {
+                                        continue;
+                                    }
+
+                                    $sub_field_value = $row_data[$sub_field_name];
+                                    $sub_field_type = $sub_field['type'];
+
+                                    // Sanitize based on sub-field type
+                                    switch ($sub_field_type) {
+                                        case 'email':
+                                            $sanitized_row[$sub_field_name] = sanitize_email($sub_field_value);
+                                            break;
+                                        case 'textarea':
+                                            $sanitized_row[$sub_field_name] = sanitize_textarea_field($sub_field_value);
+                                            break;
+                                        case 'number':
+                                            $sanitized_row[$sub_field_name] = is_numeric($sub_field_value) ?
+                                                floatval($sub_field_value) : '';
+                                            break;
+                                        case 'url':
+                                            $sanitized_row[$sub_field_name] = sanitize_url($sub_field_value);
+                                            break;
+                                        case 'tel':
+                                        case 'phone':
+                                            $sanitized_row[$sub_field_name] = preg_replace('/[^0-9\+\-\(\) ]/', '', $sub_field_value);
+                                            break;
+                                        case 'checkboxes':
+                                        case 'multiple_choices':
+                                            if (is_array($sub_field_value)) {
+                                                $sanitized_row[$sub_field_name] = array_map('sanitize_text_field', $sub_field_value);
+                                            } else {
+                                                $sanitized_row[$sub_field_name] = sanitize_text_field($sub_field_value);
+                                            }
+                                            break;
+                                        default:
+                                            $sanitized_row[$sub_field_name] = sanitize_text_field($sub_field_value);
+                                            break;
+                                    }
+                                }
+
+                                $sanitized_data[$field_name][] = $sanitized_row;
+                            }
+                        }
+                        break;
+
+                    case 'post_select':
+                        // Sanitize post selection value (post title)
+                        $sanitized_data[$field_name] = sanitize_text_field($form_data[$field_name]);
+                        break;
+
+                    case 'color':
+                        // Validate and sanitize hex color value
+                        $color_value = $form_data[$field_name];
+                        if (preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $color_value)) {
+                            $sanitized_data[$field_name] = sanitize_hex_color($color_value);
+                        } else {
+                            $sanitized_data[$field_name] = '#000000';
+                        }
+                        break;
+
+                    case 'nps':
+                        // Validate NPS score (0-10)
+                        $nps_value = absint($form_data[$field_name]);
+                        if ($nps_value >= 0 && $nps_value <= 10) {
+                            $sanitized_data[$field_name] = $nps_value;
+                        } else {
+                            $sanitized_data[$field_name] = 0;
+                        }
+                        break;
+
+                    case 'richtext':
+                        // Custom sanitization for Quill editor content
+                        $content = $form_data[$field_name];
+
+                        // Step 1: Remove dangerous tags completely
+                        $content = preg_replace('/<(script|iframe|object|embed|form|input)[^>]*>.*?<\/\1>/is', '', $content);
+                        $content = preg_replace('/<(script|iframe|object|embed|form|input)[^>]*\/?>/i', '', $content);
+
+                        // Step 2: Remove dangerous attributes (event handlers)
+                        $content = preg_replace('/\s*on\w+\s*=\s*["\'][^"\']*["\']/i', '', $content);
+                        $content = preg_replace('/\s*on\w+\s*=\s*[^\s>]*/i', '', $content);
+
+                        // Step 3: Sanitize href attributes (remove javascript:)
+                        $content = preg_replace('/href\s*=\s*["\']javascript:[^"\']*["\']/i', 'href="#"', $content);
+
+                        // Step 4: Sanitize style attributes - only allow safe CSS properties
+                        $content = preg_replace_callback(
+                            '/style\s*=\s*"([^"]*)"/i',
+                            function($matches) {
+                                $style = $matches[1];
+                                $safe_styles = [];
+
+                                // Allow color (but not inside background-color match)
+                                if (preg_match('/(?<![a-z-])color\s*:\s*([^;]+)/i', $style, $match)) {
+                                    $value = trim($match[1]);
+                                    // Only allow rgb(), rgba(), hex colors, and color names
+                                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                                        $safe_styles[] = 'color: ' . $value;
+                                    }
+                                }
+
+                                // Allow background-color
+                                if (preg_match('/background-color\s*:\s*([^;]+)/i', $style, $match)) {
+                                    $value = trim($match[1]);
+                                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                                        $safe_styles[] = 'background-color: ' . $value;
+                                    }
+                                }
+
+                                // Allow text-align
+                                if (preg_match('/text-align\s*:\s*(left|center|right|justify)/i', $style, $match)) {
+                                    $safe_styles[] = 'text-align: ' . strtolower($match[1]);
+                                }
+
+                                return empty($safe_styles) ? '' : 'style="' . esc_attr(implode('; ', $safe_styles)) . '"';
+                            },
+                            $content
+                        );
+
+                        // Step 5: Sanitize class names - only allow Quill's classes
+                        $content = preg_replace_callback(
+                            '/class\s*=\s*"([^"]*)"/i',
+                            function($matches) {
+                                $allowed_classes = ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-indent-1', 'ql-indent-2', 'ql-indent-3', 'ql-indent-4', 'ql-indent-5', 'ql-indent-6', 'ql-indent-7', 'ql-indent-8', 'ql-code-block'];
+                                $classes = explode(' ', $matches[1]);
+                                $safe_classes = array_intersect($classes, $allowed_classes);
+                                return empty($safe_classes) ? '' : 'class="' . esc_attr(implode(' ', $safe_classes)) . '"';
+                            },
+                            $content
+                        );
+
+                        // Step 6: Remove any remaining disallowed tags (but keep attributes on allowed tags)
+                        // We've already removed dangerous tags in Step 1, so this is just extra safety
+                        $allowed_tags_pattern = 'p|br|strong|b|em|i|u|s|strike|a|ul|ol|li|h1|h2|h3|h4|blockquote|pre|code|span|button';
+                        $content = preg_replace('/<(?!\/?(' . $allowed_tags_pattern . ')[\s>])[^>]*>/i', '', $content);
+
+                        // Step 7: Validate max_length if set
+                        $max_length = $field['settings']['max_length'] ?? 0;
+                        if ($max_length > 0) {
+                            $text_content = wp_strip_all_tags($content);
+                            if (mb_strlen($text_content) > $max_length) {
+                                // Truncate to max length by removing content from end
+                                // Note: This is a fallback; frontend should enforce this
+                                $content = mb_substr($content, 0, $max_length * 3); // Approximate HTML overhead
+                            }
+                        }
+
+                        $sanitized_data[$field_name] = $content;
+                        break;
+
+                    case 'signature':
+                        // Handle signature as base64 data URL
+                        $signature_data = $form_data[$field_name];
+                        if (!empty($signature_data) && preg_match('/^data:image\/(png|jpeg|jpg);base64,/', $signature_data)) {
+                            // Save signature to media library
+                            $upload_result = $this->save_signature_to_media_library($signature_data, $form_id);
+                            if (!empty($upload_result['url'])) {
+                                $sanitized_data[$field_name] = esc_url_raw($upload_result['url']);
+                            } else {
+                                $sanitized_data[$field_name] = '';
+                            }
+                        } else {
+                            $sanitized_data[$field_name] = '';
+                        }
+                        break;
+
+                    case 'chained_select':
+                        // Handle chained select as array of level values
+                        if (is_array($form_data[$field_name])) {
+                            $sanitized_data[$field_name] = [];
+                            foreach ($form_data[$field_name] as $key => $val) {
+                                $sanitized_data[$field_name][sanitize_key($key)] = sanitize_text_field($val);
+                            }
+                        } else {
+                            $sanitized_data[$field_name] = [];
+                        }
+                        break;
+
+                    // Default sanitization for text and other field types
                     default:
                         $sanitized_data[$field_name] = sanitize_text_field($form_data[$field_name]);
                         break;
@@ -408,6 +628,55 @@ class Submission {
     }
 
     /**
+     * Save signature base64 data to WordPress media library
+     *
+     * @param string $base64_data Base64 encoded image data URL
+     * @param int $form_id Form ID for generating filename
+     * @return array Array with 'url' and 'file' keys, or empty array on failure
+     */
+    private function save_signature_to_media_library($base64_data, $form_id) {
+        // Extract the base64 data
+        $data = explode(',', $base64_data);
+        if (count($data) !== 2) {
+            return [];
+        }
+
+        // Decode the base64 data
+        $decoded = base64_decode($data[1]);
+        if (!$decoded) {
+            return [];
+        }
+
+        // Generate unique filename with microtime for better uniqueness
+        $filename = 'signature_' . absint($form_id) . '_' . str_replace('.', '', (string) microtime(true)) . '.png';
+
+        // Use WordPress upload function
+        $upload = wp_upload_bits($filename, null, $decoded);
+
+        if (!empty($upload['error'])) {
+            return [];
+        }
+
+        // Create attachment in media library
+        $attachment = [
+            'post_mime_type' => 'image/png',
+            'post_title' => sanitize_file_name($filename),
+            'post_status' => 'inherit',
+        ];
+
+        $attach_id = wp_insert_attachment($attachment, $upload['file']);
+
+        if (!is_wp_error($attach_id)) {
+            // Generate attachment metadata
+            require_once ABSPATH . 'wp-admin/includes/image.php';
+            $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+            wp_update_attachment_metadata($attach_id, $attach_data);
+        }
+
+        return $upload;
+    }
+
+    /**
      * Validate form submission data against form configuration
      * 
      * @param array $form_data Submitted form data
@@ -427,8 +696,53 @@ class Submission {
             if (!$is_required) {
                 continue;
             }
-            
-            // Check required fields
+
+            // Rich Text required validation - strip HTML to check actual content
+            if ($field['type'] === 'richtext' && $is_required) {
+                $value = wp_strip_all_tags($form_data[$field_name] ?? '');
+                if (empty(trim($value))) {
+                    $errors[$field_name] = sprintf(
+                        /* translators: %s: field label */
+                        __('%s is required.', 'ht-contactform'),
+                        $field_label
+                    );
+                    continue;
+                }
+            }
+
+            // Signature required validation - check for valid signature data
+            // After sanitization, signature is saved to media library and becomes a URL
+            if ($field['type'] === 'signature' && $is_required) {
+                $value = $form_data[$field_name] ?? '';
+                // Accept either base64 data URL (pre-sanitization) or saved image URL (post-sanitization)
+                $is_valid = !empty($value) && (
+                    preg_match('/^data:image\/(png|jpeg|jpg);base64,/', $value) ||
+                    filter_var($value, FILTER_VALIDATE_URL)
+                );
+                if (!$is_valid) {
+                    $errors[$field_name] = sprintf(
+                        /* translators: %s: field label */
+                        __('%s is required.', 'ht-contactform'),
+                        $field_label
+                    );
+                    continue;
+                }
+            }
+
+            // Chained Select required validation - check if all levels have values
+            if ($field['type'] === 'chained_select' && $is_required) {
+                $values = $form_data[$field_name] ?? [];
+                if (!is_array($values) || empty(array_filter($values))) {
+                    $errors[$field_name] = sprintf(
+                        /* translators: %s: field label */
+                        __('%s is required.', 'ht-contactform'),
+                        $field_label
+                    );
+                    continue;
+                }
+            }
+
+            // Check required fields (generic - for other field types)
             if ($is_required && (!isset($form_data[$field_name]) || $form_data[$field_name] === '')) {
                 $errors[$field_name] = sprintf(
                     /* translators: %s: field label */
@@ -448,29 +762,94 @@ class Submission {
                     );
                 }
             }
+
+            // Validate repeater field
+            if ($field['type'] === 'repeater') {
+                $sub_fields = $field['settings']['sub_fields'] ?? [];
+
+                // Check if repeater data exists
+                $repeater_data = $form_data[$field_name] ?? [];
+
+                if (!is_array($repeater_data)) {
+                    $repeater_data = [];
+                }
+
+                // Validate sub-fields in each row
+                foreach ($repeater_data as $row_index => $row_data) {
+                    if (!is_array($row_data)) {
+                        continue;
+                    }
+
+                    foreach ($sub_fields as $sub_field) {
+                        $sub_field_name = $sub_field['settings']['name_attribute'] ?? $sub_field['id'];
+                        $sub_field_label = $sub_field['settings']['label'] ?? $sub_field_name;
+                        $sub_is_required = !empty($sub_field['settings']['required']);
+
+                        // Check required sub-fields
+                        if ($sub_is_required && (!isset($row_data[$sub_field_name]) || $row_data[$sub_field_name] === '')) {
+                            $row_number = $row_index + 1;
+                            $errors["{$field_name}[{$row_index}][{$sub_field_name}]"] = sprintf(
+                                /* translators: 1: sub-field label, 2: row number */
+                                __('%1$s is required in row %2$d.', 'ht-contactform'),
+                                $sub_field_label,
+                                $row_number
+                            );
+                        }
+
+                        // Validate email format in sub-fields (if email_validation is enabled)
+                        if ($sub_field['type'] === 'email' && !empty($row_data[$sub_field_name])) {
+                            $email_validation_enabled = !empty($sub_field['settings']['email_validation']) || !empty($sub_field['email_validation']);
+                            if ($email_validation_enabled && !is_email($row_data[$sub_field_name])) {
+                                $row_number = $row_index + 1;
+                                $errors["{$field_name}[{$row_index}][{$sub_field_name}]"] = sprintf(
+                                    /* translators: 1: sub-field label, 2: row number */
+                                    __('%1$s must be a valid email address in row %2$d.', 'ht-contactform'),
+                                    $sub_field_label,
+                                    $row_number
+                                );
+                            }
+                        }
+                    }
+                }
+            }
         }
-        
+
         return $errors;
     }
 
     /**
      * Handle file uploads
-     * 
+     *
      * @param array $form_data Form data
      * @param array $form Form configuration
      * @return array Array of uploaded files
      */
     public function handle_files_upload($form_data, $form) {
+        $upload_dir = wp_upload_dir();
+
+        // Get draft_key from form data if resuming a saved draft
+        $draft_key = $form_data['ht_form_draft_key'] ?? null;
+
         foreach ($form['fields'] as $field) {
             if ($field['type'] === 'file_upload' || $field['type'] === 'image_upload') {
                 $destination = $field['settings']['upload_location'] ?? 'ht_form_default';
-                if(isset($form_data[$field['settings']['name_attribute']])) {
-                    $files = $form_data[$field['settings']['name_attribute']];
-                }
-                if (!empty($files)) {
-                    foreach ($files as $key => $file) {
-                        $file = sanitize_file_name($file);
-                        $form_data[$field['settings']['name_attribute']][$key] = $this->upload_file($file, $destination);
+                $field_name = $field['settings']['name_attribute'];
+
+                if (isset($form_data[$field_name])) {
+                    $files = $form_data[$field_name];
+                    if (!empty($files)) {
+                        foreach ($files as $key => $file_value) {
+                            // Extract filename from URL if it's a full URL (from resumed draft)
+                            $file_name = $this->extract_filename($file_value);
+                            $file_name = sanitize_file_name($file_name);
+
+                            // Find the file in temp or drafts folder
+                            $source_path = $this->find_file_source($file_name, $draft_key, $upload_dir);
+
+                            if ($source_path) {
+                                $form_data[$field_name][$key] = $this->upload_file_from_path($source_path, $file_name, $destination);
+                            }
+                        }
                     }
                 }
             }
@@ -479,16 +858,58 @@ class Submission {
     }
 
     /**
-     * Upload file to media library or default directory
-     * 
-     * @param string $file_name File name with extension
-     * @param string $destination Destination directory
-     * @return int|string Attachment ID or file path
+     * Extract filename from value (could be filename or URL)
+     *
+     * @param string $file_value File value (filename or URL)
+     * @return string Extracted filename
      */
-    public function upload_file($file_name, $destination) {
+    private function extract_filename($file_value) {
+        if (strpos($file_value, 'http://') === 0 || strpos($file_value, 'https://') === 0) {
+            $parsed = wp_parse_url($file_value);
+            return basename($parsed['path'] ?? $file_value);
+        }
+        return $file_value;
+    }
+
+    /**
+     * Find file in temp or drafts folder
+     *
+     * @param string $file_name File name
+     * @param string|null $draft_key Draft key for resumed forms
+     * @param array $upload_dir WordPress upload directory info
+     * @return string|null Full path to file or null if not found
+     */
+    private function find_file_source($file_name, $draft_key, $upload_dir) {
+        // First check temp folder (new uploads)
+        $temp_path = $upload_dir['basedir'] . '/ht_form/temp/' . $file_name;
+        if (file_exists($temp_path)) {
+            return $temp_path;
+        }
+
+        // Then check drafts folder (resumed files)
+        if ($draft_key) {
+            $draft_key = sanitize_file_name($draft_key);
+            $draft_path = $upload_dir['basedir'] . '/ht_form/drafts/' . $draft_key . '/' . $file_name;
+            if (file_exists($draft_path)) {
+                return $draft_path;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Upload file to media library or default directory from a source path
+     *
+     * @param string $source_path Full path to source file
+     * @param string $file_name File name with extension
+     * @param string $destination Destination type (media_library or ht_form_default)
+     * @return string|false URL of uploaded file or false on failure
+     */
+    public function upload_file_from_path($source_path, $file_name, $destination) {
         $upload_dir = wp_upload_dir();
-        $temp_file = $upload_dir['basedir'] . '/ht_form/temp/' . $file_name;
-        if($destination === 'media_library') {
+
+        if ($destination === 'media_library') {
             // === ATTACH TO MEDIA LIBRARY ===
             require_once ABSPATH . 'wp-admin/includes/file.php';
             require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -496,31 +917,45 @@ class Submission {
 
             $file = [
                 'name' => basename($file_name),
-                'tmp_name' => $temp_file,
-                'type' => mime_content_type($temp_file),
+                'tmp_name' => $source_path,
+                'type' => mime_content_type($source_path),
                 'error' => 0,
-                'size' => filesize($temp_file),
+                'size' => filesize($source_path),
             ];
             $attachment_id = media_handle_sideload($file, 0);
-            if(is_wp_error($attachment_id)) {
+            if (is_wp_error($attachment_id)) {
                 return $attachment_id->get_error_message();
             } else {
-                @unlink($temp_file);
+                @unlink($source_path);
                 return wp_get_attachment_url($attachment_id);
             }
-        } elseif($destination === 'ht_form_default') {
-            $destination = $upload_dir['basedir'] . '/ht_form';
-            if (!file_exists($destination)) {
-                wp_mkdir_p($destination);
+        } elseif ($destination === 'ht_form_default') {
+            $dest_dir = $upload_dir['basedir'] . '/ht_form';
+            if (!file_exists($dest_dir)) {
+                wp_mkdir_p($dest_dir);
             }
-            $file_name = wp_unique_filename($destination, $file_name);
-            $file_path = "$destination/$file_name";
-            if (rename($temp_file, $file_path)) {
+            $unique_name = wp_unique_filename($dest_dir, $file_name);
+            $file_path = "$dest_dir/$unique_name";
+            if (rename($source_path, $file_path)) {
                 // Return URL instead of file path
-                return $upload_dir['baseurl'] . '/ht_form/' . $file_name;
+                return $upload_dir['baseurl'] . '/ht_form/' . $unique_name;
             }
         }
         return false;
+    }
+
+    /**
+     * Upload file to media library or default directory (legacy method)
+     *
+     * @param string $file_name File name with extension
+     * @param string $destination Destination directory
+     * @return int|string Attachment ID or file path
+     * @deprecated Use upload_file_from_path instead
+     */
+    public function upload_file($file_name, $destination) {
+        $upload_dir = wp_upload_dir();
+        $temp_file = $upload_dir['basedir'] . '/ht_form/temp/' . $file_name;
+        return $this->upload_file_from_path($temp_file, $file_name, $destination);
     }
 
     /**

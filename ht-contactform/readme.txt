@@ -1,178 +1,236 @@
-=== HT Contact Form Widget For Elementor Page Builder & Gutenberg Blocks & Form Builder. ===
+=== HT Contact Form – Drag & Drop Form Builder for WordPress ===
 Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
-Tags: Contact Form, Form Builder, Forms, Custom Form, form
-Tags: Contact Form, Form Builder, Forms, Custom Form, form
+Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 2.4.1
+Tested up to: 6.9
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-HT Contact Form lets you design responsive forms quickly with drag & drop, spam protection, form storage, and instant email alerts.
+The easiest drag & drop form builder for WordPress. Create contact forms, surveys, and lead capture forms in minutes with 38+ fields and 21+ integrations.
 
 == Description ==
 
-**HT Contact Form** is a powerful, lightweight, and easy-to-use **WordPress form plugin** that allows you to create stunning, professional contact forms in minutes—no coding required. Capture leads, collect feedback, connect with visitors, and grow your business effortlessly with forms that look and work beautifully on any device.
+**Stop struggling with complicated form plugins.** HT Contact Form is the WordPress form builder that gets out of your way and lets you create beautiful, functional forms in minutes - not hours.
 
-Build beautiful custom forms instantly with the intuitive **drag-and-drop builder**. Select from **12+ ready-to-use input fields** to design **contact forms** that perfectly match your brand identity and website design.
+Whether you need a simple contact form, a detailed application, or a complex survey with conditional logic, HT Contact Form has you covered. **No coding required. No expensive add-ons. Just drag, drop, and publish.**
 
-HT Contact Form doesn’t just make form creation easy—it also ensures your data is protected. With features like **form entry storage**, **built-in spam protection**, and **Google reCAPTCHA integration**, your information stays safe while maintaining a seamless user experience.
+**[Documentation](https://hasthemes.com/docs-category/ht-contact-forms/)** | **[Support](https://hasthemes.com/contact-us/)**
 
-Furthermore, **email notifications** and **pre-designed email templates** keep both you and your users informed automatically after every form submission.
+== Key Features ==
 
-A few helpful links here to get started 👇
+🎨 **Drag & Drop Builder** - Design forms visually with our intuitive builder. No coding needed.
 
-📄 [Documentation](https://hasthemes.com/docs/ht-contact-forms/ht-contact-forms/) | 👨🏻‍💻 [Support](https://hasthemes.com/contact-us/)
+📝 **38+ Form Fields** - Everything from basic text inputs to signatures, file uploads, and repeater fields.
 
-## ✨ Powerful Features You'll Love
+🔗 **21+ Integrations** - Connect to Mailchimp, HubSpot, Zapier, Slack, and more - all included free.
 
-🛠️ **Drag & Drop Builder** – Effortlessly design professional forms using a clean and intuitive interface.
+💾 **Save & Resume** - Let users save their progress and complete forms later via unique link.
 
-🧩 **27+ Ready-to-Use Input Fields** – Choose from a variety of form elements to build any type of contact form to suit your needs.
+🔀 **Conditional Logic** - Show or hide fields based on user selections.
 
-💾 **Store Form Entries** – Never lose important submissions again! Automatically save all entries for future reference.
+🛡️ **Spam Protection** - Built-in honeypot, reCAPTCHA v2/v3, and hCaptcha support.
 
-🛡️ **Anti-Spam Protection** – Say goodbye to spam submissions with powerful built-in filtering that keeps your inbox clean.
+📊 **Entry Management** - Store, search, filter, and export all submissions from your dashboard.
 
-🔒 **Google reCAPTCHA Support** – Add an extra layer of security to your WordPress forms.
+📧 **Email Notifications** - Instant alerts with 5 pre-designed email templates.
 
-📣 **Email Notifications** – Instantly get notified when someone submits a form.
+🏷️ **Smart Tags** - Dynamic field values that auto-populate from user data, URLs, or other fields.
 
-📧 **5 Pre-Built Email Templates** – Send professional responses automatically with beautifully designed email templates.
+📱 **Fully Responsive** - Forms look perfect on desktop, tablet, and mobile.
 
-📤 **Export Forms** – Easily transfer your forms between sites or create backups with one-click exports.
+🎯 **Form Styling** - Customize colors, fonts, borders, and spacing to match your brand.
 
-📊 **Export Entries** – Download form submissions in CSV, Excel, ODS, or JSON formats for analysis or CRM integration.
+📤 **Export Options** - Download entries as CSV, Excel, ODS, or JSON.
 
-🔍 **Filter Entries & Form Finder** – Quickly locate specific forms and submissions in your dashboard.
+== What's New ==
 
-⚡ **Pre-Filled Field Support** – Set default field values or leverage Smart Tags that dynamically populate form fields.
+🔗 **9 New Integrations** - Connect forms to GetResponse, Drip, Moosend, iContact, MailPoet, Notion, Trello, HubSpot, and Zoho CRM.
 
-📱 **Fully Responsive & Mobile Friendly** – Deliver a perfect form experience on every device, from desktops to smartphones.
+📧 **Email Marketing** - GetResponse, Drip, Moosend, iContact, and MailPoet integrations for subscriber management.
 
-🎯 **Field Conditions Display** – Show/hide fields based on user input.
+💼 **CRM Integrations** - HubSpot and Zoho CRM for contact and lead management.
 
-🌍 **Form Submission Restrictions** – Restrict form submissions based on IP address and country.
+📂 **Productivity Tools** - Notion databases and Trello boards integration for workflow automation.
 
-## 🔥 Why Choose HT Contact Form?
+== Build Any Form You Need ==
 
-### 🛠️ Drag & Drop Builder
-**Design Like a Pro Without Coding**
-Create stunning contact forms in minutes with our visual form builder. Simply drag fields into place, arrange them to match your vision, and customize with a few clicks. Perfect for beginners and pros alike!
+* 📬 **Contact Forms** - Simple inquiry forms with name, email, and message
+* 🎯 **Lead Generation** - Capture leads with custom fields and send to your CRM
+* 📋 **Surveys & Feedback** - Multi-question forms with ratings, NPS, and conditional logic
+* ✅ **Signup Forms** - Collect user details for newsletters, events, or services
+* 📄 **Application Forms** - Long forms with save & resume functionality
+* 🎫 **Support Requests** - Ticket creation with file attachments and priority selection
 
-### 💾 Store Form Entries
-**Never Lose Important Information Again**
-Every submission is automatically saved in your WordPress dashboard. Access your complete submission history anytime, review data at a glance, and follow up with users effortlessly.
+== 38+ Form Fields ==
 
-### 🔗 Webhook Integration
-**Automate Your Workflows in Real Time**
-Send form data instantly to external applications, services, or APIs using our flexible webhook integration. Whether you’re connecting to CRMs, marketing tools, or custom scripts, HT Contact Form makes automation seamless and fast—no third-party plugins required.
+✏️ **Basic Input**
+Text, Textarea, Email, Number, Phone, Password, Website, Name (with formats)
 
-### 🛡️ Anti-Spam Protection
-**Focus on Real Users, Not Spam**
-Our built-in spam filtering keeps your inbox clean automatically. Eliminate time-wasting junk submissions and focus on meaningful interactions with genuine visitors and customers.
+☑️ **Selection**
+Dropdown, Radio Buttons, Checkboxes, Multiple Choice, Country List
 
-### 🔒 Google reCAPTCHA Support
-**Security That Doesn't Frustrate Users**
-Add powerful protection against bots with seamless reCAPTCHA integration. Block automated submissions while keeping the form experience smooth and hassle-free for real users.
+⚙️ **Advanced**
+Repeater (dynamic rows), Chained Select, Post Selection, Rich Text Editor
 
-### 📧 Email Notifications
-**Stay Connected Automatically**
-Receive instant alerts when someone reaches out through your contact forms. Send professional confirmation emails to users automatically, improving communication and building trust with every form submission.
+📅 **Date & Time**
+Date/Time Picker (with calendar and time selection)
 
-### 📊 Export Entries
-**Your Data, Your Way**
-Export submissions in CSV, Excel, ODS, or JSON formats with a single click. Perfect for analyzing trends, importing into your CRM, creating reports, or backing up important contact information.
+📎 **Uploads**
+File Upload, Image Upload, Signature Capture
 
-### 📱 Fully Responsive & Mobile Friendly
-**Perfect on Every Device**
-Forms automatically adapt to look beautiful on any screen size—from desktop monitors to smartphones. Give your visitors a flawless experience no matter how they access your site.
+🧩 **Layout**
+Section Break, Custom HTML, Shortcode Embed
 
-### 🎨 Form Styler
-**Customize Your Forms**
-Customize the look and feel of your forms with HT Contact Form's custom styling options. You can change colors, font size, weight, line height, border, radius, and other design elements to match your brand identity and website design.
+🔐 **Security**
+reCAPTCHA (v2 & v3), hCaptcha, GDPR Consent, Terms & Conditions
 
-## 🧩 Versatile Form Fields to Build Anything
+⭐ **Special**
+Save & Resume, Star Rating, NPS Score, Color Picker, Range Slider, Mask Input, Hidden Field, Action Hook
 
-Create the perfect form for any purpose with our comprehensive collection of field types:
+== 21+ Integrations ==
 
-1. **Name Fields**  
-2. **Simple Text** 
-3. **Textarea** 
-4. **Mask Input** 
-5. **Dropdown** 
-6. **Multiple Choices** 
-7. **Checkboxes** 
-8. **Number** 
-9. **GDPR**
-10. **reCAPTCHA**
-11. **Email**
-12. **Range Slider**
-13. **Phone**
-14. **Address**
-15. **Country List**
-16. **File Upload**
-17. **Image Upload**
-18. **Password**
-19. **Date/Calendar Picker**
-20. **ShortCode**
-21. **Rating**
-22. **Radio**
-23. **Website**
-24. **Custom HTML**
-25. **Hidden**
-26. **Terms & Conditions**
-27. **Submit Button**
+📧 **Email Marketing**
+Mailchimp, ActiveCampaign, MailerLite, GetResponse, Drip, Moosend, iContact, MailPoet, Constant Contact, Brevo
 
-## 📈 3rd Party Integrations
+💼 **CRM**
+HubSpot, Zoho CRM, Insightly, OnepageCRM
 
-HT Contact Form seamlessly integrates with popular services to help you streamline your workflow and enhance your form experience. Check out some of the integrations available:
+📂 **Productivity**
+Notion, Trello, Slack, Discord
 
-1. **Mailchimp** – Automatically add form submitters to your Mailchimp email list.
-2. **Slack** – Instantly send form submission notifications to your Slack channels.
-3. **Discord** – Receive form submission alerts directly in your Discord channels.
-4. **ActiveCampaign** – Add submitters to your ActiveCampaign email list seamlessly.
-5. **MailerLite** – Grow your MailerLite list with every new form submission.
-6. **Zapier** – Connect with thousands of apps by sending form data to Zapier.
-7. **Constant Contact** – Automatically forward form entries to Constant Contact.
-8. **Support Genix** – Create a support ticket from each form submission.
-9. **Brevo** – Send form data directly to your Brevo marketing platform.
-10. **Insightly** – Automatically push form entries to your Insightly CRM for lead management.
-11. **Webhook** – Send form data to any external URL using a custom webhook.
+⚡ **Automation**
+Zapier (connect to 5000+ apps), Custom Webhooks
+
+🎫 **Support**
+Support Genix (helpdesk tickets)
+
+== Why Choose HT Contact Form? ==
+
+💰 **Free & Powerful** - Get features that competitors charge hundreds for. No form limits, no entry limits, no hidden costs.
+
+⚡ **Modern Interface** - Built with React for a fast, smooth admin experience. No page reloads, instant previews.
+
+🔗 **All Integrations Included** - 21+ integrations at no extra cost. Connect your forms to the tools you already use.
+
+👨‍💻 **Developer Friendly** - Action hooks, custom HTML fields, and webhook support for unlimited extensibility.
+
+🚀 **Active Development** - Regular updates with new fields, integrations, and features based on user feedback.
 
 == Other Projects ==
-We have a lot of plugins and extensions that might interest you. Try out other projects by following this link:
 
-<strong>[Woolentor Addons](https://wordpress.org/plugins/woolentor-addons/)</strong>
-Woolentor is a WooCommerce page builder plugin that extends the functionality of the WooCommerce store. These Elementor Addons provide additional features and options for WooCommerce stores. Woolentor is the best alternative for ShopReady, Kadence, JetWidgets, ShopEngine, and CoDesigner. The Woolentor addons come with 50+ free Elementor widgets like Wishlist Extension Addon, Product compare, Product Filters, Product Variation Swatches, Shopify Style Checkout, Product Slider and 50+ pro Elementor Widgets like Checkout Fields Editor, Partial Payment, Email Customizer for WooCommerce with ready Email Templates, WooCommerce Email Automation, Multi Step Checkout, and many much more. Also it provide 90+ WooCommerce Elementor templates, 22+ WooCommerce Modules, and Gutenberg Blocks.
+🛒 **[ShopLentor (Woolentor)](https://wordpress.org/plugins/woolentor-addons/)** - WooCommerce page builder with 125+ widgets, 36 modules including Shopify-style checkout, Quick View, Wishlist, and Compare features.
 
-<strong>[HT Mega For Elementor](https://wordpress.org/plugins/ht-mega-for-elementor/)</strong>
-HT Mega is an Elementor Addons that comes with custom page builder,  header builder, footer builder, mega menus, and more for your Elementor based website. The HT Mega plugin also includes a comprehensive set of Elementor widgets, readymade Elementor templates and Elementor Blocks.  HT Mega plugin works like ElementsKit, Essential Addons for Elementor, Royal Elementor Addons, Premium Addons, Happy Addons, PowerPack Addons, Unlimited Elements, Qi Addons, etc. The HT Mega plugin provides 84+ free Elementor widgets like Post Grid widget, Slider widget, Accordion widget, Elementor Forms widget, Contact Form Widget, Elementor tables, and other related items. It also provides 18+ pro widgets like Filterable Gallery Widget, Event Box Widget, Breadcrumbs Widget, Elementor Facebook Review Widget, Elementor Category List Widget, etc.
+🎧 **[Support Genix](https://wordpress.org/plugins/support-genix-lite/)** - AI-powered helpdesk with ticketing system, knowledge base, and 24/7 chatbot support for customer service.
 
-<strong>[Hashbar Wp Notification Bar](https://wordpress.org/plugins/hashbar-wp-notification-bar/)</strong>
-HashBar is a WordPress Notification Bar Plugin that enables you to create unlimited notification bars on your WordPress website. You can create as many notification bars as you want and customize their content to meet your needs.
+🎨 **[HT Mega For Elementor](https://wordpress.org/plugins/ht-mega-for-elementor/)** - Elementor addon with 135+ widgets, AI Content Writer, Theme Builder, Mega Menu Builder, and 790+ ready blocks.
 
-<strong>[WP Plugin Manager - Deactivate plugins per page](https://wordpress.org/plugins/wp-plugin-manager/)</strong>
-WP Plugin Manager is the perfect solution for those who want to disable certain plugins on specific pages or posts. With this plugin, you can easily activate or deactivate plugins on a per-page or per-post basis. Whichever plugin you don’t need you can deactivate or disable that plugin with the help of WP plugin Manager.
-
-<strong>[Whols](https://wordpress.org/plugins/whols/)</strong>
-Whols is an outstanding plugin for WooCommerce that allows store owners to set wholesale prices for the products of their online stores. With Whols, you can easily add custom fields to your registration form, set minimum product requirements, and control how wholesale prices are displayed on both the shop and product detail pages. Whols work  like Wholesale Suite, B2Bking and B2B plugins.
-
-<strong>[Just Tables](https://wordpress.org/plugins/just-tables/)</strong>
-JustTables is a WooCommerce product table plugin that helps you easily create and manage tables for your products. It includes 28 pre-built columns with options to enable/disable, and you can add custom columns with custom fields/taxonomies. Just Tables also allows you to order table columns using drag and drop and set the number of products per page.
-
-<strong>[Swatchly](https://wordpress.org/plugins/swatchly/)</strong>
-Swatchly is a WooCommerce product variation swatches plugin that allows you to add color swatches to your product pages. With Swatchly, you can enable swatches for the shop, product list, and product details pages. There are three swatch types (label swatche, color swatche, image swatche), and the plugin supports multi-colored swatches.
-
-<strong>[HT Slider For Elementor](https://wordpress.org/plugins/ht-slider-for-elementor/)</strong>
-HT Slider For Elementor is a powerful and user-friendly slider addon for Elementor. You can customize the look and feel of your slider with HT Slider's custom styling options. You also have the option to display your slides by id and category. Plus, HT Slider For Elementor comes with custom design options for slider navigation and pagination, so you can easily control the look and feel of your slider.
+📢 **[Hashbar WP Notification Bar](https://wordpress.org/plugins/hashbar-wp-notification-bar/)** - Create unlimited notification bars for announcements, promotions, and alerts.
 
 == Need Help? ==
-Is there any feature that you want to get in this plugin?
-Needs assistance to use this plugin?
-Feel free to [Contact us](https://hasthemes.com/contact-us/)
+
+Have a feature request or need assistance?
+**[Contact Us](https://hasthemes.com/contact-us/)**
+
+== Frequently Asked Questions ==
+
+= Is HT Contact Form free? =
+Yes! HT Contact Form is completely free with no premium version required. All 38+ fields and 21+ integrations are included.
+
+= Does it work with my theme? =
+HT Contact Form works with any WordPress theme. Forms are fully responsive and can be styled to match your design.
+
+= Can I use it with Elementor or Gutenberg? =
+Absolutely. HT Contact Form includes both an Elementor widget and Gutenberg block for easy form embedding.
+
+= How do I prevent spam? =
+HT Contact Form includes multiple spam protection options: honeypot fields, minimum submission time, Google reCAPTCHA (v2 and v3), and hCaptcha.
+
+= Can users save and continue forms later? =
+Yes! The Save & Resume field lets users save their progress and receive a unique link to complete the form later.
+
+= Where are form submissions stored? =
+All submissions are stored in your WordPress database and accessible from the Entries page. You can search, filter, export, and delete entries.
+
+= Can I export form entries? =
+Yes. Export entries in CSV, Excel (XLSX), ODS, or JSON format with one click.
+
+= Does it integrate with my email marketing tool? =
+HT Contact Form integrates with 10+ email marketing platforms including Mailchimp, ActiveCampaign, GetResponse, MailerLite, Drip, Moosend, iContact, MailPoet, Constant Contact, and Brevo.
+
+= Can I connect forms to my CRM? =
+Yes. Native integrations are available for HubSpot, Zoho CRM, Insightly, and OnepageCRM. You can also use Zapier or webhooks to connect to any other CRM.
+
+= Is it GDPR compliant? =
+HT Contact Form includes GDPR consent fields, hCaptcha (privacy-focused), and stores data locally in your WordPress database.
+
+== Installation ==
+
+= From WordPress Dashboard =
+1. Go to Plugins > Add New
+2. Search for "HT Contact Form"
+3. Click Install, then Activate
+
+= Manual Installation =
+1. Download the plugin and unzip
+2. Upload the `ht-contactform` folder to `/wp-content/plugins/`
+3. Activate through the Plugins menu in WordPress
+
+== Screenshots ==
+
+1. Drag & Drop Form Builder - Create beautiful forms with 38+ fields
+2. Responsive Form Preview - Forms look perfect on any device
+3. 21+ Integrations - Connect to Mailchimp, HubSpot, Zapier & more
+4. Entry Management - Search, filter & export all submissions
+5. Entry Details - View complete submission information
+6. Email Notifications - Instant alerts with 5 email templates
+7. Conditional Logic - Show/hide fields based on user input
+8. Spam Protection - reCAPTCHA, hCaptcha & honeypot security
+9. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.8.0 - Date: 28-Jan-2026 =
+* Added: Form Styler settings for Signature field (border, background, pen color, clear button styling).
+* Added: Form Styler settings for Ratings field (star colors, sizes, gap).
+* Added: Form Styler settings for File Upload field (dropzone border, background, button styling).
+* Added: Form Styler settings for Section Break field (heading color/size/weight, divider styling).
+* Added: Form Styler settings for NPS field (number colors, backgrounds, size, radius).
+* Fixed: Duplicate Smart Tags button appearing in field settings.
+
+= Version: 2.7.0 - Date: 18-Jan-2026 =
+* Added: GetResponse Integration - Email marketing with campaigns and custom fields support.
+* Added: Drip Integration - Email marketing with subscriber management and tags.
+* Added: Moosend Integration - Email marketing with mailing lists and custom fields.
+* Added: iContact Integration - Email marketing with list management.
+* Added: MailPoet Integration - WordPress newsletter plugin integration.
+* Added: Notion Integration - Create database entries from form submissions.
+* Added: Trello Integration - Create cards in Trello boards from form data.
+* Added: HubSpot Integration - CRM with contacts, deals, and custom properties.
+* Added: Zoho CRM Integration - Full CRM with leads, contacts, deals, and accounts.
+
+= Version: 2.6.0 - Date: 06-Jan-2026 =
+* Added: Rich Text Editor field with Quill-based WYSIWYG and configurable toolbar options.
+* Added: Signature field for capturing handwritten signatures using canvas.
+* Added: Chained Select field for multi-level dependent dropdowns with CSV data import.
+* Added: Color Picker field for color selection.
+* Added: Net Promoter Score (NPS) field for 0-10 customer feedback rating.
+* Added: Action Hook field for developers to trigger custom WordPress actions.
+* Added: Section Break field for visual section dividers with title and description.
+* Added: Save & Resume field allowing users to save form progress and continue later.
+* Added: hCaptcha field as a privacy-focused alternative to reCAPTCHA.
+* Added: reCAPTCHA multi-version support with separate v2 and v3 configuration.
+* Added: Secret key verification for reCAPTCHA and hCaptcha in settings.
+* Improved: Captcha fields now disabled in builder until properly configured.
+* Fixed: Select dropdown freeze in form editor when flip positioning triggered.
+
+= Version: 2.5.1 - Date: 17-Nov-2025 =
+* Fixed: Select 2 not loading for post select field.
+
+= Version: 2.5.0 - Date: 05-Nov-2025 =
+* Added: Repeater Field - Create dynamic repeatable field groups.
+* Added: Post Selection Field - Select WordPress posts and custom post types via dropdown.
+* Added: OnepageCRM Integration - Full CRM integration with Contact, Deal, Note, and Action services.
 
 = Version: 2.4.1 - Date: 15-Sep-2025 =
 * Added: Rich text editor for the notification email body builder.
@@ -224,7 +282,7 @@ Feel free to [Contact us](https://hasthemes.com/contact-us/)
 = Version: 2.1.0 - Date: 13-May-2025 =
 * Added: New Entries page to view all form submissions in one place.
 * Added: Webhook integration to send form data to external URLs.
-* Added: Smart Tags support in the “Send To Email” field for dynamic email routing.
+* Added: Smart Tags support in the "Send To Email" field for dynamic email routing.
 * Improved: Data fetching performance across the plugin.
 * Fixed: Issue where notifications were not sent to multiple email addresses.
 * Fixed: JavaScript conflict with inputmask library and other plugins.
@@ -303,24 +361,3 @@ Feel free to [Contact us](https://hasthemes.com/contact-us/)
 
 = Version: 1.0.3 - Date: 29-Dec-2020 =
 * Capability With Latest WordPress.
-
-== Installation ==
-This section describes how to install the HT Contact Form Widget For Elementor Page Builder, Gutenberg block & Form Builder Plugins for WordPress get it working.
-
-= Install: =
-1. Go to the WordPress Dashboard "Add New Plugin" section.
-2. Search For "HT Contact Form".
-3. Install, then Activate it.
-
-= OR: =
-1. Unzip (if it is zipped) and Upload `ht-contactform` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-
-== Screenshots ==
-1. Form List
-2. Form Editor
-3. Form Preview
-4. Entries List
-5. Entry Details
-6. Global Settings
-

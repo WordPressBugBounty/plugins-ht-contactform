@@ -151,11 +151,7 @@ class Fields {
         return sprintf(
             '<div data-id="%1$s" class="%2$s" %3$s %4$s>
                 <div class="ht-form-elem-inner">
-                    <div class="ht-form-elem-head">
-                        %5$s
-                        %6$s
-                        %7$s
-                    </div>
+                    <div class="ht-form-elem-head">%5$s%6$s%7$s</div>
                     <div class="ht-form-elem-content">
                         %8$s
                         %9$s
@@ -993,6 +989,107 @@ class Fields {
     }
 
     /**
+     * Render post select field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_post_select($field_id, $settings) {
+        $post_type = !empty($settings['post_type']) ? sanitize_text_field($settings['post_type']) : 'post';
+        $post_status = !empty($settings['post_status']) ? sanitize_text_field($settings['post_status']) : 'publish';
+        $posts_per_page = !empty($settings['posts_per_page']) ? absint($settings['posts_per_page']) : 100;
+
+        // Validate post type exists
+        if (!post_type_exists($post_type)) {
+            $post_type = 'post';
+        }
+
+        // Query posts (ordered by date ascending - oldest first)
+        $args = [
+            'post_type' => $post_type,
+            'post_status' => $post_status,
+            'posts_per_page' => $posts_per_page,
+            'orderby' => 'date',
+            'order' => 'ASC',
+            'no_found_rows' => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+        ];
+
+        // Check cache first
+        $cache_key = 'ht_form_posts_' . md5(serialize($args));
+        $posts = get_transient($cache_key);
+
+        if (false === $posts) {
+            $posts = get_posts($args);
+            // Cache for 5 minutes
+            set_transient($cache_key, $posts, 5 * MINUTE_IN_SECONDS);
+        }
+
+        // Build select attributes
+        $attributes = [
+            'id' => $field_id,
+            'class' => 'ht-form-elem-select',
+            'required' => !empty($settings['required']) ? true : false,
+            'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
+            'data-searchable' => !empty($settings['searchable']) ? $settings['searchable'] : false,
+            'data-placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
+            'data-ht-select' => true,
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
+        ];
+
+        // Handle empty posts case
+        if (empty($posts)) {
+            $attributes['disabled'] = true;
+            $attributes_string = '';
+            foreach ($attributes as $key => $value) {
+                if ($value) {
+                    $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+                }
+            }
+            $post_type_obj = get_post_type_object($post_type);
+            $post_type_label = $post_type_obj ? $post_type_obj->labels->name : $post_type;
+            return sprintf(
+                '<select %s><option value="">%s</option></select>',
+                $attributes_string,
+                esc_html(sprintf(__('No %s available', 'ht-contactform'), strtolower($post_type_label)))
+            );
+        }
+
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if ($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+
+        // Build options
+        $options = '';
+        if (!empty($settings['placeholder'])) {
+            $options .= sprintf(
+                '<option value="" disabled selected>%s</option>',
+                esc_html($settings['placeholder'])
+            );
+        }
+
+        foreach ($posts as $post) {
+            $options .= sprintf(
+                '<option value="%s">%s</option>',
+                esc_attr($post->post_title),
+                esc_html($post->post_title)
+            );
+        }
+
+        return sprintf(
+            '<select %s>%s</select>',
+            $attributes_string,
+            $options
+        );
+    }
+
+    /**
      * Render select/dropdown field
      *
      * @param string $field_id Field ID
@@ -1548,12 +1645,18 @@ class Fields {
      * @return string
      */
     public function field_recaptcha($field_id, $settings) {
-        // Get global settings for reCAPTCHA
-        $recaptcha_version = isset($this->global_settings['captcha']['recaptcha_version']) ? 
-                            $this->global_settings['captcha']['recaptcha_version'] : 'reCAPTCHAv2';
-        $site_key = isset($this->global_settings['captcha']['recaptcha_site_key']) ? 
-                    $this->global_settings['captcha']['recaptcha_site_key'] : '';
-        
+        // Get active reCAPTCHA version
+        $active_version = $this->global_settings['captcha']['recaptcha_active_version'] ?? '';
+
+        // Determine site key based on active version
+        if ($active_version === 'v2') {
+            $site_key = $this->global_settings['captcha']['recaptcha_v2_site_key'] ?? '';
+        } elseif ($active_version === 'v3') {
+            $site_key = $this->global_settings['captcha']['recaptcha_v3_site_key'] ?? '';
+        } else {
+            return ''; // reCAPTCHA disabled
+        }
+
         if (empty($site_key)) {
             return '<div class="ht-form-recaptcha-error">' . esc_html__('reCAPTCHA site key is not configured.', 'ht-contactform') . '</div>';
         }
@@ -1565,7 +1668,7 @@ class Fields {
             'value' => '',
             'required' => true,
         ];
-        
+
         // Build attribute string
         $attributes_string = '';
         foreach ($attributes as $key => $value) {
@@ -1573,16 +1676,685 @@ class Fields {
                 $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
             }
         }
-        
+
         $output = '<input ' . $attributes_string . '/>';
-        
-        if ($recaptcha_version === 'reCAPTCHAv2') {
+
+        // Only render visible widget for v2
+        if ($active_version === 'v2') {
             $output .= sprintf(
                 '<div class="g-recaptcha" data-sitekey="%s"></div>',
                 esc_attr($site_key)
             );
         }
-        
+
+        return $output;
+    }
+
+    /**
+     * Render hCaptcha field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_hcaptcha($field_id, $settings) {
+        $site_key = isset($this->global_settings['captcha']['hcaptcha_site_key']) ?
+                    $this->global_settings['captcha']['hcaptcha_site_key'] : '';
+
+        if (empty($site_key)) {
+            return '<div class="ht-form-hcaptcha-error">' . esc_html__('hCaptcha site key is not configured.', 'ht-contactform') . '</div>';
+        }
+
+        $attributes = [
+            'type' => 'hidden',
+            'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : 'h-captcha-response',
+            'id' => $field_id,
+            'value' => '',
+            'required' => true,
+        ];
+
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if($value) {
+                $attributes_string .= sprintf(' %s="%s"', $key, esc_attr($value));
+            }
+        }
+
+        $output = '<input ' . $attributes_string . '/>';
+        $output .= sprintf(
+            '<div class="h-captcha" data-sitekey="%s"></div>',
+            esc_attr($site_key)
+        );
+
+        return $output;
+    }
+
+    /**
+     * Render repeater field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_repeater($field_id, $settings) {
+        $name_attribute = !empty($settings['name_attribute']) ? sanitize_text_field($settings['name_attribute']) : $field_id;
+        $sub_fields = !empty($settings['sub_fields']) ? $settings['sub_fields'] : [];
+        $add_button_text = !empty($settings['add_button_text']) ? esc_html($settings['add_button_text']) : __('Add Row', 'ht-contactform');
+        $remove_button_text = !empty($settings['remove_button_text']) ? esc_html($settings['remove_button_text']) : __('Remove', 'ht-contactform');
+        $row_label = !empty($settings['row_label']) ? esc_html($settings['row_label']) : __('Row {n}', 'ht-contactform');
+
+        $output = sprintf(
+            '<div class="ht-form-repeater-wrapper"
+                  data-row-label="%s"
+                  data-name="%s"
+                  data-remove-text="%s">',
+            esc_attr($row_label),
+            esc_attr($name_attribute),
+            esc_attr($remove_button_text)
+        );
+
+        // Render initial row
+        $output .= '<div class="ht-form-repeater-rows">';
+        $output .= $this->render_repeater_row($field_id, $name_attribute, $sub_fields, 0, $remove_button_text, $row_label);
+        $output .= '</div>';
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Render single repeater row
+     *
+     * @param string $field_id Field ID
+     * @param string $name_attribute Name attribute
+     * @param array $sub_fields Sub fields to render
+     * @param int $index Row index
+     * @param string $remove_button_text Remove button text
+     * @param string $row_label Row label template
+     * @param int $min_rows Minimum rows
+     * @return string
+     */
+    private function render_repeater_row($field_id, $name_attribute, $sub_fields, $index, $remove_button_text, $row_label) {
+        $row_number = $index + 1;
+        $label = str_replace('{n}', $row_number, $row_label);
+
+        $output = sprintf(
+            '<div class="ht-form-repeater-row" data-row-index="%s">',
+            esc_attr($index)
+        );
+
+        // Row content with sub-fields
+        $output .= '<div class="ht-form-repeater-row-content">';
+
+        foreach ($sub_fields as $sub_field) {
+            // Clone the sub-field and update its name attribute for array storage
+            $sub_field_settings = $sub_field['settings'];
+
+            // Compute sub-field name: use custom name_attribute, else label (sanitized), else id
+            $sub_field_name = '';
+            if (!empty($sub_field_settings['name_attribute'])) {
+                $sub_field_name = $sub_field_settings['name_attribute'];
+            } elseif (!empty($sub_field['name_attribute'])) {
+                $sub_field_name = $sub_field['name_attribute'];
+            } elseif (!empty($sub_field['label'])) {
+                $sub_field_name = strtolower(str_replace(' ', '_', trim($sub_field['label'])));
+            } else {
+                $sub_field_name = $sub_field['id'];
+            }
+
+            // Update name attribute to include repeater array notation
+            $sub_field_settings['name_attribute'] = "{$name_attribute}[{$index}][{$sub_field_name}]";
+
+            // Wrap sub-field in column div
+            $output .= '<div class="ht-form-repeater-column">';
+
+            // Render the sub-field
+            $classes = ['ht-form-elem', "ht-form-elem-{$sub_field['type']}"];
+            if (!empty($sub_field_settings['size'])) {
+                $classes[] = "ht-form-elem-{$sub_field_settings['size']}";
+            }
+
+            $sub_field_id = $sub_field['id'] . '_' . $index;
+            $output .= $this->render_field($classes, $sub_field['type'], $sub_field_id, $sub_field_settings, false);
+
+            $output .= '</div>'; // Close column
+        }
+
+        // Render button group with remove and add buttons
+        $output .= '<div class="ht-form-repeater-button-group">';
+
+        // Remove button (icon only)
+        $output .= sprintf(
+            '<button type="button" class="ht-form-repeater-remove-btn" data-row-index="%s" title="%s">
+                <span class="ht-form-repeater-btn-icon">×</span>
+            </button>',
+            esc_attr($index),
+            esc_attr($remove_button_text)
+        );
+
+        // Add button (icon only)
+        $output .= sprintf(
+            '<button type="button" class="ht-form-repeater-add-btn" data-field-id="%s" title="%s">
+                <span class="ht-form-repeater-btn-icon">+</span>
+            </button>',
+            esc_attr($field_id),
+            esc_attr(__('Add Row', 'ht-contactform'))
+        );
+
+        $output .= '</div>'; // Close button group
+
+        $output .= '</div>'; // Close row-content
+        $output .= '</div>'; // Close row
+
+        return $output;
+    }
+
+    /**
+     * Render Section Break field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_section_break($field_id, $settings) {
+        $heading = !empty($settings['heading']) ? $settings['heading'] : '';
+        $description = !empty($settings['description']) ? $settings['description'] : '';
+        $divider_style = !empty($settings['divider_style']) ? $settings['divider_style'] : 'solid';
+        $divider_color = !empty($settings['divider_color']) ? $settings['divider_color'] : '#dddddd';
+        $divider_width = isset($settings['divider_width']) ? intval($settings['divider_width']) : 3;
+        $alignment = !empty($settings['heading_alignment']) ? $settings['heading_alignment'] : 'left';
+        $field_class = !empty($settings['field_class']) ? $settings['field_class'] : '';
+
+        $classes = ['ht-form-section-break', 'ht-form-section-break-align-' . esc_attr($alignment)];
+        if ($field_class) {
+            $classes[] = esc_attr($field_class);
+        }
+
+        $output = '<div class="' . implode(' ', $classes) . '">';
+
+        if ($heading) {
+            $output .= '<h3 class="ht-form-section-break-heading">' . esc_html($heading) . '</h3>';
+        }
+
+        if ($description) {
+            $output .= '<div class="ht-form-section-break-description">' . wp_kses_post($description) . '</div>';
+        }
+
+        if ($divider_style !== 'none') {
+            $output .= '<div class="ht-form-section-break-divider" style="border-bottom-style: ' . esc_attr($divider_style) . '; border-bottom-color: ' . esc_attr($divider_color) . '; border-bottom-width: ' . esc_attr($divider_width) . 'px;"></div>';
+        }
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Render Action Hook field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_action_hook($field_id, $settings) {
+        $hook_name = !empty($settings['hook_name']) ? sanitize_key($settings['hook_name']) : 'custom_hook';
+        $full_hook_name = 'ht_form_' . $hook_name;
+
+        // Start output buffering to capture any hook output
+        ob_start();
+        do_action($full_hook_name, $field_id, $settings);
+        $hook_output = ob_get_clean();
+
+        // Only wrap in div if there's output
+        if (!empty($hook_output)) {
+            return "<div class=\"ht-form-action-hook\">$hook_output</div>";
+        }
+
+        return '';
+    }
+
+    /**
+     * Render Color Picker field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_color($field_id, $settings) {
+        $default_color = !empty($settings['default_color']) ? $settings['default_color'] : '#000000';
+        $name_attribute = !empty($settings['name_attribute']) ? $settings['name_attribute'] : 'color';
+        $required = !empty($settings['required']) ? true : false;
+        $required_message = !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '';
+
+        $attributes = [
+            'type' => 'color',
+            'id' => $field_id,
+            'class' => 'ht-form-elem-color-input',
+            'value' => esc_attr($default_color),
+            'name' => esc_attr($name_attribute),
+        ];
+
+        if ($required) {
+            $attributes['required'] = 'required';
+            $attributes['data-required-message'] = esc_attr($required_message);
+        }
+
+        // Build attribute string
+        $attributes_string = '';
+        foreach ($attributes as $key => $value) {
+            if ($value !== '' && $value !== false) {
+                $attributes_string .= sprintf(' %s="%s"', $key, $value);
+            }
+        }
+
+        return sprintf(
+            '<div class="ht-form-elem-color"><input%1$s /><span class="ht-form-elem-color-value">%2$s</span></div>',
+            $attributes_string,
+            esc_html($default_color)
+        );
+    }
+
+    /**
+     * Render Net Promoter Score field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_nps($field_id, $settings) {
+        $name_attribute = !empty($settings['name_attribute']) ? $settings['name_attribute'] : 'nps_score';
+        $required = !empty($settings['required']) ? true : false;
+        $required_message = !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '';
+        $show_labels = isset($settings['show_labels']) ? $settings['show_labels'] : true;
+        $low_label = !empty($settings['low_label']) ? $settings['low_label'] : __('Not at all likely', 'ht-contactform');
+        $high_label = !empty($settings['high_label']) ? $settings['high_label'] : __('Extremely likely', 'ht-contactform');
+        $color_coding = isset($settings['color_coding']) ? $settings['color_coding'] : true;
+
+        $output = '<div class="ht-form-elem-nps">';
+
+        // Labels
+        if ($show_labels) {
+            $output .= '<div class="ht-form-elem-nps-labels">';
+            $output .= '<span class="ht-form-elem-nps-label-low">' . esc_html($low_label) . '</span>';
+            $output .= '<span class="ht-form-elem-nps-label-high">' . esc_html($high_label) . '</span>';
+            $output .= '</div>';
+        }
+
+        // Scale options (0-10)
+        $output .= '<div class="ht-form-elem-nps-scale">';
+        for ($i = 0; $i <= 10; $i++) {
+            $color_class = '';
+            if ($color_coding) {
+                if ($i <= 6) {
+                    $color_class = 'ht-nps-detractor';
+                } elseif ($i <= 8) {
+                    $color_class = 'ht-nps-passive';
+                } else {
+                    $color_class = 'ht-nps-promoter';
+                }
+            }
+
+            $output .= '<label class="ht-form-elem-nps-option ' . esc_attr($color_class) . '">';
+            $output .= '<input type="radio" name="' . esc_attr($name_attribute) . '" value="' . $i . '"';
+            if ($required && $i === 0) {
+                $output .= ' required data-required-message="' . esc_attr($required_message) . '"';
+            }
+            $output .= ' />';
+            $output .= '<span class="ht-form-elem-nps-value">' . $i . '</span>';
+            $output .= '</label>';
+        }
+        $output .= '</div>';
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Rich Text Editor field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_richtext($field_id, $settings) {
+        $name_attribute = isset($settings['name_attribute']) ? $settings['name_attribute'] : 'richtext_content';
+        $placeholder = isset($settings['placeholder']) ? $settings['placeholder'] : '';
+        $required = isset($settings['required']) && $settings['required'];
+        $required_message = isset($settings['required_message']) ? $settings['required_message'] : __('This field is required', 'ht-contactform');
+        $toolbar = isset($settings['toolbar']) ? $settings['toolbar'] : 'basic';
+        $min_height = isset($settings['min_height']) ? absint($settings['min_height']) : 150;
+        $max_length = isset($settings['max_length']) && !empty($settings['max_length']) ? absint($settings['max_length']) : 0;
+        $size = isset($settings['size']) ? $settings['size'] : 'default';
+
+        $output = '<div class="ht-form-elem-richtext ht-form-elem-richtext-' . esc_attr($size) . '"';
+        $output .= ' data-placeholder="' . esc_attr($placeholder) . '"';
+        $output .= ' data-toolbar="' . esc_attr($toolbar) . '"';
+        $output .= ' data-min-height="' . esc_attr($min_height) . '"';
+        if ($max_length > 0) {
+            $output .= ' data-max-length="' . esc_attr($max_length) . '"';
+        }
+        $output .= '>';
+
+        // Editor container
+        $output .= '<div class="ht-form-elem-richtext-editor" style="min-height: ' . esc_attr($min_height) . 'px;"></div>';
+
+        // Hidden input for form submission
+        $output .= '<input type="hidden" name="' . esc_attr($name_attribute) . '"';
+        if ($required) {
+            $output .= ' required data-required-message="' . esc_attr($required_message) . '"';
+        }
+        $output .= ' class="ht-form-elem-richtext-value" />';
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Signature field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_signature($field_id, $settings) {
+        $name_attribute = isset($settings['name_attribute']) ? $settings['name_attribute'] : 'signature';
+        $required = isset($settings['required']) && $settings['required'];
+        $required_message = isset($settings['required_message']) ? $settings['required_message'] : __('This field is required', 'ht-contactform');
+        $canvas_width = isset($settings['canvas_width']) ? absint($settings['canvas_width']) : 0;
+        $canvas_height = isset($settings['canvas_height']) ? absint($settings['canvas_height']) : 200;
+        $pen_color = isset($settings['pen_color']) ? sanitize_hex_color($settings['pen_color']) : '#000000';
+        $background_color = isset($settings['background_color']) ? sanitize_hex_color($settings['background_color']) : '#ffffff';
+        $pen_width = isset($settings['pen_width']) ? absint($settings['pen_width']) : 2;
+        $show_clear_button = isset($settings['show_clear_button']) ? $settings['show_clear_button'] : true;
+        $clear_button_text = isset($settings['clear_button_text']) ? $settings['clear_button_text'] : __('Clear', 'ht-contactform');
+
+        $canvas_style = 'height: ' . esc_attr($canvas_height) . 'px;';
+        if ($canvas_width > 0) {
+            $canvas_style .= ' width: ' . esc_attr($canvas_width) . 'px;';
+        } else {
+            $canvas_style .= ' width: 100%;';
+        }
+
+        $output = '<div class="ht-form-elem-signature"';
+        $output .= ' data-pen-color="' . esc_attr($pen_color) . '"';
+        $output .= ' data-background-color="' . esc_attr($background_color) . '"';
+        $output .= ' data-pen-width="' . esc_attr($pen_width) . '"';
+        $output .= '>';
+
+        $output .= '<div class="ht-form-elem-signature-canvas-wrapper" style="background-color: ' . esc_attr($background_color) . ';">';
+        $output .= '<canvas class="ht-form-elem-signature-canvas" style="' . $canvas_style . '"></canvas>';
+        $output .= '</div>';
+
+        // Hidden input for storing signature data
+        $output .= '<input type="hidden" name="' . esc_attr($name_attribute) . '"';
+        if ($required) {
+            $output .= ' required data-required-message="' . esc_attr($required_message) . '"';
+        }
+        $output .= ' class="ht-form-elem-signature-value" />';
+
+        // Clear button
+        if ($show_clear_button) {
+            $output .= '<button type="button" class="ht-form-elem-signature-clear">' . esc_html($clear_button_text) . '</button>';
+        }
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Chained Select field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_chained_select($field_id, $settings) {
+        $name_attribute = isset($settings['name_attribute']) ? $settings['name_attribute'] : 'chained_select';
+        $required = isset($settings['required']) && $settings['required'];
+        $required_message = isset($settings['required_message']) ? $settings['required_message'] : __('This field is required', 'ht-contactform');
+        $default_placeholder = isset($settings['placeholder']) ? $settings['placeholder'] : __('Select...', 'ht-contactform');
+        $layout = isset($settings['layout']) ? $settings['layout'] : 'vertical';
+        $size = isset($settings['size']) ? $settings['size'] : 'default';
+
+        // Get stored data from settings (parsed CSV data stored directly)
+        $stored_data = isset($settings['chained_data_input']) ? $settings['chained_data_input'] : [];
+        $raw_data = isset($stored_data['chained_data']) ? $stored_data['chained_data'] : [];
+        $csv_labels = isset($stored_data['chained_labels']) ? $stored_data['chained_labels'] : [];
+        $level_count = isset($stored_data['level_count']) ? (int) $stored_data['level_count'] : 0;
+
+        // Build hierarchical data from flat data for JavaScript
+        $chained_data = $this->build_hierarchical_data($raw_data, $level_count);
+
+        // Default to 2 levels if no data
+        if ($level_count < 2) {
+            $level_count = 2;
+        }
+
+        $layout_class = $layout === 'horizontal' ? 'ht-form-elem-chained-select-horizontal' : 'ht-form-elem-chained-select-vertical';
+        $output = '<div class="ht-form-elem-chained-select ' . esc_attr($layout_class) . ' ht-form-elem-chained-select-' . esc_attr($size) . '" data-level-count="' . esc_attr($level_count) . '"';
+        if ($required) {
+            $output .= ' data-required="true"';
+        }
+        $output .= '>';
+
+        // Store chained data as JSON for JavaScript (includes hierarchical data for level 1->2)
+        $output .= '<script type="application/json" class="ht-form-chained-data">' . wp_json_encode($chained_data) . '</script>';
+
+        // Store raw data for multi-level filtering (level 3+)
+        $output .= '<script type="application/json" class="ht-form-chained-raw-data">' . wp_json_encode($raw_data) . '</script>';
+
+        // Store labels
+        $output .= '<script type="application/json" class="ht-form-chained-labels">' . wp_json_encode($csv_labels) . '</script>';
+
+        // Render all level selects dynamically
+        for ($level = 1; $level <= $level_count; $level++) {
+            $level_label = isset($csv_labels[$level - 1]) ? $csv_labels[$level - 1] : sprintf(__('Level %d', 'ht-contactform'), $level);
+            $placeholder = $default_placeholder;
+
+            $output .= '<div class="ht-form-elem-chained-select-level">';
+
+            if (!empty($level_label)) {
+                $output .= '<label class="ht-form-elem-chained-select-label">' . esc_html($level_label) . '</label>';
+            }
+
+            $output .= '<select name="' . esc_attr($name_attribute) . '[level_' . $level . ']" class="ht-form-elem-chained-select-input ht-form-elem-chained-level-' . $level . '" data-level="' . $level . '" data-placeholder="' . esc_attr($placeholder) . '"';
+
+            // Only first level is enabled initially, others are disabled
+            if ($level > 1) {
+                $output .= ' disabled';
+            }
+
+            // Required only on first level
+            if ($required && $level === 1) {
+                $output .= ' required data-required-message="' . esc_attr($required_message) . '"';
+            }
+
+            $output .= '>';
+            $output .= '<option value="">' . esc_html($placeholder) . '</option>';
+
+            // Only populate level 1 options, others are populated via JavaScript
+            if ($level === 1) {
+                foreach ($chained_data as $option) {
+                    $output .= '<option value="' . esc_attr($option['value']) . '">' . esc_html($option['label']) . '</option>';
+                }
+            }
+
+            $output .= '</select>';
+            $output .= '</div>';
+        }
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Build hierarchical data structure for chained selects
+     *
+     * @param array $raw_data Flat data rows
+     * @param int $level_count Number of levels
+     * @return array Hierarchical data for level 1
+     */
+    private function build_hierarchical_data($raw_data, $level_count) {
+        $grouped = [];
+
+        foreach ($raw_data as $row) {
+            $l1_value = $row['level_1'];
+            if (empty($l1_value)) {
+                continue;
+            }
+
+            if (!isset($grouped[$l1_value])) {
+                $grouped[$l1_value] = [
+                    'label' => $l1_value,
+                    'value' => $l1_value,
+                    'children' => [],
+                ];
+            }
+
+            // For 2-level, add level 2 as children
+            if ($level_count >= 2 && !empty($row['level_2'])) {
+                $l2_value = $row['level_2'];
+                $child_exists = false;
+
+                foreach ($grouped[$l1_value]['children'] as $child) {
+                    if ($child['value'] === $l2_value) {
+                        $child_exists = true;
+                        break;
+                    }
+                }
+
+                if (!$child_exists) {
+                    $grouped[$l1_value]['children'][] = [
+                        'label' => $l2_value,
+                        'value' => $l2_value,
+                    ];
+                }
+            }
+        }
+
+        return array_values($grouped);
+    }
+
+    /**
+     * Render Save & Resume field
+     *
+     * @param string $field_id Field ID
+     * @param array $settings Field settings
+     * @return string
+     */
+    public function field_save_resume($field_id, $settings) {
+        $button_text = isset($settings['save_button_text']) ? $settings['save_button_text'] : __('Save Progress', 'ht-contactform');
+        $button_style = isset($settings['save_button_style']) ? $settings['save_button_style'] : 'default';
+        $button_align = isset($settings['save_button_align']) ? $settings['save_button_align'] : 'left';
+        $expiry_days = isset($settings['draft_expiry_days']) ? absint($settings['draft_expiry_days']) : 30;
+        $show_email = isset($settings['show_email_option']) ? (bool) $settings['show_email_option'] : true;
+        $email_button_text = isset($settings['email_button_text']) ? $settings['email_button_text'] : __('Email me the link', 'ht-contactform');
+        $success_message = isset($settings['success_message']) ? $settings['success_message'] : __('Your progress has been saved!', 'ht-contactform');
+        $copy_link_text = isset($settings['copy_link_text']) ? $settings['copy_link_text'] : __('Copy Resume Link', 'ht-contactform');
+        $resume_notice_text = isset($settings['resume_notice_text']) ? $settings['resume_notice_text'] : __('Resuming your saved progress...', 'ht-contactform');
+        $field_class = isset($settings['field_class']) ? $settings['field_class'] : '';
+
+        $classes = ['ht-form-save-resume-wrapper', 'ht-form-elem-align-' . esc_attr($button_align)];
+        if ($field_class) {
+            $classes[] = esc_attr($field_class);
+        }
+
+        $output = '<div class="' . implode(' ', $classes) . '"';
+        $output .= ' data-expiry="' . esc_attr($expiry_days) . '"';
+        $output .= ' data-show-email="' . esc_attr($show_email ? 'true' : 'false') . '"';
+        $output .= ' data-success-message="' . esc_attr($success_message) . '"';
+        $output .= ' data-copy-link-text="' . esc_attr($copy_link_text) . '"';
+        $output .= ' data-email-button-text="' . esc_attr($email_button_text) . '"';
+        $output .= ' data-resume-notice-text="' . esc_attr($resume_notice_text) . '"';
+        $output .= '>';
+
+        // Save button
+        $output .= '<button type="button" class="ht-form-save-btn ht-form-save-btn-' . esc_attr($button_style) . '">';
+        $output .= '<span class="ht-form-save-btn-text">' . esc_html($button_text) . '</span>';
+        $output .= '<span class="ht-form-save-btn-loading" style="display: none;">';
+        $output .= '<svg class="ht-form-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></path></svg>';
+        $output .= '</span>';
+        $output .= '</button>';
+
+        // Modal template for success (inside wrapper so JS can find it)
+        $output .= $this->render_save_resume_modal($settings);
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Render the save resume success modal template
+     *
+     * @param array $settings Field settings
+     * @return string
+     */
+    private function render_save_resume_modal($settings) {
+        $success_message = isset($settings['success_message']) ? $settings['success_message'] : __('Your progress has been saved!', 'ht-contactform');
+        $copy_link_text = isset($settings['copy_link_text']) ? $settings['copy_link_text'] : __('Copy Resume Link', 'ht-contactform');
+        $show_email = isset($settings['show_email_option']) ? (bool) $settings['show_email_option'] : true;
+        $email_button_text = isset($settings['email_button_text']) ? $settings['email_button_text'] : __('Email me the link', 'ht-contactform');
+
+        $output = '<div class="ht-form-save-modal" style="display: none;">';
+        $output .= '<div class="ht-form-save-modal-overlay"></div>';
+        $output .= '<div class="ht-form-save-modal-content">';
+
+        // Close button
+        $output .= '<button type="button" class="ht-form-save-modal-close" aria-label="' . esc_attr__('Close', 'ht-contactform') . '">&times;</button>';
+
+        // Success icon
+        $output .= '<div class="ht-form-save-modal-icon">';
+        $output .= '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+        $output .= '</div>';
+
+        // Success message
+        $output .= '<h3 class="ht-form-save-modal-title">' . esc_html($success_message) . '</h3>';
+
+        // Resume link section
+        $output .= '<div class="ht-form-save-modal-link-section">';
+        $output .= '<input type="text" class="ht-form-save-modal-link-input" readonly />';
+        $output .= '<button type="button" class="ht-form-save-modal-copy-btn">';
+        $output .= '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        $output .= '<span>' . esc_html($copy_link_text) . '</span>';
+        $output .= '</button>';
+        $output .= '</div>';
+
+        // Email section (if enabled)
+        if ($show_email) {
+            $output .= '<div class="ht-form-save-modal-email-section">';
+            $output .= '<p class="ht-form-save-modal-email-divider">' . esc_html__('or', 'ht-contactform') . '</p>';
+            $output .= '<div class="ht-form-save-modal-email-form">';
+            $output .= '<input type="email" class="ht-form-save-modal-email-input" placeholder="' . esc_attr__('Enter your email', 'ht-contactform') . '" />';
+            $output .= '<button type="button" class="ht-form-save-modal-email-btn">';
+            $output .= '<span class="ht-form-btn-text">' . esc_html($email_button_text) . '</span>';
+            $output .= '<span class="ht-form-btn-loading" style="display: none;">';
+            $output .= '<svg class="ht-form-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></path></svg>';
+            $output .= '</span>';
+            $output .= '</button>';
+            $output .= '</div>';
+            $output .= '<p class="ht-form-save-modal-email-status"></p>';
+            $output .= '</div>';
+        }
+
+        // Expiry notice
+        $output .= '<p class="ht-form-save-modal-expiry">';
+        $output .= sprintf(
+            /* translators: %d: Number of days */
+            esc_html__('This link will expire in %d days.', 'ht-contactform'),
+            isset($settings['draft_expiry_days']) ? absint($settings['draft_expiry_days']) : 30
+        );
+        $output .= '</p>';
+
+        $output .= '</div>'; // .ht-form-save-modal-content
+        $output .= '</div>'; // .ht-form-save-modal
+
         return $output;
     }
 }

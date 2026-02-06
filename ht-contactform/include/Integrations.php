@@ -13,6 +13,16 @@ use HTContactForm\Integrations\SupportGenix;
 use HTContactForm\Integrations\ConstantContact;
 use HTContactForm\Integrations\Brevo;
 use HTContactForm\Integrations\Insightly;
+use HTContactForm\Integrations\OnepageCRM;
+use HTContactForm\Integrations\GetResponse;
+use HTContactForm\Integrations\Drip;
+use HTContactForm\Integrations\Moosend;
+use HTContactForm\Integrations\iContact;
+use HTContactForm\Integrations\MailPoet;
+use HTContactForm\Integrations\Notion;
+use HTContactForm\Integrations\Trello;
+use HTContactForm\Integrations\HubSpot;
+use HTContactForm\Integrations\ZohoCRM;
 
 /**
  * Integrations Class
@@ -72,6 +82,16 @@ class Integrations {
         $this->constantcontact($form, $form_data, $meta);
         $this->brevo($form, $form_data, $meta);
         $this->insightly($form, $form_data, $meta);
+        $this->onepagecrm($form, $form_data, $meta);
+        $this->getresponse($form, $form_data, $meta);
+        $this->drip($form, $form_data, $meta);
+        $this->moosend($form, $form_data, $meta);
+        $this->icontact($form, $form_data, $meta);
+        $this->mailpoet($form, $form_data, $meta);
+        $this->notion($form, $form_data, $meta);
+        $this->trello($form, $form_data, $meta);
+        $this->hubspot($form, $form_data, $meta);
+        $this->zohocrm($form, $form_data, $meta);
         // Allow other integrations to be processed
         do_action('ht_form/process_custom_integrations', $form, $form_data, $meta);
     }
@@ -585,8 +605,511 @@ class Integrations {
     }
 
     /**
+     * Send data to OnepageCRM
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
+    public function onepagecrm($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            // Check if OnepageCRM integration is enabled globally
+            if (empty($this->integrations_settings['onepagecrm']['enabled']) ||
+                empty($this->integrations_settings['onepagecrm']['api_key']) ||
+                empty($this->integrations_settings['onepagecrm']['user_id'])) {
+                return;
+            }
+
+            // Get form-specific integrations
+            $integration_list = $this->get_form_integrations($form['id'], 'onepagecrm');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            // Process each OnepageCRM integration
+            $onepagecrm = OnepageCRM::get_instance(
+                $this->integrations_settings['onepagecrm']['api_key'],
+                $this->integrations_settings['onepagecrm']['user_id']
+            );
+
+            foreach ($integration_list as $integration) {
+                if($integration['service'] === 'contact') {
+                    $result = $onepagecrm->create_contact((object) $integration, $form, $form_data, $meta);
+                }
+                if($integration['service'] === 'deal') {
+                    $result = $onepagecrm->create_deal((object) $integration, $form, $form_data);
+                }
+                if($integration['service'] === 'note') {
+                    $result = $onepagecrm->add_note((object) $integration, $form, $form_data);
+                }
+                if($integration['service'] === 'action') {
+                    $result = $onepagecrm->create_action((object) $integration, $form, $form_data);
+                }
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form OnepageCRM Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form OnepageCRM Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle GetResponse integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Submission metadata
+     * @return void
+     */
+    public function getresponse($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['getresponse']['enabled']) ||
+                empty($this->integrations_settings['getresponse']['api_key'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'getresponse');
+
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $getresponse = GetResponse::get_instance(
+                $this->integrations_settings['getresponse']['api_key']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $getresponse->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form GetResponse Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form GetResponse Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle Drip integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Submission metadata
+     * @return void
+     */
+    public function drip($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['drip']['enabled']) ||
+                empty($this->integrations_settings['drip']['api_key'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'drip');
+
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $drip = Drip::get_instance(
+                $this->integrations_settings['drip']['api_key']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $drip->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Drip Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Drip Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle Moosend integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Submission metadata
+     * @return void
+     */
+    public function moosend($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['moosend']['api_key'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'moosend');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $moosend = Moosend::get_instance(
+                $this->integrations_settings['moosend']['api_key']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $moosend->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Moosend Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Moosend Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Process iContact integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
+    public function icontact($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            // Check if iContact credentials are configured
+            if (empty($this->integrations_settings['icontact']['app_id']) ||
+                empty($this->integrations_settings['icontact']['username']) ||
+                empty($this->integrations_settings['icontact']['password']) ||
+                empty($this->integrations_settings['icontact']['account_id']) ||
+                empty($this->integrations_settings['icontact']['client_folder_id'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'icontact');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $icontact = iContact::get_instance([
+                'app_id'           => $this->integrations_settings['icontact']['app_id'],
+                'username'         => $this->integrations_settings['icontact']['username'],
+                'password'         => $this->integrations_settings['icontact']['password'],
+                'account_id'       => $this->integrations_settings['icontact']['account_id'],
+                'client_folder_id' => $this->integrations_settings['icontact']['client_folder_id'],
+            ]);
+
+            foreach ($integration_list as $integration) {
+                $result = $icontact->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form iContact Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form iContact Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Send data to MailPoet
+     *
+     * @param array $form Form data
+     * @param array $form_data Form submission data
+     * @param array $meta Meta data
+     */
+    public function mailpoet($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            // Check if MailPoet is enabled in global settings
+            if (empty($this->integrations_settings['mailpoet'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'mailpoet');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $mailpoet = MailPoet::get_instance();
+
+            // Check if MailPoet plugin is active
+            if (!$mailpoet->is_active()) {
+                error_log('HT Contact Form: MailPoet plugin is not installed or activated.');
+                return;
+            }
+
+            foreach ($integration_list as $integration) {
+                $result = $mailpoet->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form MailPoet Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form MailPoet Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle Notion integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Meta data
+     */
+    public function notion($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['notion']['api_key'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'notion');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $notion = Notion::get_instance(
+                $this->integrations_settings['notion']['api_key']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $notion->create_page((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Notion Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Notion Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle Trello integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Meta data
+     */
+    public function trello($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['trello']['api_key']) ||
+                empty($this->integrations_settings['trello']['api_token'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'trello');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $trello = Trello::get_instance(
+                $this->integrations_settings['trello']['api_key'],
+                $this->integrations_settings['trello']['api_token']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $trello->create_card((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Trello Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Trello Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle HubSpot integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Submission metadata
+     * @return void
+     */
+    public function hubspot($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['hubspot']['enabled']) ||
+                empty($this->integrations_settings['hubspot']['access_token'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'hubspot');
+
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $hubspot = HubSpot::get_instance(
+                $this->integrations_settings['hubspot']['access_token']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $hubspot->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form HubSpot Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form HubSpot Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Send data to Zoho Flow
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Submitted form data
+     * @param array $meta Entry metadata
+     * @return void
+     */
+    public function zohocrm($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            // Check if Zoho CRM integration is enabled globally
+            if (empty($this->integrations_settings['zohocrm']['enabled']) ||
+                empty($this->integrations_settings['zohocrm']['client_id']) ||
+                empty($this->integrations_settings['zohocrm']['client_secret'])) {
+                return;
+            }
+
+            // Get form-specific integrations
+            $integration_list = $this->get_form_integrations($form['id'], 'zohocrm');
+            if (empty($integration_list)) {
+                return;
+            }
+
+            // Process each Zoho CRM integration
+            $zohocrm = ZohoCRM::get_instance(
+                $this->integrations_settings['zohocrm']['client_id'],
+                $this->integrations_settings['zohocrm']['client_secret'],
+                $this->integrations_settings['zohocrm']['data_center'] ?? 'com'
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $zohocrm->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Zoho CRM Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Zoho CRM Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
      * Get form-specific integrations of a specific type
-     * 
+     *
      * @param int $form_id Form ID
      * @param string $integration_type Integration type (webhook, mailchimp, slack)
      * @return array Array of enabled integrations of the specified type
@@ -596,12 +1119,12 @@ class Integrations {
         if (empty($integration_list)) {
             return [];
         }
-        
+
         $decoded_list = json_decode($integration_list, true);
         if (!is_array($decoded_list)) {
             return [];
         }
-        
+
         return array_filter($decoded_list, function($integration) use ($integration_type) {
             return $integration['type'] === $integration_type && $integration['enabled'];
         });

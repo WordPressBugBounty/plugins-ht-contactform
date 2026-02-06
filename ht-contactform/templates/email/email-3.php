@@ -60,17 +60,75 @@ $footer_text = $args['footer_text'] ?? '';
                                     $field_type = $current_field ? $current_field['type'] : '';
                                     $field_admin_label = $current_field ? $current_field['settings']['admin_label'] : '';
                                     $display_value = $value;
-                                    
+
                                     if(is_array($value) && !empty($value)) {
-                                        if($field_type === 'name' || $field_type === 'address') {
+                                        // Handle chained_select - join level values with " > "
+                                        if($field_type === 'chained_select') {
+                                            $level_values = array_filter(array_values($value));
+                                            $display_value = implode(' > ', $level_values);
+                                        }
+                                        // Check if it's a repeater field (array of objects)
+                                        else if($field_type === 'repeater' && isset($value[0]) && is_array($value[0])) {
+                                            $repeater_html = '<table style="width: 100%; border-collapse: collapse; margin-top: 5px;">';
+                                            $repeater_html .= '<thead><tr style="background-color: #f0f0f0;">';
+
+                                            // Add column headers from first row
+                                            $first_row = $value[0];
+                                            foreach (array_keys($first_row) as $col_key) {
+                                                $repeater_html .= sprintf('<th style="padding: 6px; border: 1px solid #ddd; font-size: 11px; text-align: left;">%s</th>', esc_html(ucfirst(str_replace('_', ' ', $col_key))));
+                                            }
+                                            $repeater_html .= '</tr></thead><tbody>';
+
+                                            // Add data rows
+                                            foreach ($value as $row_index => $row_data) {
+                                                $repeater_html .= '<tr>';
+                                                foreach ($row_data as $cell_value) {
+                                                    if (is_array($cell_value)) {
+                                                        $cell_value = implode(', ', $cell_value);
+                                                    }
+                                                    $repeater_html .= sprintf('<td style="padding: 6px; border: 1px solid #ddd; font-size: 12px;">%s</td>', esc_html($cell_value));
+                                                }
+                                                $repeater_html .= '</tr>';
+                                            }
+                                            $repeater_html .= '</tbody></table>';
+                                            $display_value = $repeater_html;
+                                        } else if($field_type === 'name' || $field_type === 'address') {
                                             $display_value = implode(' ', $value);
                                         } else {
                                             $display_value = sprintf('<ul style="margin: 0; padding: 0;"><li>%s</li></ul>', implode('</li><li>', $value));
                                         }
                                     }
-                                    
+
                                     if($field_type === 'textarea') {
                                         $display_value = nl2br(esc_html($value));
+                                    }
+
+                                    // Flag for pre-sanitized content (richtext)
+                                    $is_pre_sanitized = false;
+
+                                    if($field_type === 'richtext') {
+                                        // Rich text is already sanitized in Submission.php, output as-is
+                                        $display_value = $value;
+                                        $is_pre_sanitized = true;
+                                    }
+
+                                    if($field_type === 'signature' && !empty($value)) {
+                                        // Render signature as image
+                                        $display_value = '<img src="' . esc_url($value) . '" alt="' . esc_attr__('Signature', 'ht-contactform') . '" style="max-width: 300px; height: auto; border: 1px solid #EEEEEE; border-radius: 4px;" />';
+                                    }
+
+                                    if(($field_type === 'file_upload' || $field_type === 'image_upload') && !empty($value)) {
+                                        // Render file/image uploads as links with filename as text
+                                        if(is_array($value)) {
+                                            $links = array_map(function($url) {
+                                                $filename = basename(wp_parse_url($url, PHP_URL_PATH));
+                                                return '<a href="' . esc_url($url) . '" target="_blank" style="color: #111111; text-decoration: underline;">' . esc_html($filename) . '</a>';
+                                            }, $value);
+                                            $display_value = implode('<br>', $links);
+                                        } else {
+                                            $filename = basename(wp_parse_url($value, PHP_URL_PATH));
+                                            $display_value = '<a href="' . esc_url($value) . '" target="_blank" style="color: #111111; text-decoration: underline;">' . esc_html($filename) . '</a>';
+                                        }
                                     }
 
                                     if($field_type === 'ratings') {
@@ -90,7 +148,14 @@ $footer_text = $args['footer_text'] ?? '';
                                             <?php echo esc_html($field_admin_label); ?>
                                         </th>
                                         <td style="padding: 12px 0; border-top: 1px solid #EEEEEE; vertical-align: top; color: #111111; font-size: 14px;">
-                                            <?php echo wp_kses_post($display_value); ?>
+                                            <?php
+                                            if ($is_pre_sanitized) {
+                                                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                echo $display_value;
+                                            } else {
+                                                echo wp_kses_post($display_value);
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                     <?php

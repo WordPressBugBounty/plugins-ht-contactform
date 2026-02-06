@@ -47,6 +47,11 @@ class Styler {
             $this->get_terms_conditions_settings(),
             $this->get_date_time_settings(),
             $this->get_submit_button_settings(),
+            $this->get_signature_settings(),
+            $this->get_ratings_settings(),
+            $this->get_file_upload_settings(),
+            $this->get_section_break_settings(),
+            $this->get_nps_settings(),
         ));
     }
 
@@ -1704,6 +1709,327 @@ class Styler {
                 'type' => 'color',
                 'value' => '#2563eb',
                 'group' => 'submit_button',
+            ]),
+        ]);
+    }
+
+    public function get_signature_settings(): array {
+        return apply_filters('ht_form_styler_signature_settings', [
+            self::$field->create([
+                'id' => 'signature_border_color',
+                'label' => __('Border Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#dddddd',
+                'group' => 'signature',
+            ]),
+            self::$field->create([
+                'id' => 'signature_bg_color',
+                'label' => __('Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'signature',
+            ]),
+            self::$field->create([
+                'id' => 'signature_pen_color',
+                'label' => __('Pen Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#000000',
+                'group' => 'signature',
+            ]),
+            self::$field->create([
+                'id' => 'signature_clear_btn_color',
+                'label' => __('Clear Button Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'signature',
+            ]),
+            self::$field->create([
+                'id' => 'signature_clear_btn_bg',
+                'label' => __('Clear Button Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ef4444',
+                'group' => 'signature',
+            ]),
+            self::$field->create([
+                'id' => 'signature_radius',
+                'label' => __('Radius', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'signature',
+            ]),
+        ]);
+    }
+
+    public function get_ratings_settings(): array {
+        return apply_filters('ht_form_styler_ratings_settings', [
+            self::$field->create([
+                'id' => 'ratings_color',
+                'label' => __('Star Color (Inactive)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#d1d5db',
+                'group' => 'ratings',
+            ]),
+            self::$field->create([
+                'id' => 'ratings_color_active',
+                'label' => __('Star Color (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#fbbf24',
+                'group' => 'ratings',
+            ]),
+            self::$field->create([
+                'id' => 'ratings_size',
+                'label' => __('Star Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '24',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'ratings',
+            ]),
+            self::$field->create([
+                'id' => 'ratings_size_sm',
+                'label' => __('Star Size (Small)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '20',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'ratings',
+            ]),
+            self::$field->create([
+                'id' => 'ratings_size_lg',
+                'label' => __('Star Size (Large)', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '28',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'ratings',
+            ]),
+            self::$field->create([
+                'id' => 'ratings_gap',
+                'label' => __('Gap Between Stars', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'ratings',
+            ]),
+        ]);
+    }
+
+    public function get_file_upload_settings(): array {
+        return apply_filters('ht_form_styler_file_upload_settings', [
+            self::$field->create([
+                'id' => 'file_upload_border_color',
+                'label' => __('Dropzone Border Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#dddddd',
+                'group' => 'file_upload',
+            ]),
+            self::$field->create([
+                'id' => 'file_upload_border_style',
+                'label' => __('Dropzone Border Style', 'ht-contactform'),
+                'type' => 'select',
+                'value' => 'dashed',
+                'options' => [
+                    [
+                        'value' => 'solid',
+                        'label' => __('Solid', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dashed',
+                        'label' => __('Dashed', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dotted',
+                        'label' => __('Dotted', 'ht-contactform'),
+                    ],
+                ],
+                'group' => 'file_upload',
+            ]),
+            self::$field->create([
+                'id' => 'file_upload_bg_color',
+                'label' => __('Dropzone Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#f9fafb',
+                'group' => 'file_upload',
+            ]),
+            self::$field->create([
+                'id' => 'file_upload_btn_color',
+                'label' => __('Button Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'file_upload',
+            ]),
+            self::$field->create([
+                'id' => 'file_upload_btn_bg',
+                'label' => __('Button Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'file_upload',
+            ]),
+            self::$field->create([
+                'id' => 'file_upload_radius',
+                'label' => __('Radius', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'file_upload',
+            ]),
+        ]);
+    }
+
+    public function get_section_break_settings(): array {
+        return apply_filters('ht_form_styler_section_break_settings', [
+            self::$field->create([
+                'id' => 'section_break_heading_color',
+                'label' => __('Heading Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#111827',
+                'group' => 'section_break',
+            ]),
+            self::$field->create([
+                'id' => 'section_break_heading_size',
+                'label' => __('Heading Font Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '18',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'section_break',
+            ]),
+            self::$field->create([
+                'id' => 'section_break_heading_weight',
+                'label' => __('Heading Font Weight', 'ht-contactform'),
+                'type' => 'select',
+                'value' => '600',
+                'options' => [
+                    [
+                        'label' => __('100', 'ht-contactform'),
+                        'value' => '100',
+                    ],
+                    [
+                        'label' => __('200', 'ht-contactform'),
+                        'value' => '200',
+                    ],
+                    [
+                        'label' => __('300', 'ht-contactform'),
+                        'value' => '300',
+                    ],
+                    [
+                        'label' => __('400', 'ht-contactform'),
+                        'value' => '400',
+                    ],
+                    [
+                        'label' => __('500', 'ht-contactform'),
+                        'value' => '500',
+                    ],
+                    [
+                        'label' => __('600', 'ht-contactform'),
+                        'value' => '600',
+                    ],
+                    [
+                        'label' => __('700', 'ht-contactform'),
+                        'value' => '700',
+                    ],
+                    [
+                        'label' => __('800', 'ht-contactform'),
+                        'value' => '800',
+                    ],
+                    [
+                        'label' => __('900', 'ht-contactform'),
+                        'value' => '900',
+                    ],
+                ],
+                'group' => 'section_break',
+            ]),
+            self::$field->create([
+                'id' => 'section_break_divider_color',
+                'label' => __('Divider Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#e5e7eb',
+                'group' => 'section_break',
+            ]),
+            self::$field->create([
+                'id' => 'section_break_divider_width',
+                'label' => __('Divider Width', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '1',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'section_break',
+            ]),
+            self::$field->create([
+                'id' => 'section_break_divider_style',
+                'label' => __('Divider Style', 'ht-contactform'),
+                'type' => 'select',
+                'value' => 'solid',
+                'options' => [
+                    [
+                        'value' => 'solid',
+                        'label' => __('Solid', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dashed',
+                        'label' => __('Dashed', 'ht-contactform'),
+                    ],
+                    [
+                        'value' => 'dotted',
+                        'label' => __('Dotted', 'ht-contactform'),
+                    ],
+                ],
+                'group' => 'section_break',
+            ]),
+        ]);
+    }
+
+    public function get_nps_settings(): array {
+        return apply_filters('ht_form_styler_nps_settings', [
+            self::$field->create([
+                'id' => 'nps_color',
+                'label' => __('Number Color', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#374151',
+                'group' => 'nps',
+            ]),
+            self::$field->create([
+                'id' => 'nps_color_active',
+                'label' => __('Number Color (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#ffffff',
+                'group' => 'nps',
+            ]),
+            self::$field->create([
+                'id' => 'nps_bg_color',
+                'label' => __('Background', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#f3f4f6',
+                'group' => 'nps',
+            ]),
+            self::$field->create([
+                'id' => 'nps_bg_color_active',
+                'label' => __('Background (Active)', 'ht-contactform'),
+                'type' => 'color',
+                'value' => '#2563eb',
+                'group' => 'nps',
+            ]),
+            self::$field->create([
+                'id' => 'nps_size',
+                'label' => __('Number Size', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '14',
+                'suffix' => 'px',
+                'min' => '10',
+                'group' => 'nps',
+            ]),
+            self::$field->create([
+                'id' => 'nps_radius',
+                'label' => __('Radius', 'ht-contactform'),
+                'type' => 'number',
+                'value' => '4',
+                'suffix' => 'px',
+                'min' => '0',
+                'group' => 'nps',
             ]),
         ]);
     }

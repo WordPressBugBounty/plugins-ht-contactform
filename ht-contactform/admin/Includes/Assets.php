@@ -17,6 +17,18 @@ class Assets {
     }
     public function __construct() {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+        add_filter('upload_mimes', [$this, 'allow_csv_uploads']);
+    }
+
+    /**
+     * Allow CSV file uploads in WordPress Media Library
+     *
+     * @param array $mimes Allowed mime types
+     * @return array Modified mime types
+     */
+    public function allow_csv_uploads($mimes) {
+        $mimes['csv'] = 'text/csv';
+        return $mimes;
     }
 
     /**
@@ -38,6 +50,9 @@ class Assets {
         if ('toplevel_page_htcontact-form' === $hook) {
             wp_enqueue_style('htcontact-form-admin-styles');
             wp_enqueue_style('ht-form');
+
+            // Enqueue WordPress Media Library for file uploads (CSV, etc.)
+            wp_enqueue_media();
 
             $form_config = FormConfig::get_instance();
             $welcome_config = Welcome::get_instance();

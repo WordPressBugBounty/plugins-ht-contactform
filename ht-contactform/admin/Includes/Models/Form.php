@@ -842,6 +842,7 @@ class Form {
                 
             case 'repeater':
             case 'cl_repeater':
+            case 'repeater_sub_fields':
                 return $this->sanitize_recursive($value);
                 
             case 'select':
@@ -880,7 +881,46 @@ class Form {
 
             case 'richtext':
                 return wp_kses_post($value);
-                
+
+            case 'chained_data':
+                // Sanitize chained select data stored as object
+                if (!is_array($value)) {
+                    return [];
+                }
+                $sanitized = [];
+
+                // Sanitize data_source (file or url)
+                $sanitized['data_source'] = isset($value['data_source']) && in_array($value['data_source'], ['file', 'url'])
+                    ? $value['data_source']
+                    : 'file';
+
+                // Sanitize remote_url
+                $sanitized['remote_url'] = isset($value['remote_url']) ? esc_url_raw($value['remote_url']) : '';
+
+                // Sanitize chained_data array (array of row objects)
+                if (isset($value['chained_data']) && is_array($value['chained_data'])) {
+                    $sanitized['chained_data'] = array_map(function($row) {
+                        if (!is_array($row)) {
+                            return [];
+                        }
+                        return array_map('sanitize_text_field', $row);
+                    }, $value['chained_data']);
+                } else {
+                    $sanitized['chained_data'] = [];
+                }
+
+                // Sanitize chained_labels array
+                if (isset($value['chained_labels']) && is_array($value['chained_labels'])) {
+                    $sanitized['chained_labels'] = array_map('sanitize_text_field', $value['chained_labels']);
+                } else {
+                    $sanitized['chained_labels'] = [];
+                }
+
+                // Sanitize level_count
+                $sanitized['level_count'] = isset($value['level_count']) ? absint($value['level_count']) : 0;
+
+                return $sanitized;
+
             default:
                 return sanitize_text_field($value);
         }

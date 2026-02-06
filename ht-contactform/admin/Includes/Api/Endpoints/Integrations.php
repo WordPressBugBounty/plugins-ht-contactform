@@ -7,6 +7,14 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Mailchimp;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ActiveCampaign;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\MailerLite;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ConstantContact;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\GetResponse;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Drip;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Moosend;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\iContact;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Trello;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\HubSpot;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Notion;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\OnepageCRM;
 
 use HTContactForm\Integrations\Insightly;
 use HTContactForm\Integrations\Brevo;
@@ -254,7 +262,7 @@ class Integrations {
         update_option(self::OPTION_NAME, $sanitize_data);
         
         // Clear any caches
-        wp_cache_delete('ht_form_integrations_settings', 'options');
+        wp_cache_delete('ht_form_integrations', 'options');
         
         return new WP_REST_Response($sanitize_data, 200);
     }
@@ -279,7 +287,7 @@ class Integrations {
         }
 
         // Check if integration type is supported
-        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact', 'brevo', 'insightly'];
+        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact', 'brevo', 'insightly', 'onepagecrm', 'getresponse', 'drip', 'moosend', 'icontact', 'mailpoet', 'notion', 'trello', 'hubspot', 'zohocrm'];
         if (!in_array($integration, $supported_integrations)) {
             return new WP_Error(
                 'unsupported_integration',
@@ -333,12 +341,212 @@ class Integrations {
         if ($integration === 'constantcontact') {
             $constantcontact = new ConstantContact($settings['client_id'], $settings['client_secret']);
             $result = $constantcontact->verify();
-            
+
             if (is_wp_error($result)) {
                 return $result;
             }
         }
-        
+
+        // Verify OnepageCRM User ID & API key
+        if ($integration === 'onepagecrm') {
+            if (empty($settings['user_id']) || empty($settings['api_key'])) {
+                return new WP_Error(
+                    'missing_credentials',
+                    esc_html__('User ID and API key are required for OnepageCRM integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $onepagecrm = OnepageCRM::get_instance();
+            $result = $onepagecrm->verify_credentials($settings['api_key'], $settings['user_id']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify GetResponse API key
+        if ($integration === 'getresponse') {
+            if (empty($settings['api_key'])) {
+                return new WP_Error(
+                    'missing_api_key',
+                    esc_html__('API key is required for GetResponse integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $getresponse = GetResponse::get_instance();
+            $result = $getresponse->verify($settings['api_key']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Drip API key
+        if ($integration === 'drip') {
+            if (empty($settings['api_key'])) {
+                return new WP_Error(
+                    'missing_api_key',
+                    esc_html__('API key is required for Drip integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $drip = Drip::get_instance();
+            $result = $drip->verify($settings['api_key']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Moosend API key
+        if ($integration === 'moosend') {
+            if (empty($settings['api_key'])) {
+                return new WP_Error(
+                    'missing_api_key',
+                    esc_html__('API key is required for Moosend integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $moosend = Moosend::get_instance();
+            $result = $moosend->verify($settings['api_key']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify iContact credentials
+        if ($integration === 'icontact') {
+            if (empty($settings['app_id']) || empty($settings['username']) || empty($settings['password'])) {
+                return new WP_Error(
+                    'missing_credentials',
+                    esc_html__('App ID, Username, and Password are required for iContact integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $icontact = iContact::get_instance();
+            $result = $icontact->verify([
+                'app_id' => $settings['app_id'],
+                'username' => $settings['username'],
+                'password' => $settings['password'],
+            ]);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Notion API key
+        if ($integration === 'notion') {
+            if (empty($settings['api_key'])) {
+                return new WP_Error(
+                    'missing_api_key',
+                    esc_html__('API key is required for Notion integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $notion = Notion::get_instance();
+            $result = $notion->verify($settings['api_key']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Trello API key and token
+        if ($integration === 'trello') {
+            if (empty($settings['api_key']) || empty($settings['api_token'])) {
+                return new WP_Error(
+                    'missing_credentials',
+                    esc_html__('API key and API token are required for Trello integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $trello = Trello::get_instance();
+            $result = $trello->verify($settings['api_key'], $settings['api_token']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify HubSpot access token
+        if ($integration === 'hubspot') {
+            if (empty($settings['access_token'])) {
+                return new WP_Error(
+                    'missing_access_token',
+                    esc_html__('Access token is required for HubSpot integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $hubspot = HubSpot::get_instance();
+            $result = $hubspot->verify($settings['access_token']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Zoho CRM uses OAuth - verification happens via OAuth callback
+        if ($integration === 'zohocrm') {
+            if (empty($settings['client_id']) || empty($settings['client_secret'])) {
+                return new WP_Error(
+                    'missing_credentials',
+                    esc_html__('Client ID and Client Secret are required for Zoho CRM integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $zohocrm = new \HTContactForm\Integrations\ZohoCRM(
+                $settings['client_id'],
+                $settings['client_secret'],
+                $settings['data_center'] ?? 'com'
+            );
+
+            // If already connected, return success
+            if ($zohocrm->is_connected()) {
+                return new WP_REST_Response([
+                    'success' => true,
+                    'message' => __('Zoho CRM is connected.', 'ht-contactform'),
+                ], 200);
+            }
+
+            // Not connected - return auth URL for OAuth flow
+            return new WP_REST_Response([
+                'success' => true,
+                'message' => __('Redirecting to Zoho for authorization...', 'ht-contactform'),
+                'data' => [
+                    'auth_url' => $zohocrm->get_auth_url(),
+                ],
+            ], 200);
+        }
+
+        // Verify MailPoet - just check if plugin is active
+        if ($integration === 'mailpoet') {
+            // MailPoet doesn't need API verification - it's a local plugin
+            // Just check if the plugin is active
+            if (!class_exists('\\MailPoet\\API\\API')) {
+                return new WP_Error(
+                    'mailpoet_not_active',
+                    esc_html__('MailPoet plugin is not installed or activated.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            return new WP_REST_Response([
+                'success' => true,
+                'message' => esc_html__('MailPoet is active and ready to use.', 'ht-contactform'),
+            ], 200);
+        }
+
         return new WP_REST_Response($result->get_data(), 200);
     }
 

@@ -829,4 +829,144 @@ class Field {
             ],
         ]);
     }
+
+    /**
+     * Sub Fields Option - Fields that can be repeated
+     * @param array $args
+     * @return array{value: mixed, id: string, label: string, type: string, info: string}
+     */
+    public function sub_fields(array $args = []) {
+        return $this->create([
+            'id' => 'sub_fields',
+            'label' => __('Sub Fields', 'ht-contactform'),
+            'type' => 'repeater_sub_fields',
+            'info' => __('Select which fields to include in each repeater row.', 'ht-contactform'),
+            'value' => $args['value'] ?? [],
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Add Button Text Option
+     * @param array $args
+     * @return array{value: mixed, id: string, label: string, type: string, info: string}
+     */
+    public function add_button_text(array $args = []) {
+        return $this->create([
+            'id' => 'add_button_text',
+            'label' => __('Add Button Text', 'ht-contactform'),
+            'type' => 'text',
+            'info' => __('Text for the "Add Row" button.', 'ht-contactform'),
+            'value' => $args['value'] ?? __('Add Row', 'ht-contactform'),
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Remove Button Text Option
+     * @param array $args
+     * @return array{value: mixed, id: string, label: string, type: string, info: string}
+     */
+    public function remove_button_text(array $args = []) {
+        return $this->create([
+            'id' => 'remove_button_text',
+            'label' => __('Remove Button Text', 'ht-contactform'),
+            'type' => 'text',
+            'info' => __('Text for the "Remove Row" button.', 'ht-contactform'),
+            'value' => $args['value'] ?? __('Remove', 'ht-contactform'),
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Row Label Option
+     * @param array $args
+     * @return array{value: mixed, id: string, label: string, type: string, info: string}
+     */
+    public function row_label(array $args = []) {
+        return $this->create([
+            'id' => 'row_label',
+            'label' => __('Row Label', 'ht-contactform'),
+            'type' => 'text',
+            'info' => __('Label template for each row. Use {n} for row number. Example: "Item {n}"', 'ht-contactform'),
+            'value' => $args['value'] ?? __('Row {n}', 'ht-contactform'),
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Post Type Option
+     * @param array $args
+     * @return array
+     */
+    public function post_type(array $args = []) {
+        // Get all public post types
+        $post_types = get_post_types(['public' => true], 'objects');
+        $options = [];
+
+        foreach ($post_types as $post_type) {
+            // Skip attachments
+            if ($post_type->name === 'attachment') {
+                continue;
+            }
+
+            // Get post count
+            $count = wp_count_posts($post_type->name);
+            $publish_count = isset($count->publish) ? (int) $count->publish : 0;
+
+            $options[] = [
+                'value' => $post_type->name,
+                'label' => sprintf('%s (%d)', $post_type->labels->name, $publish_count),
+            ];
+        }
+
+        return $this->create([
+            'id' => 'post_type',
+            'label' => __('Post Type', 'ht-contactform'),
+            'type' => 'select',
+            'info' => __('Select which post type to query.', 'ht-contactform'),
+            'value' => $args['value'] ?? 'post',
+            'options' => $options,
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Post Status Option
+     * @param array $args
+     * @return array
+     */
+    public function post_status(array $args = []) {
+        return $this->create([
+            'id' => 'post_status',
+            'label' => __('Post Status', 'ht-contactform'),
+            'type' => 'select',
+            'info' => __('Filter posts by status.', 'ht-contactform'),
+            'value' => $args['value'] ?? 'publish',
+            'options' => [
+                ['value' => 'publish', 'label' => __('Published', 'ht-contactform')],
+                ['value' => 'draft', 'label' => __('Draft', 'ht-contactform')],
+                ['value' => 'pending', 'label' => __('Pending Review', 'ht-contactform')],
+                ['value' => 'any', 'label' => __('Any', 'ht-contactform')],
+            ],
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
+    /**
+     * Posts Per Page Option
+     * @param array $args
+     * @return array
+     */
+    public function posts_per_page(array $args = []) {
+        return $this->create([
+            'id' => 'posts_per_page',
+            'label' => __('Posts Limit', 'ht-contactform'),
+            'type' => 'number',
+            'info' => __('Maximum number of posts to show. Default: 100', 'ht-contactform'),
+            'value' => $args['value'] ?? 100,
+            'dependency' => $args['dependency'] ?? null,
+        ]);
+    }
+
 }

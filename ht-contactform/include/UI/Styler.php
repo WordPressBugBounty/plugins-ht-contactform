@@ -60,6 +60,11 @@ class Styler {
         $style .= $this->get_terms_conditions_style();
         $style .= $this->get_date_time_style();
         $style .= $this->get_submit_button_style();
+        $style .= $this->get_signature_style();
+        $style .= $this->get_ratings_style();
+        $style .= $this->get_file_upload_style();
+        $style .= $this->get_section_break_style();
+        $style .= $this->get_nps_style();
         $style .= "}";
         return $style;
     }
@@ -613,6 +618,146 @@ class Styler {
         }
         if(isset($this->styler['submit_button_line_height']) && $this->styler['submit_button_line_height'] !== '') {
             $style .= "--ht-submit-button-lh: {$this->styler['submit_button_line_height']};";
+        }
+        return $style;
+    }
+
+    /**
+     * Get signature style
+     *
+     * @return string
+     */
+    public function get_signature_style() {
+        $style = '';
+        if(isset($this->styler['signature_border_color']) && $this->styler['signature_border_color'] !== '') {
+            $style .= "--ht-signature-border-color: {$this->styler['signature_border_color']};";
+        }
+        if(isset($this->styler['signature_bg_color']) && $this->styler['signature_bg_color'] !== '') {
+            $style .= "--ht-signature-bg-color: {$this->styler['signature_bg_color']};";
+        }
+        if(isset($this->styler['signature_pen_color']) && $this->styler['signature_pen_color'] !== '') {
+            $style .= "--ht-signature-pen-color: {$this->styler['signature_pen_color']};";
+        }
+        if(isset($this->styler['signature_clear_btn_color']) && $this->styler['signature_clear_btn_color'] !== '') {
+            $style .= "--ht-signature-clear-btn-color: {$this->styler['signature_clear_btn_color']};";
+        }
+        if(isset($this->styler['signature_clear_btn_bg']) && $this->styler['signature_clear_btn_bg'] !== '') {
+            $style .= "--ht-signature-clear-btn-bg: {$this->styler['signature_clear_btn_bg']};";
+        }
+        if(isset($this->styler['signature_radius']) && $this->styler['signature_radius'] !== '') {
+            $style .= "--ht-signature-radius: {$this->styler['signature_radius']}px;";
+        }
+        return $style;
+    }
+
+    /**
+     * Get ratings style
+     *
+     * @return string
+     */
+    public function get_ratings_style() {
+        $style = '';
+        if(isset($this->styler['ratings_color']) && $this->styler['ratings_color'] !== '') {
+            $style .= "--ht-ratings-color: {$this->styler['ratings_color']};";
+        }
+        if(isset($this->styler['ratings_color_active']) && $this->styler['ratings_color_active'] !== '') {
+            $style .= "--ht-ratings-color-active: {$this->styler['ratings_color_active']};";
+        }
+        if(isset($this->styler['ratings_size']) && $this->styler['ratings_size'] !== '') {
+            $style .= "--ht-ratings-size: {$this->styler['ratings_size']}px;";
+        }
+        if(isset($this->styler['ratings_size_sm']) && $this->styler['ratings_size_sm'] !== '') {
+            $style .= "--ht-ratings-size-sm: {$this->styler['ratings_size_sm']}px;";
+        }
+        if(isset($this->styler['ratings_size_lg']) && $this->styler['ratings_size_lg'] !== '') {
+            $style .= "--ht-ratings-size-lg: {$this->styler['ratings_size_lg']}px;";
+        }
+        if(isset($this->styler['ratings_gap']) && $this->styler['ratings_gap'] !== '') {
+            $style .= "--ht-ratings-gap: {$this->styler['ratings_gap']}px;";
+        }
+        return $style;
+    }
+
+    /**
+     * Get file upload style
+     *
+     * @return string
+     */
+    public function get_file_upload_style() {
+        $style = '';
+        if(isset($this->styler['file_upload_border_color']) && $this->styler['file_upload_border_color'] !== '') {
+            $style .= "--ht-file-upload-border-color: {$this->styler['file_upload_border_color']};";
+        }
+        if(isset($this->styler['file_upload_border_style']) && $this->styler['file_upload_border_style'] !== '') {
+            $style .= "--ht-file-upload-border-style: {$this->styler['file_upload_border_style']};";
+        }
+        if(isset($this->styler['file_upload_bg_color']) && $this->styler['file_upload_bg_color'] !== '') {
+            $style .= "--ht-file-upload-bg-color: {$this->styler['file_upload_bg_color']};";
+        }
+        if(isset($this->styler['file_upload_btn_color']) && $this->styler['file_upload_btn_color'] !== '') {
+            $style .= "--ht-file-upload-btn-color: {$this->styler['file_upload_btn_color']};";
+        }
+        if(isset($this->styler['file_upload_btn_bg']) && $this->styler['file_upload_btn_bg'] !== '') {
+            $style .= "--ht-file-upload-btn-bg: {$this->styler['file_upload_btn_bg']};";
+        }
+        if(isset($this->styler['file_upload_radius']) && $this->styler['file_upload_radius'] !== '') {
+            $style .= "--ht-file-upload-radius: {$this->styler['file_upload_radius']}px;";
+        }
+        return $style;
+    }
+
+    /**
+     * Get section break style
+     *
+     * @return string
+     */
+    public function get_section_break_style() {
+        $style = '';
+        if(isset($this->styler['section_break_heading_color']) && $this->styler['section_break_heading_color'] !== '') {
+            $style .= "--ht-section-break-heading-color: {$this->styler['section_break_heading_color']};";
+        }
+        if(isset($this->styler['section_break_heading_size']) && $this->styler['section_break_heading_size'] !== '') {
+            $style .= "--ht-section-break-heading-fz: {$this->styler['section_break_heading_size']}px;";
+        }
+        if(isset($this->styler['section_break_heading_weight']) && $this->styler['section_break_heading_weight'] !== '') {
+            $style .= "--ht-section-break-heading-fw: {$this->styler['section_break_heading_weight']};";
+        }
+        if(isset($this->styler['section_break_divider_color']) && $this->styler['section_break_divider_color'] !== '') {
+            $style .= "--ht-section-break-divider-color: {$this->styler['section_break_divider_color']};";
+        }
+        if(isset($this->styler['section_break_divider_width']) && $this->styler['section_break_divider_width'] !== '') {
+            $style .= "--ht-section-break-divider-width: {$this->styler['section_break_divider_width']}px;";
+        }
+        if(isset($this->styler['section_break_divider_style']) && $this->styler['section_break_divider_style'] !== '') {
+            $style .= "--ht-section-break-divider-style: {$this->styler['section_break_divider_style']};";
+        }
+        return $style;
+    }
+
+    /**
+     * Get NPS style
+     *
+     * @return string
+     */
+    public function get_nps_style() {
+        $style = '';
+        if(isset($this->styler['nps_color']) && $this->styler['nps_color'] !== '') {
+            $style .= "--ht-nps-color: {$this->styler['nps_color']};";
+        }
+        if(isset($this->styler['nps_color_active']) && $this->styler['nps_color_active'] !== '') {
+            $style .= "--ht-nps-color-active: {$this->styler['nps_color_active']};";
+        }
+        if(isset($this->styler['nps_bg_color']) && $this->styler['nps_bg_color'] !== '') {
+            $style .= "--ht-nps-bg-color: {$this->styler['nps_bg_color']};";
+        }
+        if(isset($this->styler['nps_bg_color_active']) && $this->styler['nps_bg_color_active'] !== '') {
+            $style .= "--ht-nps-bg-color-active: {$this->styler['nps_bg_color_active']};";
+        }
+        if(isset($this->styler['nps_size']) && $this->styler['nps_size'] !== '') {
+            $style .= "--ht-nps-fz: {$this->styler['nps_size']}px;";
+        }
+        if(isset($this->styler['nps_radius']) && $this->styler['nps_radius'] !== '') {
+            $style .= "--ht-nps-radius: {$this->styler['nps_radius']}px;";
         }
         return $style;
     }

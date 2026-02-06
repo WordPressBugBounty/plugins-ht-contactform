@@ -260,83 +260,150 @@ class Helper {
 
     /**
      * Validate reCAPTCHA response
-     * 
+     *
      * @param string $recaptcha_response The reCAPTCHA response
      * @return array|bool {code: string, message: string, status: int}
      */
     public static function validate_recaptcha($recaptcha_response) {
         $global_settings = get_option('ht_form_global_settings', []);
-        if (
-            !empty($global_settings['captcha']['captcha_type']) && 
-            $global_settings['captcha']['captcha_type'] === 'reCAPTCHA' &&
-            !empty($global_settings['captcha']['recaptcha_secret_key'])
-        ) {
-            
-            $recaptcha_version = $global_settings['captcha']['recaptcha_version'] ?? 'reCAPTCHAv2';
-            $secret_key = $global_settings['captcha']['recaptcha_secret_key'] ?? '';
-            
-            if (!empty($recaptcha_response)) {
-                $recaptcha_response = sanitize_text_field($recaptcha_response);
-                
-                // If response is empty, return error
-                if (empty($recaptcha_response)) {
-                    return [
-                        'code' => 'recaptcha_required',
-                        'message' => __('Please complete the reCAPTCHA challenge.', 'ht-contactform'),
-                        'status' => 400
-                    ];
-                }
-                
-                // Verify with Google's API
-                $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
-                $response = wp_remote_post($verify_url, [
-                    'body' => [
-                        'secret' => $secret_key,
-                        'response' => $recaptcha_response,
-                        'remoteip' => !empty($global_settings['miscellaneous']['disable_ip_logging']) ? '' : Helper::get_ip(),
-                    ],
-                ]);
-                
-                // Check for errors in the request
-                if (is_wp_error($response)) {
-                    return [
-                        'code' => 'recaptcha_connection_failed',
-                        'message' => __('Failed to connect to reCAPTCHA server.', 'ht-contactform'),
-                        'status' => 500
-                    ];
-                }
-                
-                // Parse the response
-                $body = wp_remote_retrieve_body($response);
-                $result = json_decode($body, true);
-                
-                // For v3, check the score
-                if ($recaptcha_version === 'reCAPTCHAv3' && 
-                    (!isset($result['success']) || !$result['success'] || 
-                    (isset($result['score']) && $result['score'] < 0.5))) {
-                    return [
-                        'code' => 'recaptcha_failed',
-                        'message' => __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'),
-                        'status' => 400
-                    ];
-                }
-                // For v2, just check success
-                else if ($recaptcha_version === 'reCAPTCHAv2' && 
-                    (!isset($result['success']) || !$result['success'])) {
-                    return [
-                        'code' => 'recaptcha_failed',
-                        'message' => __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'),
-                        'status' => 400
-                    ];
-                }
-                return true;
-            }
+
+        // Get active version and corresponding secret key
+        $active_version = $global_settings['captcha']['recaptcha_active_version'] ?? '';
+
+        if ($active_version === 'v2') {
+            $secret_key = $global_settings['captcha']['recaptcha_v2_secret_key'] ?? '';
+        } elseif ($active_version === 'v3') {
+            $secret_key = $global_settings['captcha']['recaptcha_v3_secret_key'] ?? '';
+        } else {
+            return [
+                'code' => 'recaptcha_not_configured',
+                'message' => __('reCAPTCHA is not configured.', 'ht-contactform'),
+                'status' => 400
+            ];
         }
-        return [
-            'code' => 'recaptcha_not_configured',
-            'message' => __('reCAPTCHA is not configured.', 'ht-contactform'),
-            'status' => 400
-        ];
+
+        if (empty($secret_key)) {
+            return [
+                'code' => 'recaptcha_not_configured',
+                'message' => __('reCAPTCHA is not configured.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        $recaptcha_response = sanitize_text_field($recaptcha_response);
+
+        // If response is empty, return error
+        if (empty($recaptcha_response)) {
+            return [
+                'code' => 'recaptcha_required',
+                'message' => __('Please complete the reCAPTCHA challenge.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        // Verify with Google's API
+        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+        $response = wp_remote_post($verify_url, [
+            'body' => [
+                'secret' => $secret_key,
+                'response' => $recaptcha_response,
+                'remoteip' => !empty($global_settings['miscellaneous']['disable_ip_logging']) ? '' : Helper::get_ip(),
+            ],
+        ]);
+
+        // Check for errors in the request
+        if (is_wp_error($response)) {
+            return [
+                'code' => 'recaptcha_connection_failed',
+                'message' => __('Failed to connect to reCAPTCHA server.', 'ht-contactform'),
+                'status' => 500
+            ];
+        }
+
+        // Parse the response
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+
+        // For v3, check the score
+        if ($active_version === 'v3' &&
+            (!isset($result['success']) || !$result['success'] ||
+            (isset($result['score']) && $result['score'] < 0.5))) {
+            return [
+                'code' => 'recaptcha_failed',
+                'message' => __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+        // For v2, just check success
+        elseif ($active_version === 'v2' &&
+            (!isset($result['success']) || !$result['success'])) {
+            return [
+                'code' => 'recaptcha_failed',
+                'message' => __('reCAPTCHA verification failed. Please try again.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate hCaptcha response
+     *
+     * @param string $hcaptcha_response hCaptcha response token
+     * @return array|bool {code: string, message: string, status: int}
+     */
+    public static function validate_hcaptcha($hcaptcha_response) {
+        $global_settings = get_option('ht_form_global_settings', []);
+
+        if (empty($global_settings['captcha']['hcaptcha_secret_key'])) {
+            return [
+                'code' => 'hcaptcha_not_configured',
+                'message' => __('hCaptcha is not configured.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        $secret_key = $global_settings['captcha']['hcaptcha_secret_key'];
+        $hcaptcha_response = sanitize_text_field($hcaptcha_response);
+
+        if (empty($hcaptcha_response)) {
+            return [
+                'code' => 'hcaptcha_required',
+                'message' => __('Please complete the hCaptcha challenge.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        // Verify with hCaptcha API
+        $response = wp_remote_post('https://hcaptcha.com/siteverify', [
+            'body' => [
+                'secret' => $secret_key,
+                'response' => $hcaptcha_response,
+                'remoteip' => !empty($global_settings['miscellaneous']['disable_ip_logging']) ? '' : Helper::get_ip(),
+            ],
+        ]);
+
+        if (is_wp_error($response)) {
+            return [
+                'code' => 'hcaptcha_connection_failed',
+                'message' => __('Failed to connect to hCaptcha server.', 'ht-contactform'),
+                'status' => 500
+            ];
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+
+        if (!isset($result['success']) || !$result['success']) {
+            return [
+                'code' => 'hcaptcha_failed',
+                'message' => __('hCaptcha verification failed. Please try again.', 'ht-contactform'),
+                'status' => 400
+            ];
+        }
+
+        return true;
     }
 
     /**

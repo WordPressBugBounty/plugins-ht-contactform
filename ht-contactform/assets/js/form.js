@@ -937,6 +937,16 @@ const HTFormEventHandlers = {
         HTFormCaptchaHandler.handle(form)
             .then(() => {
                 if (HTFormValidator.validateForm(form)) {
+                    const formId = form.querySelector('[name="ht_form_id"]')?.value || form.dataset.formId;
+
+                    // Dispatch custom event for third-party integrations
+                    document.dispatchEvent(new CustomEvent('htform:before_submit', {
+                        detail: {
+                            formId: formId,
+                            formElement: form
+                        }
+                    }));
+
                     form.submit();
                 } else {
                     HTFormValidator.scrollToFirstError(form);
@@ -1261,6 +1271,17 @@ const HTFormAjaxSubmitter = {
     },
 
     _handleSuccess(form, data) {
+        const formId = form.querySelector('[name="ht_form_id"]')?.value || form.dataset.formId;
+
+        // Dispatch custom event for third-party integrations (Meta Pixel, GTM, etc.)
+        document.dispatchEvent(new CustomEvent('htform:submitted', {
+            detail: {
+                formId: formId,
+                formElement: form,
+                response: data
+            }
+        }));
+
         const confirmation = data.confirmation;
         if (!confirmation) return;
 
@@ -1281,6 +1302,17 @@ const HTFormAjaxSubmitter = {
     },
 
     _handleError(form, error) {
+        const formId = form.querySelector('[name="ht_form_id"]')?.value || form.dataset.formId;
+
+        // Dispatch custom event for third-party integrations
+        document.dispatchEvent(new CustomEvent('htform:error', {
+            detail: {
+                formId: formId,
+                formElement: form,
+                error: error.response?.data || error.message
+            }
+        }));
+
         let errorMessage = 'Form submission failed. Please try again.';
         
         if (error.response?.data) {

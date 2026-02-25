@@ -108,6 +108,9 @@ class Admin {
     }
     public function diagnostic_data() {
         $diagnostic_data = DiagnosticData::get_instance();
+        if ( ! $diagnostic_data->should_show_notice() ) {
+            return;
+        }
         ob_start();
         $diagnostic_data->show_notices();
         $message = ob_get_clean();

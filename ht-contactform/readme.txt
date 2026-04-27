@@ -15,7 +15,9 @@ The easiest drag & drop form builder for WordPress. Create contact forms, survey
 
 Whether you need a simple contact form, a detailed application, or a complex survey with conditional logic, HT Contact Form has you covered. **No coding required. No expensive add-ons. Just drag, drop, and publish.**
 
-**[Documentation](https://hasthemes.com/docs-category/ht-contact-forms/)** | **[Support](https://hasthemes.com/contact-us/)**
+**[Learn More](https://hasthemes.com/plugins/ht-contact-form/)** | **[Documentation](https://hasthemes.com/docs-category/ht-contact-forms/)** | **[Support](https://hasthemes.com/contact-us/)**
+
+[youtube https://www.youtube.com/watch?v=raW1OPdg46Q]
 
 == Key Features ==
 
@@ -119,13 +121,31 @@ Support Genix (helpdesk tickets)
 
 == Other Projects ==
 
-🛒 **[ShopLentor (Woolentor)](https://wordpress.org/plugins/woolentor-addons/)** - WooCommerce page builder with 125+ widgets, 36 modules including Shopify-style checkout, Quick View, Wishlist, and Compare features.
+**[ShopLentor (Woolentor)](https://wordpress.org/plugins/woolentor-addons/)** - WooCommerce page builder with 125+ widgets, 36 modules including Shopify-style checkout, Quick View, Wishlist, and Compare features.
 
-🎧 **[Support Genix](https://wordpress.org/plugins/support-genix-lite/)** - AI-powered helpdesk with ticketing system, knowledge base, and 24/7 chatbot support for customer service.
+**[Support Genix](https://wordpress.org/plugins/support-genix-lite/)** - AI-powered helpdesk with ticketing system, knowledge base, and 24/7 chatbot support for customer service.
 
-🎨 **[HT Mega For Elementor](https://wordpress.org/plugins/ht-mega-for-elementor/)** - Elementor addon with 135+ widgets, AI Content Writer, Theme Builder, Mega Menu Builder, and 790+ ready blocks.
+**[HT Mega For Elementor](https://wordpress.org/plugins/ht-mega-for-elementor/)** - Elementor addon with 135+ widgets, AI Content Writer, Theme Builder, Mega Menu Builder, and 790+ ready blocks.
 
-📢 **[Hashbar WP Notification Bar](https://wordpress.org/plugins/hashbar-wp-notification-bar/)** - Create unlimited notification bars for announcements, promotions, and alerts.
+**[Hashbar WP Notification Bar](https://wordpress.org/plugins/hashbar-wp-notification-bar/)** - Create unlimited notification bars for announcements, promotions, and alerts.
+
+**[HT Easy GA4](https://wordpress.org/plugins/ht-easy-google-analytics/)** - Track your website visitors and view Google Analytics dashboard reports from your website.
+
+[**WP Plugin Manager**](https://wordpress.org/plugins/wp-plugin-manager/) – Disable certain plugins on specific pages or posts for better performance. Activate or deactivate plugins on a per-page basis.
+
+[**Extensions For CF7**](https://wordpress.org/plugins/extensions-for-cf7/) – Contact Form 7 Database, Conditional Fields, and Mailchimp integration for lead generation.
+
+[**Whols**](https://wordpress.org/plugins/whols/) – WooCommerce wholesale pricing plugin. Set wholesale prices, custom registration fields, and minimum requirements. Works like Wholesale Suite, B2Bking.
+
+[**JustTables**](https://wordpress.org/plugins/just-tables/) – WooCommerce product table plugin with 28 pre-built columns, custom fields support, and drag-and-drop ordering.
+
+[**Swatchly**](https://wordpress.org/plugins/swatchly/) – WooCommerce product variation swatches with color, label, and image swatch types.
+
+[**HT Slider For Elementor**](https://wordpress.org/plugins/ht-slider-for-elementor/) – Powerful slider addon for Elementor with custom styling options and navigation controls.
+
+== 🎬 Video created by the community ==
+
+[youtube https://www.youtube.com/watch?v=m0dwUPKQAUE]
 
 == Need Help? ==
 

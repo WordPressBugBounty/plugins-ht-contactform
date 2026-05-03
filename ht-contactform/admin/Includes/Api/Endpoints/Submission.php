@@ -400,10 +400,10 @@ class Submission {
                         if(is_array($form_data[$field_name])) {
                             $sanitized_data[$field_name] = [];
                             foreach ($form_data[$field_name] as $file_value) {
-                                $sanitized_data[$field_name][] = $file_value;
+                                $sanitized_data[$field_name][] = esc_url_raw($file_value);
                             }
                         } else {
-                            $sanitized_data[$field_name] = $form_data[$field_name];
+                            $sanitized_data[$field_name] = esc_url_raw($form_data[$field_name]);
                         }
                         break;
 
@@ -493,19 +493,36 @@ class Submission {
                         break;
 
                     case 'richtext':
-                        // Custom sanitization for Quill editor content
                         $content = $form_data[$field_name];
 
-                        // Step 1: Remove dangerous tags completely
-                        $content = preg_replace('/<(script|iframe|object|embed|form|input)[^>]*>.*?<\/\1>/is', '', $content);
-                        $content = preg_replace('/<(script|iframe|object|embed|form|input)[^>]*\/?>/i', '', $content);
-
-                        // Step 2: Remove dangerous attributes (event handlers)
-                        $content = preg_replace('/\s*on\w+\s*=\s*["\'][^"\']*["\']/i', '', $content);
-                        $content = preg_replace('/\s*on\w+\s*=\s*[^\s>]*/i', '', $content);
-
-                        // Step 3: Sanitize href attributes (remove javascript:)
-                        $content = preg_replace('/href\s*=\s*["\']javascript:[^"\']*["\']/i', 'href="#"', $content);
+                        // Primary sanitization: wp_kses decodes HTML entities, strips control
+                        // characters (0x00-0x1F), and checks href protocol against an explicit
+                        // allowlist — covers newline/entity/unquoted bypass vectors that regex cannot.
+                        $allowed_html = [
+                            'p'          => [ 'class' => true, 'style' => true ],
+                            'br'         => [],
+                            'strong'     => [],
+                            'b'          => [],
+                            'em'         => [],
+                            'i'          => [],
+                            'u'          => [],
+                            's'          => [],
+                            'strike'     => [],
+                            'a'          => [ 'href' => true, 'target' => true, 'rel' => true, 'class' => true ],
+                            'ul'         => [],
+                            'ol'         => [],
+                            'li'         => [ 'class' => true ],
+                            'h1'         => [ 'class' => true, 'style' => true ],
+                            'h2'         => [ 'class' => true, 'style' => true ],
+                            'h3'         => [ 'class' => true, 'style' => true ],
+                            'h4'         => [ 'class' => true, 'style' => true ],
+                            'blockquote' => [ 'class' => true ],
+                            'pre'        => [ 'class' => true ],
+                            'code'       => [ 'class' => true ],
+                            'span'       => [ 'class' => true, 'style' => true ],
+                            'button'     => [],
+                        ];
+                        $content = wp_kses( $content, $allowed_html, [ 'http', 'https', 'mailto', 'tel' ] );
 
                         // Step 4: Sanitize style attributes - only allow safe CSS properties
                         $content = preg_replace_callback(
@@ -553,12 +570,7 @@ class Submission {
                             $content
                         );
 
-                        // Step 6: Remove any remaining disallowed tags (but keep attributes on allowed tags)
-                        // We've already removed dangerous tags in Step 1, so this is just extra safety
-                        $allowed_tags_pattern = 'p|br|strong|b|em|i|u|s|strike|a|ul|ol|li|h1|h2|h3|h4|blockquote|pre|code|span|button';
-                        $content = preg_replace('/<(?!\/?(' . $allowed_tags_pattern . ')[\s>])[^>]*>/i', '', $content);
-
-                        // Step 7: Validate max_length if set
+                        // Step 6: Validate max_length if set
                         $max_length = $field['settings']['max_length'] ?? 0;
                         if ($max_length > 0) {
                             $text_content = wp_strip_all_tags($content);
@@ -848,6 +860,8 @@ class Submission {
 
                             if ($source_path) {
                                 $form_data[$field_name][$key] = $this->upload_file_from_path($source_path, $file_name, $destination);
+                            } else {
+                                $form_data[$field_name][$key] = '';
                             }
                         }
                     }

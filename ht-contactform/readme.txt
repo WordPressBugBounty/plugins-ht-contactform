@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -209,6 +209,9 @@ HT Contact Form includes GDPR consent fields, hCaptcha (privacy-focused), and st
 9. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.8.3 - Date: 03-May-2026 =
+* Security: Improved sanitization of richtext and file upload fields.
 
 = Version: 2.8.2 - Date: 25-Feb-2026 =
 * Improved: Admin notice display.

@@ -22,8 +22,37 @@ class Admin {
         Assets::get_instance();
         add_action('in_admin_header', [$this, 'remove_admin_notice']);
         add_action('admin_menu', [$this, 'add_admin_menu']);
+        add_filter('submenu_file', [$this, 'sync_submenu_active']);
         add_action('init', [$this, 'update_global_settings']);
         add_action('admin_init', [$this, 'diagnostic_data']);
+    }
+
+    /**
+     * Keep the WP sidebar submenu in sync with the SPA path param.
+     * All submenus share one page slug, so WP can't pick the active one on its own.
+     */
+    public function sync_submenu_active($submenu_file) {
+        $slug = 'htcontact-form';
+
+        if (!isset($_GET['page']) || $_GET['page'] !== $slug) {
+            return $submenu_file;
+        }
+
+        $path = isset($_GET['path']) ? sanitize_key(wp_unslash($_GET['path'])) : '';
+
+        $map = [
+            ''             => "admin.php?page=$slug",
+            'forms'        => "admin.php?page=$slug&path=forms",
+            'editor'       => "admin.php?page=$slug&path=editor",
+            'templates'    => "admin.php?page=$slug&path=templates",
+            'all_entries'  => "admin.php?page=$slug&path=all_entries",
+            'entries'      => "admin.php?page=$slug&path=all_entries",
+            'entry'        => "admin.php?page=$slug&path=all_entries",
+            'settings'     => "admin.php?page=$slug&path=settings",
+            'integrations' => "admin.php?page=$slug&path=integrations",
+        ];
+
+        return $map[$path] ?? $map[''];
     }
     
     /**
@@ -69,6 +98,11 @@ class Admin {
                 esc_html__('New Form', 'ht-contactform'),
                 $capability,
                 "admin.php?page=$slug&path=editor"
+            ];
+            $submenu[ $slug ][] = [
+                esc_html__('Templates', 'ht-contactform'),
+                $capability,
+                "admin.php?page=$slug&path=templates"
             ];
             $submenu[ $slug ][] = [
                 esc_html__('Entries', 'ht-contactform'),

@@ -22,6 +22,7 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\HubSpot;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ZohoCRM;
 use HTContactFormAdmin\Includes\Api\Endpoints\Utilities;
 use HTContactFormAdmin\Includes\Api\Endpoints\Draft;
+use HTContactFormAdmin\Includes\Api\Endpoints\Templates;
 
 class ApiRegistry {
     private static $instance = null;
@@ -54,5 +55,6 @@ class ApiRegistry {
         ZohoCRM::get_instance();
         Utilities::get_instance();
         Draft::get_instance();
+        Templates::get_instance();
     }
 }

@@ -372,7 +372,7 @@ class Fields {
             'placeholder' => !empty($settings['placeholder']) ? $settings['placeholder'] : '',
             'required' => !empty($settings['required']) ? true : false,
             'data-required-message' => !empty($settings['required']) && !empty($settings['required_message']) ? $settings['required_message'] : '',
-            'data-email-validation' => $settings['email_validation'],
+            'data-email-validation' => !empty($settings['email_validation']) ? $settings['email_validation'] : '',
             'data-email-validation-message' => !empty($settings['email_validation']) && !empty($settings['email_validation_message']) ? $settings['email_validation_message'] : '',
             'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : '',
             'data-email-unique' => !empty($settings['email_unique']) ? true : false,

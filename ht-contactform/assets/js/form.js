@@ -1551,7 +1551,7 @@ const HTFormFieldComponents = {
     },
 
     _getDateTimeConfig(input) {
-        const format = input.getAttribute('data-format');
+        const format = input.getAttribute('data-format') || 'Y-m-d';
         const range = input.getAttribute('data-range') === '1';
         const multiple = input.getAttribute('data-multiple') === '1';
         const enableTime = format?.includes('H') || format?.includes('h');
@@ -1568,6 +1568,7 @@ const HTFormFieldComponents = {
             noCalendar: noDate,
             dateFormat: format,
             mode,
+            static: true,
             time_24hr: enableTime && format?.includes('H')
         };
     },

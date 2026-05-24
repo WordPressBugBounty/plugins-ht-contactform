@@ -57,6 +57,33 @@ class Form {
         $this->default_integrations = $form_config->form_editor_integrations();
     }
 
+    /**
+     * Default form settings reduced to the saved shape:
+     * { section_key: { id, settings: { setting_id: value } } }
+     *
+     * @return array
+     */
+    public function get_default_settings(): array {
+        $defaults = [];
+
+        foreach ($this->default_settings as $section_key => $section) {
+            $values = [];
+
+            foreach (($section['settings'] ?? []) as $setting) {
+                if (isset($setting['id'])) {
+                    $values[$setting['id']] = $setting['value'] ?? null;
+                }
+            }
+
+            $defaults[$section_key] = [
+                'id'       => $section['id'] ?? $section_key,
+                'settings' => $values,
+            ];
+        }
+
+        return $defaults;
+    }
+
     //-------------------------------------------------------------------------
     // MAIN CRUD OPERATIONS
     //-------------------------------------------------------------------------

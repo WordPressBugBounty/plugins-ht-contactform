@@ -1383,8 +1383,8 @@
 
 
 /* Date/Time Style */
-.ht-form-elem .flatpickr-calendar {
-    margin-top: -30px;
+.ht-form-elem-content .flatpickr-wrapper {
+    width: 100%;
 }
 
 .ht-form-elem .flatpickr-calendar .numInput {

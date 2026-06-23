@@ -69,8 +69,31 @@ class Welcome {
 
     public function banners() {
         return [
-            $this->extcf7_banner(),
+            $this->cookieray_banner(),
         ];
+    }
+
+    public function cookieray_banner() {
+        ob_start();
+        ?>
+            <div class="htcontact-form-cookieray-banner">
+                <h2><?php echo esc_html__( 'Stay Cookie & GDPR Compliant', 'ht-contactform' ); ?></h2>
+                <p class="htcontact-form-cookieray-desc"><?php echo esc_html__( 'Add CookieRay — a free cookie consent plugin to keep your site GDPR compliant.', 'ht-contactform' ); ?></p>
+                <div class="htcontact-form-cookieray-features">
+                    <ul class="htcontact-form-cookieray-feature-list">
+                        <li><?php echo esc_html__( 'Customizable Consent Banner', 'ht-contactform' ); ?></li>
+                        <li><?php echo esc_html__( 'Built-in Cookie Scanner', 'ht-contactform' ); ?></li>
+                        <li><?php echo esc_html__( 'GDPR & CCPA Ready', 'ht-contactform' ); ?></li>
+                    </ul>
+                </div>
+                <div class="htcontact-form-cookieray-action-btn">
+                    <a class="htcontact-form-cookieray-btn" href="<?php echo esc_url('https://wordpress.org/plugins/cookieray/?utm_source=htcontactform&utm_medium=htcf7dashboard&utm_campaign=cookieray');?>" target="_blank" rel="noopener noreferrer">
+                        <span class="htcontact-form-cookieray-btn-text"><?php echo esc_html__('Get CookieRay Free','ht-contactform'); ?></span>
+                    </a>
+                </div>
+            </div>
+        <?php
+        return ob_get_clean();
     }
 
     public function extcf7_banner() {

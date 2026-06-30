@@ -512,7 +512,7 @@ class DiagnosticData {
      * Get IP Address
      */
     private function get_ip_address() {
-        $response = wp_remote_get( 'https://icanhazip.com/' );
+        $response = wp_remote_get( 'https://icanhazip.com/', [ 'timeout' => 5 ] );
 
         if ( is_wp_error( $response ) ) {
             return '';
@@ -532,23 +532,24 @@ class DiagnosticData {
      * Get Country Form ID Address
      */
     private function get_country_from_ip( $ip_address ) {
-        $api_url = 'http://ip-api.com/json/' . $ip_address;
-    
+        // HTTPS + commercial-use-allowed provider (ip-api.com is HTTP-only and
+        // non-commercial). Returns the full country name in 'country'.
+        $api_url = 'https://ipwho.is/' . $ip_address;
+
         // Fetch data from the API
-        $response = wp_remote_get( $api_url );
-    
+        $response = wp_remote_get( $api_url, [ 'timeout' => 5 ] );
+
         if ( is_wp_error( $response ) ) {
             return 'Error';
         }
-    
+
         // Decode the JSON response
-        $data = json_decode( wp_remote_retrieve_body($response) );
-    
-        if ($data && $data->status === 'success') {
-            return $data->country;
-        } else {
-            return 'Unknown';
+        $data = json_decode( wp_remote_retrieve_body($response), true );
+
+        if ( is_array($data) && !empty($data['success']) && !empty($data['country']) ) {
+            return $data['country'];
         }
+        return 'Unknown';
     }
 
     private function form_created() {

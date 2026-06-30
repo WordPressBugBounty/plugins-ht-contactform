@@ -166,50 +166,44 @@ class Helper {
      * @return string The visitor's IP address
      */
     public static function get_ip() {
-        // Check for shared internet/ISP IP
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ip_address = sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
-        }
-        
-        // Check for IPs passing through proxies
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            // HTTP_X_FORWARDED_FOR can contain multiple IPs separated by comma
-            // The first one is the original client IP
-            $ip_list = explode(',', sanitize_text_field(wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR'])));
-            foreach ($ip_list as $ip) {
-                $ip = trim($ip);
-                if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    $ip_address = $ip;
-                }
-            }
-        }
-        
-        // Check for CloudFlare IP
-        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            $ip_address = sanitize_text_field(wp_unslash($_SERVER['HTTP_CF_CONNECTING_IP']));
-        }
-        
-        // Check for other common proxy headers
-        $proxy_headers = [
-            'HTTP_X_REAL_IP',
-            'HTTP_X_CLUSTER_CLIENT_IP', 
-            'HTTP_FORWARDED',
-            'HTTP_X_FORWARDED'
-        ];
-        
-        foreach ($proxy_headers as $header) {
-            if (!empty($_SERVER[$header])) {
-                $ip = sanitize_text_field(wp_unslash($_SERVER[$header]));
-                if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    $ip_address = $ip;
-                }
-            }
-        }
-        
-        // If no proxy detected, return remote address or empty string
+        // REMOTE_ADDR is the only non-spoofable source (the actual TCP peer).
         $ip_address = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
-        if($ip_address === '127.0.0.1' || $ip_address === '::1') {
-            return self::get_remote_ip();
+
+        // Proxy/CDN headers (X-Forwarded-For, CF-Connecting-IP, etc.) are
+        // user-controllable and trivially spoofable. Only honor them when the
+        // site owner explicitly opts in via this filter (i.e. they run behind a
+        // trusted reverse proxy / Cloudflare that overwrites these headers).
+        if (apply_filters('htcf_trust_proxy_headers', false)) {
+            // Cloudflare sets a single, already-resolved client IP.
+            if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+                $cf_ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_CF_CONNECTING_IP']));
+                if (filter_var($cf_ip, FILTER_VALIDATE_IP)) {
+                    $ip_address = $cf_ip;
+                }
+            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                // First valid entry is the original client; later entries are proxies.
+                $ip_list = explode(',', sanitize_text_field(wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR'])));
+                foreach ($ip_list as $forwarded_ip) {
+                    $forwarded_ip = trim($forwarded_ip);
+                    if (filter_var($forwarded_ip, FILTER_VALIDATE_IP)) {
+                        $ip_address = $forwarded_ip;
+                        break;
+                    }
+                }
+            } elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+                $real_ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_X_REAL_IP']));
+                if (filter_var($real_ip, FILTER_VALIDATE_IP)) {
+                    $ip_address = $real_ip;
+                }
+            }
+        }
+
+        // Local development: no public IP available, fall back to server's public IP.
+        if ($ip_address === '127.0.0.1' || $ip_address === '::1' || $ip_address === '') {
+            $remote = self::get_remote_ip();
+            if ($remote) {
+                return $remote;
+            }
         }
         return $ip_address;
     }
@@ -221,13 +215,13 @@ class Helper {
      */
     public static function get_remote_ip() {
         $api_url = "https://api.ipify.org?format=json";
-        $response = wp_remote_get($api_url);
+        $response = wp_remote_get($api_url, ['timeout' => 5]);
         if (is_wp_error($response)) {
             return false;
         }
         $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
-        if (isset($data['error'])) {
+        if (!is_array($data) || empty($data['ip'])) {
             return false;
         }
         return $data['ip'];
@@ -241,19 +235,32 @@ class Helper {
      * @return mixed Geolocation data or false on error
      */
     public static function get_geolocation_data($ip, $key = null) {
-        // $api_url = "https://ipinfo.io/{$ip}/json";
-        $api_url = "https://ipinfo.io/?token=c97c286aac0e17";
-        $response = wp_remote_get($api_url);
-        if (is_wp_error($response)) {
+        if (empty($ip) || !filter_var($ip, FILTER_VALIDATE_IP)) {
             return false;
         }
-        $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
-        if (isset($data['error'])) {
-            return false;
+
+        // Cache per IP to avoid a blocking external call on every page render
+        // and to stay well within the geolocation provider's request quota.
+        $cache_key = 'htcf_geo_' . md5($ip);
+        $data = get_transient($cache_key);
+        if ($data === false) {
+            $api_url = "https://ipwho.is/{$ip}";
+            $response = wp_remote_get($api_url, ['timeout' => 5]);
+            if (is_wp_error($response)) {
+                return false;
+            }
+            $data = json_decode(wp_remote_retrieve_body($response), true);
+            if (!is_array($data) || empty($data['success'])) {
+                return false;
+            }
+            // Normalize keys so callers can keep using ['country'] as the ISO2 code
+            // (ipwho.is returns the ISO2 code in 'country_code', full name in 'country').
+            $data['country'] = isset($data['country_code']) ? $data['country_code'] : '';
+            set_transient($cache_key, $data, DAY_IN_SECONDS);
         }
+
         if($key) {
-            return $data[$key];
+            return isset($data[$key]) ? $data[$key] : false;
         }
         return $data;
     }

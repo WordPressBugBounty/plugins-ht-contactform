@@ -607,7 +607,8 @@ class Fields {
         $only_countries = $validate && !empty($settings['country_list_type']) && $settings['country_list_type'] === 'include' ? implode(',', $settings['country_list']) : '';
 
         if(!empty($settings['auto_country_select'])) {
-            $initial_country = $this->helper->get_geolocation_data($this->helper->get_ip())['country'];
+            $geo_data = $this->helper->get_geolocation_data($this->helper->get_ip());
+            $initial_country = !empty($geo_data['country']) ? $geo_data['country'] : $initial_country;
         }
         $attributes = [
             'type' => 'tel',
@@ -654,7 +655,8 @@ class Fields {
         $only_countries = !empty($settings['country_list_type']) && $settings['country_list_type'] === 'include' ? implode(',', $settings['country_list']) : '';
 
         if(!empty($settings['auto_country_select'])) {
-            $initial_country = $this->helper->get_geolocation_data($this->helper->get_ip())['country'];
+            $geo_data = $this->helper->get_geolocation_data($this->helper->get_ip());
+            $initial_country = !empty($geo_data['country']) ? $geo_data['country'] : $initial_country;
         }
         $attributes = [
             'type' => 'text',
@@ -691,6 +693,9 @@ class Fields {
      */
     public function field_address($field_id, $settings) {
         $geo_data = $this->helper->get_geolocation_data($this->helper->get_ip());
+        if (!is_array($geo_data)) {
+            $geo_data = [];
+        }
         $attributes = [
             'id' => $field_id,
             'class' => 'ht-form-elem-group ht-form-elem-address',
@@ -749,7 +754,7 @@ class Fields {
             $wrapper_classes[] = 'ht-form-elem-input-field';
             $value = !empty($settings['city']['value']) ? $settings['city']['value'] : '';
             if(!empty($settings['city']['auto_fill'])) {
-                $value = $geo_data['city'];
+                $value = $geo_data['city'] ?? '';
             }
             $fields[] = $this->render_field(
                 $wrapper_classes,
@@ -770,7 +775,7 @@ class Fields {
             $wrapper_classes[] = 'ht-form-elem-input-field';
             $value = !empty($settings['state']['value']) ? $settings['state']['value'] : '';
             if(!empty($settings['state']['auto_fill'])) {
-                $value = $geo_data['region'];
+                $value = $geo_data['region'] ?? '';
             }
             $fields[] = $this->render_field(
                 $wrapper_classes,
@@ -791,7 +796,7 @@ class Fields {
             $wrapper_classes[] = 'ht-form-elem-input-field';
             $value = !empty($settings['zip']['value']) ? $settings['zip']['value'] : '';
             if(!empty($settings['zip']['auto_fill'])) {
-                $value = $geo_data['postal'];
+                $value = $geo_data['postal'] ?? '';
             }
             $fields[] = $this->render_field(
                 $wrapper_classes,

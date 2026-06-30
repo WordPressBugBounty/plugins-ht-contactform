@@ -162,7 +162,7 @@ class Mailer {
         $headers = [
             'Content-Type: text/html; charset=UTF-8',
             'From: ' . $this->get_form_name() . ' <' . $this->get_form_email() . '>',
-            'Reply-To: ' . $this->get_form_name() . ' <' . $this->get_form_reply_to() . '>'
+            'Reply-To: ' . $this->get_form_reply_to()
         ];
         $headers = apply_filters('ht_form/email_headers', $headers, $this->form, $this->form_data);
         return $headers;
@@ -237,11 +237,10 @@ class Mailer {
             return sanitize_email($this->notification->form_email);
         }
         if($this->notification->form_email !== '{admin_email}' && !empty($this->notification->form_email)) {
-            foreach($this->fields as $field) {
-                if($field['type'] === 'email' && isset($field['name_attribute']) && !empty($field['name_attribute']) && 
-                   str_contains($this->notification->form_email, $field['name_attribute']) && 
-                   isset($this->form_data[$field['name_attribute']])) {
-                    return sanitize_email($this->form_data[$field['name_attribute']]);
+            if(str_contains($this->notification->form_email, '{') || str_contains($this->notification->form_email, '}')) {
+                $email = $this->helper->filter_vars($this->notification->form_email, $this->form_data);
+                if(is_email($email)) {
+                    return sanitize_email($email);
                 }
             }
         }
@@ -258,11 +257,10 @@ class Mailer {
             return sanitize_email($this->notification->form_reply_to);
         }
         if($this->notification->form_reply_to !== '{admin_email}' && !empty($this->notification->form_reply_to)) {
-            foreach($this->fields as $field) {
-                if($field['type'] === 'email' && isset($field['name_attribute']) && !empty($field['name_attribute']) && 
-                str_contains($this->notification->form_reply_to, $field['name_attribute']) && 
-                isset($this->form_data[$field['name_attribute']])) {
-                    return sanitize_email($this->form_data[$field['name_attribute']]);
+            if(str_contains($this->notification->form_reply_to, '{') || str_contains($this->notification->form_reply_to, '}')) {
+                $reply_to = $this->helper->filter_vars($this->notification->form_reply_to, $this->form_data);
+                if(is_email($reply_to)) {
+                    return sanitize_email($reply_to);
                 }
             }
         }

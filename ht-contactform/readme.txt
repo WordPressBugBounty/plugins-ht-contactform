@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.9.1
+Stable tag: 2.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,6 +184,13 @@ Yes. Native integrations are available for HubSpot, Zoho CRM, Insightly, and One
 = Is it GDPR compliant? =
 HT Contact Form includes GDPR consent fields, hCaptcha (privacy-focused), and stores data locally in your WordPress database.
 
+= Why is the wrong country or IP detected behind Cloudflare or a proxy? =
+For security, the plugin uses the direct connection IP by default, which on sites behind Cloudflare, a CDN, or a reverse proxy is the proxy's address — not the visitor's. To trust the forwarded visitor IP (CF-Connecting-IP / X-Forwarded-For), add this to your theme's functions.php or a snippet plugin:
+
+`add_filter( 'htcf_trust_proxy_headers', '__return_true' );`
+
+Only enable this if your site is genuinely behind a trusted proxy, since these headers can be spoofed on direct-connection setups.
+
 == Installation ==
 
 = From WordPress Dashboard =
@@ -210,6 +217,11 @@ HT Contact Form includes GDPR consent fields, hCaptcha (privacy-focused), and st
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.9.2 - Date: 30-Jun-2026 =
+* Fixed: Smart tags not being parsed in the Reply-To and From email notification fields.
+* Fixed: Visitor IP resolved to the proxy/CDN address (breaking geolocation, IP logging and country/IP restrictions) on sites behind Cloudflare or a reverse proxy.
+* Improved: Switched IP geolocation to a more reliable provider and cached lookups to speed up page loads.
 
 = Version: 2.9.1 - Date: 23-Jun-2026 =
 * Fixed: Minor CSS issue.

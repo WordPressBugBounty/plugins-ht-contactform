@@ -68,7 +68,7 @@ class SubmissionHelper {
             $ip = Helper::get_ip();
             $geo_data = Helper::get_geolocation_data($ip);
             $restricted_countries = $settings['restrict_country'] ?? [];
-            if (in_array(strtolower($geo_data['country']), $restricted_countries)) {
+            if (!empty($geo_data['country']) && in_array(strtolower($geo_data['country']), $restricted_countries)) {
                 return new WP_Error(
                     'country_restricted',
                     $settings['restrict_country_message'],

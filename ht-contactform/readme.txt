@@ -1,9 +1,9 @@
 === HT Contact Form – Drag & Drop Form Builder for WordPress ===
-Contributors: htplugins, hasthemes, tarekht, zenaulislam, aslamhasib
+Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.9.2
+Stable tag: 2.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,9 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.9.3 - Date: 15-Jul-2026 =
+* Security: Fixed an unauthenticated disclosure of saved draft data in the Save & Resume feature. Drafts are now bound to their owner via a per-draft access token. Reported by Mustafa Ahmed via WPScan.
 
 = Version: 2.9.2 - Date: 30-Jun-2026 =
 * Fixed: Smart tags not being parsed in the Reply-To and From email notification fields.

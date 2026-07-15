@@ -247,25 +247,37 @@ class Draft {
 
         $expiry = $expiry_days ?: 30;
 
-        // Check for existing draft for this form (prevents draft accumulation)
-        $existing_draft = $this->drafts->find_by_form_id($form_id);
-        if ($existing_draft) {
-            // Update existing draft instead of creating new one
-            $this->drafts->update_by_id($existing_draft['id'], $form_data, $expiry);
+        // If the caller supplies its own draft key + access token, update that
+        // draft in place (same visitor re-saving). Drafts are NEVER looked up
+        // by form_id: doing so would collapse every visitor's data into one
+        // shared record and hand its key to whoever saved next. Ownership is
+        // proven by possession of the per-draft access token.
+        $draft_key    = $request->get_param('draft_key');
+        $access_token = $request->get_param('access_token');
 
-            // Build resume URL with existing draft key
-            $resume_url = $this->drafts->build_resume_url($existing_draft['draft_key'], $page_url);
-            $expires_at = wp_date('Y-m-d H:i:s', strtotime("+{$expiry} days"));
+        if (!empty($draft_key) && $this->validate_draft_key($draft_key)) {
+            $existing_draft = $this->drafts->find_by_key($draft_key);
 
-            return new WP_REST_Response([
-                'success'    => true,
-                'draft_key'  => $existing_draft['draft_key'],
-                'resume_url' => $resume_url,
-                'expires_at' => $expires_at,
-            ], 200);
+            if (!is_wp_error($existing_draft)
+                && (int) $existing_draft->form_id === absint($form_id)
+                && $this->drafts->verify_access_token($existing_draft, $access_token)
+            ) {
+                $this->drafts->update_by_id($existing_draft->id, $form_data, $expiry);
+
+                $resume_url = $this->drafts->build_resume_url($draft_key, $page_url, $access_token);
+                $expires_at = wp_date('Y-m-d H:i:s', strtotime("+{$expiry} days"));
+
+                return new WP_REST_Response([
+                    'success'      => true,
+                    'draft_key'    => $draft_key,
+                    'access_token' => $access_token,
+                    'resume_url'   => $resume_url,
+                    'expires_at'   => $expires_at,
+                ], 200);
+            }
         }
 
-        // Create new draft if no existing one found
+        // Otherwise create a brand-new draft with its own unique key + token.
         $result = $this->drafts->create([
             'form_id'     => $form_id,
             'form_data'   => $form_data,
@@ -277,13 +289,14 @@ class Draft {
         }
 
         // Build resume URL
-        $resume_url = $this->drafts->build_resume_url($result['draft_key'], $page_url);
+        $resume_url = $this->drafts->build_resume_url($result['draft_key'], $page_url, $result['access_token']);
 
         return new WP_REST_Response([
-            'success'    => true,
-            'draft_key'  => $result['draft_key'],
-            'resume_url' => $resume_url,
-            'expires_at' => $result['expires_at'],
+            'success'      => true,
+            'draft_key'    => $result['draft_key'],
+            'access_token' => $result['access_token'],
+            'resume_url'   => $resume_url,
+            'expires_at'   => $result['expires_at'],
         ], 200);
     }
 
@@ -294,12 +307,30 @@ class Draft {
      * @return WP_REST_Response|WP_Error Response with draft data or error
      */
     public function get_draft($request) {
+        // Verify nonce — reads must originate from a rendered form page, not an
+        // arbitrary unauthenticated cross-site request.
+        $nonce_check = $this->verify_nonce($request);
+        if (is_wp_error($nonce_check)) {
+            return $nonce_check;
+        }
+
         $draft_key = $request->get_param('key');
+        $access_token = $request->get_param('token');
 
         $draft = $this->drafts->find_by_key($draft_key);
 
         if (is_wp_error($draft)) {
             return $draft;
+        }
+
+        // Authorize by per-draft access token (ownership check). Prevents
+        // harvesting another visitor's saved PII by replaying a draft key.
+        if (!$this->drafts->verify_access_token($draft, $access_token)) {
+            return new WP_Error(
+                'forbidden',
+                __('You are not authorized to access this draft.', 'ht-contactform'),
+                ['status' => 403]
+            );
         }
 
         return new WP_REST_Response([
@@ -323,6 +354,7 @@ class Draft {
         }
 
         $draft_key = $request->get_param('key');
+        $access_token = $request->get_param('access_token');
         $form_data = $request->get_param('form_data');
 
         if (empty($form_data) || !is_array($form_data)) {
@@ -330,6 +362,19 @@ class Draft {
                 'missing_form_data',
                 __('Form data is required', 'ht-contactform'),
                 ['status' => 400]
+            );
+        }
+
+        // Authorize by per-draft access token (ownership check).
+        $existing_draft = $this->drafts->find_by_key($draft_key);
+        if (is_wp_error($existing_draft)) {
+            return $existing_draft;
+        }
+        if (!$this->drafts->verify_access_token($existing_draft, $access_token)) {
+            return new WP_Error(
+                'forbidden',
+                __('You are not authorized to modify this draft.', 'ht-contactform'),
+                ['status' => 403]
             );
         }
 
@@ -358,6 +403,7 @@ class Draft {
         }
 
         $draft_key = $request->get_param('draft_key');
+        $access_token = $request->get_param('access_token');
         $email = $request->get_param('email');
         $page_url = $request->get_param('page_url');
 
@@ -379,8 +425,22 @@ class Draft {
             );
         }
 
+        // Authorize by per-draft access token — only the owner may email the
+        // resume link (which itself carries the token) to an address.
+        $draft = $this->drafts->find_by_key($draft_key);
+        if (is_wp_error($draft)) {
+            return $draft;
+        }
+        if (!$this->drafts->verify_access_token($draft, $access_token)) {
+            return new WP_Error(
+                'forbidden',
+                __('You are not authorized to access this draft.', 'ht-contactform'),
+                ['status' => 403]
+            );
+        }
+
         // Send email
-        $result = $this->drafts->send_email($draft_key, $email, $page_url);
+        $result = $this->drafts->send_email($draft_key, $email, $page_url, $access_token);
 
         if (is_wp_error($result)) {
             return $result;
@@ -426,6 +486,7 @@ class Draft {
         }
 
         $draft_key = $request->get_param('draft_key');
+        $access_token = $request->get_param('access_token');
         $file_ids = $request->get_param('file_ids');
 
         // Validate draft_key
@@ -450,6 +511,15 @@ class Draft {
         $draft = $this->drafts->find_by_key($draft_key);
         if (is_wp_error($draft)) {
             return $draft;
+        }
+
+        // Authorize by per-draft access token (ownership check).
+        if (!$this->drafts->verify_access_token($draft, $access_token)) {
+            return new WP_Error(
+                'forbidden',
+                __('You are not authorized to modify this draft.', 'ht-contactform'),
+                ['status' => 403]
+            );
         }
 
         // Move files to draft storage

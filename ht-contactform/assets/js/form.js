@@ -1961,23 +1961,30 @@ const HTFormFieldComponents = {
     _checkForResume() {
         const urlParams = new URLSearchParams(window.location.search);
         const resumeKey = urlParams.get('ht_form_resume');
+        const resumeToken = urlParams.get('ht_form_token');
 
         if (!resumeKey) return;
 
         // Fetch draft data and populate form
-        this._loadDraft(resumeKey);
+        this._loadDraft(resumeKey, resumeToken);
     },
 
     /**
      * Load draft data from server
      * @private
      */
-    async _loadDraft(draftKey) {
+    async _loadDraft(draftKey, accessToken) {
         try {
-            const response = await fetch(`${ht_form.rest_url}ht-form/v1/draft/${draftKey}`, {
+            // Fall back to this browser's own stored token for same-device resume.
+            const token = accessToken || '';
+            const url = `${ht_form.rest_url}ht-form/v1/draft/${draftKey}`
+                + (token ? `?token=${encodeURIComponent(token)}` : '');
+
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-WP-Nonce': ht_form.rest_nonce,
                 }
             });
 
@@ -1985,7 +1992,7 @@ const HTFormFieldComponents = {
 
             if (!response.ok) {
                 console.warn('Draft not found or expired');
-                HTFormUtils.removeUrlParams(['ht_form_resume']);
+                HTFormUtils.removeUrlParams(['ht_form_resume', 'ht_form_token']);
                 return;
             }
 
@@ -1995,12 +2002,17 @@ const HTFormFieldComponents = {
                 console.warn('Form not found for draft');
                 // Show user-friendly error message
                 alert(__('This resume link is for a different form. Please use the correct form page.', 'ht-contactform'));
-                HTFormUtils.removeUrlParams(['ht_form_resume']);
+                HTFormUtils.removeUrlParams(['ht_form_resume', 'ht_form_token']);
                 return;
             }
 
-            // Store draft key BEFORE populating fields (needed for file restore)
+            // Store draft key + access token BEFORE populating fields (needed
+            // for file restore and subsequent save/update/email calls)
             form.dataset.draftKey = draftKey;
+            form.dataset.accessToken = token || '';
+            if (token) {
+                this._setStoredDraft(result.form_id, draftKey, token);
+            }
 
             // Show resume notice
             const wrapper = form.querySelector('.ht-form-save-resume-wrapper');
@@ -2013,7 +2025,7 @@ const HTFormFieldComponents = {
             this._populateFormFields(form, result.form_data);
 
             // Clean up URL
-            HTFormUtils.removeUrlParams(['ht_form_resume']);
+            HTFormUtils.removeUrlParams(['ht_form_resume', 'ht_form_token']);
 
         } catch (error) {
             console.error('Failed to load draft:', error);
@@ -2406,6 +2418,11 @@ const HTFormFieldComponents = {
             const expiryDays = parseInt(wrapper.dataset.expiry || '30', 10);
             const formId = form.querySelector('[name="ht_form_id"]')?.value || form.dataset.formId;
 
+            // Reuse this browser's own draft (key + access token) if it saved
+            // this form before, so re-saving updates the same record instead of
+            // piling up drafts. The access token proves ownership server-side.
+            const stored = this._getStoredDraft(formId);
+
             const response = await fetch(`${ht_form.rest_url}ht-form/v1/draft/save`, {
                 method: 'POST',
                 headers: {
@@ -2417,6 +2434,8 @@ const HTFormFieldComponents = {
                     form_data: formData,
                     expiry_days: expiryDays,
                     page_url: window.location.href.split('?')[0],
+                    draft_key: form.dataset.draftKey || stored.draft_key || '',
+                    access_token: form.dataset.accessToken || stored.access_token || '',
                 }),
             });
 
@@ -2426,8 +2445,10 @@ const HTFormFieldComponents = {
                 throw new Error(result.message || __('Failed to save progress', 'ht-contactform'));
             }
 
-            // Store the draft key and resume URL
+            // Store the draft key, access token and resume URL
             form.dataset.draftKey = result.draft_key;
+            form.dataset.accessToken = result.access_token || '';
+            this._setStoredDraft(formId, result.draft_key, result.access_token);
             modal.dataset.resumeUrl = result.resume_url;
 
             // Move uploaded files from temp to draft storage
@@ -2563,6 +2584,34 @@ const HTFormFieldComponents = {
      * Move uploaded files from temp to draft storage
      * @private
      */
+    /**
+     * Read this browser's stored draft (key + access token) for a form.
+     * @private
+     */
+    _getStoredDraft(formId) {
+        try {
+            const raw = window.localStorage.getItem(`ht_form_draft_${formId}`);
+            return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+            return {};
+        }
+    },
+
+    /**
+     * Persist this browser's draft key + access token for a form.
+     * @private
+     */
+    _setStoredDraft(formId, draftKey, accessToken) {
+        try {
+            window.localStorage.setItem(
+                `ht_form_draft_${formId}`,
+                JSON.stringify({ draft_key: draftKey, access_token: accessToken || '' })
+            );
+        } catch (e) {
+            /* storage unavailable — non-fatal */
+        }
+    },
+
     async _moveFilesToDraft(form, draftKey) {
         // Collect all file IDs from FilePond instances
         const fileIds = [];
@@ -2592,6 +2641,7 @@ const HTFormFieldComponents = {
                 },
                 body: JSON.stringify({
                     draft_key: draftKey,
+                    access_token: form.dataset.accessToken || '',
                     file_ids: fileIds
                 })
             });
@@ -2698,6 +2748,7 @@ const HTFormFieldComponents = {
                 },
                 body: JSON.stringify({
                     draft_key: draftKey,
+                    access_token: form.dataset.accessToken || '',
                     email: email,
                     page_url: window.location.href.split('?')[0],
                 }),

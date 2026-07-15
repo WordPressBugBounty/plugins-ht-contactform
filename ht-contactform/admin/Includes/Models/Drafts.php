@@ -65,6 +65,7 @@ class Drafts {
             $sql = "CREATE TABLE {$this->table} (
                 id bigint(20) NOT NULL AUTO_INCREMENT,
                 draft_key varchar(64) NOT NULL,
+                access_token varchar(128) DEFAULT NULL,
                 form_id bigint(20) NOT NULL,
                 form_data longtext NOT NULL,
                 email varchar(255) DEFAULT NULL,
@@ -79,6 +80,16 @@ class Drafts {
 
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
             dbDelta($sql);
+
+            return;
+        }
+
+        // Migration: add access_token column to existing installs (pre-2.9.3)
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $has_token = $wpdb->get_var("SHOW COLUMNS FROM {$this->table} LIKE 'access_token'");
+        if (!$has_token) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+            $wpdb->query("ALTER TABLE {$this->table} ADD COLUMN access_token varchar(128) DEFAULT NULL AFTER draft_key");
         }
     }
 
@@ -147,6 +158,51 @@ class Drafts {
     }
 
     /**
+     * Generate a high-entropy access token (the per-draft owner capability)
+     *
+     * @return string 64-char random token
+     */
+    private function generate_access_token() {
+        return wp_generate_password(64, false, false);
+    }
+
+    /**
+     * Hash an access token for storage / comparison
+     *
+     * @param string $token Raw access token
+     * @return string Hashed token
+     */
+    private function hash_access_token($token) {
+        return hash_hmac('sha256', $token, wp_salt('auth'));
+    }
+
+    /**
+     * Verify a raw access token against a draft row.
+     *
+     * Legacy drafts created before access tokens existed have an empty
+     * access_token and are grandfathered (token check skipped) so previously
+     * issued resume links keep working until they expire.
+     *
+     * @param object|array $draft Draft row (must include access_token)
+     * @param string       $token Raw access token supplied by the caller
+     * @return bool True if authorized to access the draft
+     */
+    public function verify_access_token($draft, $token) {
+        $stored = is_object($draft) ? ($draft->access_token ?? '') : ($draft['access_token'] ?? '');
+
+        // Grandfather legacy tokenless drafts.
+        if (empty($stored)) {
+            return true;
+        }
+
+        if (empty($token) || !is_string($token)) {
+            return false;
+        }
+
+        return hash_equals($stored, $this->hash_access_token($token));
+    }
+
+    /**
      * Create a new draft
      *
      * @param array $data {
@@ -170,19 +226,21 @@ class Drafts {
         }
 
         $draft_key = $this->generate_draft_key();
+        $access_token = $this->generate_access_token();
         $expiry_days = isset($data['expiry_days']) ? absint($data['expiry_days']) : 30;
         $expires_at = wp_date('Y-m-d H:i:s', strtotime("+{$expiry_days} days"));
         $now = wp_date('Y-m-d H:i:s');
 
         // Prepare draft data
         $draft = [
-            'draft_key'  => $draft_key,
-            'form_id'    => absint($data['form_id']),
-            'form_data'  => wp_json_encode($data['form_data']),
-            'email'      => !empty($data['email']) ? sanitize_email($data['email']) : null,
-            'expires_at' => $expires_at,
-            'created_at' => $now,
-            'updated_at' => $now,
+            'draft_key'    => $draft_key,
+            'access_token' => $this->hash_access_token($access_token),
+            'form_id'      => absint($data['form_id']),
+            'form_data'    => wp_json_encode($data['form_data']),
+            'email'        => !empty($data['email']) ? sanitize_email($data['email']) : null,
+            'expires_at'   => $expires_at,
+            'created_at'   => $now,
+            'updated_at'   => $now,
         ];
 
         // Insert into database
@@ -198,9 +256,10 @@ class Drafts {
         }
 
         return [
-            'id'         => $wpdb->insert_id,
-            'draft_key'  => $draft_key,
-            'expires_at' => $expires_at,
+            'id'           => $wpdb->insert_id,
+            'draft_key'    => $draft_key,
+            'access_token' => $access_token,
+            'expires_at'   => $expires_at,
         ];
     }
 
@@ -435,7 +494,7 @@ class Drafts {
      * @param string $page_url  The page URL where form is displayed
      * @return bool|WP_Error True on success or error
      */
-    public function send_email($draft_key, $email, $page_url) {
+    public function send_email($draft_key, $email, $page_url, $access_token = '') {
         // Validate email
         if (!is_email($email)) {
             return new WP_Error(
@@ -451,8 +510,9 @@ class Drafts {
             return $draft;
         }
 
-        // Build resume URL
-        $resume_url = add_query_arg('ht_form_resume', $draft_key, $page_url);
+        // Build resume URL (includes the access token so the emailed link can
+        // authorize the read back to its owner)
+        $resume_url = $this->build_resume_url($draft_key, $page_url, $access_token);
 
         // Get site name
         $site_name = get_bloginfo('name');
@@ -514,14 +574,19 @@ class Drafts {
      * @param string $page_url  Page URL (optional, uses current URL if not provided)
      * @return string Full resume URL
      */
-    public function build_resume_url($draft_key, $page_url = '') {
+    public function build_resume_url($draft_key, $page_url = '', $access_token = '') {
         if (empty($page_url)) {
             $page_url = home_url(add_query_arg([]));
         }
 
-        // Remove any existing resume param
-        $page_url = remove_query_arg('ht_form_resume', $page_url);
+        // Remove any existing resume params
+        $page_url = remove_query_arg(['ht_form_resume', 'ht_form_token'], $page_url);
 
-        return add_query_arg('ht_form_resume', $draft_key, $page_url);
+        $args = ['ht_form_resume' => $draft_key];
+        if (!empty($access_token)) {
+            $args['ht_form_token'] = $access_token;
+        }
+
+        return add_query_arg($args, $page_url);
     }
 }

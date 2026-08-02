@@ -174,37 +174,33 @@ class Mailer {
      * @return string Email recipient
      */
     private function get_recipient() {
+        $raw = !empty($this->notification->form_send_to_email) ? $this->notification->form_send_to_email : '';
+
         $emails = [];
-        if(!empty($this->notification->form_send_to_email) && str_contains($this->notification->form_send_to_email, ',')) {
-            $emails = explode(', ', $this->notification->form_send_to_email);
-            $emails = array_map(function($email) {
-                if(is_email($email)) {
-                    return sanitize_email($email);
+        foreach(explode(',', $raw) as $token) {
+            $token = trim($token);
+            if($token === '') {
+                continue;
+            }
+            if(str_contains($token, '{') || str_contains($token, '}')) {
+                $token = $this->helper->filter_vars($token, $this->form_data);
+            }
+            // A resolved smart tag may itself expand to multiple comma-separated emails
+            foreach(explode(',', $token) as $email) {
+                $email = trim($email);
+                if($email !== '' && is_email($email)) {
+                    $emails[] = sanitize_email($email);
                 }
-                if(str_contains($email, '{') || str_contains($email, '}')) {
-                    $email = $this->helper->filter_vars($email, $this->form_data);
-                    if(is_email($email)) {
-                        return sanitize_email($email);
-                    }
-                }
-                return sanitize_email(get_option('admin_email'));
-            }, $emails);
-            return implode(', ', array_unique($emails));
+            }
         }
-        if(isset($this->notification->form_send_to_email)) {
-            $email = $this->notification->form_send_to_email;
-            if(is_email($email)) {
-                return sanitize_email($email);
-            }
-            if(str_contains($email, '{') || str_contains($email, '}')) {
-                $email = $this->helper->filter_vars($email, $this->form_data);
-                if(is_email($email)) {
-                    return sanitize_email($email);
-                }
-            }
+
+        $emails = array_unique($emails);
+
+        if(empty($emails)) {
             return sanitize_email(get_option('admin_email'));
         }
-        return sanitize_email(get_option('admin_email')); 
+
+        return implode(', ', $emails);
     }
 
     /**
@@ -236,7 +232,7 @@ class Mailer {
         if(isset($this->notification->form_email) && is_email($this->notification->form_email)) {
             return sanitize_email($this->notification->form_email);
         }
-        if($this->notification->form_email !== '{admin_email}' && !empty($this->notification->form_email)) {
+        if(!empty($this->notification->form_email)) {
             if(str_contains($this->notification->form_email, '{') || str_contains($this->notification->form_email, '}')) {
                 $email = $this->helper->filter_vars($this->notification->form_email, $this->form_data);
                 if(is_email($email)) {

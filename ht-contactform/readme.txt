@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 2.9.3
+Stable tag: 2.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,13 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.9.4 - Date: 02-Aug-2026 =
+* Fixed: Fields added manually in the form builder (Blank form + drag & drop) could share the same internal field name when two fields of the same type were added, causing one field's submitted data to silently overwrite another's.
+* Fixed: Send To Email notification field failed to parse multiple recipients unless separated by exactly a comma and a space, silently dropping recipients or falling back to the admin email.
+* Added: Smart tag picker to the Send To Email, Email Subject, Form Name, Form Email, and Reply To notification fields.
+* Added: Search field in the smart tag picker dropdown to quickly filter long tag lists.
+* Fixed: Form scripts (including reCAPTCHA) and localized settings failing to load when the form is rendered by a plugin that outputs it very late in the page (e.g. some popup/modal builders), leaving reCAPTCHA non-functional.
 
 = Version: 2.9.3 - Date: 15-Jul-2026 =
 * Security: Fixed an unauthenticated disclosure of saved draft data in the Save & Resume feature. Drafts are now bound to their owner via a per-draft access token. Reported by Mustafa Ahmed via WPScan.

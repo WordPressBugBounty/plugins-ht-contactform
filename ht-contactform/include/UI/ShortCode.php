@@ -712,48 +712,76 @@ class ShortCode {
      */
     private function enqueue_assets() {
 
+        $style_handles = [];
+        $script_handles = [];
+
         foreach ($this->assets as $asset) {
             wp_enqueue_style("ht-{$asset}");
+            $style_handles[] = "ht-{$asset}";
             wp_enqueue_script("ht-{$asset}");
+            $script_handles[] = "ht-{$asset}";
         }
 
         // Enqueue styles
         wp_enqueue_style( 'ht-form');
+        $style_handles[] = 'ht-form';
 
         wp_enqueue_script('ht-axios');
+        $script_handles[] = 'ht-axios';
 
         // Enqueue scripts
         wp_enqueue_script('ht-form');
+        $script_handles[] = 'ht-form';
 
         // Localize script
-        wp_localize_script(
-            'ht-form',
-            'ht_form',
-            [
-                'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('ht_form_ajax_nonce'),
-                'rest_url' => rest_url(),
-                'rest_nonce' => wp_create_nonce('wp_rest'),
-                'plugin_url' => HTCONTACTFORM_PL_URL,
-                'upload_url' => wp_upload_dir()['baseurl'],
-                'captcha' => [
-                    'recaptcha_active_version' => $this->global_settings['captcha']['recaptcha_active_version'] ?? '',
-                    'recaptcha_site_key' => $this->get_active_recaptcha_site_key(),
-                    'hcaptcha_site_key' => $this->global_settings['captcha']['hcaptcha_site_key'] ?? '',
-                ],
-                'i18n' => $this->global_settings['validation_messages'] ?? [
-                    "character_limit" => __("You have exceeded the number of allowed characters.", 'ht-contactform'),
-                    "email" => __("Please enter a valid email address.", 'ht-contactform'),
-                    "input_mask" => __("Please enter a valid {format} format.", 'ht-contactform'),
-                    "phone" => __("Please enter a valid phone number.", 'ht-contactform'),
-                    "maximum_number" => __("You have exceeded the number of allowed maximum.", 'ht-contactform'),
-                    "minimum_number" => __("You have exceeded the number of allowed minimum.", 'ht-contactform'),
-                    "number" => __("Please enter a valid number.", 'ht-contactform'),
-                    "required" => __("This field is required.", 'ht-contactform'),
-                    "selection_limit" => __("You have exceeded the number of allowed selections.", 'ht-contactform'),
-                    "url" => __("Please enter a valid URL.", 'ht-contactform'),
-                ],
-            ]
-        );
+        $l10n = [
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('ht_form_ajax_nonce'),
+            'rest_url' => rest_url(),
+            'rest_nonce' => wp_create_nonce('wp_rest'),
+            'plugin_url' => HTCONTACTFORM_PL_URL,
+            'upload_url' => wp_upload_dir()['baseurl'],
+            'captcha' => [
+                'recaptcha_active_version' => $this->global_settings['captcha']['recaptcha_active_version'] ?? '',
+                'recaptcha_site_key' => $this->get_active_recaptcha_site_key(),
+                'hcaptcha_site_key' => $this->global_settings['captcha']['hcaptcha_site_key'] ?? '',
+            ],
+            'i18n' => $this->global_settings['validation_messages'] ?? [
+                "character_limit" => __("You have exceeded the number of allowed characters.", 'ht-contactform'),
+                "email" => __("Please enter a valid email address.", 'ht-contactform'),
+                "input_mask" => __("Please enter a valid {format} format.", 'ht-contactform'),
+                "phone" => __("Please enter a valid phone number.", 'ht-contactform'),
+                "maximum_number" => __("You have exceeded the number of allowed maximum.", 'ht-contactform'),
+                "minimum_number" => __("You have exceeded the number of allowed minimum.", 'ht-contactform'),
+                "number" => __("Please enter a valid number.", 'ht-contactform'),
+                "required" => __("This field is required.", 'ht-contactform'),
+                "selection_limit" => __("You have exceeded the number of allowed selections.", 'ht-contactform'),
+                "url" => __("Please enter a valid URL.", 'ht-contactform'),
+            ],
+        ];
+        wp_localize_script('ht-form', 'ht_form', $l10n);
+
+        // If the form is rendered after WordPress has already printed the
+        // footer script/style batch (e.g. a shortcode echoed from a plugin
+        // hooked into wp_footer at a very late priority, such as a popup),
+        // the assets above would never be output. Flush them immediately;
+        // wp_print_scripts()/wp_print_styles() skip handles already
+        // printed, so this is a no-op in the normal early-enqueue case.
+        if (did_action('wp_print_footer_scripts')) {
+            wp_print_styles($style_handles);
+            wp_print_scripts($script_handles);
+
+            // wp_print_scripts() skips 'ht-form' if it was already printed
+            // earlier in the request, which would silently drop this
+            // render's localized data (e.g. captcha config). Rebuild and
+            // overwrite the stored "data" ourselves instead of trusting
+            // get_data(): wp_localize_script() PREPENDS to any existing
+            // value for this handle rather than replacing it, so a stale
+            // earlier declaration would otherwise print alongside this
+            // one. Overwriting keeps only this render's data.
+            $inline_script = 'var ht_form = ' . wp_json_encode($l10n) . ';';
+            wp_scripts()->add_data('ht-form', 'data', $inline_script);
+            printf("<script id='ht-form-js-extra'>\n%s\n</script>\n", $inline_script);
+        }
     }
 }

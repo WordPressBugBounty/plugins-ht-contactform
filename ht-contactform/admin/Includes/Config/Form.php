@@ -2488,6 +2488,7 @@ class Form {
                         'label' => __('Send To Email', 'ht-contactform'),
                         'info' => __('Enter the email address to receive form entry notifications. For multiple notifications, separate email addresses with a comma and space.', 'ht-contactform'),
                         'value' => '{admin_email}',
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -2503,6 +2504,7 @@ class Form {
                         'id' => 'form_subject',
                         'label' => __('Email Subject', 'ht-contactform'),
                         'value' => __('New Form Entry - {form_title}', 'ht-contactform'),
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -2518,6 +2520,7 @@ class Form {
                         'id' => 'form_name',
                         'label' => __('Form Name', 'ht-contactform'),
                         'value' => get_bloginfo('name'),
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -2534,6 +2537,7 @@ class Form {
                         'label' => __('Form Email', 'ht-contactform'),
                         'info' => __('Notifications can only use 1 From Email. Please do not enter multiple addresses.', 'ht-contactform'),
                         'value' => '{admin_email}',
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [
@@ -2549,6 +2553,7 @@ class Form {
                         'id' => 'form_reply_to',
                         'label' => __('Reply To', 'ht-contactform'),
                         'info' => __('Enter the email address you would like to be used as the reply to address for the notification email.', 'ht-contactform'),
+                        'support' => ['tags'],
                         'dependency' => [
                             'relation' => 'AND',
                             'rules' => [

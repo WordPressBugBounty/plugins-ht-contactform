@@ -2,8 +2,8 @@
 Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 2.9.4
+Tested up to: 7.1
+Stable tag: 2.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,11 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.9.5 - Date: 27-Aug-2026 =
+* Fixed: Recommended Plugins page grid collapsed to a single column on newer WordPress versions.
+* Fixed: A few minor issues.
+* Tested: Compatibility with the latest version of WordPress.
 
 = Version: 2.9.4 - Date: 02-Aug-2026 =
 * Fixed: Fields added manually in the form builder (Blank form + drag & drop) could share the same internal field name when two fields of the same type were added, causing one field's submitted data to silently overwrite another's.

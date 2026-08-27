@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: HT Contact Form – Drag & Drop Form Builder for "
 "WordPress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 03:09+0000\n"
+"POT-Creation-Date: 2026-08-27 09:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.7.2; wp-6.7.2\n"
+"X-Loco-Version: 2.8.8; wp-7.1; php-8.4.18\n"
 "X-Domain: ht-contactform"
 
 #: admin/Includes/Config/Field.php:428
@@ -22,13 +22,13 @@ msgid "$999.99"
 msgstr ""
 
 #. 1: sub-field label, 2: row number
-#: admin/Includes/Api/Endpoints/Submission.php:793
+#: admin/Includes/Api/Endpoints/Submission.php:805
 #, php-format
 msgid "%1$s is required in row %2$d."
 msgstr ""
 
 #. 1: sub-field label, 2: row number
-#: admin/Includes/Api/Endpoints/Submission.php:806
+#: admin/Includes/Api/Endpoints/Submission.php:818
 #, php-format
 msgid "%1$s must be a valid email address in row %2$d."
 msgstr ""
@@ -40,22 +40,22 @@ msgid "%1$s • %2$s"
 msgstr ""
 
 #. %s: Number of installations.
-#: include/recommended-plugins/class.recommended-plugins.php:316
+#: include/recommended-plugins/class.recommended-plugins.php:329
 #, php-format
 msgid "%s Active Installations"
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Endpoints/Submission.php:706
-#: admin/Includes/Api/Endpoints/Submission.php:725
-#: admin/Includes/Api/Endpoints/Submission.php:738
-#: admin/Includes/Api/Endpoints/Submission.php:749
+#: admin/Includes/Api/Endpoints/Submission.php:718
+#: admin/Includes/Api/Endpoints/Submission.php:737
+#: admin/Includes/Api/Endpoints/Submission.php:750
+#: admin/Includes/Api/Endpoints/Submission.php:761
 #, php-format
 msgid "%s is required."
 msgstr ""
 
 #. %s: field label
-#: admin/Includes/Api/Endpoints/Submission.php:760
+#: admin/Includes/Api/Endpoints/Submission.php:772
 #, php-format
 msgid "%s must be a valid email address."
 msgstr ""
@@ -71,75 +71,84 @@ msgstr ""
 msgid "(999) 999-9999"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:96 admin/Includes/Config/Styler.php:172
-#: admin/Includes/Config/Styler.php:264 admin/Includes/Config/Styler.php:390
-#: admin/Includes/Config/Styler.php:556 admin/Includes/Config/Styler.php:760
-#: admin/Includes/Config/Styler.php:995 admin/Includes/Config/Styler.php:1138
-#: admin/Includes/Config/Styler.php:1342 admin/Includes/Config/Styler.php:1616
+#: admin/Includes/Config/Styler.php:101 admin/Includes/Config/Styler.php:177
+#: admin/Includes/Config/Styler.php:269 admin/Includes/Config/Styler.php:395
+#: admin/Includes/Config/Styler.php:561 admin/Includes/Config/Styler.php:765
+#: admin/Includes/Config/Styler.php:1000 admin/Includes/Config/Styler.php:1143
+#: admin/Includes/Config/Styler.php:1347 admin/Includes/Config/Styler.php:1621
+#: admin/Includes/Config/Styler.php:1908
 msgid "100"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:100 admin/Includes/Config/Styler.php:176
-#: admin/Includes/Config/Styler.php:268 admin/Includes/Config/Styler.php:394
-#: admin/Includes/Config/Styler.php:560 admin/Includes/Config/Styler.php:764
-#: admin/Includes/Config/Styler.php:999 admin/Includes/Config/Styler.php:1142
-#: admin/Includes/Config/Styler.php:1346 admin/Includes/Config/Styler.php:1620
+#: admin/Includes/Config/Styler.php:105 admin/Includes/Config/Styler.php:181
+#: admin/Includes/Config/Styler.php:273 admin/Includes/Config/Styler.php:399
+#: admin/Includes/Config/Styler.php:565 admin/Includes/Config/Styler.php:769
+#: admin/Includes/Config/Styler.php:1004 admin/Includes/Config/Styler.php:1147
+#: admin/Includes/Config/Styler.php:1351 admin/Includes/Config/Styler.php:1625
+#: admin/Includes/Config/Styler.php:1912
 msgid "200"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:104 admin/Includes/Config/Styler.php:180
-#: admin/Includes/Config/Styler.php:272 admin/Includes/Config/Styler.php:398
-#: admin/Includes/Config/Styler.php:564 admin/Includes/Config/Styler.php:768
-#: admin/Includes/Config/Styler.php:1003 admin/Includes/Config/Styler.php:1146
-#: admin/Includes/Config/Styler.php:1350 admin/Includes/Config/Styler.php:1624
+#: admin/Includes/Config/Styler.php:109 admin/Includes/Config/Styler.php:185
+#: admin/Includes/Config/Styler.php:277 admin/Includes/Config/Styler.php:403
+#: admin/Includes/Config/Styler.php:569 admin/Includes/Config/Styler.php:773
+#: admin/Includes/Config/Styler.php:1008 admin/Includes/Config/Styler.php:1151
+#: admin/Includes/Config/Styler.php:1355 admin/Includes/Config/Styler.php:1629
+#: admin/Includes/Config/Styler.php:1916
 msgid "300"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:108 admin/Includes/Config/Styler.php:184
-#: admin/Includes/Config/Styler.php:276 admin/Includes/Config/Styler.php:402
-#: admin/Includes/Config/Styler.php:568 admin/Includes/Config/Styler.php:772
-#: admin/Includes/Config/Styler.php:1007 admin/Includes/Config/Styler.php:1150
-#: admin/Includes/Config/Styler.php:1354 admin/Includes/Config/Styler.php:1628
+#: admin/Includes/Config/Styler.php:113 admin/Includes/Config/Styler.php:189
+#: admin/Includes/Config/Styler.php:281 admin/Includes/Config/Styler.php:407
+#: admin/Includes/Config/Styler.php:573 admin/Includes/Config/Styler.php:777
+#: admin/Includes/Config/Styler.php:1012 admin/Includes/Config/Styler.php:1155
+#: admin/Includes/Config/Styler.php:1359 admin/Includes/Config/Styler.php:1633
+#: admin/Includes/Config/Styler.php:1920
 msgid "400"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:112 admin/Includes/Config/Styler.php:188
-#: admin/Includes/Config/Styler.php:280 admin/Includes/Config/Styler.php:406
-#: admin/Includes/Config/Styler.php:572 admin/Includes/Config/Styler.php:776
-#: admin/Includes/Config/Styler.php:1011 admin/Includes/Config/Styler.php:1154
-#: admin/Includes/Config/Styler.php:1358 admin/Includes/Config/Styler.php:1632
+#: admin/Includes/Config/Styler.php:117 admin/Includes/Config/Styler.php:193
+#: admin/Includes/Config/Styler.php:285 admin/Includes/Config/Styler.php:411
+#: admin/Includes/Config/Styler.php:577 admin/Includes/Config/Styler.php:781
+#: admin/Includes/Config/Styler.php:1016 admin/Includes/Config/Styler.php:1159
+#: admin/Includes/Config/Styler.php:1363 admin/Includes/Config/Styler.php:1637
+#: admin/Includes/Config/Styler.php:1924
 msgid "500"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:116 admin/Includes/Config/Styler.php:192
-#: admin/Includes/Config/Styler.php:284 admin/Includes/Config/Styler.php:410
-#: admin/Includes/Config/Styler.php:576 admin/Includes/Config/Styler.php:780
-#: admin/Includes/Config/Styler.php:1015 admin/Includes/Config/Styler.php:1158
-#: admin/Includes/Config/Styler.php:1362 admin/Includes/Config/Styler.php:1636
+#: admin/Includes/Config/Styler.php:121 admin/Includes/Config/Styler.php:197
+#: admin/Includes/Config/Styler.php:289 admin/Includes/Config/Styler.php:415
+#: admin/Includes/Config/Styler.php:581 admin/Includes/Config/Styler.php:785
+#: admin/Includes/Config/Styler.php:1020 admin/Includes/Config/Styler.php:1163
+#: admin/Includes/Config/Styler.php:1367 admin/Includes/Config/Styler.php:1641
+#: admin/Includes/Config/Styler.php:1928
 msgid "600"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:120 admin/Includes/Config/Styler.php:196
-#: admin/Includes/Config/Styler.php:288 admin/Includes/Config/Styler.php:414
-#: admin/Includes/Config/Styler.php:580 admin/Includes/Config/Styler.php:784
-#: admin/Includes/Config/Styler.php:1019 admin/Includes/Config/Styler.php:1162
-#: admin/Includes/Config/Styler.php:1366 admin/Includes/Config/Styler.php:1640
+#: admin/Includes/Config/Styler.php:125 admin/Includes/Config/Styler.php:201
+#: admin/Includes/Config/Styler.php:293 admin/Includes/Config/Styler.php:419
+#: admin/Includes/Config/Styler.php:585 admin/Includes/Config/Styler.php:789
+#: admin/Includes/Config/Styler.php:1024 admin/Includes/Config/Styler.php:1167
+#: admin/Includes/Config/Styler.php:1371 admin/Includes/Config/Styler.php:1645
+#: admin/Includes/Config/Styler.php:1932
 msgid "700"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:124 admin/Includes/Config/Styler.php:200
-#: admin/Includes/Config/Styler.php:292 admin/Includes/Config/Styler.php:418
-#: admin/Includes/Config/Styler.php:584 admin/Includes/Config/Styler.php:788
-#: admin/Includes/Config/Styler.php:1023 admin/Includes/Config/Styler.php:1166
-#: admin/Includes/Config/Styler.php:1370 admin/Includes/Config/Styler.php:1644
+#: admin/Includes/Config/Styler.php:129 admin/Includes/Config/Styler.php:205
+#: admin/Includes/Config/Styler.php:297 admin/Includes/Config/Styler.php:423
+#: admin/Includes/Config/Styler.php:589 admin/Includes/Config/Styler.php:793
+#: admin/Includes/Config/Styler.php:1028 admin/Includes/Config/Styler.php:1171
+#: admin/Includes/Config/Styler.php:1375 admin/Includes/Config/Styler.php:1649
+#: admin/Includes/Config/Styler.php:1936
 msgid "800"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:128 admin/Includes/Config/Styler.php:204
-#: admin/Includes/Config/Styler.php:296 admin/Includes/Config/Styler.php:422
-#: admin/Includes/Config/Styler.php:588 admin/Includes/Config/Styler.php:792
-#: admin/Includes/Config/Styler.php:1027 admin/Includes/Config/Styler.php:1170
-#: admin/Includes/Config/Styler.php:1374 admin/Includes/Config/Styler.php:1648
+#: admin/Includes/Config/Styler.php:133 admin/Includes/Config/Styler.php:209
+#: admin/Includes/Config/Styler.php:301 admin/Includes/Config/Styler.php:427
+#: admin/Includes/Config/Styler.php:593 admin/Includes/Config/Styler.php:797
+#: admin/Includes/Config/Styler.php:1032 admin/Includes/Config/Styler.php:1175
+#: admin/Includes/Config/Styler.php:1379 admin/Includes/Config/Styler.php:1653
+#: admin/Includes/Config/Styler.php:1940
 msgid "900"
 msgstr ""
 
@@ -156,7 +165,7 @@ msgid "99999-9999"
 msgstr ""
 
 #. %s: Site name
-#: admin/Includes/Models/Drafts.php:463
+#: admin/Includes/Models/Drafts.php:523
 #, php-format
 msgid "[%s] Your Form Progress Has Been Saved"
 msgstr ""
@@ -165,7 +174,7 @@ msgstr ""
 msgid "A new form submission has been received with the following details:"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:87
+#: admin/Includes/Config/Welcome.php:110
 msgid "Acceptance Field"
 msgstr ""
 
@@ -202,7 +211,7 @@ msgstr ""
 msgid "Action Status"
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:261
+#: include/recommended-plugins/class.recommended-plugins.php:274
 msgid "Activate"
 msgstr ""
 
@@ -213,7 +222,7 @@ msgid ""
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:145
-#: include/recommended-plugins/class.recommended-plugins.php:272
+#: include/recommended-plugins/class.recommended-plugins.php:285
 msgid "Activated"
 msgstr ""
 
@@ -222,7 +231,7 @@ msgid "Activating.."
 msgstr ""
 
 #. %s: Number of millions.
-#: include/recommended-plugins/class.recommended-plugins.php:390
+#: include/recommended-plugins/class.recommended-plugins.php:441
 #, php-format
 msgctxt "Active plugin installations"
 msgid "%s+ Million"
@@ -230,7 +239,7 @@ msgid_plural "%s+ Million"
 msgstr[0] ""
 msgstr[1] ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:394
+#: include/recommended-plugins/class.recommended-plugins.php:445
 msgctxt "Active plugin installations"
 msgid "Less Than 10"
 msgstr ""
@@ -247,11 +256,17 @@ msgstr ""
 msgid "Add Button Text"
 msgstr ""
 
+#: admin/Includes/Config/Welcome.php:81
+msgid ""
+"Add CookieRay — a free cookie consent plugin to keep your site GDPR "
+"compliant."
+msgstr ""
+
 #: admin/Includes/Config/Field.php:860
 msgid "Add Row"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:418
+#: admin/Includes/Services/Helper.php:425
 msgid "Admin Email"
 msgstr ""
 
@@ -263,7 +278,7 @@ msgstr ""
 msgid "Admin label is field title which will be used for admin field title."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:86
+#: admin/Includes/Config/Welcome.php:109
 msgid "Advanced Telephone"
 msgstr ""
 
@@ -287,7 +302,7 @@ msgstr ""
 msgid "All credentials (App ID, Username, Password) are required."
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:83
+#: admin/Includes/Config/Welcome.php:106
 msgid "Already Submitted Notice"
 msgstr ""
 
@@ -355,13 +370,6 @@ msgstr ""
 msgid "App ID, Username, and Password are required for iContact integration."
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:138
-msgid ""
-"Are you getting frustrated with WooCommerce’s current way of presenting the "
-"variants for your products? Well, say goodbye to dropdowns and start showing "
-"the product variations in a whole new light with Swatchly."
-msgstr ""
-
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:447
 msgid "ASAP"
 msgstr ""
@@ -374,54 +382,37 @@ msgstr ""
 msgid "Assistant Phone"
 msgstr ""
 
-#. %1$s: project name
-#. %2$s: strong start tag
-#. %3$s: strong end tag
-#. %4$s: a start tag with url
-#. %5$s: a end tag
-#: admin/Includes/DiagnosticData.php:624
-#, php-format
-msgid ""
-"At %2$s%1$s%3$s, we prioritize continuous improvement and compatibility. To "
-"achieve this, we gather non-sensitive diagnostic information and details "
-"about plugin usage. This includes your site's URL, the versions of WordPress "
-"and PHP you're using, and a list of your installed plugins and themes. We "
-"also require your email address to provide you with exclusive discount "
-"coupons and updates. This data collection is crucial for ensuring that "
-"%2$s%1$s%3$s remains up-to-date and compatible with the most widely-used "
-"plugins and themes. Rest assured, your privacy is our priority – no spam, "
-"guaranteed. %4$sPrivacy Policy%5$s"
-msgstr ""
-
-#: admin/Includes/Services/Helper.php:537
+#: admin/Includes/Services/Helper.php:544
 msgid "Author Email"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:523
+#: admin/Includes/Services/Helper.php:530
 msgid "Author ID"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:530
+#: admin/Includes/Services/Helper.php:537
 msgid "Author Name"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:98
-#: admin/Includes/Config/Styler.php:234 admin/Includes/Config/Styler.php:342
-#: admin/Includes/Config/Styler.php:696 admin/Includes/Config/Styler.php:900
-#: admin/Includes/Config/Styler.php:925 admin/Includes/Config/Styler.php:1561
+#: admin/Includes/Config/Styler.php:239 admin/Includes/Config/Styler.php:347
+#: admin/Includes/Config/Styler.php:701 admin/Includes/Config/Styler.php:905
+#: admin/Includes/Config/Styler.php:930 admin/Includes/Config/Styler.php:1566
+#: admin/Includes/Config/Styler.php:1727 admin/Includes/Config/Styler.php:2004
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:571
 msgid "Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:703 admin/Includes/Config/Styler.php:907
+#: admin/Includes/Config/Styler.php:708 admin/Includes/Config/Styler.php:912
+#: admin/Includes/Config/Styler.php:2011
 msgid "Background (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1568
+#: admin/Includes/Config/Styler.php:1573
 msgid "Background (Hover)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:932
+#: admin/Includes/Config/Styler.php:937
 msgid "Background (Selected)"
 msgstr ""
 
@@ -438,7 +429,7 @@ msgid "Below Input Element"
 msgstr ""
 
 #. 1: Site name, 2: Resume URL, 3: Expiry date
-#: admin/Includes/Models/Drafts.php:470
+#: admin/Includes/Models/Drafts.php:530
 #, php-format
 msgid ""
 "Best regards,\n"
@@ -485,6 +476,7 @@ msgstr ""
 msgid "Birthday"
 msgstr ""
 
+#: include/Admin/templates/dashboard-widget.php:91
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:161
 msgid "Blog"
 msgstr ""
@@ -506,20 +498,21 @@ msgstr ""
 msgid "Border"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:470 admin/Includes/Config/Styler.php:682
-#: admin/Includes/Config/Styler.php:886 admin/Includes/Config/Styler.php:1696
+#: admin/Includes/Config/Styler.php:475 admin/Includes/Config/Styler.php:687
+#: admin/Includes/Config/Styler.php:891 admin/Includes/Config/Styler.php:1701
+#: admin/Includes/Config/Styler.php:1720
 msgid "Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:689 admin/Includes/Config/Styler.php:893
+#: admin/Includes/Config/Styler.php:694 admin/Includes/Config/Styler.php:898
 msgid "Border Color (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:477
+#: admin/Includes/Config/Styler.php:482
 msgid "Border Color (Focus)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1703
+#: admin/Includes/Config/Styler.php:1708
 msgid "Border Color (Hover)"
 msgstr ""
 
@@ -530,13 +523,13 @@ msgstr ""
 msgid "Border Radius"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:449 admin/Includes/Config/Styler.php:661
-#: admin/Includes/Config/Styler.php:865 admin/Includes/Config/Styler.php:1675
+#: admin/Includes/Config/Styler.php:454 admin/Includes/Config/Styler.php:666
+#: admin/Includes/Config/Styler.php:870 admin/Includes/Config/Styler.php:1680
 msgid "Border Style"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:440 admin/Includes/Config/Styler.php:652
-#: admin/Includes/Config/Styler.php:856 admin/Includes/Config/Styler.php:1666
+#: admin/Includes/Config/Styler.php:445 admin/Includes/Config/Styler.php:657
+#: admin/Includes/Config/Styler.php:861 admin/Includes/Config/Styler.php:1671
 msgid "Border Width"
 msgstr ""
 
@@ -552,8 +545,20 @@ msgstr ""
 msgid "Build forms with ease using our intuitive form builder."
 msgstr ""
 
+#: admin/Includes/Config/Welcome.php:85
+msgid "Built-in Cookie Scanner"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:521
 msgid "Button"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1866
+msgid "Button Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1859
+msgid "Button Color"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:541
@@ -561,12 +566,12 @@ msgid "Button Type Layout"
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:141
-#: include/recommended-plugins/class.recommended-plugins.php:249
-#: include/recommended-plugins/class.recommended-plugins.php:303
+#: include/recommended-plugins/class.recommended-plugins.php:262
+#: include/recommended-plugins/class.recommended-plugins.php:316
 msgid "Buy Now"
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:289
+#: include/recommended-plugins/class.recommended-plugins.php:302
 msgid "By "
 msgstr ""
 
@@ -579,58 +584,58 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:709 admin/Includes/Config/Styler.php:913
+#: admin/Includes/Config/Styler.php:714 admin/Includes/Config/Styler.php:918
 msgid "Check Icon Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:642
+#: admin/Includes/Config/Styler.php:647
 msgid "Checkbox & Label Gap"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1268 admin/Includes/Config/Styler.php:1486
+#: admin/Includes/Config/Styler.php:1273 admin/Includes/Config/Styler.php:1491
 msgid "Checkbox Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1275 admin/Includes/Config/Styler.php:1493
+#: admin/Includes/Config/Styler.php:1280 admin/Includes/Config/Styler.php:1498
 msgid "Checkbox Background (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1254 admin/Includes/Config/Styler.php:1472
+#: admin/Includes/Config/Styler.php:1259 admin/Includes/Config/Styler.php:1477
 msgid "Checkbox Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1261 admin/Includes/Config/Styler.php:1479
+#: admin/Includes/Config/Styler.php:1266 admin/Includes/Config/Styler.php:1484
 msgid "Checkbox Border Color (Active)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1233 admin/Includes/Config/Styler.php:1451
+#: admin/Includes/Config/Styler.php:1238 admin/Includes/Config/Styler.php:1456
 msgid "Checkbox Border Style"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1224 admin/Includes/Config/Styler.php:1442
+#: admin/Includes/Config/Styler.php:1229 admin/Includes/Config/Styler.php:1447
 msgid "Checkbox Border Width"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1282 admin/Includes/Config/Styler.php:1500
+#: admin/Includes/Config/Styler.php:1287 admin/Includes/Config/Styler.php:1505
 msgid "Checkbox Check Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1289 admin/Includes/Config/Styler.php:1507
+#: admin/Includes/Config/Styler.php:1294 admin/Includes/Config/Styler.php:1512
 msgid "Checkbox Radius"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:606 admin/Includes/Config/Styler.php:1188
-#: admin/Includes/Config/Styler.php:1392
+#: admin/Includes/Config/Styler.php:611 admin/Includes/Config/Styler.php:1193
+#: admin/Includes/Config/Styler.php:1397
 msgid "Checkbox Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:624 admin/Includes/Config/Styler.php:1206
-#: admin/Includes/Config/Styler.php:1410
+#: admin/Includes/Config/Styler.php:629 admin/Includes/Config/Styler.php:1211
+#: admin/Includes/Config/Styler.php:1415
 msgid "Checkbox Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:615 admin/Includes/Config/Styler.php:1197
-#: admin/Includes/Config/Styler.php:1401
+#: admin/Includes/Config/Styler.php:620 admin/Includes/Config/Styler.php:1202
+#: admin/Includes/Config/Styler.php:1406
 msgid "Checkbox Size (Small)"
 msgstr ""
 
@@ -647,6 +652,14 @@ msgstr ""
 msgid "City"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:1748
+msgid "Clear Button Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1741
+msgid "Clear Button Color"
+msgstr ""
+
 #: admin/Includes/Api/Endpoints/Integrations.php:503
 msgid "Client ID and Client Secret are required for Zoho CRM integration."
 msgstr ""
@@ -655,14 +668,14 @@ msgstr ""
 msgid "Close Date"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:57 admin/Includes/Config/Styler.php:151
-#: admin/Includes/Config/Styler.php:227 admin/Includes/Config/Styler.php:335
-#: admin/Includes/Config/Styler.php:517 admin/Includes/Config/Styler.php:721
-#: admin/Includes/Config/Styler.php:1547
+#: admin/Includes/Config/Styler.php:62 admin/Includes/Config/Styler.php:156
+#: admin/Includes/Config/Styler.php:232 admin/Includes/Config/Styler.php:340
+#: admin/Includes/Config/Styler.php:522 admin/Includes/Config/Styler.php:726
+#: admin/Includes/Config/Styler.php:1552
 msgid "Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1554
+#: admin/Includes/Config/Styler.php:1559
 msgid "Color (Hover)"
 msgstr ""
 
@@ -687,18 +700,6 @@ msgstr ""
 msgid "Contact Form"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:174
-msgid ""
-"Contact Form7 Extensions plugin is a fantastic WordPress plugin that "
-"enriches the functionalities of Contact Form 7.This all-in-one WordPress "
-"plugin will help you turn any contact page into a well-organized, engaging "
-"tool for communicating with your website visitors by providing tons of "
-"advanced features like drag and drop file upload, repeater field, trigger "
-"error for already submitted forms, popup form response, country flags and "
-"dial codes with a telephone input field and acceptance field, etc. in "
-"addition to its basic features."
-msgstr ""
-
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:419
 msgid "Contact ID and tag IDs are required."
 msgstr ""
@@ -717,7 +718,12 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-#: admin/Includes/DiagnosticData.php:632
+#: include/recommended-plugins/recommended-plugins.php:69
+#: include/recommended-plugins/recommended-plugins.php:122
+msgid "CookieRay – Cookie Banner for Cookie Consent (GDPR/CCPA Compliant)"
+msgstr ""
+
+#: admin/Includes/DiagnosticData.php:706
 msgid "Count Me In"
 msgstr ""
 
@@ -726,8 +732,8 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:316
-msgid "Coupon Zen"
+#: include/recommended-plugins/recommended-plugins.php:137
+msgid "CourseGlade LMS – Online Course & eLearning Platform"
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:25
@@ -746,9 +752,14 @@ msgstr ""
 msgid "CSV must have at least a header row and one data row"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:459 admin/Includes/Config/Styler.php:671
-#: admin/Includes/Config/Styler.php:875 admin/Includes/Config/Styler.php:1243
-#: admin/Includes/Config/Styler.php:1461 admin/Includes/Config/Styler.php:1685
+#: admin/Includes/Config/Welcome.php:84
+msgid "Customizable Consent Banner"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:464 admin/Includes/Config/Styler.php:676
+#: admin/Includes/Config/Styler.php:880 admin/Includes/Config/Styler.php:1248
+#: admin/Includes/Config/Styler.php:1466 admin/Includes/Config/Styler.php:1690
+#: admin/Includes/Config/Styler.php:1841 admin/Includes/Config/Styler.php:1974
 msgid "Dashed"
 msgstr ""
 
@@ -756,11 +767,7 @@ msgstr ""
 msgid "Database ID is required"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:310
-msgid "DataCaptia"
-msgstr ""
-
-#: templates/email/email-5.php:192 admin/Includes/Services/Helper.php:460
+#: templates/email/email-5.php:192 admin/Includes/Services/Helper.php:467
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:416
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:448
 msgid "Date"
@@ -770,15 +777,15 @@ msgstr ""
 msgid "Date of Birth"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1528
+#: admin/Includes/Config/Styler.php:1533
 msgid "Date/Time Selected Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1535
+#: admin/Includes/Config/Styler.php:1540
 msgid "Date/Time Selected Border Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1521
+#: admin/Includes/Config/Styler.php:1526
 msgid "Date/Time Selected Color"
 msgstr ""
 
@@ -844,21 +851,30 @@ msgstr ""
 msgid "Discord webhook returned error code: %s"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:252
-msgid "Docus Pro"
+#: admin/Includes/Config/Styler.php:1948
+msgid "Divider Color"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:304
-msgid "Docus – YouTube Video Playlist"
+#: admin/Includes/Config/Styler.php:1964
+msgid "Divider Style"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1955
+msgid "Divider Width"
+msgstr ""
+
+#: include/Admin/templates/dashboard-widget.php:97
+msgid "Documentation"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:451
 msgid "Done"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:463 admin/Includes/Config/Styler.php:675
-#: admin/Includes/Config/Styler.php:879 admin/Includes/Config/Styler.php:1247
-#: admin/Includes/Config/Styler.php:1465 admin/Includes/Config/Styler.php:1689
+#: admin/Includes/Config/Styler.php:468 admin/Includes/Config/Styler.php:680
+#: admin/Includes/Config/Styler.php:884 admin/Includes/Config/Styler.php:1252
+#: admin/Includes/Config/Styler.php:1470 admin/Includes/Config/Styler.php:1694
+#: admin/Includes/Config/Styler.php:1845 admin/Includes/Config/Styler.php:1978
 msgid "Dotted"
 msgstr ""
 
@@ -866,19 +882,19 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:255
+#: admin/Includes/Models/Drafts.php:314
 msgid "Draft not found"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:227
+#: admin/Includes/Models/Drafts.php:286
 msgid "Draft not found or has expired"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:304
+#: admin/Includes/Models/Drafts.php:363
 msgid "Draft not found or no changes made"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:88
+#: admin/Includes/Config/Welcome.php:111
 msgid "Drag & Drop File Upload"
 msgstr ""
 
@@ -908,6 +924,18 @@ msgstr ""
 
 #: include/Integrations/Drip.php:341 include/Integrations/Drip.php:344
 msgid "Drip subscription successful"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1852
+msgid "Dropzone Background"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1824
+msgid "Dropzone Border Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1831
+msgid "Dropzone Border Style"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:792
@@ -942,23 +970,16 @@ msgstr ""
 msgid "Email or Web"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:453
+#: admin/Includes/Services/Helper.php:460
 msgid "Embedded Post/Page ID"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:439
+#: admin/Includes/Services/Helper.php:446
 msgid "Embedded Post/Page Title"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:446
+#: admin/Includes/Services/Helper.php:453
 msgid "Embedded Post/Page URL"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:255
-msgid ""
-"Embedding a YouTube playlist into your website plays a vital role to curate "
-"your content into several categories and make your web content more engaging "
-"and popular by keeping the visitors on your website for a longer period."
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:400
@@ -1044,7 +1065,7 @@ msgstr ""
 msgid "Enter Zip Code"
 msgstr ""
 
-#: admin/Admin.php:74
+#: admin/Admin.php:108
 msgid "Entries"
 msgstr ""
 
@@ -1061,7 +1082,7 @@ msgstr ""
 msgid "Entry not found"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:491
+#: admin/Includes/Config/Styler.php:496
 msgid "Error Border Color"
 msgstr ""
 
@@ -1080,16 +1101,12 @@ msgstr ""
 msgid "Error from Insightly API: %s"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:484
+#: admin/Includes/Config/Styler.php:489
 msgid "Error Text Color"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:357
 msgid "Expected Close Date"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:171
-msgid "Extensions For CF7 Pro"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:163
@@ -1112,7 +1129,7 @@ msgstr ""
 msgid "Failed to connect to captcha API"
 msgstr ""
 
-#: include/UI/ShortCode.php:689 admin/Includes/Services/Helper.php:390
+#: include/UI/ShortCode.php:689 admin/Includes/Services/Helper.php:397
 msgid "Failed to connect to hCaptcha server."
 msgstr ""
 
@@ -1134,7 +1151,7 @@ msgstr ""
 msgid "Failed to connect to OnepageCRM: %s"
 msgstr ""
 
-#: include/UI/ShortCode.php:680 admin/Includes/Services/Helper.php:318
+#: include/UI/ShortCode.php:680 admin/Includes/Services/Helper.php:325
 msgid "Failed to connect to reCAPTCHA server."
 msgstr ""
 
@@ -1142,7 +1159,7 @@ msgstr ""
 msgid "Failed to create contact in iContact"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:335
+#: admin/Includes/Models/Drafts.php:394
 msgid "Failed to delete draft"
 msgstr ""
 
@@ -1175,7 +1192,7 @@ msgstr ""
 msgid "Failed to get MailPoet lists: %s"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:195
+#: admin/Includes/Models/Drafts.php:253
 msgid "Failed to save form draft"
 msgstr ""
 
@@ -1183,20 +1200,16 @@ msgstr ""
 msgid "Failed to save form submission"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:490
+#: admin/Includes/Models/Drafts.php:550
 msgid "Failed to send email. Please try again."
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:296
+#: admin/Includes/Models/Drafts.php:355
 msgid "Failed to update draft"
 msgstr ""
 
 #: admin/Includes/Models/Entries.php:373
 msgid "Failed to update entry"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:280
-msgid "Faster YouTube Embed"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:358
@@ -1229,6 +1242,8 @@ msgstr ""
 msgid "First and Last Name"
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1045
+#: include/Templates/TemplateRegistry.php:1046
 #: admin/Includes/Config/Field.php:720
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:137
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:304
@@ -1244,33 +1259,33 @@ msgstr ""
 msgid "Fixed Bid"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:64 admin/Includes/Config/Styler.php:158
-#: admin/Includes/Config/Styler.php:250 admin/Includes/Config/Styler.php:358
-#: admin/Includes/Config/Styler.php:524 admin/Includes/Config/Styler.php:728
-#: admin/Includes/Config/Styler.php:1584
+#: admin/Includes/Config/Styler.php:69 admin/Includes/Config/Styler.php:163
+#: admin/Includes/Config/Styler.php:255 admin/Includes/Config/Styler.php:363
+#: admin/Includes/Config/Styler.php:529 admin/Includes/Config/Styler.php:733
+#: admin/Includes/Config/Styler.php:1589
 msgid "Font Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:82 admin/Includes/Config/Styler.php:376
-#: admin/Includes/Config/Styler.php:542 admin/Includes/Config/Styler.php:746
-#: admin/Includes/Config/Styler.php:1602
+#: admin/Includes/Config/Styler.php:87 admin/Includes/Config/Styler.php:381
+#: admin/Includes/Config/Styler.php:547 admin/Includes/Config/Styler.php:751
+#: admin/Includes/Config/Styler.php:1607
 msgid "Font Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:73 admin/Includes/Config/Styler.php:367
-#: admin/Includes/Config/Styler.php:533 admin/Includes/Config/Styler.php:737
-#: admin/Includes/Config/Styler.php:1593
+#: admin/Includes/Config/Styler.php:78 admin/Includes/Config/Styler.php:372
+#: admin/Includes/Config/Styler.php:538 admin/Includes/Config/Styler.php:742
+#: admin/Includes/Config/Styler.php:1598
 msgid "Font Size (Small)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:91 admin/Includes/Config/Styler.php:167
-#: admin/Includes/Config/Styler.php:259 admin/Includes/Config/Styler.php:385
-#: admin/Includes/Config/Styler.php:551 admin/Includes/Config/Styler.php:755
-#: admin/Includes/Config/Styler.php:1611
+#: admin/Includes/Config/Styler.php:96 admin/Includes/Config/Styler.php:172
+#: admin/Includes/Config/Styler.php:264 admin/Includes/Config/Styler.php:390
+#: admin/Includes/Config/Styler.php:556 admin/Includes/Config/Styler.php:760
+#: admin/Includes/Config/Styler.php:1616
 msgid "Font Weight"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1079 admin/Includes/Config/Styler.php:1087
+#: admin/Includes/Config/Styler.php:1084 admin/Includes/Config/Styler.php:1092
 msgid "For Multiselect Only"
 msgstr ""
 
@@ -1292,7 +1307,7 @@ msgstr ""
 
 #: admin/Includes/Api/Endpoints/Form.php:242
 #: admin/Includes/Api/Endpoints/Draft.php:243
-#: admin/Includes/Api/Endpoints/Draft.php:331
+#: admin/Includes/Api/Endpoints/Draft.php:363
 msgid "Form data is required"
 msgstr ""
 
@@ -1304,11 +1319,11 @@ msgstr ""
 msgid "Form Editor"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:425
+#: admin/Includes/Services/Helper.php:432
 msgid "Form ID"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:167 admin/Includes/Models/Entries.php:290
+#: admin/Includes/Models/Drafts.php:223 admin/Includes/Models/Entries.php:290
 msgid "Form ID and form data are required"
 msgstr ""
 
@@ -1345,7 +1360,7 @@ msgstr ""
 msgid "Form Submission: %s"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:432
+#: admin/Includes/Services/Helper.php:439
 msgid "Form Title"
 msgstr ""
 
@@ -1366,7 +1381,7 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: admin/Admin.php:64 admin/Includes/PostTypes/FormPostType.php:22
+#: admin/Admin.php:93 admin/Includes/PostTypes/FormPostType.php:22
 msgid "Forms"
 msgstr ""
 
@@ -1374,11 +1389,23 @@ msgstr ""
 msgid "Four Columns"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1215 admin/Includes/Config/Styler.php:1433
+#: admin/Includes/Config/Styler.php:1220 admin/Includes/Config/Styler.php:1438
 msgid "Gap Between Checkbox & Text"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:94 admin/Includes/Config/Welcome.php:95
+#: admin/Includes/Config/Styler.php:1810
+msgid "Gap Between Stars"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:86
+msgid "GDPR & CCPA Ready"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:91
+msgid "Get CookieRay Free"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:117 admin/Includes/Config/Welcome.php:118
 msgid "Get Pro Now"
 msgstr ""
 
@@ -1401,12 +1428,8 @@ msgstr ""
 msgid "GetResponse subscription successful"
 msgstr ""
 
-#: admin/Admin.php:79
+#: admin/Admin.php:113
 msgid "Global Settings"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:225
-msgid "Google Place Review"
 msgstr ""
 
 #: admin/Includes/Models/Entries.php:223 admin/Includes/Models/Entries.php:225
@@ -1414,34 +1437,36 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:50
-msgid "HashBar"
+#: include/recommended-plugins/recommended-plugins.php:57
+msgid "HashBar – Announcement, Notification Bar & Popup Campaign"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:183
-msgid ""
-"HashBar is a WordPress Notification / Alert / Offer Bar plugin which allows "
-"you to create unlimited notification bars to notify your customers. This "
-"plugin has option to show email subscription form (sometimes it increases up "
-"to 500% email subscriber), Offer text and buttons about your promotions. "
-"This plugin has the options to add unlimited background colors and images to "
-"make your notification bar more professional."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:180
-msgid "HashBar Pro"
-msgstr ""
-
-#: include/recommended-plugins/class.recommended-plugins.php:246
+#: include/recommended-plugins/class.recommended-plugins.php:259
 msgid "HasTheme"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:362
+#: include/Admin/class-dashboard-widget.php:29
+msgid "HasThemes Stories"
+msgstr ""
+
+#: admin/Includes/Services/Helper.php:369
 msgid "hCaptcha is not configured."
 msgstr ""
 
-#: include/UI/ShortCode.php:692 admin/Includes/Services/Helper.php:401
+#: include/UI/ShortCode.php:692 admin/Includes/Services/Helper.php:408
 msgid "hCaptcha verification failed. Please try again."
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1887
+msgid "Heading Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1894
+msgid "Heading Font Size"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1903
+msgid "Heading Font Weight"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:148
@@ -1472,16 +1497,8 @@ msgstr ""
 msgid "Hover"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:243
-msgid "HT Click To Call"
-msgstr ""
-
-#: admin/Admin.php:49 admin/Admin.php:50
+#: admin/Admin.php:78 admin/Admin.php:79
 msgid "HT Contact Form"
-msgstr ""
-
-#. Name of the plugin
-msgid "HT Contact Form - Easy Form Builder for WordPress"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:13
@@ -1497,81 +1514,24 @@ msgid ""
 "your conversion rates soar!"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:274
-msgid "HT Feed"
+#. Name of the plugin
+msgid "HT Contact Form – Drag & Drop Form Builder for WordPress"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:117
+msgid "HT Easy GA4 – Google Analytics WordPress Plugin"
 msgstr ""
 
 #: include/Widgets/ht_form_widgets.php:13
 msgid "HT Form"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:44
-msgid "HT Mega"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:126
-msgid "HT Mega Pro"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:68
-msgid "HT Menu"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:207
-msgid "HT Menu Pro"
+#: include/recommended-plugins/recommended-plugins.php:107
+msgid "HT Mega Addons for Elementor – Elementor Widgets & Template Builder"
 msgstr ""
 
 #. Author of the plugin
 msgid "HT Plugins"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:74
-msgid "HT Script"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:198
-msgid "HT Script Pro"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:56
-msgid "HT Slider For Elementor"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:216
-msgid "HT Slider Pro For Elementor"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:219
-msgid ""
-"HT Slider Pro is a plugin to create a slider for WordPress websites easily "
-"using the Elementor page builder. 80+ prebuild slides/templates are included "
-"in this plugin. There is the option to create a post slider, WooCommerce "
-"product slider, Video slider, image slider, etc. Fullscreen, full width and "
-"box layout option are included."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:328
-msgid "HT Social Share"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:62
-msgid "HT WPForms"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:246
-msgid ""
-"HT – Click to Call is a lightweight WordPress plugin that allows you to add "
-"a floating click to call button on your website. It will offer your website "
-"visitors an opportunity to call your business immediately at the right "
-"moment, especially when they are interested in your products or services and "
-"seeking more information."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:129
-msgid ""
-"HTMega is an absolute addon for elementor that includes 80+ elements & 360 "
-"Blocks with unlimited variations. HT Mega brings limitless possibilities. "
-"Embellish your site with the elements of HT Mega."
 msgstr ""
 
 #. %s: Error message
@@ -1619,11 +1579,11 @@ msgstr ""
 msgid "HubSpot credentials verified successfully"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:314
+#: admin/Includes/Config/Styler.php:319
 msgid "Icon Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:321
+#: admin/Includes/Config/Styler.php:326
 msgid "Icon Size"
 msgstr ""
 
@@ -1654,14 +1614,6 @@ msgstr ""
 msgid "iContact subscription successful"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:228
-msgid ""
-"If you are searching for a modern and excellent google places review "
-"WordPress plugin to showcase reviews from Google Maps and strengthen trust "
-"between you and your site visitors, look no further than HT Google Place "
-"Review"
-msgstr ""
-
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:364
 msgid "Industry"
 msgstr ""
@@ -1674,14 +1626,8 @@ msgstr ""
 msgid "Input"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:201
-msgid ""
-"Insert Headers and Footers Code allows you to insert Google Analytics, "
-"Facebook Pixel, custom CSS, custom HTML, JavaScript code to your website "
-"header and footer without modifying your theme code.This plugin has the "
-"option to add any custom code to your theme in one place, no need to edit "
-"the theme code. It will save your time and remove the hassle for the theme "
-"update."
+#: include/recommended-plugins/recommended-plugins.php:127
+msgid "Insert Headers and Footers Code – HT Script"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:32
@@ -1696,7 +1642,7 @@ msgstr ""
 msgid "Insightly Service"
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:267
+#: include/recommended-plugins/class.recommended-plugins.php:280
 msgid "Install Now"
 msgstr ""
 
@@ -1725,7 +1671,7 @@ msgstr ""
 msgid "Integration type \"%s\" is not supported."
 msgstr ""
 
-#: admin/Admin.php:84
+#: admin/Admin.php:118
 msgid "Integrations"
 msgstr ""
 
@@ -1743,12 +1689,12 @@ msgstr ""
 msgid "Invalid captcha type"
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Draft.php:368
-#: admin/Includes/Api/Endpoints/Draft.php:435
+#: admin/Includes/Api/Endpoints/Draft.php:414
+#: admin/Includes/Api/Endpoints/Draft.php:496
 msgid "Invalid draft key"
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Draft.php:444
+#: admin/Includes/Api/Endpoints/Draft.php:505
 msgid "Invalid file IDs"
 msgstr ""
 
@@ -1858,22 +1804,10 @@ msgstr ""
 msgid "Justified"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:98
-msgid "JustTables"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:156
+#: include/recommended-plugins/recommended-plugins.php:75
 msgid ""
-"JustTables is an incredible WordPress plugin that lets you showcase all your "
-"WooCommerce products in a sortable and filterable table view. It allows your "
-"customers to easily navigate through different attributes of the products "
-"and compare them on a single page. This plugin will be of great help if you "
-"are looking for an easy solution that increases the chances of landing a "
-"sale on your online store."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:153
-msgid "JustTables Pro"
+"Kelune CRM – Contact Management, Email Marketing, Newsletter & Marketing "
+"Automation"
 msgstr ""
 
 #: include/Widgets/elementor_widgets.php:433
@@ -1893,6 +1827,8 @@ msgstr ""
 msgid "Large"
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1061
+#: include/Templates/TemplateRegistry.php:1062
 #: admin/Includes/Config/Field.php:736
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:144
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:311
@@ -1933,18 +1869,18 @@ msgstr ""
 msgid "Limit the number of selectable options to prevent excessive choices."
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:136 admin/Includes/Config/Styler.php:212
-#: admin/Includes/Config/Styler.php:304 admin/Includes/Config/Styler.php:430
-#: admin/Includes/Config/Styler.php:596 admin/Includes/Config/Styler.php:800
-#: admin/Includes/Config/Styler.php:1035 admin/Includes/Config/Styler.php:1656
+#: admin/Includes/Config/Styler.php:141 admin/Includes/Config/Styler.php:217
+#: admin/Includes/Config/Styler.php:309 admin/Includes/Config/Styler.php:435
+#: admin/Includes/Config/Styler.php:601 admin/Includes/Config/Styler.php:805
+#: admin/Includes/Config/Styler.php:1040 admin/Includes/Config/Styler.php:1661
 msgid "Line Height"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1419
+#: admin/Includes/Config/Styler.php:1424
 msgid "Link Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1426
+#: admin/Includes/Config/Styler.php:1431
 msgid "Link Hover Color"
 msgstr ""
 
@@ -1961,11 +1897,11 @@ msgstr ""
 msgid "List Generation"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:551
+#: admin/Includes/Services/Helper.php:558
 msgid "Login URL"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:558
+#: admin/Includes/Services/Helper.php:565
 msgid "Logout URL"
 msgstr ""
 
@@ -1973,7 +1909,7 @@ msgstr ""
 msgid "Lost"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:572
+#: admin/Includes/Services/Helper.php:579
 msgid "Lost Password URL"
 msgstr ""
 
@@ -2063,6 +1999,8 @@ msgstr ""
 msgid "Message Position"
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1053
+#: include/Templates/TemplateRegistry.php:1054
 #: admin/Includes/Config/Field.php:728
 msgid "Middle Name"
 msgstr ""
@@ -2104,7 +2042,7 @@ msgstr ""
 msgid "Moosend subscription successful"
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:311
+#: include/recommended-plugins/class.recommended-plugins.php:324
 msgid "More Details"
 msgstr ""
 
@@ -2120,25 +2058,11 @@ msgstr ""
 msgid "Ms"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:104
-msgid "Multi Currency"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:162
-msgid "Multi Currency Pro for WooCommerce"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:165
-msgid ""
-"Multi-Currency Pro for WooCommerce is a prominent currency switcher plugin "
-"for WooCommerce. This plugin allows your website or online store visitors to "
-"switch to their preferred currency or their country’s currency."
-msgstr ""
-
 #: admin/Includes/Config/Field.php:482
 msgid "Multiple"
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1037
 #: admin/Includes/Config/Field.php:712
 msgid "Name"
 msgstr ""
@@ -2156,7 +2080,7 @@ msgstr ""
 msgid "New entry submitted on %s"
 msgstr ""
 
-#: admin/Admin.php:69
+#: admin/Admin.php:98
 msgid "New Form"
 msgstr ""
 
@@ -2178,8 +2102,8 @@ msgstr ""
 msgid "No properties to add to the page"
 msgstr ""
 
-#: admin/Includes/DiagnosticData.php:635
-msgid "No, Thanks"
+#: admin/Includes/DiagnosticData.php:709
+msgid "No thanks"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:400
@@ -2226,6 +2150,18 @@ msgstr ""
 msgid "Notion page created successfully"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:1990
+msgid "Number Color"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1997
+msgid "Number Color (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:2018
+msgid "Number Size"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:521
 msgid "One Column"
 msgstr ""
@@ -2270,19 +2206,19 @@ msgstr ""
 msgid "Opportunity Name"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1071
+#: admin/Includes/Config/Styler.php:1076
 msgid "Option Highlighted Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1064
+#: admin/Includes/Config/Styler.php:1069
 msgid "Option Highlighted Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1057
+#: admin/Includes/Config/Styler.php:1062
 msgid "Option Selected Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1050
+#: admin/Includes/Config/Styler.php:1055
 msgid "Option Selected Color"
 msgstr ""
 
@@ -2337,10 +2273,6 @@ msgstr ""
 msgid "Other Street"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:262
-msgid "Others"
-msgstr ""
-
 #: include/Widgets/elementor_widgets.php:71
 #: include/Widgets/elementor_widgets.php:272
 #: include/Widgets/elementor_widgets.php:404
@@ -2351,6 +2283,10 @@ msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:285
 msgid "Partner"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1734
+msgid "Pen Color"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:383
@@ -2399,11 +2335,11 @@ msgstr ""
 msgid "Phone Other"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1086
+#: admin/Includes/Config/Styler.php:1091
 msgid "Pill Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1078
+#: admin/Includes/Config/Styler.php:1083
 msgid "Pill Color"
 msgstr ""
 
@@ -2416,6 +2352,10 @@ msgstr ""
 msgid "Pipeline Stage"
 msgstr ""
 
+#: include/recommended-plugins/recommended-plugins.php:132
+msgid "Pixelavo – Server Side Tracking & Pixel + AI Ads Tools"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:216
 #: include/Widgets/elementor_widgets.php:370
 msgid "Placeholder Color"
@@ -2425,31 +2365,31 @@ msgstr ""
 msgid "Placeholder Text"
 msgstr ""
 
-#: include/UI/ShortCode.php:686 admin/Includes/Services/Helper.php:373
+#: include/UI/ShortCode.php:686 admin/Includes/Services/Helper.php:380
 msgid "Please complete the hCaptcha challenge."
 msgstr ""
 
-#: include/UI/ShortCode.php:677 admin/Includes/Services/Helper.php:299
+#: include/UI/ShortCode.php:677 admin/Includes/Services/Helper.php:306
 msgid "Please complete the reCAPTCHA challenge."
 msgstr ""
 
-#: include/UI/ShortCode.php:746
+#: include/UI/ShortCode.php:751
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: include/UI/ShortCode.php:751
+#: include/UI/ShortCode.php:756
 msgid "Please enter a valid number."
 msgstr ""
 
-#: include/UI/ShortCode.php:748
+#: include/UI/ShortCode.php:753
 msgid "Please enter a valid phone number."
 msgstr ""
 
-#: include/UI/ShortCode.php:754
+#: include/UI/ShortCode.php:759
 msgid "Please enter a valid URL."
 msgstr ""
 
-#: include/UI/ShortCode.php:747
+#: include/UI/ShortCode.php:752
 msgid "Please enter a valid {format} format."
 msgstr ""
 
@@ -2457,8 +2397,8 @@ msgstr ""
 msgid "Please leave this field empty"
 msgstr ""
 
-#: admin/Includes/Models/Drafts.php:443
-#: admin/Includes/Api/Endpoints/Draft.php:377
+#: admin/Includes/Models/Drafts.php:502
+#: admin/Includes/Api/Endpoints/Draft.php:423
 msgid "Please provide a valid email address"
 msgstr ""
 
@@ -2475,15 +2415,19 @@ msgstr ""
 msgid "Please Select contact form."
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:414
+#: include/recommended-plugins/class.recommended-plugins.php:465
 msgid "Plugin Not Found"
 msgstr ""
 
-#: include/recommended-plugins/class.recommended-plugins.php:434
+#: include/recommended-plugins/class.recommended-plugins.php:485
 msgid "Plugin Successfully Activated"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:85
+#: include/recommended-plugins/recommended-plugins.php:102
+msgid "Popular"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:108
 msgid "Popup Form Response"
 msgstr ""
 
@@ -2508,20 +2452,16 @@ msgstr ""
 msgid "Prefix Label"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:505
+#: admin/Includes/Config/Styler.php:510
 msgid "Prefix/Suffix Background Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:498
+#: admin/Includes/Config/Styler.php:503
 msgid "Prefix/Suffix Color"
 msgstr ""
 
 #: include/recommended-plugins/class.recommended-plugins.php:142
 msgid "Preview"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:292
-msgid "Preview Link Generator"
 msgstr ""
 
 #: admin/Includes/Config/Welcome.php:58
@@ -2534,10 +2474,6 @@ msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:472
 msgid "Probability of Winning"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:135
-msgid "Product Variation Swatches"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:810
@@ -2578,11 +2514,11 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:80
+#: admin/Includes/Config/Welcome.php:103
 msgid "Purchase CF7 Pro Extensions"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:467
+#: admin/Includes/Services/Helper.php:474
 msgid "Query String Variable"
 msgstr ""
 
@@ -2590,29 +2526,26 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:298
-msgid "QuickSwish"
-msgstr ""
-
-#: admin/Includes/Config/Styler.php:846
+#: admin/Includes/Config/Styler.php:851
 msgid "Radio & Label Gap"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:810
+#: admin/Includes/Config/Styler.php:815
 msgid "Radio Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:828
+#: admin/Includes/Config/Styler.php:833
 msgid "Radio Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:819
+#: admin/Includes/Config/Styler.php:824
 msgid "Radio Size (Small)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:241 admin/Includes/Config/Styler.php:349
-#: admin/Includes/Config/Styler.php:633 admin/Includes/Config/Styler.php:837
-#: admin/Includes/Config/Styler.php:1575
+#: admin/Includes/Config/Styler.php:246 admin/Includes/Config/Styler.php:354
+#: admin/Includes/Config/Styler.php:638 admin/Includes/Config/Styler.php:842
+#: admin/Includes/Config/Styler.php:1580 admin/Includes/Config/Styler.php:1755
+#: admin/Includes/Config/Styler.php:1873 admin/Includes/Config/Styler.php:2027
 msgid "Radius"
 msgstr ""
 
@@ -2620,17 +2553,13 @@ msgstr ""
 msgid "Read the Full Guide"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:268
-msgid "Really Simple Google Tag Manager"
-msgstr ""
-
-#: admin/Includes/Services/Helper.php:280
-#: admin/Includes/Services/Helper.php:288
+#: admin/Includes/Services/Helper.php:287
+#: admin/Includes/Services/Helper.php:295
 msgid "reCAPTCHA is not configured."
 msgstr ""
 
-#: include/UI/ShortCode.php:683 admin/Includes/Services/Helper.php:333
-#: admin/Includes/Services/Helper.php:342
+#: include/UI/ShortCode.php:683 admin/Includes/Services/Helper.php:340
+#: admin/Includes/Services/Helper.php:349
 msgid "reCAPTCHA verification failed. Please try again."
 msgstr ""
 
@@ -2642,19 +2571,23 @@ msgstr ""
 msgid "Recommendations"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:31
-msgid "Recommended"
+#: include/recommended-plugins/recommended-plugins.php:43
+msgid "Recommended Plugins"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:95
+msgid "Recurio – Ultimate Subscription for WooCommerce"
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations.php:525
 msgid "Redirecting to Zoho for authorization..."
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:544
+#: admin/Includes/Services/Helper.php:551
 msgid "Referrer URL"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:565
+#: admin/Includes/Services/Helper.php:572
 msgid "Register URL"
 msgstr ""
 
@@ -2670,7 +2603,7 @@ msgstr ""
 msgid "Remove Button Text"
 msgstr ""
 
-#: admin/Includes/Config/Welcome.php:84
+#: admin/Includes/Config/Welcome.php:107
 msgid "Repeater Field"
 msgstr ""
 
@@ -2689,7 +2622,7 @@ msgstr ""
 msgid "Responsible User"
 msgstr ""
 
-#: admin/Includes/Api/Endpoints/Draft.php:391
+#: admin/Includes/Api/Endpoints/Draft.php:451
 msgid "Resume link has been sent to your email"
 msgstr ""
 
@@ -2794,15 +2727,13 @@ msgstr ""
 msgid "Seminar"
 msgstr ""
 
-#. %1$s: a start tag with url
-#. %2$s: a end tag
-#: admin/Includes/DiagnosticData.php:630
+#: admin/Includes/DiagnosticData.php:704
 #, php-format
 msgid ""
 "Server information (Web server, PHP version, MySQL version), WordPress "
 "information, site name, site URL, number of plugins, number of users, your "
 "name, and email address. You can rest assured that no sensitive data will be "
-"collected or tracked. %1$sLearn more%2$s."
+"collected or tracked. %1$sPrivacy Policy%2$s"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:333
@@ -2844,6 +2775,10 @@ msgstr ""
 msgid "Shipping Street"
 msgstr ""
 
+#: include/recommended-plugins/recommended-plugins.php:38
+msgid "ShopLentor – All-in-One WooCommerce Growth & Store Enhancement Plugin"
+msgstr ""
+
 #: admin/Includes/Config/Field.php:661
 msgid "Show the current slider value in real-time beneath the slider control."
 msgstr ""
@@ -2858,15 +2793,11 @@ msgstr ""
 msgid "Simple"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:322
-msgid "Sirve – Simple Directory Listing"
-msgstr ""
-
-#: admin/Includes/Services/Helper.php:579
+#: admin/Includes/Services/Helper.php:586
 msgid "Site Title"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:586
+#: admin/Includes/Services/Helper.php:593
 msgid "Site URL"
 msgstr ""
 
@@ -2892,9 +2823,10 @@ msgstr ""
 msgid "Social"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:455 admin/Includes/Config/Styler.php:667
-#: admin/Includes/Config/Styler.php:871 admin/Includes/Config/Styler.php:1239
-#: admin/Includes/Config/Styler.php:1457 admin/Includes/Config/Styler.php:1681
+#: admin/Includes/Config/Styler.php:460 admin/Includes/Config/Styler.php:672
+#: admin/Includes/Config/Styler.php:876 admin/Includes/Config/Styler.php:1244
+#: admin/Includes/Config/Styler.php:1462 admin/Includes/Config/Styler.php:1686
+#: admin/Includes/Config/Styler.php:1837 admin/Includes/Config/Styler.php:1970
 msgid "Solid"
 msgstr ""
 
@@ -2933,6 +2865,26 @@ msgstr ""
 msgid "Stage Number"
 msgstr ""
 
+#: admin/Includes/Config/Styler.php:1776
+msgid "Star Color (Active)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1769
+msgid "Star Color (Inactive)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1783
+msgid "Star Size"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1801
+msgid "Star Size (Large)"
+msgstr ""
+
+#: admin/Includes/Config/Styler.php:1792
+msgid "Star Size (Small)"
+msgstr ""
+
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:138
 msgid "Starred"
 msgstr ""
@@ -2950,6 +2902,10 @@ msgstr ""
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:836
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:378
 msgid "Status"
+msgstr ""
+
+#: admin/Includes/Config/Welcome.php:80
+msgid "Stay Cookie & GDPR Compliant"
 msgstr ""
 
 #: admin/Includes/Config/Field.php:591
@@ -2994,6 +2950,16 @@ msgstr ""
 msgid "Suffix Label"
 msgstr ""
 
+#: include/Admin/templates/dashboard-widget.php:103
+msgid "Support"
+msgstr ""
+
+#: include/recommended-plugins/recommended-plugins.php:51
+msgid ""
+"Support Genix – Helpdesk, AI Chatbot, Knowledge Base & Customer Support "
+"Ticketing System"
+msgstr ""
+
 #: admin/Includes/Api/Endpoints/Integrations/ActiveCampaign.php:465
 msgid "Tags added successfully."
 msgstr ""
@@ -3002,33 +2968,45 @@ msgstr ""
 msgid "Tasks"
 msgstr ""
 
+#: admin/Includes/Api/Endpoints/Templates.php:96
+msgid "Template not found."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Templates.php:89
+msgid "template_id is required."
+msgstr ""
+
+#: admin/Admin.php:103
+msgid "Templates"
+msgstr ""
+
 #: include/Widgets/elementor_widgets.php:199
 #: include/Widgets/elementor_widgets.php:359
 #: include/Widgets/elementor_widgets.php:452
 #: include/Widgets/elementor_widgets.php:565
 #: include/Widgets/elementor_widgets.php:653
-#: admin/Includes/Config/Styler.php:956 admin/Includes/Config/Styler.php:1099
-#: admin/Includes/Config/Styler.php:1303
+#: admin/Includes/Config/Styler.php:961 admin/Includes/Config/Styler.php:1104
+#: admin/Includes/Config/Styler.php:1308
 msgid "Text Color"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:963 admin/Includes/Config/Styler.php:1106
-#: admin/Includes/Config/Styler.php:1310
+#: admin/Includes/Config/Styler.php:968 admin/Includes/Config/Styler.php:1111
+#: admin/Includes/Config/Styler.php:1315
 msgid "Text Font Size"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:981 admin/Includes/Config/Styler.php:1124
-#: admin/Includes/Config/Styler.php:1328
+#: admin/Includes/Config/Styler.php:986 admin/Includes/Config/Styler.php:1129
+#: admin/Includes/Config/Styler.php:1333
 msgid "Text Font Size (Large)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:972 admin/Includes/Config/Styler.php:1115
-#: admin/Includes/Config/Styler.php:1319
+#: admin/Includes/Config/Styler.php:977 admin/Includes/Config/Styler.php:1120
+#: admin/Includes/Config/Styler.php:1324
 msgid "Text Font Size (Small)"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:990 admin/Includes/Config/Styler.php:1133
-#: admin/Includes/Config/Styler.php:1337
+#: admin/Includes/Config/Styler.php:995 admin/Includes/Config/Styler.php:1138
+#: admin/Includes/Config/Styler.php:1342
 msgid "Text Font Weight"
 msgstr ""
 
@@ -3040,7 +3018,7 @@ msgstr ""
 msgid "Text for the \"Remove Row\" button."
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:1178 admin/Includes/Config/Styler.php:1382
+#: admin/Includes/Config/Styler.php:1183 admin/Includes/Config/Styler.php:1387
 msgid "Text Line Height"
 msgstr ""
 
@@ -3059,7 +3037,7 @@ msgstr ""
 #. %1$s: project name
 #. %2$s: strong start tag
 #. %3$s: strong end tag
-#: admin/Includes/DiagnosticData.php:664
+#: admin/Includes/DiagnosticData.php:732
 #, php-format
 msgid "Thank you very much for supporting %2$s%1$s%3$s."
 msgstr ""
@@ -3078,13 +3056,14 @@ msgstr ""
 msgid "The CSV file is empty"
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1033
 #: admin/Includes/Config/Field.php:168 admin/Includes/Config/Field.php:717
 #: admin/Includes/Config/Field.php:725 admin/Includes/Config/Field.php:733
 #: admin/Includes/Config/Field.php:741
 msgid "This field is required"
 msgstr ""
 
-#: include/UI/ShortCode.php:752
+#: include/UI/ShortCode.php:757
 msgid "This field is required."
 msgstr ""
 
@@ -3103,11 +3082,11 @@ msgstr ""
 msgid "Three Columns"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:939
+#: admin/Includes/Config/Styler.php:944
 msgid "Thumb Background"
 msgstr ""
 
-#: admin/Includes/Config/Styler.php:946
+#: admin/Includes/Config/Styler.php:951
 msgid "Thumb Radius"
 msgstr ""
 
@@ -3198,27 +3177,27 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: admin/Includes/Models/Form.php:143 admin/Includes/Api/Endpoints/Form.php:215
+#: admin/Includes/Models/Form.php:170 admin/Includes/Api/Endpoints/Form.php:215
 msgid "Untitled Form"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:481
+#: admin/Includes/Services/Helper.php:488
 msgid "User Display Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:509
+#: admin/Includes/Services/Helper.php:516
 msgid "User Email"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:495
+#: admin/Includes/Services/Helper.php:502
 msgid "User First Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:488
+#: admin/Includes/Services/Helper.php:495
 msgid "User Full Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:474
+#: admin/Includes/Services/Helper.php:481
 msgid "User ID"
 msgstr ""
 
@@ -3226,11 +3205,11 @@ msgstr ""
 msgid "User ID and API key are required for OnepageCRM integration."
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:502
+#: admin/Includes/Services/Helper.php:509
 msgid "User Last Name"
 msgstr ""
 
-#: admin/Includes/Services/Helper.php:516
+#: admin/Includes/Services/Helper.php:523
 msgid "User Meta"
 msgstr ""
 
@@ -3257,23 +3236,11 @@ msgstr ""
 msgid "Waiting"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:234
-msgid "Was This Helpful?"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:237
+#: admin/Includes/DiagnosticData.php:713
+#, php-format
 msgid ""
-"Was this helpful? is a WordPress plugin that allows you to take visitors' "
-"feedback on your post/pages or any article. A visitor can share his feedback "
-"by like/dislike/yes/no"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:86
-msgid "WC Builder"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:286
-msgid "WC Sales Notification"
+"Want to help make %2$s%1$s%3$s even more awesome? Allow %1$s to collect "
+"diagnostic data and usage information. (%4$swhat we collect%5$s)"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/Insightly.php:394
@@ -3282,7 +3249,7 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: admin/Admin.php:59
+#: admin/Admin.php:88
 msgid "Welcome"
 msgstr ""
 
@@ -3290,50 +3257,20 @@ msgstr ""
 msgid "Welcome to HT Contact Form"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:92
-msgid "Whols"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:147
-msgid ""
-"Whols is an outstanding WordPress plugin for WooCommerce that allows store "
-"owners to set wholesale prices for the products of their online stores. This "
-"plugin enables you to show special wholesale prices to the wholesaler. Users "
-"can easily request to become a wholesale customer by filling out a simple "
-"online registration form. Once the registration is complete, the owner of "
-"the store will be able to review the request and approve the request either "
-"manually or automatically."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:144
-msgid "Whols Pro"
+#: include/recommended-plugins/recommended-plugins.php:90
+msgid "Whols – Wholesale Prices and B2B Store Solution for WooCommerce"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:384
 msgid "Won"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:38
-msgid "WooLentor"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:120
-msgid ""
-"WooLentor is one of the most popular WooCommerce Elementor Addons on "
-"WordPress.org. It has been downloaded more than 672,148 times and 60,000 "
-"stores are using WooLentor plugin. Why not you?"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:117
-msgid "WooLentor Pro"
+#: include/recommended-plugins/recommended-plugins.php:83
+msgid "WooCommerce"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:305
 msgid "Word of mouth"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:210
-msgid "WordPress Mega Menu Builder for Elementor"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:181
@@ -3342,19 +3279,9 @@ msgstr ""
 msgid "Work"
 msgstr ""
 
-#: include/recommended-plugins/recommended-plugins.php:80
-msgid "WP Plugin Manager"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:189
-msgid "WP Plugin Manager Pro"
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:192
-msgid ""
-"WP Plugin Manager Pro is a specialized WordPress Plugin that helps you to "
-"deactivate unnecessary WordPress Plugins page wise and boosts the speed of "
-"your WordPress site to improve the overall site performance."
+#: include/recommended-plugins/recommended-plugins.php:63
+#: include/recommended-plugins/recommended-plugins.php:112
+msgid "WP Plugin Manager – Deactivate plugins per page"
 msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:315
@@ -3363,6 +3290,16 @@ msgstr ""
 
 #: admin/Includes/Config/Editor/Integrations/OnepageCRM.php:143
 msgid "Yes"
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Draft.php:331
+#: admin/Includes/Api/Endpoints/Draft.php:437
+msgid "You are not authorized to access this draft."
+msgstr ""
+
+#: admin/Includes/Api/Endpoints/Draft.php:376
+#: admin/Includes/Api/Endpoints/Draft.php:520
+msgid "You are not authorized to modify this draft."
 msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations/Trello.php:122
@@ -3377,24 +3314,20 @@ msgstr ""
 msgid "You do not have permission to manage settings."
 msgstr ""
 
-#: include/UI/ShortCode.php:745
+#: include/UI/ShortCode.php:750
 msgid "You have exceeded the number of allowed characters."
 msgstr ""
 
-#: include/UI/ShortCode.php:749
+#: include/UI/ShortCode.php:754
 msgid "You have exceeded the number of allowed maximum."
 msgstr ""
 
-#: include/UI/ShortCode.php:750
+#: include/UI/ShortCode.php:755
 msgid "You have exceeded the number of allowed minimum."
 msgstr ""
 
-#: include/UI/ShortCode.php:753
+#: include/UI/ShortCode.php:758
 msgid "You have exceeded the number of allowed selections."
-msgstr ""
-
-#: include/recommended-plugins/recommended-plugins.php:111
-msgid "You May Also Like"
 msgstr ""
 
 #: templates/email/email-4.php:47
@@ -3409,6 +3342,10 @@ msgstr ""
 msgid "Your IP address is restricted. Please try again."
 msgstr ""
 
+#: include/Templates/TemplateRegistry.php:1038
+msgid "Your Name"
+msgstr ""
+
 #: include/Integrations/Zapier.php:116
 #, php-format
 msgid "Zapier webhook error: %s"
@@ -3421,10 +3358,4 @@ msgstr ""
 
 #: admin/Includes/Api/Endpoints/Integrations.php:518
 msgid "Zoho CRM is connected."
-msgstr ""
-
-#. %1$s: project name
-#: admin/Includes/DiagnosticData.php:642
-#, php-format
-msgid "🌟 Enhance Your %1$s Experience as a Valued Contributor!"
 msgstr ""

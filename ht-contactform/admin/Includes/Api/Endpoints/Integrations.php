@@ -15,6 +15,7 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Trello;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\HubSpot;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Notion;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\OnepageCRM;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\TwentyCRM;
 
 use HTContactForm\Integrations\Insightly;
 use HTContactForm\Integrations\Brevo;
@@ -287,7 +288,7 @@ class Integrations {
         }
 
         // Check if integration type is supported
-        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact', 'brevo', 'insightly', 'onepagecrm', 'getresponse', 'drip', 'moosend', 'icontact', 'mailpoet', 'notion', 'trello', 'hubspot', 'zohocrm'];
+        $supported_integrations = ['mailchimp', 'activecampaign', 'mailerlite', 'constantcontact', 'brevo', 'insightly', 'onepagecrm', 'getresponse', 'drip', 'moosend', 'icontact', 'mailpoet', 'notion', 'trello', 'hubspot', 'zohocrm', 'twentycrm'];
         if (!in_array($integration, $supported_integrations)) {
             return new WP_Error(
                 'unsupported_integration',
@@ -489,6 +490,27 @@ class Integrations {
 
             $hubspot = HubSpot::get_instance();
             $result = $hubspot->verify($settings['access_token']);
+
+            if (is_wp_error($result)) {
+                return $result;
+            }
+        }
+
+        // Verify Twenty CRM API key and instance URL
+        if ($integration === 'twentycrm') {
+            if (empty($settings['api_key']) || empty($settings['base_url'])) {
+                return new WP_Error(
+                    'missing_credentials',
+                    esc_html__('API key and instance URL are required for Twenty CRM integration.', 'ht-contactform'),
+                    ['status' => 400]
+                );
+            }
+
+            $twentycrm = TwentyCRM::get_instance();
+            $result = $twentycrm->verify([
+                'api_key'  => $settings['api_key'],
+                'base_url' => $settings['base_url'],
+            ]);
 
             if (is_wp_error($result)) {
                 return $result;

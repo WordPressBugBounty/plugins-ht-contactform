@@ -8,6 +8,13 @@ namespace Hasthemes\HTContact_Form;
 class Recommended_Plugins {
 
     /**
+     * Seconds this page may spend on per-slug wp.org lookups before deferring
+     * the remainder to a later page load. Keeps a slow or unreachable wp.org
+     * from exhausting max_execution_time and white-screening the page.
+     */
+    const LOOKUP_TIME_BUDGET = 8;
+
+    /**
      * [$_instance]
      * @var null
      */
@@ -78,7 +85,7 @@ class Recommended_Plugins {
         $this->priority          =  !empty( $args['priority'] ) ? $args['priority'] : 100;
         $this->hook_suffix       =  !empty( $args['hook_suffix'] ) ? $args['hook_suffix'] : '';
         $this->assets_url        =  !empty( $args['assets_url'] ) ? $args['assets_url'] : plugins_url( 'assets', __FILE__ );
-        $this->tab_list          =  !empty( $args['tab_list'] ) ? $args['assets_url'] : [];
+        $this->tab_list          =  !empty( $args['tab_list'] ) ? $args['tab_list'] : [];
 
         
         add_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
@@ -167,7 +174,11 @@ class Recommended_Plugins {
         foreach ( $this->tab_list as $tab ) {
             if ( empty( $tab['plugins'] ) ) { continue; }
             foreach ( $tab['plugins'] as $plugin ) {
-                if ( ! empty( $plugin['slug'] ) ) { $requested_slugs[] = $plugin['slug']; }
+                if ( empty( $plugin['slug'] ) ) { continue; }
+                // Entries carrying a 'link' are paid products that do not exist
+                // on wp.org; looking them up only buys a guaranteed API miss.
+                if ( ! empty( $plugin['link'] ) ) { continue; }
+                $requested_slugs[] = $plugin['slug'];
             }
         }
         $prepare_plugin = $this->get_plugins_info( $requested_slugs );
@@ -240,6 +251,7 @@ class Recommended_Plugins {
                                     'location'  => isset( $plugin['location'] ) ? $plugin['slug'].'/'.$plugin['location'] : '',
                                     'name'      => isset( $plugin['name'] ) ? $plugin['name'] : '',
                                 );
+
                                 if( array_key_exists( $plugin['slug'], $prepare_plugin ) ){
                                     $plugins_type = 'free';
                                     $title        = $data['name'] ? $data['name'] : $prepare_plugin[$plugin['slug']]['name'];
@@ -252,7 +264,7 @@ class Recommended_Plugins {
                                     $modal_class  = 'class="thickbox open-plugin-details-modal"';
 
                                 }else{
-                                    $plugins_type = 'pro';
+                                    $plugins_type   = 'pro';
                                     $title          = wp_kses( $plugin['name'], $this->plugins_allowedtags );
                                     $image_url     = $this->plugin_icon( $plugins_type, $plugin['slug'] );
                                     $description    = isset( $plugin['description'] ) ? $plugin['description'] : '';
@@ -360,46 +372,142 @@ class Recommended_Plugins {
             return array();
         }
 
+        if ( ! function_exists( 'plugins_api' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+        }
+
         $slugs = array_unique( $slugs );
         sort( $slugs ); // deterministic cache key regardless of tab iteration order
 
         $transient_var = 'htrp_htplugins_info_' . md5( implode( ',', $slugs ) );
         $plugins_info  = get_transient( $transient_var );
 
-        if ( false === $plugins_info ) {
+        if ( is_array( $plugins_info ) ) {
+            return $plugins_info;
+        }
 
-            $plugins_info = array();
+        // Resolve as many slugs as possible from two bulk author queries. A
+        // per-slug plugins_api() call costs one HTTP round trip each, so doing
+        // that for every entry up front exhausts max_execution_time on a cold
+        // cache once the list grows past a handful of plugins.
+        $plugins_info = array();
 
-            foreach ( $slugs as $slug ) {
-                $plugin_info = plugins_api( 'plugin_information', array(
-                    'slug'   => $slug,
-                    'fields' => array(
-                        'short_description' => true, 'sections' => false, 'icons' => true,
-                        'active_installs' => true, 'author' => true, 'versions' => false,
-                        'ratings' => false, 'reviews' => false, 'banners' => false,
-                        'compatibility' => false, 'homepage' => false, 'donate_link' => false,
-                        'tags' => false,
-                    ),
-                ) );
+        foreach ( array( 'htplugins', 'palscode' ) as $author ) {
+            foreach ( $this->get_plugins( $author ) as $plugin ) {
 
-                if ( is_wp_error( $plugin_info ) ) {
-                    continue; // not on wp.org (pro-only / paid slug) — stays in the "pro" render branch
+                // plugins_api() has returned both arrays and objects here
+                // across WP versions; normalize before reading fields.
+                $plugin = (array) $plugin;
+
+                if ( empty( $plugin['slug'] ) || ! in_array( $plugin['slug'], $slugs, true ) ) {
+                    continue;
                 }
 
-                $plugins_info[ $slug ] = array(
-                    'name'            => $plugin_info->name,
-                    'slug'            => $plugin_info->slug,
-                    'icons'           => (array) $plugin_info->icons,
-                    'description'     => $plugin_info->short_description,
-                    'author'          => $plugin_info->author,
-                    'active_installs' => $plugin_info->active_installs,
+                $plugins_info[ $plugin['slug'] ] = array(
+                    'name'            => isset( $plugin['name'] ) ? $plugin['name'] : '',
+                    'slug'            => $plugin['slug'],
+                    'icons'           => isset( $plugin['icons'] ) ? (array) $plugin['icons'] : array(),
+                    'description'     => isset( $plugin['short_description'] ) ? $plugin['short_description'] : '',
+                    'author'          => isset( $plugin['author'] ) ? $plugin['author'] : '',
+                    'active_installs' => isset( $plugin['active_installs'] ) ? $plugin['active_installs'] : 0,
                 );
             }
+        }
 
+        // Anything the author queries missed gets looked up by slug — that is
+        // the accurate source (wp.org's author filter goes by SVN repo
+        // ownership, which can differ from the displayed "Author:" line), but
+        // it is bounded so a slow wp.org never takes the page down with it.
+        $missing  = array_values( array_diff( $slugs, array_keys( $plugins_info ) ) );
+        $deadline = time() + self::LOOKUP_TIME_BUDGET;
+        $complete = true;
+
+        foreach ( $missing as $slug ) {
+
+            $slug_cache_key = 'htrp_plugin_info_' . md5( $slug );
+            $cached         = get_transient( $slug_cache_key );
+
+            if ( is_array( $cached ) ) {
+                $plugins_info[ $slug ] = $cached;
+                continue;
+            }
+
+            // 'none' is the negative cache: a slug wp.org cannot resolve is
+            // pro-only, and re-asking on every page load just costs time.
+            if ( 'none' === $cached ) {
+                continue;
+            }
+
+            if ( time() >= $deadline ) {
+                $complete = false; // finish the rest on a later page load
+                break;
+            }
+
+            $plugin_info = plugins_api( 'plugin_information', array(
+                'slug'   => $slug,
+                'fields' => array(
+                    'short_description' => true, 'sections' => false, 'icons' => true,
+                    'active_installs' => true, 'author' => true, 'versions' => false,
+                    'ratings' => false, 'reviews' => false, 'banners' => false,
+                    'compatibility' => false, 'homepage' => false, 'donate_link' => false,
+                    'tags' => false,
+                ),
+            ) );
+
+            if ( is_wp_error( $plugin_info ) ) {
+                // Not on wp.org (pro-only / paid slug) — stays in the "pro" render branch.
+                set_transient( $slug_cache_key, 'none', 1 * WEEK_IN_SECONDS );
+                continue;
+            }
+
+            $plugins_info[ $slug ] = array(
+                'name'            => $plugin_info->name,
+                'slug'            => $plugin_info->slug,
+                'icons'           => (array) $plugin_info->icons,
+                'description'     => $plugin_info->short_description,
+                'author'          => $plugin_info->author,
+                'active_installs' => $plugin_info->active_installs,
+            );
+
+            set_transient( $slug_cache_key, $plugins_info[ $slug ], 1 * WEEK_IN_SECONDS );
+        }
+
+        // Only cache the combined result once every slug has been resolved,
+        // so a run cut short by the time budget resumes instead of freezing
+        // a partial list in place for a week.
+        if ( $complete ) {
             set_transient( $transient_var, $plugins_info, 1 * WEEK_IN_SECONDS );
         }
 
         return $plugins_info;
+    }
+
+    /**
+     * [get_plugins] Get plugin list from the wp.org API by author account
+     * @param  string $username wp.org username
+     * @return array plugin list
+     */
+    public function get_plugins( $username = 'htplugins' ){
+        $transient_var    = 'htrp_htplugins_list_'.$username;
+        $org_plugins_list = get_transient( $transient_var );
+
+        if ( false === $org_plugins_list ) {
+
+            if ( ! function_exists( 'plugins_api' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+            }
+
+            $plugins_list_by_author = plugins_api( 'query_plugins', array( 'author' => $username, 'per_page' => 100 ) );
+
+            if ( is_wp_error( $plugins_list_by_author ) || empty( $plugins_list_by_author->plugins ) ) {
+                return array();
+            }
+
+            $org_plugins_list = $plugins_list_by_author->plugins;
+            set_transient( $transient_var, $org_plugins_list, 1 * WEEK_IN_SECONDS );
+        }
+
+        return is_array( $org_plugins_list ) ? $org_plugins_list : array();
     }
 
     /**
@@ -455,37 +563,36 @@ class Recommended_Plugins {
      * @return [JSON]
      */
     public function plugin_activation() {
-        $nonce = sanitize_text_field($_POST['nonce']);
-        if(wp_verify_nonce($nonce, 'ht-contactform-nonce')) {
 
-            if ( ! current_user_can( 'install_plugins' ) || ! isset( $_POST['location'] ) || ! sanitize_text_field($_POST['location']) ) {
-                wp_send_json_error(
-                    array(
-                        'success' => false,
-                        'message' => esc_html__( 'Plugin Not Found', 'ht-contactform' ),
-                    )
-                );
-            }
+        check_ajax_referer( 'ht-contactform-nonce', 'nonce' );
 
-            $plugin_location = ( isset( $_POST['location'] ) ) ? sanitize_text_field( $_POST['location'] ) : '';
-            $activate    = activate_plugin( $plugin_location, '', false, true );
-
-            if ( is_wp_error( $activate ) ) {
-                wp_send_json_error(
-                    array(
-                        'success' => false,
-                        'message' => $activate->get_error_message(),
-                    )
-                );
-            }
-
-            wp_send_json_success(
+        if ( ! current_user_can( 'install_plugins' ) || ! isset( $_POST['location'] ) || ! sanitize_text_field( wp_unslash( $_POST['location'] ) ) ) {
+            wp_send_json_error(
                 array(
-                    'success' => true,
-                    'message' => esc_html__( 'Plugin Successfully Activated', 'ht-contactform' ),
+                    'success' => false,
+                    'message' => esc_html__( 'Plugin Not Found', 'ht-contactform' ),
                 )
             );
         }
+
+        $plugin_location = ( isset( $_POST['location'] ) ) ? sanitize_text_field( wp_unslash( $_POST['location'] ) ) : '';
+        $activate    = activate_plugin( $plugin_location, '', false, true );
+
+        if ( is_wp_error( $activate ) ) {
+            wp_send_json_error(
+                array(
+                    'success' => false,
+                    'message' => $activate->get_error_message(),
+                )
+            );
+        }
+
+        wp_send_json_success(
+            array(
+                'success' => true,
+                'message' => esc_html__( 'Plugin Successfully Activated', 'ht-contactform' ),
+            )
+        );
 
     }
 }

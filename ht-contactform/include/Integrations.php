@@ -23,6 +23,7 @@ use HTContactForm\Integrations\Notion;
 use HTContactForm\Integrations\Trello;
 use HTContactForm\Integrations\HubSpot;
 use HTContactForm\Integrations\ZohoCRM;
+use HTContactForm\Integrations\TwentyCRM;
 
 /**
  * Integrations Class
@@ -92,6 +93,7 @@ class Integrations {
         $this->trello($form, $form_data, $meta);
         $this->hubspot($form, $form_data, $meta);
         $this->zohocrm($form, $form_data, $meta);
+        $this->twentycrm($form, $form_data, $meta);
         // Allow other integrations to be processed
         do_action('ht_form/process_custom_integrations', $form, $form_data, $meta);
     }
@@ -1048,6 +1050,56 @@ class Integrations {
         } catch (\Exception $e) {
             error_log(sprintf(
                 'HT Contact Form HubSpot Exception (Form ID: %s): %s',
+                $form['id'] ?? 'unknown',
+                $e->getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Handle Twenty CRM integration
+     *
+     * @param array $form Form configuration
+     * @param array $form_data Form submission data
+     * @param array $meta Submission metadata
+     * @return void
+     */
+    public function twentycrm($form, $form_data, $meta) {
+        try {
+            if (empty($this->integrations_settings) || empty($form['id'])) {
+                return;
+            }
+
+            if (empty($this->integrations_settings['twentycrm']['enabled']) ||
+                empty($this->integrations_settings['twentycrm']['api_key']) ||
+                empty($this->integrations_settings['twentycrm']['base_url'])) {
+                return;
+            }
+
+            $integration_list = $this->get_form_integrations($form['id'], 'twentycrm');
+
+            if (empty($integration_list)) {
+                return;
+            }
+
+            $twentycrm = TwentyCRM::get_instance(
+                $this->integrations_settings['twentycrm']['api_key'],
+                $this->integrations_settings['twentycrm']['base_url']
+            );
+
+            foreach ($integration_list as $integration) {
+                $result = $twentycrm->subscribe((object) $integration, $form, $form_data, $meta);
+                if (is_wp_error($result)) {
+                    error_log(sprintf(
+                        'HT Contact Form Twenty CRM Error (Form ID: %s): %s',
+                        $form['id'],
+                        $result->get_error_message()
+                    ));
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                'HT Contact Form Twenty CRM Exception (Form ID: %s): %s',
                 $form['id'] ?? 'unknown',
                 $e->getMessage()
             ));

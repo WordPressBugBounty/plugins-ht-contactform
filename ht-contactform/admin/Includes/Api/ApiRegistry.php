@@ -20,6 +20,7 @@ use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Notion;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\Trello;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\HubSpot;
 use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\ZohoCRM;
+use HTContactFormAdmin\Includes\Api\Endpoints\Integrations\TwentyCRM;
 use HTContactFormAdmin\Includes\Api\Endpoints\Utilities;
 use HTContactFormAdmin\Includes\Api\Endpoints\Draft;
 use HTContactFormAdmin\Includes\Api\Endpoints\Templates;
@@ -53,6 +54,7 @@ class ApiRegistry {
         Trello::get_instance();
         HubSpot::get_instance();
         ZohoCRM::get_instance();
+        TwentyCRM::get_instance();
         Utilities::get_instance();
         Draft::get_instance();
         Templates::get_instance();

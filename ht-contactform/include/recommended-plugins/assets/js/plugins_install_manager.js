@@ -62,7 +62,7 @@
             if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
                 wp.updates.requestFilesystemCredentials( e );
                 $( document ).on( 'credential-modal-cancel', function() {
-                    var $message = $( '.install-now.updating-message' );
+                    var $message = $( '.htrp-install-now.updating-message' );
                     $message.removeClass( 'updating-message' ).text( wp.updates.l10n.installNow );
                     wp.a11y.speak( wp.updates.l10n.updateCancel, 'polite' );
                 });
@@ -70,6 +70,7 @@
             wp.updates.installPlugin( {
                 slug: $plugindata['slug']
             });
+
 
         },
 
@@ -81,7 +82,7 @@
 
             var $plugindata = $message.data('pluginopt');
 
-            $message.removeClass( 'install-now installed button-disabled updated-message' )
+            $message.removeClass( 'htrp-install-now installed button-disabled updated-message' )
                 .addClass( 'updating-message' )
                 .html( htrp_params.buttontxt.activating );
 
@@ -92,11 +93,11 @@
                     data: {
                         action   : htrp_params.text_domain+'_ajax_plugin_activation',
                         location : $plugindata['location'],
-                        nonce    : htrp_params.nonce,
+                        nonce    : htrp_params.nonce
                     },
                 } ).done( function( result ) {
                     if ( result.success ) {
-                        $message.removeClass( 'button-primary install-now activate-now updating-message' )
+                        $message.removeClass( 'button-primary htrp-install-now htrp-activate-now updating-message' )
                             .attr( 'disabled', 'disabled' )
                             .addClass( 'disabled' )
                             .text( htrp_params.buttontxt.active );
@@ -105,6 +106,8 @@
                         $message.removeClass( 'updating-message' );
                     }
 
+                } ).fail( function() {
+                    $message.removeClass( 'updating-message' );
                 });
 
             }, 1200 );
@@ -132,15 +135,19 @@
                 data: {
                     action   : htrp_params.text_domain+'_ajax_plugin_activation',
                     location : $plugindata['location'],
-                    nonce    : htrp_params.nonce,
+                    nonce    : htrp_params.nonce
                 },
             }).done( function( response ) {
                 if ( response.success ) {
-                    $button.removeClass( 'button-primary install-now activate-now updating-message' )
+                    $button.removeClass( 'button-primary htrp-install-now htrp-activate-now updating-message' )
                         .attr( 'disabled', 'disabled' )
                         .addClass( 'disabled' )
                         .text( htrp_params.buttontxt.active );
+                } else {
+                    $button.removeClass( 'updating-message' );
                 }
+            }).fail( function() {
+                $button.removeClass( 'updating-message' );
             });
 
         },

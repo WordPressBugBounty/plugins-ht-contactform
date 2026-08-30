@@ -4553,6 +4553,127 @@ class Form {
                     ]),
                 ]
             ],
+            'twentycrm' => [
+                'id' => 'twentycrm',
+                'label' => __('Twenty CRM', 'ht-contactform'),
+                'value' => [
+                    'enabled' => false,
+                    'name' => '',
+                    'field_mapping' => [],
+                    'update_existing' => true,
+                    'create_company' => false,
+                    'company_mapping' => [],
+                ],
+                'fields' => [
+                    self::$field->create([
+                        'id' => 'enabled',
+                        'label' => __('Enable Twenty CRM', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                    ]),
+                    self::$field->create([
+                        'id' => 'name',
+                        'label' => __('Integration Name', 'ht-contactform'),
+                        'info' => __('Enter a unique name for the Twenty CRM integration to identify it.', 'ht-contactform'),
+                        'value' => __('Twenty CRM Integration Feed', 'ht-contactform'),
+                        'callback' => 'sanitize_text_field',
+                        'required' => true,
+                    ]),
+                    self::$field->create([
+                        'id' => 'field_mapping',
+                        'label' => __('Map Person Fields', 'ht-contactform'),
+                        'info' => __('Map your form fields to Twenty CRM person fields. Email is required.', 'ht-contactform'),
+                        'required' => true,
+                        'type' => 'custom',
+                        'value' => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'value',
+                                'placeholder' => __('Type or select smart tags.', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags'],
+                            ]),
+                        ],
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enabled',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'update_existing',
+                        'label' => __('Update Existing Person', 'ht-contactform'),
+                        'info' => __('When a person with the same email already exists, update that record instead of creating a duplicate.', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => true,
+                        'callback' => 'rest_sanitize_boolean',
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enabled',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'create_company',
+                        'label' => __('Create / Link Company', 'ht-contactform'),
+                        'info' => __('Find or create a company record and link the person to it.', 'ht-contactform'),
+                        'type' => 'switch',
+                        'value' => false,
+                        'callback' => 'rest_sanitize_boolean',
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enabled',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                    self::$field->create([
+                        'id' => 'company_mapping',
+                        'label' => __('Map Company Fields', 'ht-contactform'),
+                        'info' => __('Map your form fields to Twenty CRM company fields. Name or domain is required.', 'ht-contactform'),
+                        'type' => 'custom',
+                        'value' => [],
+                        'fields' => [
+                            self::$field->create([
+                                'id' => 'value',
+                                'placeholder' => __('Type or select smart tags.', 'ht-contactform'),
+                                'callback' => 'sanitize_text_field',
+                                'support' => ['tags'],
+                            ]),
+                        ],
+                        'dependency' => [
+                            'relation' => 'AND',
+                            'rules' => [
+                                [
+                                    'id' => 'enabled',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ],
+                                [
+                                    'id' => 'create_company',
+                                    'value' => true,
+                                    'compare' => '==',
+                                ]
+                            ]
+                        ],
+                    ]),
+                ]
+            ],
             'zohocrm' => [
                 'id' => 'zohocrm',
                 'label' => __('Zoho CRM', 'ht-contactform'),
@@ -5320,6 +5441,32 @@ class Form {
                             'id' => 'access_token',
                             'label' => __('Private App Access Token', 'ht-contactform'),
                             'info' => __('Enter your HubSpot Private App Access Token. Create one at Settings > Integrations > Private Apps in HubSpot.', 'ht-contactform'),
+                            'callback' => 'api_key',
+                            'required' => true,
+                        ]),
+                    ]
+                ]),
+                self::$field->create([
+                    'id' => 'twentycrm',
+                    'icon' => 'twentycrm',
+                    'label' => __('Twenty CRM', 'ht-contactform'),
+                    'info' => __('This option allows you to integrate with Twenty CRM to create people, companies, and notes from form submissions.', 'ht-contactform'),
+                    'type' => 'integration',
+                    'value' => false,
+                    'callback' => 'switch',
+                    'options' => [
+                        self::$field->create([
+                            'id' => 'base_url',
+                            'label' => __('Instance URL', 'ht-contactform'),
+                            'info' => __('Use https://api.twenty.com for Twenty Cloud, or your own domain for a self-hosted instance.', 'ht-contactform'),
+                            'value' => 'https://api.twenty.com',
+                            'callback' => 'esc_url_raw',
+                            'required' => true,
+                        ]),
+                        self::$field->create([
+                            'id' => 'api_key',
+                            'label' => __('API Key', 'ht-contactform'),
+                            'info' => __('Create one in Twenty under Settings > API & Webhooks > Create key. It is shown only once.', 'ht-contactform'),
                             'callback' => 'api_key',
                             'required' => true,
                         ]),

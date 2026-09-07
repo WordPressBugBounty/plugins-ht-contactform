@@ -414,8 +414,71 @@ class Helper {
     }
 
     /**
+     * Find the captcha field configured on a form
+     *
+     * @param array $fields Form fields
+     * @return array|null {type: string, name: string} or null when the form has no captcha field
+     */
+    public static function get_form_captcha_field($fields) {
+        if (empty($fields) || !is_array($fields)) {
+            return null;
+        }
+
+        $defaults = [
+            'recaptcha' => 'g-recaptcha-response',
+            'hcaptcha'  => 'h-captcha-response',
+        ];
+
+        foreach ($fields as $field) {
+            $type = is_array($field) ? ($field['type'] ?? '') : '';
+            if (!isset($defaults[$type])) {
+                continue;
+            }
+
+            $settings = (is_array($field) && !empty($field['settings']) && is_array($field['settings'])) ? $field['settings'] : [];
+
+            return [
+                'type' => $type,
+                'name' => !empty($settings['name_attribute']) ? $settings['name_attribute'] : $defaults[$type],
+            ];
+        }
+
+        return null;
+    }
+
+    /**
+     * Verify the captcha for a form submission
+     *
+     * Whether a captcha is required is decided by the form's own field
+     * configuration, never by what the request happens to contain. A request
+     * that omits the token fails verification instead of skipping it.
+     *
+     * @param array $fields Form fields
+     * @param array $data Submitted data
+     * @return array|bool True when the submission may proceed, otherwise {code, message, status}
+     */
+    public static function verify_form_captcha($fields, $data) {
+        $captcha_field = self::get_form_captcha_field($fields);
+
+        // No captcha field on this form: nothing to verify.
+        if (empty($captcha_field)) {
+            return true;
+        }
+
+        $token = (is_array($data) && isset($data[$captcha_field['name']]) && is_string($data[$captcha_field['name']]))
+            ? $data[$captcha_field['name']]
+            : '';
+
+        if ($captcha_field['type'] === 'hcaptcha') {
+            return self::validate_hcaptcha($token);
+        }
+
+        return self::validate_recaptcha($token);
+    }
+
+    /**
      * Get body tags
-     * 
+     *
      * @return array Body tags
      */
     public function get_body_tags() {

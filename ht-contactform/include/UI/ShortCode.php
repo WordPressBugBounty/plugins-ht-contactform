@@ -499,37 +499,18 @@ class ShortCode {
             }
         }
 
-        // Check which captcha is configured
-        $recaptcha_active_version = $this->global_settings['captcha']['recaptcha_active_version'] ?? '';
-        $recaptcha_configured = false;
-        if ($recaptcha_active_version === 'v2') {
-            $recaptcha_configured = !empty($this->global_settings['captcha']['recaptcha_v2_secret_key']);
-        } elseif ($recaptcha_active_version === 'v3') {
-            $recaptcha_configured = !empty($this->global_settings['captcha']['recaptcha_v3_secret_key']);
-        }
-        $hcaptcha_configured = !empty($this->global_settings['captcha']['hcaptcha_secret_key']);
-
-        // Verify hCaptcha first if configured (hCaptcha may also send g-recaptcha-response for compatibility)
-        if($hcaptcha_configured && isset($_POST['h-captcha-response'])) {
-            $hcaptcha_result = Helper::validate_hcaptcha(sanitize_text_field(wp_unslash($_POST['h-captcha-response'])));
-            if ($hcaptcha_result !== true) {
-                wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', $hcaptcha_result['code']));
-                exit;
-            }
-        }
-        // Verify reCAPTCHA only if configured and hCaptcha response is not present
-        elseif($recaptcha_configured && isset($_POST['g-recaptcha-response'])) {
-            $recaptcha_result = Helper::validate_recaptcha(sanitize_text_field(wp_unslash($_POST['g-recaptcha-response'])));
-            if ($recaptcha_result !== true) {
-                wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', $recaptcha_result['code']));
-                exit;
-            }
-        }
-
         // Process the form submission
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already verified above
         $form_data = wp_unslash($_POST);
         unset($form_data['action'], $form_data['ht_form_nonce'], $form_data['ht_form_id']);
+
+        // Verify the captcha. Whether one is required is decided by the form
+        // configuration, so a request that omits the token fails here.
+        $captcha_result = Helper::verify_form_captcha($form['fields'], $form_data);
+        if ($captcha_result !== true) {
+            wp_redirect($this->add_url_param(wp_get_referer(), 'form_error', $captcha_result['code']));
+            exit;
+        }
 
         // Remove honeypot field from the submission data
         unset($form_data['ht_form_hp_email'], $form_data['ht_form_timestamp']);
@@ -537,6 +518,10 @@ class ShortCode {
         // Remove captcha responses from the submission data
         unset($form_data['g-recaptcha-response']);
         unset($form_data['h-captcha-response']);
+        $captcha_field = Helper::get_form_captcha_field($form['fields']);
+        if (!empty($captcha_field)) {
+            unset($form_data[$captcha_field['name']]);
+        }
 
         $submission = SubmissionEndpoint::get_instance();
         $form_data = $submission->sanitize_data($form_id, $form_data, $form['fields']);

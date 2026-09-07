@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.10.0
+Stable tag: 2.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,10 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.10.1 - Date: 07-Sep-2026 =
+* Security: Fixed reCAPTCHA and hCaptcha verification being skipped when a submission omitted the captcha token, allowing automated submissions to bypass the challenge entirely. Verification is now required whenever the form contains a captcha field.
+* Fixed: The "Minimum time to submit" spam protection setting never rejected fast submissions on AJAX-enabled forms.
 
 = Version: 2.10.0 - Date: 30-Aug-2026 =
 * Added: Twenty CRM integration.

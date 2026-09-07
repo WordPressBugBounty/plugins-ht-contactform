@@ -163,9 +163,6 @@ class Submission {
                 );
             }
 
-            // Remove honeypot field from the submission data
-            unset($form_data['ht_form_hp_email'], $form_data['ht_form_timestamp']);
-
             // Check for minimum submission time if enabled
             $settings = $form['settings'] ?? [];
             $spam_settings = $settings->spam_protection['settings'] ?? [];
@@ -189,43 +186,27 @@ class Submission {
                 }
             }
 
-            // Get global settings for captcha configuration
-            $global_settings = get_option('ht_form_global_settings', []);
-            $recaptcha_active_version = $global_settings['captcha']['recaptcha_active_version'] ?? '';
-            $recaptcha_configured = false;
-            if ($recaptcha_active_version === 'v2') {
-                $recaptcha_configured = !empty($global_settings['captcha']['recaptcha_v2_secret_key']);
-            } elseif ($recaptcha_active_version === 'v3') {
-                $recaptcha_configured = !empty($global_settings['captcha']['recaptcha_v3_secret_key']);
-            }
-            $hcaptcha_configured = !empty($global_settings['captcha']['hcaptcha_secret_key']);
+            // Remove honeypot and timestamp fields from the submission data
+            unset($form_data['ht_form_hp_email'], $form_data['ht_form_timestamp']);
 
-            // Verify hCaptcha first if configured (hCaptcha may also send g-recaptcha-response for compatibility)
-            if($hcaptcha_configured && isset($form_data['h-captcha-response'])) {
-                $hcaptcha_result = Helper::validate_hcaptcha($form_data['h-captcha-response']);
-                if ($hcaptcha_result !== true) {
-                    return new WP_Error(
-                        $hcaptcha_result['code'],
-                        $hcaptcha_result['message'],
-                        ['status' => $hcaptcha_result['status']]
-                    );
-                }
-            }
-            // Verify reCAPTCHA only if configured and hCaptcha response is not present
-            elseif($recaptcha_configured && isset($form_data['g-recaptcha-response'])) {
-                $recaptcha_result = Helper::validate_recaptcha($form_data['g-recaptcha-response']);
-                if ($recaptcha_result !== true) {
-                    return new WP_Error(
-                        $recaptcha_result['code'],
-                        $recaptcha_result['message'],
-                        ['status' => $recaptcha_result['status']]
-                    );
-                }
+            // Verify the captcha. Whether one is required is decided by the form
+            // configuration, so a request that omits the token fails here.
+            $captcha_result = Helper::verify_form_captcha($form['fields'], $form_data);
+            if ($captcha_result !== true) {
+                return new WP_Error(
+                    $captcha_result['code'],
+                    $captcha_result['message'],
+                    ['status' => $captcha_result['status']]
+                );
             }
 
             // Remove captcha responses from the submission data
             unset($form_data['g-recaptcha-response']);
             unset($form_data['h-captcha-response']);
+            $captcha_field = Helper::get_form_captcha_field($form['fields']);
+            if (!empty($captcha_field)) {
+                unset($form_data[$captcha_field['name']]);
+            }
 
             // Sanitize Form Data
             $form_data = $this->sanitize_data($form_id, $form_data, $form['fields']);

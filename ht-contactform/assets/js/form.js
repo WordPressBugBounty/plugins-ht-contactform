@@ -2050,8 +2050,14 @@ const HTFormFieldComponents = {
             if (field.classList.contains('ht-form-elem-richtext-value')) {
                 const container = field.closest('.ht-form-elem-richtext');
                 if (container && container._quill && value) {
-                    container._quill.root.innerHTML = value;
-                    field.value = value;
+                    // Never assign draft-sourced HTML via innerHTML — it is
+                    // attacker-controlled (saved anonymously, restored via a
+                    // shared resume link). Route it through Quill's clipboard
+                    // parser instead, which only reconstructs content using
+                    // the editor's registered formats and drops anything else
+                    // (script/img/on*-handlers included).
+                    container._quill.clipboard.dangerouslyPasteHTML(value);
+                    field.value = container._quill.root.innerHTML;
                 }
                 return;
             }

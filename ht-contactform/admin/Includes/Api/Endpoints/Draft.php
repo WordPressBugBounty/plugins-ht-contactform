@@ -178,6 +178,52 @@ class Draft {
         return current_user_can('manage_options');
     }
 
+    /**
+     * Sanitize draft form data before it is persisted.
+     *
+     * Drafts are saved and read back by anonymous visitors, and the resume flow
+     * writes Rich Text values straight into the editor DOM, so Rich Text fields
+     * must be run through the same allow-list used for final submissions. Other
+     * field types are restored via safe property assignment (`.value = …`) on
+     * the frontend, so they are left as-is here.
+     *
+     * @param array $form_data Raw form data keyed by field name
+     * @param array $fields    Form field config (from FormModel::get()['fields'])
+     * @return array Sanitized form data
+     */
+    private function sanitize_draft_form_data($form_data, $fields) {
+        if (!is_array($form_data)) {
+            return $form_data;
+        }
+
+        if (empty($fields) || !is_array($fields)) {
+            // No field config to key off — fall back to stripping all HTML so
+            // nothing untrusted can reach a later innerHTML-based sink.
+            foreach ($form_data as $key => $value) {
+                if (is_string($value)) {
+                    $form_data[$key] = sanitize_text_field($value);
+                }
+            }
+            return $form_data;
+        }
+
+        foreach ($fields as $field) {
+            if (($field['type'] ?? '') !== 'richtext') {
+                continue;
+            }
+
+            $field_name = $field['settings']['name_attribute'] ?? ($field['id'] ?? '');
+            if ($field_name === '' || !isset($form_data[$field_name]) || !is_string($form_data[$field_name])) {
+                continue;
+            }
+
+            $max_length = $field['settings']['max_length'] ?? 0;
+            $form_data[$field_name] = Submission::sanitize_richtext_field($form_data[$field_name], $max_length);
+        }
+
+        return $form_data;
+    }
+
     //-------------------------------------------------------------------------
     // MAIN OPERATIONS
     //-------------------------------------------------------------------------
@@ -244,6 +290,11 @@ class Draft {
                 ['status' => 400]
             );
         }
+
+        // Sanitize before persisting — this endpoint is reachable by anonymous
+        // visitors and the stored value later gets written back into the page
+        // (e.g. into the Rich Text editor) when the draft is resumed.
+        $form_data = $this->sanitize_draft_form_data($form_data, $form['fields'] ?? []);
 
         $expiry = $expiry_days ?: 30;
 
@@ -377,6 +428,11 @@ class Draft {
                 ['status' => 403]
             );
         }
+
+        // Sanitize before persisting — same public, unauthenticated write path
+        // as save_draft(), so it needs the same allow-list before storage.
+        $form = $this->form->get((int) $existing_draft->form_id);
+        $form_data = $this->sanitize_draft_form_data($form_data, is_wp_error($form) ? [] : ($form['fields'] ?? []));
 
         $result = $this->drafts->update($draft_key, $form_data);
 

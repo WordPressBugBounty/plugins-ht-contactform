@@ -474,95 +474,8 @@ class Submission {
                         break;
 
                     case 'richtext':
-                        $content = $form_data[$field_name];
-
-                        // Primary sanitization: wp_kses decodes HTML entities, strips control
-                        // characters (0x00-0x1F), and checks href protocol against an explicit
-                        // allowlist — covers newline/entity/unquoted bypass vectors that regex cannot.
-                        $allowed_html = [
-                            'p'          => [ 'class' => true, 'style' => true ],
-                            'br'         => [],
-                            'strong'     => [],
-                            'b'          => [],
-                            'em'         => [],
-                            'i'          => [],
-                            'u'          => [],
-                            's'          => [],
-                            'strike'     => [],
-                            'a'          => [ 'href' => true, 'target' => true, 'rel' => true, 'class' => true ],
-                            'ul'         => [],
-                            'ol'         => [],
-                            'li'         => [ 'class' => true ],
-                            'h1'         => [ 'class' => true, 'style' => true ],
-                            'h2'         => [ 'class' => true, 'style' => true ],
-                            'h3'         => [ 'class' => true, 'style' => true ],
-                            'h4'         => [ 'class' => true, 'style' => true ],
-                            'blockquote' => [ 'class' => true ],
-                            'pre'        => [ 'class' => true ],
-                            'code'       => [ 'class' => true ],
-                            'span'       => [ 'class' => true, 'style' => true ],
-                            'button'     => [],
-                        ];
-                        $content = wp_kses( $content, $allowed_html, [ 'http', 'https', 'mailto', 'tel' ] );
-
-                        // Step 4: Sanitize style attributes - only allow safe CSS properties
-                        $content = preg_replace_callback(
-                            '/style\s*=\s*"([^"]*)"/i',
-                            function($matches) {
-                                $style = $matches[1];
-                                $safe_styles = [];
-
-                                // Allow color (but not inside background-color match)
-                                if (preg_match('/(?<![a-z-])color\s*:\s*([^;]+)/i', $style, $match)) {
-                                    $value = trim($match[1]);
-                                    // Only allow rgb(), rgba(), hex colors, and color names
-                                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
-                                        $safe_styles[] = 'color: ' . $value;
-                                    }
-                                }
-
-                                // Allow background-color
-                                if (preg_match('/background-color\s*:\s*([^;]+)/i', $style, $match)) {
-                                    $value = trim($match[1]);
-                                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
-                                        $safe_styles[] = 'background-color: ' . $value;
-                                    }
-                                }
-
-                                // Allow text-align
-                                if (preg_match('/text-align\s*:\s*(left|center|right|justify)/i', $style, $match)) {
-                                    $safe_styles[] = 'text-align: ' . strtolower($match[1]);
-                                }
-
-                                return empty($safe_styles) ? '' : 'style="' . esc_attr(implode('; ', $safe_styles)) . '"';
-                            },
-                            $content
-                        );
-
-                        // Step 5: Sanitize class names - only allow Quill's classes
-                        $content = preg_replace_callback(
-                            '/class\s*=\s*"([^"]*)"/i',
-                            function($matches) {
-                                $allowed_classes = ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-indent-1', 'ql-indent-2', 'ql-indent-3', 'ql-indent-4', 'ql-indent-5', 'ql-indent-6', 'ql-indent-7', 'ql-indent-8', 'ql-code-block'];
-                                $classes = explode(' ', $matches[1]);
-                                $safe_classes = array_intersect($classes, $allowed_classes);
-                                return empty($safe_classes) ? '' : 'class="' . esc_attr(implode(' ', $safe_classes)) . '"';
-                            },
-                            $content
-                        );
-
-                        // Step 6: Validate max_length if set
                         $max_length = $field['settings']['max_length'] ?? 0;
-                        if ($max_length > 0) {
-                            $text_content = wp_strip_all_tags($content);
-                            if (mb_strlen($text_content) > $max_length) {
-                                // Truncate to max length by removing content from end
-                                // Note: This is a fallback; frontend should enforce this
-                                $content = mb_substr($content, 0, $max_length * 3); // Approximate HTML overhead
-                            }
-                        }
-
-                        $sanitized_data[$field_name] = $content;
+                        $sanitized_data[$field_name] = self::sanitize_richtext_field($form_data[$field_name], $max_length);
                         break;
 
                     case 'signature':
@@ -612,6 +525,110 @@ class Submission {
             }
         }
         return $sanitized_data;
+    }
+
+    /**
+     * Sanitize a Rich Text (Quill) field value to a strict, Quill-scoped HTML allow-list.
+     *
+     * Shared by form submission and the public draft save/resume endpoints — both
+     * accept attacker-controlled Rich Text HTML that later gets rendered back to a
+     * browser, so both must run it through the same allow-list before persisting.
+     *
+     * @param string $content    Raw Rich Text HTML
+     * @param int    $max_length Optional character cap (0 = no limit)
+     * @return string Sanitized HTML
+     */
+    public static function sanitize_richtext_field($content, $max_length = 0) {
+        if (!is_string($content)) {
+            return '';
+        }
+
+        // Primary sanitization: wp_kses decodes HTML entities, strips control
+        // characters (0x00-0x1F), and checks href protocol against an explicit
+        // allowlist — covers newline/entity/unquoted bypass vectors that regex cannot.
+        $allowed_html = [
+            'p'          => [ 'class' => true, 'style' => true ],
+            'br'         => [],
+            'strong'     => [],
+            'b'          => [],
+            'em'         => [],
+            'i'          => [],
+            'u'          => [],
+            's'          => [],
+            'strike'     => [],
+            'a'          => [ 'href' => true, 'target' => true, 'rel' => true, 'class' => true ],
+            'ul'         => [],
+            'ol'         => [],
+            'li'         => [ 'class' => true ],
+            'h1'         => [ 'class' => true, 'style' => true ],
+            'h2'         => [ 'class' => true, 'style' => true ],
+            'h3'         => [ 'class' => true, 'style' => true ],
+            'h4'         => [ 'class' => true, 'style' => true ],
+            'blockquote' => [ 'class' => true ],
+            'pre'        => [ 'class' => true ],
+            'code'       => [ 'class' => true ],
+            'span'       => [ 'class' => true, 'style' => true ],
+            'button'     => [],
+        ];
+        $content = wp_kses( $content, $allowed_html, [ 'http', 'https', 'mailto', 'tel' ] );
+
+        // Step 4: Sanitize style attributes - only allow safe CSS properties
+        $content = preg_replace_callback(
+            '/style\s*=\s*"([^"]*)"/i',
+            function($matches) {
+                $style = $matches[1];
+                $safe_styles = [];
+
+                // Allow color (but not inside background-color match)
+                if (preg_match('/(?<![a-z-])color\s*:\s*([^;]+)/i', $style, $match)) {
+                    $value = trim($match[1]);
+                    // Only allow rgb(), rgba(), hex colors, and color names
+                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                        $safe_styles[] = 'color: ' . $value;
+                    }
+                }
+
+                // Allow background-color
+                if (preg_match('/background-color\s*:\s*([^;]+)/i', $style, $match)) {
+                    $value = trim($match[1]);
+                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                        $safe_styles[] = 'background-color: ' . $value;
+                    }
+                }
+
+                // Allow text-align
+                if (preg_match('/text-align\s*:\s*(left|center|right|justify)/i', $style, $match)) {
+                    $safe_styles[] = 'text-align: ' . strtolower($match[1]);
+                }
+
+                return empty($safe_styles) ? '' : 'style="' . esc_attr(implode('; ', $safe_styles)) . '"';
+            },
+            $content
+        );
+
+        // Step 5: Sanitize class names - only allow Quill's classes
+        $content = preg_replace_callback(
+            '/class\s*=\s*"([^"]*)"/i',
+            function($matches) {
+                $allowed_classes = ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-indent-1', 'ql-indent-2', 'ql-indent-3', 'ql-indent-4', 'ql-indent-5', 'ql-indent-6', 'ql-indent-7', 'ql-indent-8', 'ql-code-block'];
+                $classes = explode(' ', $matches[1]);
+                $safe_classes = array_intersect($classes, $allowed_classes);
+                return empty($safe_classes) ? '' : 'class="' . esc_attr(implode(' ', $safe_classes)) . '"';
+            },
+            $content
+        );
+
+        // Step 6: Validate max_length if set
+        if ($max_length > 0) {
+            $text_content = wp_strip_all_tags($content);
+            if (mb_strlen($text_content) > $max_length) {
+                // Truncate to max length by removing content from end
+                // Note: This is a fallback; frontend should enforce this
+                $content = mb_substr($content, 0, $max_length * 3); // Approximate HTML overhead
+            }
+        }
+
+        return $content;
     }
 
     private function get_field_setting_value($settings, $type) {

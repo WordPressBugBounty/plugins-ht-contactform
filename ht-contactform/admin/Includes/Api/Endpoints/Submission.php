@@ -539,86 +539,51 @@ class Submission {
      * @return string Sanitized HTML
      */
     public static function sanitize_richtext_field($content, $max_length = 0) {
-        if (!is_string($content)) {
+        if (!is_string($content) || $content === '') {
             return '';
         }
 
-        // Primary sanitization: wp_kses decodes HTML entities, strips control
-        // characters (0x00-0x1F), and checks href protocol against an explicit
-        // allowlist — covers newline/entity/unquoted bypass vectors that regex cannot.
-        $allowed_html = [
-            'p'          => [ 'class' => true, 'style' => true ],
-            'br'         => [],
-            'strong'     => [],
-            'b'          => [],
-            'em'         => [],
-            'i'          => [],
-            'u'          => [],
-            's'          => [],
-            'strike'     => [],
-            'a'          => [ 'href' => true, 'target' => true, 'rel' => true, 'class' => true ],
-            'ul'         => [],
-            'ol'         => [],
-            'li'         => [ 'class' => true ],
-            'h1'         => [ 'class' => true, 'style' => true ],
-            'h2'         => [ 'class' => true, 'style' => true ],
-            'h3'         => [ 'class' => true, 'style' => true ],
-            'h4'         => [ 'class' => true, 'style' => true ],
-            'blockquote' => [ 'class' => true ],
-            'pre'        => [ 'class' => true ],
-            'code'       => [ 'class' => true ],
-            'span'       => [ 'class' => true, 'style' => true ],
-            'button'     => [],
-        ];
-        $content = wp_kses( $content, $allowed_html, [ 'http', 'https', 'mailto', 'tel' ] );
+        // DOMDocument ships with PHP's near-universal ext-dom, but a handful of
+        // minimal hosts build PHP without it. Rather than fatal on those, fall
+        // back to plain text — safe (no markup at all survives), just not as
+        // nice as formatted output.
+        if (!class_exists('DOMDocument')) {
+            $content = wp_strip_all_tags($content);
+            if ($max_length > 0) {
+                $content = mb_substr($content, 0, $max_length);
+            }
+            return $content;
+        }
 
-        // Step 4: Sanitize style attributes - only allow safe CSS properties
-        $content = preg_replace_callback(
-            '/style\s*=\s*"([^"]*)"/i',
-            function($matches) {
-                $style = $matches[1];
-                $safe_styles = [];
-
-                // Allow color (but not inside background-color match)
-                if (preg_match('/(?<![a-z-])color\s*:\s*([^;]+)/i', $style, $match)) {
-                    $value = trim($match[1]);
-                    // Only allow rgb(), rgba(), hex colors, and color names
-                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
-                        $safe_styles[] = 'color: ' . $value;
-                    }
-                }
-
-                // Allow background-color
-                if (preg_match('/background-color\s*:\s*([^;]+)/i', $style, $match)) {
-                    $value = trim($match[1]);
-                    if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
-                        $safe_styles[] = 'background-color: ' . $value;
-                    }
-                }
-
-                // Allow text-align
-                if (preg_match('/text-align\s*:\s*(left|center|right|justify)/i', $style, $match)) {
-                    $safe_styles[] = 'text-align: ' . strtolower($match[1]);
-                }
-
-                return empty($safe_styles) ? '' : 'style="' . esc_attr(implode('; ', $safe_styles)) . '"';
-            },
-            $content
+        // wp_kses() is a regex/state-machine tag splitter, not a real HTML
+        // parser — it can be handed deliberately malformed markup (broken
+        // attribute quoting, stray "<a>" fragments) that it leaves untouched
+        // because it never recognizes new tag/attribute boundaries in it,
+        // while a real browser parses the exact same bytes into a DOM that
+        // *does* contain a disallowed attribute (e.g. onclick). Parsing with
+        // libxml's HTML parser first means we sanitize the same tree a
+        // browser would actually render, instead of a different one.
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML(
+            '<?xml encoding="utf-8" ?><div>' . $content . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
+        libxml_clear_errors();
 
-        // Step 5: Sanitize class names - only allow Quill's classes
-        $content = preg_replace_callback(
-            '/class\s*=\s*"([^"]*)"/i',
-            function($matches) {
-                $allowed_classes = ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-indent-1', 'ql-indent-2', 'ql-indent-3', 'ql-indent-4', 'ql-indent-5', 'ql-indent-6', 'ql-indent-7', 'ql-indent-8', 'ql-code-block'];
-                $classes = explode(' ', $matches[1]);
-                $safe_classes = array_intersect($classes, $allowed_classes);
-                return empty($safe_classes) ? '' : 'class="' . esc_attr(implode(' ', $safe_classes)) . '"';
-            },
-            $content
-        );
+        $root = $dom->getElementsByTagName('div')->item(0);
+        if (!$root) {
+            return '';
+        }
 
-        // Step 6: Validate max_length if set
+        self::sanitize_richtext_dom_node($root);
+
+        $content = '';
+        foreach (iterator_to_array($root->childNodes) as $child) {
+            $content .= $dom->saveHTML($child);
+        }
+
+        // Validate max_length if set
         if ($max_length > 0) {
             $text_content = wp_strip_all_tags($content);
             if (mb_strlen($text_content) > $max_length) {
@@ -629,6 +594,145 @@ class Submission {
         }
 
         return $content;
+    }
+
+    /**
+     * Recursively enforce the Rich Text (Quill) tag/attribute allow-list on a
+     * parsed DOM subtree in place. Tags not on the allow-list are unwrapped
+     * (their children are kept, e.g. stray formatting); known-dangerous
+     * container tags are dropped entirely, content included. Attributes not
+     * explicitly allowed for a tag are stripped, and the ones kept (href,
+     * class, style, target, rel) are further constrained to safe values —
+     * never emitted as-is — so nothing surviving parsing can carry an event
+     * handler or an unexpected token.
+     *
+     * @param \DOMNode $node Node whose children are sanitized
+     * @return void
+     */
+    private static function sanitize_richtext_dom_node($node) {
+        $allowed_tags = [
+            'p', 'br', 'strong', 'b', 'em', 'i', 'u', 's', 'strike',
+            'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4',
+            'blockquote', 'pre', 'code', 'span', 'button',
+        ];
+        // Tags removed together with their content — never just unwrapped.
+        $strip_entirely = ['script', 'style', 'iframe', 'object', 'embed', 'svg', 'math', 'template', 'noscript', 'form'];
+        $allowed_attrs = [
+            'a'          => ['href', 'target', 'rel', 'class'],
+            'p'          => ['class', 'style'],
+            'h1'         => ['class', 'style'],
+            'h2'         => ['class', 'style'],
+            'h3'         => ['class', 'style'],
+            'h4'         => ['class', 'style'],
+            'li'         => ['class'],
+            'blockquote' => ['class'],
+            'pre'        => ['class'],
+            'code'       => ['class'],
+            'span'       => ['class', 'style'],
+        ];
+        $allowed_classes = ['ql-align-center', 'ql-align-right', 'ql-align-justify', 'ql-indent-1', 'ql-indent-2', 'ql-indent-3', 'ql-indent-4', 'ql-indent-5', 'ql-indent-6', 'ql-indent-7', 'ql-indent-8', 'ql-code-block'];
+        $allowed_rel_tokens = ['noopener', 'noreferrer', 'nofollow', 'ugc'];
+
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if ($child->nodeType === XML_TEXT_NODE) {
+                continue;
+            }
+
+            if ($child->nodeType !== XML_ELEMENT_NODE) {
+                // Comments, processing instructions, CDATA, etc.
+                $node->removeChild($child);
+                continue;
+            }
+
+            $tag = strtolower($child->nodeName);
+
+            if (in_array($tag, $strip_entirely, true)) {
+                $node->removeChild($child);
+                continue;
+            }
+
+            if (!in_array($tag, $allowed_tags, true)) {
+                // Unwrap: keep the (still-to-be-sanitized) children, drop the wrapper.
+                while ($child->firstChild) {
+                    $node->insertBefore($child->firstChild, $child);
+                }
+                $node->removeChild($child);
+                continue;
+            }
+
+            if ($child->hasAttributes()) {
+                $allowed_for_tag = $allowed_attrs[$tag] ?? [];
+                foreach (iterator_to_array($child->attributes) as $attr) {
+                    $name = strtolower($attr->nodeName);
+
+                    if (!in_array($name, $allowed_for_tag, true)) {
+                        $child->removeAttribute($attr->nodeName);
+                        continue;
+                    }
+
+                    switch ($name) {
+                        case 'href':
+                            if (!preg_match('#^(https?://|mailto:|tel:|/)#i', $attr->nodeValue)) {
+                                $child->removeAttribute('href');
+                            }
+                            break;
+
+                        case 'target':
+                            if ($attr->nodeValue !== '_blank') {
+                                $child->removeAttribute('target');
+                            }
+                            break;
+
+                        case 'rel':
+                            $tokens = array_intersect(preg_split('/\s+/', $attr->nodeValue), $allowed_rel_tokens);
+                            if (empty($tokens)) {
+                                $child->removeAttribute('rel');
+                            } else {
+                                $child->setAttribute('rel', implode(' ', $tokens));
+                            }
+                            break;
+
+                        case 'class':
+                            $classes = array_intersect(preg_split('/\s+/', $attr->nodeValue), $allowed_classes);
+                            if (empty($classes)) {
+                                $child->removeAttribute('class');
+                            } else {
+                                $child->setAttribute('class', implode(' ', $classes));
+                            }
+                            break;
+
+                        case 'style':
+                            $safe_styles = [];
+                            $style = $attr->nodeValue;
+
+                            if (preg_match('/(?<![a-z-])color\s*:\s*([^;]+)/i', $style, $match)) {
+                                $value = trim($match[1]);
+                                if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                                    $safe_styles[] = 'color: ' . $value;
+                                }
+                            }
+                            if (preg_match('/background-color\s*:\s*([^;]+)/i', $style, $match)) {
+                                $value = trim($match[1]);
+                                if (preg_match('/^(rgb\s*\([^)]+\)|rgba\s*\([^)]+\)|#[a-fA-F0-9]{3,8}|[a-zA-Z]+)$/i', $value)) {
+                                    $safe_styles[] = 'background-color: ' . $value;
+                                }
+                            }
+                            if (preg_match('/text-align\s*:\s*(left|center|right|justify)/i', $style, $match)) {
+                                $safe_styles[] = 'text-align: ' . strtolower($match[1]);
+                            }
+
+                            if (empty($safe_styles)) {
+                                $child->removeAttribute('style');
+                            } else {
+                                $child->setAttribute('style', implode('; ', $safe_styles));
+                            }
+                            break;
+                    }
+                }
+            }
+
+            self::sanitize_richtext_dom_node($child);
+        }
     }
 
     private function get_field_setting_value($settings, $type) {

@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.10.3
+Stable tag: 2.10.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,12 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.10.4 - Date: 29-Oct-2026 =
+* Fixed: PHP 8.4+ notices corrupting exported entry files.
+* Fixed: HT Form block preview styling in the WordPress 7.1 editor.
+* Fixed: Shortcode copy button not copying on non-HTTPS sites.
+* Tested: Compatibility with the latest version of WordPress and PHP 8.5.
 
 = Version: 2.10.3 - Date: 27-Sep-2026 =
 * Security: Fixed a stored XSS in the Rich Text Editor field reachable via unauthenticated form submission.

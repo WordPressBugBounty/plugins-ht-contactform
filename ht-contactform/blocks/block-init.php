@@ -56,6 +56,12 @@ class Contactform_Block
 			array(),
 			HTCONTACTFORM_VERSION
 		);
+
+		// The post editor is always iframed (WP 7.1+); only enqueue_block_assets styles reach the iframe.
+		if ( is_admin() ) {
+			wp_enqueue_style( 'ht-form' );
+			wp_enqueue_style( 'ht-select' );
+		}
 	}
 
 	/**

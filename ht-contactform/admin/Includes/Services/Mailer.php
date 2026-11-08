@@ -94,7 +94,7 @@ class Mailer {
         /* translators: %s: form title */
         $subject = $this->notification->form_subject ?? sprintf(__('New Form Entry - %s', 'ht-contactform'), $this->form['title']);
         
-        $subject = $this->helper->filter_vars($subject, $this->form_data);
+        $subject = $this->helper->filter_vars($subject, $this->form_data, [], true);
         $notification_body = $this->notification->form_email_body;
         $lines = explode("\n", $notification_body); // Split into lines
         $data = [];
@@ -102,7 +102,7 @@ class Mailer {
             if(str_contains($line, '{all_fields}')) {
                 $data = array_merge($data, $this->form_data);
             } else {
-                $data[] = $this->helper->filter_vars($line, $this->form_data);
+                $data[] = $this->helper->filter_vars($line, $this->form_data, [], true);
             }
         }
         
@@ -183,7 +183,7 @@ class Mailer {
                 continue;
             }
             if(str_contains($token, '{') || str_contains($token, '}')) {
-                $token = $this->helper->filter_vars($token, $this->form_data);
+                $token = $this->helper->filter_vars($token, $this->form_data, [], true);
             }
             // A resolved smart tag may itself expand to multiple comma-separated emails
             foreach(explode(',', $token) as $email) {
@@ -220,7 +220,7 @@ class Mailer {
         //         }
         //     }
         // }
-        return sanitize_text_field($this->helper->filter_vars($this->notification->form_name, $this->form_data));
+        return sanitize_text_field($this->helper->filter_vars($this->notification->form_name, $this->form_data, [], true));
     }
 
     /**
@@ -234,7 +234,7 @@ class Mailer {
         }
         if(!empty($this->notification->form_email)) {
             if(str_contains($this->notification->form_email, '{') || str_contains($this->notification->form_email, '}')) {
-                $email = $this->helper->filter_vars($this->notification->form_email, $this->form_data);
+                $email = $this->helper->filter_vars($this->notification->form_email, $this->form_data, [], true);
                 if(is_email($email)) {
                     return sanitize_email($email);
                 }
@@ -254,7 +254,7 @@ class Mailer {
         }
         if($this->notification->form_reply_to !== '{admin_email}' && !empty($this->notification->form_reply_to)) {
             if(str_contains($this->notification->form_reply_to, '{') || str_contains($this->notification->form_reply_to, '}')) {
-                $reply_to = $this->helper->filter_vars($this->notification->form_reply_to, $this->form_data);
+                $reply_to = $this->helper->filter_vars($this->notification->form_reply_to, $this->form_data, [], true);
                 if(is_email($reply_to)) {
                     return sanitize_email($reply_to);
                 }

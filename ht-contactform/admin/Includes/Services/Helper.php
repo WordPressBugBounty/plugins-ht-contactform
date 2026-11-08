@@ -686,9 +686,12 @@ class Helper {
      * 
      * @param string $data Content to filter
      * @param array $form_data Form data
+     * @param array $form Form config
+     * @param bool $blank_unresolved Replace {input.*} tags that have no submitted value with an empty string.
+     *                               Leave false when the tags must survive (e.g. Custom HTML field rendering).
      * @return string Filtered content
      */
-    public function filter_vars($data, $form_data = [], $form = []) {
+    public function filter_vars($data, $form_data = [], $form = [], $blank_unresolved = false) {
         $body_tags = $this->get_body_tags();
         // Process {input.field_name} patterns
         if(str_contains($data, '{input.')) {
@@ -696,14 +699,12 @@ class Helper {
             foreach($matches as $match) {
                 $placeholder = $match[0]; // Full match like {input.name}
                 $field_name = $match[1]; // Captured group like "name"
-                if(isset($match[2])) {
-                    $field_sub_name = $match[2]; // Captured group like "first_name"
-                }
-                if(isset($form_data[$field_name])) {
+                $field_sub_name = $match[2] ?? null; // Captured group like "first_name"
+                if(is_array($form_data) && array_key_exists($field_name, $form_data) && $form_data[$field_name] !== null) {
                     $replacement = $form_data[$field_name];
                     if(is_array($replacement)) {
-                        if(isset($field_sub_name)) {
-                            $replacement = $replacement[$field_sub_name];
+                        if($field_sub_name !== null) {
+                            $replacement = $replacement[$field_sub_name] ?? '';
                         } elseif($this->is_name_field($replacement)) {
                             $replacement = implode(' ', array_filter($replacement));
                         } else {
@@ -713,10 +714,13 @@ class Helper {
                         $replacement = sanitize_text_field($replacement);
                     }
                     $data = str_replace($placeholder, $replacement, $data);
+                } elseif($blank_unresolved) {
+                    // Field not submitted: don't leak the raw {input.*} tag
+                    $data = str_replace($placeholder, '', $data);
                 }
             }
         }
-        
+
         // Process other tags
         foreach($body_tags as $tag) {
             if(strpos($data, $tag['value']) !== false) {

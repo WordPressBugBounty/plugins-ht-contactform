@@ -100,7 +100,7 @@ class Webhook {
             foreach ($webhook->headers as $header) {
                 if (!empty($header['key']) && !empty($header['value'])) {
                     if(str_contains($header['key'], '{') || str_contains($header['key'], '}')) {
-                        $headers[sanitize_key($header['key'])] = $this->helper->filter_vars($header['value'], $this->form_data);
+                        $headers[sanitize_key($header['key'])] = $this->helper->filter_vars($header['value'], $this->form_data, [], true);
                     } else {
                         $headers[sanitize_key($header['key'])] = sanitize_text_field($header['value']);
                     }
@@ -114,7 +114,7 @@ class Webhook {
             foreach ($webhook->fields as $field) {
                 if (!empty($field['key']) && !empty($field['value'])) {
                     if(str_contains($field['value'], '{') || str_contains($field['value'], '}')) {
-                        $data[$field['key']] = $this->helper->filter_vars($field['value'], $this->form_data);
+                        $data[$field['key']] = $this->helper->filter_vars($field['value'], $this->form_data, [], true);
                     } else {
                         $data[$field['key']] = sanitize_text_field($field['value']);
                     }

@@ -379,7 +379,17 @@ class ShortCode {
         
         // Rebuild URL
         $url_parts['query'] = http_build_query($query);
-        
+
+        // Land on the submitted form instead of the top of the page, so the
+        // success/error message is visible without a scroll jump.
+        if (($param === 'form_success' || $param === 'form_error') && empty($url_parts['fragment'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- only used to build an anchor, sanitized with absint
+            $anchor_form_id = isset($_POST['ht_form_id']) ? absint($_POST['ht_form_id']) : 0;
+            if ($anchor_form_id) {
+                $url_parts['fragment'] = 'ht-form-' . $anchor_form_id;
+            }
+        }
+
         return $this->build_url($url_parts);
     }
     

@@ -3,7 +3,7 @@ Contributors: htplugins, hasthemes, zenaulislam, aslamhasib, yeasinrony
 Tags: contact form, form builder, forms, custom form, drag and drop
 Requires at least: 5.0
 Tested up to: 7.1
-Stable tag: 2.10.4
+Stable tag: 2.10.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,11 @@ Only enable this if your site is genuinely behind a trusted proxy, since these h
 10. Global Settings - Configure everything from one dashboard
 
 == Changelog ==
+
+= Version: 2.10.5 - Date: 08-Nov-2026 =
+* Fixed: Empty or unsubmitted fields were sent as raw smart tags (e.g. {input.phone}) in webhooks and email notifications. They are now sent as empty values.
+* Fixed: The page jumped to the top after a form was submitted without AJAX. It now returns to the form and shows the confirmation message.
+* Fixed: The page content jumped when the confirmation message disappeared.
 
 = Version: 2.10.4 - Date: 29-Oct-2026 =
 * Fixed: PHP 8.4+ notices corrupting exported entry files.

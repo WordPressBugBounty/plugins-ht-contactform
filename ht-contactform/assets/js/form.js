@@ -131,8 +131,33 @@ const HTFormMessageHandler = {
         
         setTimeout(() => {
             HTFormUtils.removeUrlParams(['form_success', 'form_error']);
-            messageContainer.style.display = 'none';
+            HTFormMessageHandler.hideMessage(messageContainer);
         }, HTFORM_CONFIG.MESSAGE_DISPLAY_TIME);
+    },
+
+    /**
+     * Hide a message without making the page content jump.
+     * Measures where the content right after the message sits, hides the
+     * message, then scrolls by the exact height that was removed so whatever
+     * the user is looking at stays in place.
+     * @param {HTMLElement} message - Message container
+     */
+    hideMessage(message) {
+        if (!message || message.style.display === 'none') return;
+
+        const anchor = message.nextElementSibling;
+        const before = anchor ? anchor.getBoundingClientRect().top : null;
+
+        message.style.display = 'none';
+
+        // Only compensate when the content after the message is on screen or
+        // above it; if it is below the viewport the user sees no shift.
+        if (anchor && before !== null && before < window.innerHeight) {
+            const shift = anchor.getBoundingClientRect().top - before;
+            if (shift) {
+                window.scrollBy({ top: shift, left: 0, behavior: 'instant' });
+            }
+        }
     },
 
     /**
@@ -144,7 +169,7 @@ const HTFormMessageHandler = {
         messages.forEach(message => {
             setTimeout(() => {
                 HTFormUtils.removeUrlParams(['form_success', 'form_error']);
-                message.style.display = 'none';
+                HTFormMessageHandler.hideMessage(message);
             }, HTFORM_CONFIG.MESSAGE_DISPLAY_TIME);
         });
     }
@@ -2797,6 +2822,31 @@ const HTForm = {
             HTFormConditionalLogic.check(form);
             HTFormMessageHandler.autoHideMessages(form);
         });
+
+        this.scrollToSubmissionMessage();
+    },
+
+    /**
+     * After a standard (non-AJAX) submission the server redirects back with
+     * ?form_success / ?form_error and the page loads at the top. Bring the
+     * result message into view so the user is not left at the top of the page.
+     */
+    scrollToSubmissionMessage() {
+        const params = new URLSearchParams(window.location.search);
+        if (!params.has('form_success') && !params.has('form_error')) return;
+        // Respect an explicit #anchor: the browser already scrolled there
+        if (window.location.hash) return;
+
+        const message = document.querySelector(`${HTFORM_CONFIG.FORM_SELECTOR} .ht-form-message`);
+        if (!message) return;
+
+        const scroll = () => HTFormUtils.scrollToElement(message);
+        // Wait for images/layout so the position is final before scrolling
+        if (document.readyState === 'complete') {
+            scroll();
+        } else {
+            window.addEventListener('load', scroll, { once: true });
+        }
     }
 };
 
